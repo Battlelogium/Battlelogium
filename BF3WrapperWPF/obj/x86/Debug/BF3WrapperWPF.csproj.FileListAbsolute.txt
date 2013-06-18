@@ -1,0 +1,15 @@
+D:\Coding\Visual Studio\BF3Wrapper\BF3WrapperWPF\BF3WrapperWPF\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Coding\Visual Studio\BF3Wrapper\BF3WrapperWPF\BF3WrapperWPF\obj\x86\Debug\MainWindow.baml
+D:\Coding\Visual Studio\BF3Wrapper\BF3WrapperWPF\BF3WrapperWPF\obj\x86\Debug\MainWindow.g.cs
+D:\Coding\Visual Studio\BF3Wrapper\BF3WrapperWPF\BF3WrapperWPF\obj\x86\Debug\App.g.cs
+D:\Coding\Visual Studio\BF3Wrapper\BF3WrapperWPF\BF3WrapperWPF\obj\x86\Debug\BF3WrapperWPF.Properties.Resources.resources
+D:\Coding\Visual Studio\BF3Wrapper\BF3WrapperWPF\BF3WrapperWPF\obj\x86\Debug\GenerateResource.read.1.tlog
+D:\Coding\Visual Studio\BF3Wrapper\BF3WrapperWPF\BF3WrapperWPF\obj\x86\Debug\GenerateResource.write.1.tlog
+D:\Coding\Visual Studio\BF3Wrapper\BF3WrapperWPF\BF3WrapperWPF\bin\Debug\BattlelogChrome-Steam.exe
+D:\Coding\Visual Studio\BF3Wrapper\BF3WrapperWPF\BF3WrapperWPF\bin\Debug\BattlelogChrome-Steam.pdb
+D:\Coding\Visual Studio\BF3Wrapper\BF3WrapperWPF\BF3WrapperWPF\obj\x86\Debug\BattlelogChrome-Steam_MarkupCompile.cache
+D:\Coding\Visual Studio\BF3Wrapper\BF3WrapperWPF\BF3WrapperWPF\obj\x86\Debug\BattlelogChrome-Steam.g.resources
+D:\Coding\Visual Studio\BF3Wrapper\BF3WrapperWPF\BF3WrapperWPF\obj\x86\Debug\BattlelogChrome-Steam.exe
+D:\Coding\Visual Studio\BF3Wrapper\BF3WrapperWPF\BF3WrapperWPF\obj\x86\Debug\BattlelogChrome-Steam.pdb
+D:\Coding\Visual Studio\BattlelogChrome-for-Steam\BF3WrapperWPF\obj\x86\Debug\BattlelogChrome-Steam.exe
+D:\Coding\Visual Studio\BattlelogChrome-for-Steam\BF3WrapperWPF\obj\x86\Debug\BattlelogChrome-Steam.pdb
