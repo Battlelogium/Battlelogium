@@ -25,6 +25,8 @@ namespace BF3WrapperWPF
     public partial class MainWindow : Window
     {
         private Process originProcess;
+        private int waitTimeToCloseOrigin = 10000;
+        private bool startTopmost = true;
         private bool loadedOnce = false;
         //Removes ads and footers
         private String css = @"
@@ -52,6 +54,8 @@ namespace BF3WrapperWPF
         {
             Log("Initiating Window");
             InitializeComponent();
+            Log("Initialize Config");
+            InitializeConfig();
             Log("Initiating Wrapper");
             InitializeWrapper();
             Log("Initiating Origin");
@@ -59,9 +63,36 @@ namespace BF3WrapperWPF
 
         }
 
+        private void InitializeConfig(){
+            if(File.Exists(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,"config.properties"))){
+                Dictionary<String, String> config = new Dictionary<String, String>();
+                //Properties loading code from http://stackoverflow.com/questions/485659/
+                foreach (var row in File.ReadAllLines(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "config.properties")))
+                {
+                    config.Add(row.Split('=')[0], string.Join("=", row.Split('=').Skip(1).ToArray()));
+                }
+
+                waitTimeToCloseOrigin = int.Parse(config["waitTimeToCloseOrigin"]);
+                startTopmost = bool.Parse(config["startTopmost"]);
+
+            }
+
+            if (File.Exists(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "style.css")))
+            {
+                css = File.ReadAllText(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "style.css"));
+            }
+
+            Log("Wait time to close Origin: " + waitTimeToCloseOrigin.ToString());
+            Log("Starting Topmost: " + startTopmost.ToString());
+
+
+
+        }
+
         private void Log(string log){
             Console.WriteLine(DateTime.Now.ToString()+" "+log);
         }
+
         #region Origin
         private void InitializeOrigin()
 
@@ -85,7 +116,7 @@ namespace BF3WrapperWPF
             ProcessStartInfo originProcessInfo = new ProcessStartInfo(originPath);
             Log("Starting Origin");
             originProcess = Process.Start(originProcessInfo);
-            Timer disableTopMostTimer = new Timer(8000);
+            Timer disableTopMostTimer = new Timer(waitTimeToCloseOrigin);
             disableTopMostTimer.AutoReset = false;
             disableTopMostTimer.Elapsed += new ElapsedEventHandler(disableTopMostTimer_Elapsed);
             Log("Starting Timer to keep wrapper on top");
@@ -114,6 +145,7 @@ namespace BF3WrapperWPF
         #region Wrapper
         private void InitializeWrapper()
         {
+            this.Topmost = startTopmost;
             Log("Initializing Battlelog WebView");
             InitializeBattlelogWebview();
             Log("Registering Quit Event Handlers");

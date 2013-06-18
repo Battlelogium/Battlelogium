@@ -4,7 +4,7 @@
         xmlns:aw="clr-namespace:Awesomium.Windows.Controls;assembly=Awesomium.Windows.Controls"
         WindowStyle="None" ResizeMode="NoResize"  
         WindowStartupLocation="CenterScreen" WindowState="Maximized"
-        Height="300" Width="600" Topmost="True">
+        Height="300" Width="600">
        
     <Window.Resources>
         <Storyboard x:Key="FadeOut" BeginTime="0:0:2">

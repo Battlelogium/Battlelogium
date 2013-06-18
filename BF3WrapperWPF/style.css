@@ -1,0 +1,18 @@
+﻿.gate-footer {
+    display: none;
+}
+
+#footer{
+    display: none;
+}
+
+.advirticement{
+    display: none;
+}
+
+::-webkit-scrollbar{
+    visibility: hidden;
+}
+#feedback-popup-opener-tab{
+    display: none;
+}
