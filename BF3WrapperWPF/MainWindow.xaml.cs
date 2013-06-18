@@ -17,6 +17,7 @@ using System.Timers;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Microsoft.Win32;
+using System.ComponentModel;
 namespace BF3WrapperWPF
 {
     /// <summary>
@@ -52,46 +53,45 @@ namespace BF3WrapperWPF
 
         public MainWindow()
         {
+            AttachConsole(-1);
             Log("Initiating Window");
             InitializeComponent();
-            Log("Initialize Config");
+            Log("Initiating Config");
             InitializeConfig();
             Log("Initiating Wrapper");
             InitializeWrapper();
+            Log("Initiating Battlelog Webview");
+            InitializeBattlelogWebview();
             Log("Initiating Origin");
             InitializeOrigin();
 
         }
 
-        private void InitializeConfig(){
-            if(File.Exists(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,"config.properties"))){
-                Dictionary<String, String> config = new Dictionary<String, String>();
-                //Properties loading code from http://stackoverflow.com/questions/485659/
-                foreach (var row in File.ReadAllLines(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "config.properties")))
-                {
-                    config.Add(row.Split('=')[0], string.Join("=", row.Split('=').Skip(1).ToArray()));
-                }
+        //Attach a console to program if ran from commandline
+        [DllImport("Kernel32.dll")]
+        public static extern bool AttachConsole(int processId);
 
-                waitTimeToCloseOrigin = int.Parse(config["waitTimeToCloseOrigin"]);
-                startTopmost = bool.Parse(config["startTopmost"]);
+        [DllImport("kernel32.dll")]
+        public static extern Boolean FreeConsole();
 
-            }
-
-            if (File.Exists(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "style.css")))
-            {
-                css = File.ReadAllText(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "style.css"));
-            }
-
-            Log("Wait time to close Origin: " + waitTimeToCloseOrigin.ToString());
-            Log("Starting Topmost: " + startTopmost.ToString());
-
-
-
-        }
-
+        #region Utils
         private void Log(string log){
             Console.WriteLine(DateTime.Now.ToString()+" "+log);
         }
+
+        private void SendKey(Key key)
+        {
+            IInputElement target = Keyboard.FocusedElement;
+
+            //Code from http://stackoverflow.com/questions/1645815/
+            target.RaiseEvent(
+                new KeyEventArgs(Keyboard.PrimaryDevice, Keyboard.PrimaryDevice.ActiveSource, 0, key)
+                {
+                    RoutedEvent = Keyboard.KeyDownEvent
+                });
+
+        }
+        #endregion
 
         #region Origin
         private void InitializeOrigin()
@@ -115,7 +115,15 @@ namespace BF3WrapperWPF
 
             ProcessStartInfo originProcessInfo = new ProcessStartInfo(originPath);
             Log("Starting Origin");
-            originProcess = Process.Start(originProcessInfo);
+            try
+            {
+                originProcess = Process.Start(originProcessInfo);
+            }
+            catch (FileNotFoundException)
+            {
+                MessageBox.Show("Origin not found, please reinstall EA Origin", "Error");
+                this.Close();
+            }
             Timer disableTopMostTimer = new Timer(waitTimeToCloseOrigin);
             disableTopMostTimer.AutoReset = false;
             disableTopMostTimer.Elapsed += new ElapsedEventHandler(disableTopMostTimer_Elapsed);
@@ -143,20 +151,56 @@ namespace BF3WrapperWPF
         #endregion
 
         #region Wrapper
+
         private void InitializeWrapper()
         {
+            
             this.Topmost = startTopmost;
-            Log("Initializing Battlelog WebView");
-            InitializeBattlelogWebview();
-            Log("Registering Quit Event Handlers");
+
             this.KeyDown += new KeyEventHandler(KeyDownQuitHandler);
-            this.Closing += new System.ComponentModel.CancelEventHandler(WrapperClosing);
+            this.Closing += new CancelEventHandler(WrapperClosing);
+            Log("Registered Quit Event Handlers");
         }
 
-        private void WrapperClosing(object sender, System.ComponentModel.CancelEventArgs e)
+
+        private void InitializeConfig()
+        {
+            if (File.Exists(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "config.properties")))
+            {
+                Dictionary<String, String> config = new Dictionary<String, String>();
+                //Properties loading code from http://stackoverflow.com/questions/485659/
+                foreach (var row in File.ReadAllLines(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "config.properties")))
+                {
+                    config.Add(row.Split('=')[0], string.Join("=", row.Split('=').Skip(1).ToArray()));
+                }
+
+                waitTimeToCloseOrigin = int.Parse(config["waitTimeToCloseOrigin"]);
+                startTopmost = bool.Parse(config["startTopmost"]);
+
+            }
+
+            if (File.Exists(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "style.css")))
+            {
+                css = File.ReadAllText(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "style.css"));
+            }
+
+            Log("Wait time to close Origin: " + waitTimeToCloseOrigin.ToString());
+            Log("Starting Topmost: " + startTopmost.ToString());
+
+
+
+        }
+
+        private void WrapperClosing(object sender, CancelEventArgs e)
         {
             Log("Shut down WebCore");
-            WebCore.Shutdown();
+            try
+            {
+                WebCore.Shutdown();
+            }catch (Exception){
+
+            }
+
             try
             {
                 Log("Kill Origin");
@@ -180,7 +224,10 @@ namespace BF3WrapperWPF
             {
                 p.Kill();
             }
-            
+
+            Log("Free Console");
+            FreeConsole();
+            SendKey(Key.Enter);
         }
 
         #endregion
@@ -329,7 +376,6 @@ namespace BF3WrapperWPF
         }
 
         #endregion
-
 
     }
 
