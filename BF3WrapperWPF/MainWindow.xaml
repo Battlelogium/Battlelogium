@@ -4,22 +4,26 @@
         xmlns:aw="clr-namespace:Awesomium.Windows.Controls;assembly=Awesomium.Windows.Controls"
         WindowStyle="None" ResizeMode="NoResize"  
         WindowStartupLocation="CenterScreen" WindowState="Maximized"
-        Height="300" Width="600">
+        Height="300" Width="600" KeyDown="KeyDownQuitHandler" Closing="WrapperClosing">
        
     <Window.Resources>
-        <Storyboard x:Key="FadeOut" BeginTime="0:0:2">
-            <DoubleAnimation From="1" To="0" Storyboard.TargetProperty="(UIElement.Opacity)" Duration="0:0:3"/>
+        <Storyboard x:Key="FadeBackground" BeginTime="0:0:2">
+            <DoubleAnimation From="1" To="0" Storyboard.TargetProperty="(UIElement.Opacity)" Duration="0:0:3" Completed="fadeBackground_Completed"/>
+        </Storyboard>
+        
+        <Storyboard x:Key="BlinkLoading" BeginTime="0:0:0">
+            <DoubleAnimation From="1" To="0" Storyboard.TargetProperty="(UIElement.Opacity)" Duration="0:0:0.5" AutoReverse="True" DecelerationRatio="0.3" Completed="blinkLoading_Completed"/>
         </Storyboard>
     </Window.Resources>
     
     <Grid>
-        <Viewbox Canvas.ZIndex="1">
-            <Grid>
-                <Image Canvas.ZIndex="2" Margin="20,0,0,20" Stretch="None"  Source="loadingtext.png" HorizontalAlignment="Left" Name="LoadingImageText" VerticalAlignment="Bottom" />
-                <Image Canvas.ZIndex="1" Stretch="UniformToFill"  Source="loading.jpg" HorizontalAlignment="Center" Name="LoadingImage" VerticalAlignment="Center" />
+        
+            <Grid Canvas.ZIndex="1">
+                <Image Canvas.ZIndex="2" Margin="20,0,0,20" Stretch="UniformToFill" Source="loadingtext.png" HorizontalAlignment="Left" Name="LoadingImageText" VerticalAlignment="Bottom" Height="50" Width="172" />
+                <Image Canvas.ZIndex="1" Stretch="UniformToFill"  Source="loading.jpg" HorizontalAlignment="Center" Name="LoadingImage" VerticalAlignment="Top" />
             </Grid>
-        </Viewbox>
-        <aw:WebControl HorizontalAlignment="Stretch" Margin="0,0,0,0" Name="BattlelogBrowser" VerticalAlignment="Top" />
+
+        <aw:WebControl Source="http://battlelog.battlefield.com/" DocumentReady="BattlelogBrowser_DocumentReady" ShowContextMenu="BattlelogBrowser_ShowContextMenu" HorizontalAlignment="Stretch" Margin="0,0,0,0" Name="BattlelogBrowser" VerticalAlignment="Top" />
         
     </Grid>
 </Window>

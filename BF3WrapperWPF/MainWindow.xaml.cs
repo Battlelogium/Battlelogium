@@ -29,6 +29,11 @@ namespace BF3WrapperWPF
         private int waitTimeToCloseOrigin = 10000;
         private bool startTopmost = true;
         private bool loadedOnce = false;
+        private bool finishedLoading = false;
+        private bool loadingTextFinalPlay = false;
+        private Storyboard blinkLoading;
+        private Storyboard fadeBackground;
+
         //Removes ads and footers
         private String css = @"
                     .gate-footer {
@@ -51,6 +56,9 @@ namespace BF3WrapperWPF
                     }
 ";
 
+        /// <summary>
+        /// Main Window Constructor
+        /// </summary>
         public MainWindow()
         {
             AttachConsole(-1);
@@ -60,44 +68,81 @@ namespace BF3WrapperWPF
             InitializeConfig();
             Log("Initiating Wrapper");
             InitializeWrapper();
-            Log("Initiating Battlelog Webview");
-            InitializeBattlelogWebview();
+            Log("Initiating Battlelog BattlelogBrowser");
+            InitializeBattlelogBattlelogBrowser();
             Log("Initiating Origin");
             InitializeOrigin();
 
         }
 
-        //Attach a console to program if ran from commandline
+        #region Console Logging
+        /// <summary>
+        /// Attach a console to program if ran from commandline
+        /// </summary>
+        /// <param name="processId"></param>
+        /// <returns></returns>
         [DllImport("Kernel32.dll")]
         public static extern bool AttachConsole(int processId);
 
+        /// <summary>
+        /// Frees Console before quit
+        /// </summary>
+        /// <returns></returns>
         [DllImport("kernel32.dll")]
         public static extern Boolean FreeConsole();
 
+        #endregion
+
         #region Utils
-        private void Log(string log){
-            Console.WriteLine(DateTime.Now.ToString()+" "+log);
+        /// <summary>
+        /// Appends date and time before writing to Stdout
+        /// </summary>
+        /// <param name="log"></param>
+        private void Log(string log)
+        {
+            Console.WriteLine(DateTime.Now.ToString() + " " + log);
         }
 
+        /// <summary>
+        /// Raises a KeyDownEvent
+        /// </summary>
+        /// <param name="key"></param>
         private void SendKey(Key key)
         {
             IInputElement target = Keyboard.FocusedElement;
 
             //Code from http://stackoverflow.com/questions/1645815/
-            target.RaiseEvent(
-                new KeyEventArgs(Keyboard.PrimaryDevice, Keyboard.PrimaryDevice.ActiveSource, 0, key)
-                {
-                    RoutedEvent = Keyboard.KeyDownEvent
-                });
+            try
+            {
+                target.RaiseEvent(
+                    new KeyEventArgs(Keyboard.PrimaryDevice, Keyboard.PrimaryDevice.ActiveSource, 0, key)
+                    {
+                        RoutedEvent = Keyboard.KeyDownEvent
+                    });
+            }
+            catch (Exception e)
+            {
+                Log(e.ToString());
+            }
 
         }
         #endregion
 
         #region Origin
+        /// <summary>
+        /// Logic for Management of the Origin Process
+        /// </summary>
         private void InitializeOrigin()
-
         {
-            
+            StartOriginProcess();
+            StartBringWrapperToTopTimer();
+        }
+
+        /// <summary>
+        /// Finds and Starts Origin
+        /// </summary>
+        private void StartOriginProcess()
+        {
             string originDefaultPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "Origin", "Origin.exe");
             string originPath;
             Log("Getting Origin Path");
@@ -111,7 +156,7 @@ namespace BF3WrapperWPF
                 originPath = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Origin", "ClientPath", originDefaultPath).ToString();
                 Log("Got " + originPath);
             }
-            
+
 
             ProcessStartInfo originProcessInfo = new ProcessStartInfo(originPath);
             Log("Starting Origin");
@@ -124,17 +169,24 @@ namespace BF3WrapperWPF
                 MessageBox.Show("Origin not found, please reinstall EA Origin", "Error");
                 this.Close();
             }
-            Timer disableTopMostTimer = new Timer(waitTimeToCloseOrigin);
-            disableTopMostTimer.AutoReset = false;
-            disableTopMostTimer.Elapsed += new ElapsedEventHandler(disableTopMostTimer_Elapsed);
-            Log("Starting Timer to keep wrapper on top");
-            disableTopMostTimer.Start();
-
-
         }
 
-        
-        private void bringWrapperToTop()
+        /// <summary>
+        /// Starts Timer to keep wrapper to top after Origin starts
+        /// </summary>
+        private void StartBringWrapperToTopTimer()
+        {
+            Timer closeOriginWindowTimer = new Timer(waitTimeToCloseOrigin);
+            closeOriginWindowTimer.AutoReset = false;
+            closeOriginWindowTimer.Elapsed += new ElapsedEventHandler(disableTopMostTimer_Elapsed);
+            Log("Starting Timer to keep wrapper on top");
+            closeOriginWindowTimer.Start();
+        }
+
+        /// <summary>
+        /// Forces Origin to the background and keeps this wrapper to the top
+        /// </summary>
+        private void BringWrapperToTop()
         {
             Log("Unset Wrapper Topmost");
             this.Topmost = false;
@@ -144,25 +196,49 @@ namespace BF3WrapperWPF
             originProcess.CloseMainWindow();
         }
 
-        void disableTopMostTimer_Elapsed(object sender, ElapsedEventArgs e)
+        /// <summary>
+        /// Event Handler to BringWrapperToTop() after Timer Elapses
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void disableTopMostTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            Dispatcher.Invoke(new Action(bringWrapperToTop));
+            Dispatcher.Invoke(new Action(BringWrapperToTop));
         }
         #endregion
 
         #region Wrapper
 
+        /// <summary>
+        /// General wrapper logic
+        /// </summary>
         private void InitializeWrapper()
         {
-            
+            SetupStoryboards();
+            Log("Setup Storyboards");
             this.Topmost = startTopmost;
-
-            this.KeyDown += new KeyEventHandler(KeyDownQuitHandler);
-            this.Closing += new CancelEventHandler(WrapperClosing);
-            Log("Registered Quit Event Handlers");
+            blinkLoading.Begin();
         }
 
+        /// <summary>
+        /// Finds storyboards and points them to their intended target
+        /// </summary>
+        private void SetupStoryboards()
+        {
+            blinkLoading = this.FindResource("BlinkLoading") as Storyboard;
+            Log("Found blinkLoading Storyboard");
+            fadeBackground = this.FindResource("FadeBackground") as Storyboard;
+            Log("Found fadeBackground Storyboard");
 
+            Storyboard.SetTarget(blinkLoading, LoadingImageText);
+            Log("Set Target of blinkLoading to LoadingImageText");
+            Storyboard.SetTarget(fadeBackground, LoadingImage);
+            Log("Set Target of fadeBackground to LoadingImage");
+        }
+
+        /// <summary>
+        /// Load configuration options from config if one exists
+        /// </summary>
         private void InitializeConfig()
         {
             if (File.Exists(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "config.properties")))
@@ -174,7 +250,8 @@ namespace BF3WrapperWPF
                     config.Add(row.Split('=')[0], string.Join("=", row.Split('=').Skip(1).ToArray()));
                 }
 
-                waitTimeToCloseOrigin = int.Parse(config["waitTimeToCloseOrigin"]);
+                //Convert from seconds to milliseconds
+                waitTimeToCloseOrigin = int.Parse(config["waitTimeToCloseOrigin"]) * 1000;
                 startTopmost = bool.Parse(config["startTopmost"]);
 
             }
@@ -190,17 +267,72 @@ namespace BF3WrapperWPF
 
 
         }
+        #endregion
 
+        #region Battlelog
+
+        /// <summary>
+        /// Creates a WebSession and makes the BattlelogBrowser use it
+        /// </summary>
+        private void InitializeBattlelogBattlelogBrowser()
+        {
+            Log("Create WebSession");
+            WebSession session = WebCore.CreateWebSession(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "battlelog-chrome"),
+                                    new WebPreferences() { CustomCSS = css });
+            Log("Registered WebSession");
+            BattlelogBrowser.WebSession = session;
+            Log("Registered WebSession");
+        }
+
+        /// <summary>
+        /// EventHandler to disable Context Menu in BattlelogBrowser
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BattlelogBrowser_ShowContextMenu(object sender, Awesomium.Core.ContextMenuEventArgs e)
+        {
+            e.Handled = true;
+            Log("Rightclicked Disabled");
+        }
+
+        /// <summary>
+        /// Event Handler to fade out background and start quit button JS loop if loaded once
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BattlelogBrowser_DocumentReady(object sender, UrlEventArgs e)
+        {
+            if (!loadedOnce)
+            {
+                //Fade out the loading image for the first time
+                FadeOutLoadingImage();
+                Log("Begin Start Fade Image");
+                //Start adding the quit button
+                StartAddQuitButtonTimer();
+                Log("Start Add Quit Button Timer Loop");
+            }
+        }
+        #endregion
+
+        #region Quit
+
+        //EventHandler to handle application closing
         private void WrapperClosing(object sender, CancelEventArgs e)
         {
-            Log("Shut down WebCore");
+
+            //Shutdown WebCore
             try
             {
                 WebCore.Shutdown();
-            }catch (Exception){
-
+                Log("Shut down WebCore");
+            }
+            catch (Exception ex)
+            {
+                Log("Webcore unable to be shut down");
+                Log(ex.ToString());
             }
 
+            //Kill Origin
             try
             {
                 Log("Kill Origin");
@@ -208,7 +340,7 @@ namespace BF3WrapperWPF
             }
             catch (Exception)
             {
-                //If we can't kill by that, just kill all
+                //If we can't kill by killing our managed process, just kill all instances of Origin.exe
                 Log("Kill Origin");
                 Process[] originProcesses = Process.GetProcessesByName("Origin");
                 foreach (Process p in originProcesses)
@@ -225,93 +357,92 @@ namespace BF3WrapperWPF
                 p.Kill();
             }
 
+            //Sometimes this works, free the console and press enter to escape it. Workaround a bug with AttachConsole(-1)
             Log("Free Console");
             FreeConsole();
             SendKey(Key.Enter);
         }
 
-        #endregion
-
-        #region Battlelog 
-        private void InitializeBattlelogWebview()
-        {
-            Log("Create WebSession");
-            WebSession session = WebCore.CreateWebSession(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "bf3wrapper"), 
-                                    new WebPreferences(){CustomCSS = css});
-
-            Log("Registered WebView Source");
-            BattlelogBrowser.Source = new Uri("http://battlelog.battlefield.com/");
-            Log("Registered WebSession");
-            BattlelogBrowser.WebSession = session;
-            Log("Registered WebSession");
-            BattlelogBrowser.DocumentReady += new UrlEventHandler(BattlelogBrowser_DocumentReady);
-            BattlelogBrowser.ShowContextMenu += new ShowContextMenuEventHandler(BattlelogBrowser_ShowContextMenu);
-            Log("Registered WebView Listeners");
-        }
-
-        void BattlelogBrowser_ShowContextMenu(object sender, Awesomium.Core.ContextMenuEventArgs e)
-        {
-            e.Handled = true;
-            Log("Rightclicked Disabled");
-        }
-
-
-        private void BattlelogBrowser_DocumentReady(object sender, UrlEventArgs e)
-        {
-            if (!loadedOnce)
-            {
-                //Fade out the loading image for the first time
-                FadeOutLoadingImage();
-                Log("Begin Start Fade Image");
-            }
-
-            //Start adding the quit button
-            StartAddQuitButtonTimer();
-            Log("Start Add Quit Button Timer Loop");
-            
-          
-        }
-        #endregion
-
-        #region Quit Handlers
-
-        //When ESC is pressed, quit
+        /// <summary>
+        /// EventHandler to handle when ESC is pressed, quits on ESC press
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void KeyDownQuitHandler(object sender, KeyEventArgs e)
         {
-            if(e.Key == Key.Escape){
+            if (e.Key == Key.Escape)
+            {
                 this.Close();
             }
         }
-        
-        //When the Javascript button is pressed, quit
+
+        /// <summary>
+        /// EventHandler to handle when the JS quit button is pressed, quits on button press
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void JavascriptQuitHandler(object sender, JavascriptMethodEventArgs args)
         {
             this.Close();
         }
 
-
-      
-
         #endregion
 
-        #region Loading Image
+        #region Loading
+
+        /// <summary>
+        /// Fades out the loading background image
+        /// </summary>
         private void FadeOutLoadingImage()
         {
-            Storyboard sb = this.FindResource("FadeOut") as Storyboard;
-            Log("Find FadeOut from Resources");
-            Storyboard.SetTarget(sb, LoadingImage);
-            Log("Set Storyboard Target to LoadingImage");
-            sb.Completed += new EventHandler(sb_Completed);
-            Log("Registered Storyboard Completed EventHandler");
-            LoadingImageText.Visibility = Visibility.Hidden;
-            Log("Hid Loading Text Image");
-            Log("Begin Storyboard");
-            sb.Begin();
-        
+
+            finishedLoading = true;
+            Log("Set finishedLoading to true to allow LoadingImageText to stop gracefully");
+            Log("Begin fadeoutBackground");
+            fadeBackground.Begin();
+
 
         }
 
-        private void sb_Completed(object sender, EventArgs e)
+        /// <summary>
+        /// EventHandler to handle blinkLoading completed, workaround to fade text gracefully after loading as RepeatBehavior.Forever does not fire Completed event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void blinkLoading_Completed(object sender, EventArgs e)
+        {
+            /* 
+             * We don't use Storyboard.RepeatBehavior = RepeatBehavior.Forever because that does not fire the 
+             * Completed event. So we do this workaround to fade out gracefully after loading.
+             * 
+             */
+
+            if (loadingTextFinalPlay)
+            {
+                LoadingImageText.Visibility = Visibility.Hidden;
+                Log("Hid LoadingImageText");
+            }
+            else
+                if (finishedLoading)
+                {
+                    loadingTextFinalPlay = true;
+                    blinkLoading.AutoReverse = false;
+                    blinkLoading.Begin();
+                    Log("Final blink of LoadingImageText");
+                }
+                else
+                {
+
+                    blinkLoading.Begin();
+                }
+        }
+
+        /// <summary>
+        /// EventHandler to hide the background image once fadeBackground is completed so BattlelogBrowser can be interacted with
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void fadeBackground_Completed(object sender, EventArgs e)
         {
             LoadingImage.Visibility = Visibility.Hidden;
             Log("Hide Loading Image");
@@ -320,11 +451,19 @@ namespace BF3WrapperWPF
 
         #region Javascript Quit Button
 
+        /// <summary>
+        /// The Timer.Elapsed event this handles fires every 100ms. This runs Javascript addQuitButton() every 100ms
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void QuitButtonTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             Dispatcher.Invoke(new Action(AddQuitButton));
         }
 
+        /// <summary>
+        /// Starts the timer to run JS addQuitButton() every 100ms
+        /// </summary>
         private void StartAddQuitButtonTimer()
         {
             JSObject quitMethod = BattlelogBrowser.CreateGlobalJavascriptObject("wrapper");
@@ -341,8 +480,10 @@ namespace BF3WrapperWPF
             Log("Start JavascriptQuitButton Loop");
         }
 
-        
-
+        /// <summary>
+        /// Adds the JS function addQuitButton() to the page.
+        /// Function checks if quitButton exists, if not, adds it to page DOM
+        /// </summary>
         private void AddQuitButtonFunction()
         {
 
@@ -365,12 +506,13 @@ namespace BF3WrapperWPF
             Log("Added quitButton function to page");
         }
 
-
+        /// <summary>
+        /// Executes JS addQuitButton();
+        /// </summary>
         private void AddQuitButton()
         {
             if (BattlelogBrowser.IsDocumentReady)
             {
-
                 BattlelogBrowser.ExecuteJavascript("addQuitButton()");
             }
         }

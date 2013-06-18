@@ -192,7 +192,9 @@
     <Content Include="lib\xinput9_1_0.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="style.css" />
+    <Content Include="style.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Resource Include="loadingtext.png" />
     <Resource Include="loading.jpg" />
   </ItemGroup>
