@@ -224,6 +224,8 @@ namespace BF3WrapperWPF
             Log("Set Storyboard Target to LoadingImage");
             sb.Completed += new EventHandler(sb_Completed);
             Log("Registered Storyboard Completed EventHandler");
+            LoadingImageText.Visibility = Visibility.Hidden;
+            Log("Hid Loading Text Image");
             Log("Begin Storyboard");
             sb.Begin();
         

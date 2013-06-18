@@ -13,8 +13,12 @@
     </Window.Resources>
     
     <Grid>
-   
-        <Image Canvas.ZIndex="1" Stretch="UniformToFill"  Source="loading.png" HorizontalAlignment="Center" Name="LoadingImage" VerticalAlignment="Center" />
+        <Viewbox Canvas.ZIndex="1">
+            <Grid>
+                <Image Canvas.ZIndex="2" Margin="20,0,0,20" Stretch="None"  Source="loadingtext.png" HorizontalAlignment="Left" Name="LoadingImageText" VerticalAlignment="Bottom" />
+                <Image Canvas.ZIndex="1" Stretch="UniformToFill"  Source="loading.jpg" HorizontalAlignment="Center" Name="LoadingImage" VerticalAlignment="Center" />
+            </Grid>
+        </Viewbox>
         <aw:WebControl HorizontalAlignment="Stretch" Margin="0,0,0,0" Name="BattlelogBrowser" VerticalAlignment="Top" />
         
     </Grid>
