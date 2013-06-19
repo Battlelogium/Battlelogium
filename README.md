@@ -4,6 +4,13 @@ BattlelogChrome for Steam
 BattlelogChrome is a [Battlefield 3 Battlelog](http://battlelog.battlefield.com/) wrapper to allow better integration with Steam, inspired by [Battlelog on Steam](http://forums.steampowered.com/forums/showthread.php?t=2289393)
 
 
+Installation
+===========
+
+BattlelogChrome requires [.NET Framework 4](http://www.microsoft.com/en-ca/download/details.aspx?id=17851). This should have already been installed if you are on Windows Vista or later and have Windows Update enabled.
+
+If you have downloaded the zip file from [my website](http://punyman.com/projects/BattlelogChrome.zip) or a mirror, simply unzip to any folder along with the supplied Awesomium runtime libraries
+
 Features
 ========
 
