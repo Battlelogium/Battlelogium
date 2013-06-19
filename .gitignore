@@ -3,3 +3,4 @@ bin/
 Debug/
 Release/
 *.suo
+*.user

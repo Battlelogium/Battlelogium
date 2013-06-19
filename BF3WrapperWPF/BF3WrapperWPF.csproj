@@ -114,7 +114,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="App.config" />
     <Content Include="lib\awesomium_process">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
