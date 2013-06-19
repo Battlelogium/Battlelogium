@@ -1,7 +1,7 @@
 BattlelogChrome for Steam
 =========================
 
-BattleogChrome is a [Battlefield 3 Battlelog](http://battlelog.battlefield.com/) wrapper to allow better integration with Steam, inspired by [Battlelog on Steam](http://forums.steampowered.com/forums/showthread.php?t=2289393)
+BattlelogChrome is a [Battlefield 3 Battlelog](http://battlelog.battlefield.com/) wrapper to allow better integration with Steam, inspired by [Battlelog on Steam](http://forums.steampowered.com/forums/showthread.php?t=2289393)
 
 
 Features
@@ -45,7 +45,7 @@ Bug reports and support will only given if 3 things are provided.
     
 Licensing
 =========
-We are licensed under [GNU GPL v3](http://www.gnu.org/licenses/gpl.html)
+BattlelogChrome is licensed under [GNU GPL v3](http://www.gnu.org/licenses/gpl.html), and the source code is available at [Github](https://github.com/ron975/BattlelogChrome-for-Steam)
     
 
 Building
