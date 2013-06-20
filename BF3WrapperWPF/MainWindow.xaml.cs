@@ -95,36 +95,24 @@ namespace BF3WrapperWPF
 
         #region Utils
         /// <summary>
+        /// Kills processes with given name
+        /// </summary>
+        /// <param name="processname">Name of process to kill</param>
+        private void KillProcess(string processname)
+        {
+            Process[] Processes = Process.GetProcessesByName(processname);
+            foreach (Process p in Processes)
+            {
+                p.Kill();
+            }
+        }
+        /// <summary>
         /// Appends date and time before writing to Stdout
         /// </summary>
-        /// <param name="log"></param>
+        /// <param name="log">Text to log</param>
         private void Log(string log)
         {
             Console.WriteLine(DateTime.Now.ToString() + " " + log);
-        }
-
-        /// <summary>
-        /// Raises a KeyDownEvent
-        /// </summary>
-        /// <param name="key"></param>
-        private void SendKey(Key key)
-        {
-            IInputElement target = Keyboard.FocusedElement;
-
-            //Code from http://stackoverflow.com/questions/1645815/
-            try
-            {
-                target.RaiseEvent(
-                    new KeyEventArgs(Keyboard.PrimaryDevice, Keyboard.PrimaryDevice.ActiveSource, 0, key)
-                    {
-                        RoutedEvent = Keyboard.KeyDownEvent
-                    });
-            }
-            catch (Exception e)
-            {
-                Log(e.ToString());
-            }
-
         }
         #endregion
 
@@ -138,36 +126,53 @@ namespace BF3WrapperWPF
             StartBringWrapperToTopTimer();
         }
 
+        private void OriginNotFound(Exception e)
+        {
+            Log("Origin not found");
+            Log("Exception type: " + e.GetType().ToString());
+            MessageBox.Show("Please install Origin to play Battlefield 3", "Error");
+            Process.Start("http://www.origin.com/download");
+            this.Close();
+        }
         /// <summary>
         /// Finds and Starts Origin
         /// </summary>
         private void StartOriginProcess()
         {
             string originDefaultPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "Origin", "Origin.exe");
-            string originPath;
+            string originPath = originDefaultPath;
             Log("Getting Origin Path");
-            if (Environment.Is64BitOperatingSystem)
+            try
             {
-                originPath = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Origin", "ClientPath", originDefaultPath).ToString();
-                Log("Got " + originPath);
+                if (Environment.Is64BitOperatingSystem)
+                {
+                    originPath = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Origin", "ClientPath", originDefaultPath).ToString();
+                    Log("Got " + originPath);
+                }
+                else
+                {
+                    originPath = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Origin", "ClientPath", originDefaultPath).ToString();
+                    Log("Got " + originPath);
+                }
+            }catch(Exception ex){
+                OriginNotFound(ex);
+                return;
             }
-            else
-            {
-                originPath = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Origin", "ClientPath", originDefaultPath).ToString();
-                Log("Got " + originPath);
-            }
-
 
             ProcessStartInfo originProcessInfo = new ProcessStartInfo(originPath);
-            Log("Starting Origin");
+            
+            KillProcess("Origin");
+            Log("Kill any Origin processes already started");
+            
             try
             {
                 originProcess = Process.Start(originProcessInfo);
+                Log("Starting Origin");
             }
-            catch (FileNotFoundException)
+            catch (Exception ex)
             {
-                MessageBox.Show("Origin not found, please reinstall EA Origin", "Error");
-                this.Close();
+                OriginNotFound(ex);
+                return;
             }
         }
 
@@ -192,15 +197,9 @@ namespace BF3WrapperWPF
             this.Topmost = false;
             Log("Activate Wrapper");
             this.Activate();
-            try
-            {
-                originProcess.CloseMainWindow();
-                Log("Close Origin Main Window");
-            }
-            catch (InvalidOperationException)
-            {
-                Log("Origin already running");
-            }
+            originProcess.CloseMainWindow();
+            Log("Close Origin Main Window");
+           
         }
 
         /// <summary>
@@ -349,25 +348,15 @@ namespace BF3WrapperWPF
             {
                 //If we can't kill by killing our managed process, just kill all instances of Origin.exe
                 Log("Kill Origin");
-                Process[] originProcesses = Process.GetProcessesByName("Origin");
-                foreach (Process p in originProcesses)
-                {
-                    p.Kill();
-                }
+                KillProcess("Origin");
             }
 
             //We need to kill SonarHost.exe as well
             Log("Kill SonarHost");
-            Process[] ESNSonarProcesses = Process.GetProcessesByName("SonarHost");
-            foreach (Process p in ESNSonarProcesses)
-            {
-                p.Kill();
-            }
+            KillProcess("SonarHost");
 
-            //Sometimes this works, free the console and press enter to escape it. Workaround a bug with AttachConsole(-1)
-            Log("Free Console");
             FreeConsole();
-            SendKey(Key.Enter);
+            Log("Press Enter to Exit. Remember to mark output.");
         }
 
         /// <summary>
