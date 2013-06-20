@@ -192,8 +192,15 @@ namespace BF3WrapperWPF
             this.Topmost = false;
             Log("Activate Wrapper");
             this.Activate();
-            Log("Close Origin Main Window");
-            originProcess.CloseMainWindow();
+            try
+            {
+                originProcess.CloseMainWindow();
+                Log("Close Origin Main Window");
+            }
+            catch (InvalidOperationException)
+            {
+                Log("Origin already running");
+            }
         }
 
         /// <summary>
