@@ -23,7 +23,7 @@
                 <Image Canvas.ZIndex="1" Stretch="UniformToFill"  Source="loading.jpg" HorizontalAlignment="Center" Name="LoadingImage" VerticalAlignment="Top" />
             </Grid>
 
-        <aw:WebControl Source="http://battlelog.battlefield.com/" DocumentReady="BattlelogBrowser_DocumentReady" ShowContextMenu="BattlelogBrowser_ShowContextMenu" HorizontalAlignment="Stretch" Margin="0,0,0,0" Name="BattlelogBrowser" VerticalAlignment="Top" />
+        <aw:WebControl Source="http://battlelog.battlefield.com/" LoadingFrameComplete="BattlelogBrowser_LoadingFrameComplete" DocumentReady="BattlelogBrowser_DocumentReady" ShowContextMenu="BattlelogBrowser_ShowContextMenu" HorizontalAlignment="Stretch" Margin="0,0,0,0" Name="BattlelogBrowser" VerticalAlignment="Top" />
         
     </Grid>
 </Window>

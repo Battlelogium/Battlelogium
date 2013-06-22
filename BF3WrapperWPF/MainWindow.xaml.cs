@@ -18,6 +18,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Microsoft.Win32;
 using System.ComponentModel;
+using Awesomium.Core.Data;
 namespace BF3WrapperWPF
 {
     /// <summary>
@@ -114,6 +115,12 @@ namespace BF3WrapperWPF
         {
             Console.WriteLine(DateTime.Now.ToString() + " " + log);
         }
+
+        public string GrabSources()
+        {
+            return BattlelogBrowser.ExecuteJavascriptWithResult("document.getElementsByTagName('html')[0].innerHTML");
+        }
+
         #endregion
 
         #region Origin
@@ -284,7 +291,11 @@ namespace BF3WrapperWPF
         {
             Log("Create WebSession");
             WebSession session = WebCore.CreateWebSession(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "battlelog-chrome"),
-                                    new WebPreferences() { CustomCSS = css });
+                                    new WebPreferences() {
+                                        CustomCSS = css,
+                                        EnableGPUAcceleration = true,
+                                    });
+            session.AddDataSource("local", new ResourceDataSource(ResourceType.Packed));
             Log("Registered WebSession");
             BattlelogBrowser.WebSession = session;
             Log("Registered WebSession");
@@ -308,16 +319,25 @@ namespace BF3WrapperWPF
         /// <param name="e"></param>
         private void BattlelogBrowser_DocumentReady(object sender, UrlEventArgs e)
         {
-            if (!loadedOnce)
-            {
+
                 //Fade out the loading image for the first time
                 FadeOutLoadingImage();
                 Log("Begin Start Fade Image");
                 //Start adding the quit button
-                StartAddQuitButtonTimer();
-                Log("Start Add Quit Button Timer Loop");
-            }
+                InitializeQuitButton();
+                //We don't need this event handler any more
+                BattlelogBrowser.DocumentReady -= BattlelogBrowser_DocumentReady;
+            
+
         }
+
+        private void BattlelogBrowser_LoadingFrameComplete(object sender, FrameEventArgs e)
+        {
+            AddQuitButtonFunction();
+            AddQuitButton();
+            Log("Start Add Quit Button Timer Loop");
+        }
+
         #endregion
 
         #region Quit
@@ -447,33 +467,16 @@ namespace BF3WrapperWPF
 
         #region Javascript Quit Button
 
-        /// <summary>
-        /// The Timer.Elapsed event this handles fires every 100ms. This runs Javascript addQuitButton() every 100ms
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void QuitButtonTimer_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            Dispatcher.Invoke(new Action(AddQuitButton));
-        }
 
         /// <summary>
-        /// Starts the timer to run JS addQuitButton() every 100ms
+        /// Creates the JSObject where our wrapper will be bound to.
         /// </summary>
-        private void StartAddQuitButtonTimer()
+        private void InitializeQuitButton()
         {
             JSObject quitMethod = BattlelogBrowser.CreateGlobalJavascriptObject("wrapper");
             Log("Create Javascript Object");
             quitMethod.Bind("quitWrapper", false, JavascriptQuitHandler);
             Log("Binded QuitWrapper to QuitHandler");
-            AddQuitButtonFunction();
-            Log("Added QuitButton Javascript Function to Page");
-            Timer addQuitButtonTimer = new Timer(100);
-            addQuitButtonTimer.AutoReset = true;
-            addQuitButtonTimer.Elapsed += new ElapsedEventHandler(QuitButtonTimer_Elapsed);
-            Log("Registered QuitButton Timer");
-            addQuitButtonTimer.Start();
-            Log("Start JavascriptQuitButton Loop");
         }
 
         /// <summary>
@@ -484,20 +487,9 @@ namespace BF3WrapperWPF
         {
 
             BattlelogBrowser.ExecuteJavascript(@"
-                    function addQuitButton(){
-	                    var quitButtonElement = document.getElementById('wrapperQuitButton');
-	                    if (quitButtonElement == null){
-			                    var playbar = document.getElementsByClassName('main-loggedin-playbar')[0];
-			                    var button = document.createElement('button');
-			                    var quit = document.createElement('p');
-			                    quit.appendChild(document.createTextNode('QUIT'));
-			                    button.appendChild(quit);
-			                    button.setAttribute('class','common-button-large main-loggedin-playbutton');
-			                    button.setAttribute('onclick','wrapper.quitWrapper()');
-			                    button.setAttribute('id','wrapperQuitButton');
-			                    playbar.appendChild(button);
-	                    }
-                    }
+                    var quitButtonScript = document.createElement('script');
+                    quitButtonScript.setAttribute('src','asset://local/quitbutton.js');
+                    document.getElementsByTagName('head')[0].appendChild(quitButtonScript);
                  ");
             Log("Added quitButton function to page");
         }
@@ -514,6 +506,8 @@ namespace BF3WrapperWPF
         }
 
         #endregion
+
+
 
     }
 
