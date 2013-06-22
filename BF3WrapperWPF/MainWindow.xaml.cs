@@ -465,9 +465,17 @@ namespace BF3WrapperWPF
         }
         #endregion
 
-        #region Javascript Quit Button
+        #region Javascript
 
-
+        private void InjectScript(String script)
+        {
+            BattlelogBrowser.ExecuteJavascript(@"
+                    var script = document.createElement('script');
+                    script.setAttribute('src','asset://local/"+script+@"');
+                    document.getElementsByTagName('head')[0].appendChild(script);
+                 ");
+        }
+        #region Quit Button
         /// <summary>
         /// Creates the JSObject where our wrapper will be bound to.
         /// </summary>
@@ -486,11 +494,7 @@ namespace BF3WrapperWPF
         private void AddQuitButtonFunction()
         {
 
-            BattlelogBrowser.ExecuteJavascript(@"
-                    var quitButtonScript = document.createElement('script');
-                    quitButtonScript.setAttribute('src','asset://local/quitbutton.js');
-                    document.getElementsByTagName('head')[0].appendChild(quitButtonScript);
-                 ");
+            InjectScript("quitbutton.js");
             Log("Added quitButton function to page");
         }
 
@@ -504,7 +508,9 @@ namespace BF3WrapperWPF
                 BattlelogBrowser.ExecuteJavascript("addQuitButton()");
             }
         }
-
+        #endregion
+        #region BetterBattlelog
+        #endregion
         #endregion
 
 
