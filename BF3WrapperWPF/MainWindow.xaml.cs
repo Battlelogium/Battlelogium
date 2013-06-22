@@ -29,7 +29,6 @@ namespace BF3WrapperWPF
         private Process originProcess;
         private int waitTimeToCloseOrigin = 10000;
         private bool startTopmost = true;
-        private bool loadedOnce = false;
         private bool finishedLoading = false;
         private bool loadingTextFinalPlay = false;
         private Storyboard blinkLoading;
@@ -116,11 +115,29 @@ namespace BF3WrapperWPF
             Console.WriteLine(DateTime.Now.ToString() + " " + log);
         }
 
-        public string GrabSources()
+        /// <summary>
+        /// Raises a KeyDownEvent
+        /// </summary>
+        /// <param name="key"></param>
+        private void SendKey(Key key)
         {
-            return BattlelogBrowser.ExecuteJavascriptWithResult("document.getElementsByTagName('html')[0].innerHTML");
-        }
+            IInputElement target = Keyboard.FocusedElement;
 
+            //Code from http://stackoverflow.com/questions/1645815/
+            try
+            {
+                target.RaiseEvent(
+                    new KeyEventArgs(Keyboard.PrimaryDevice, Keyboard.PrimaryDevice.ActiveSource, 0, key)
+                    {
+                        RoutedEvent = Keyboard.KeyDownEvent
+                    });
+            }
+            catch (Exception e)
+            {
+                Log(e.ToString());
+            }
+
+        }
         #endregion
 
         #region Origin
@@ -333,9 +350,7 @@ namespace BF3WrapperWPF
 
         private void BattlelogBrowser_LoadingFrameComplete(object sender, FrameEventArgs e)
         {
-            InjectScript("quitbutton.js");
-            AddQuitButton();
-            Log("Start Add Quit Button Timer Loop");
+            InjectScript("asset://local/buttons.js");
         }
 
         #endregion
@@ -375,8 +390,13 @@ namespace BF3WrapperWPF
             Log("Kill SonarHost");
             KillProcess("SonarHost");
 
-            FreeConsole();
             Log("Press Enter to Exit. Remember to mark output.");
+            SendKey(Key.Enter);
+            FreeConsole();
+            SendKey(Key.Enter);
+            //We need to send the enter key else application will hang.
+            
+           
         }
 
         /// <summary>
@@ -470,15 +490,17 @@ namespace BF3WrapperWPF
         /// <summary>
         /// Injects a Javascript file to the page. Must be a resource in the root project path
         /// </summary>
-        /// <param name="script">Name of script</param>
-        private void InjectScript(String script)
+        /// <param name="scripturl">URL of script to inject</param>
+
+
+        private void InjectScript(String scripturl)
         {
             BattlelogBrowser.ExecuteJavascript(@"
                     var script = document.createElement('script');
-                    script.setAttribute('src','asset://local/"+script+@"');
+                    script.setAttribute('src','"+scripturl+@"');
                     document.getElementsByTagName('head')[0].appendChild(script);
                  ");
-            Log("Injected script " + script);
+            Log("Injected script " + scripturl);
         }
 
         #region Quit Button
@@ -493,18 +515,9 @@ namespace BF3WrapperWPF
             Log("Binded QuitWrapper to QuitHandler");
         }
 
-        /// <summary>
-        /// Executes JS addQuitButton();
-        /// </summary>
-        private void AddQuitButton()
-        {
-            if (BattlelogBrowser.IsDocumentReady)
-            {
-                BattlelogBrowser.ExecuteJavascript("addQuitButton()");
-            }
-        }
         #endregion
         #region BetterBattlelog
+        //TODO Add BetterBattlelog :(
         #endregion
         #endregion
 
