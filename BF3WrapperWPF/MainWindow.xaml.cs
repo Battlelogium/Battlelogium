@@ -333,7 +333,7 @@ namespace BF3WrapperWPF
 
         private void BattlelogBrowser_LoadingFrameComplete(object sender, FrameEventArgs e)
         {
-            AddQuitButtonFunction();
+            InjectScript("quitbutton.js");
             AddQuitButton();
             Log("Start Add Quit Button Timer Loop");
         }
@@ -467,6 +467,10 @@ namespace BF3WrapperWPF
 
         #region Javascript
 
+        /// <summary>
+        /// Injects a Javascript file to the page. Must be a resource in the root project path
+        /// </summary>
+        /// <param name="script">Name of script</param>
         private void InjectScript(String script)
         {
             BattlelogBrowser.ExecuteJavascript(@"
@@ -474,7 +478,9 @@ namespace BF3WrapperWPF
                     script.setAttribute('src','asset://local/"+script+@"');
                     document.getElementsByTagName('head')[0].appendChild(script);
                  ");
+            Log("Injected script " + script);
         }
+
         #region Quit Button
         /// <summary>
         /// Creates the JSObject where our wrapper will be bound to.
@@ -485,17 +491,6 @@ namespace BF3WrapperWPF
             Log("Create Javascript Object");
             quitMethod.Bind("quitWrapper", false, JavascriptQuitHandler);
             Log("Binded QuitWrapper to QuitHandler");
-        }
-
-        /// <summary>
-        /// Adds the JS function addQuitButton() to the page.
-        /// Function checks if quitButton exists, if not, adds it to page DOM
-        /// </summary>
-        private void AddQuitButtonFunction()
-        {
-
-            InjectScript("quitbutton.js");
-            Log("Added quitButton function to page");
         }
 
         /// <summary>
