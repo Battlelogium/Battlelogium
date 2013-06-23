@@ -1,4 +1,4 @@
-![Battlelogium for Steam](https://github.com/ron975/Battlelogium/blob/master/BF3WrapperWPF/Battlelogium.png "Battlelogium for Steam")
+![Battlelogium for Steam](https://raw.github.com/ron975/Battlelogium/master/BF3WrapperWPF/Battlelogium.png "Battlelogium for Steam")
 =========================
 
 Battlelogium is a [Battlefield 3 Battlelog](http://battlelog.battlefield.com/) wrapper to allow better integration with Steam, inspired by [Battlelog on Steam](http://forums.steampowered.com/forums/showthread.php?t=2289393)
