@@ -26,6 +26,8 @@ namespace BF3WrapperWPF
     /// </summary>
     public partial class MainWindow : Window
     {
+        private string customJS = "";
+        private bool customJSEnabled = false;
         private Process originProcess;
         private int waitTimeToCloseOrigin = 10000;
         private bool startTopmost = true;
@@ -35,7 +37,7 @@ namespace BF3WrapperWPF
         private Storyboard fadeBackground;
 
         //Removes ads and footers
-        private String css = @"
+        private string css = @"
                     .gate-footer {
                         display: none;
                     }
@@ -72,6 +74,7 @@ namespace BF3WrapperWPF
             InitializeBattlelogBattlelogBrowser();
             Log("Initiating Origin");
             InitializeOrigin();
+
 
         }
 
@@ -283,6 +286,7 @@ namespace BF3WrapperWPF
                 //Convert from seconds to milliseconds
                 waitTimeToCloseOrigin = int.Parse(config["waitTimeToCloseOrigin"]) * 1000;
                 startTopmost = bool.Parse(config["startTopmost"]);
+                customJSEnabled = bool.Parse(config["customJSEnabled");
 
             }
 
@@ -291,6 +295,9 @@ namespace BF3WrapperWPF
                 css = File.ReadAllText(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "style.css"));
             }
 
+            if ((File.Exists(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "customjs.js"))) && customJSEnabled){
+                customJS = File.ReadAllText(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "customjs.js"));
+            }
             Log("Wait time to close Origin: " + waitTimeToCloseOrigin.ToString());
             Log("Starting Topmost: " + startTopmost.ToString());
 
@@ -340,9 +347,9 @@ namespace BF3WrapperWPF
                 //Fade out the loading image for the first time
                 FadeOutLoadingImage();
                 Log("Begin Start Fade Image");
-                //Start adding the quit button
-                InitializeQuitButton();
                 //We don't need this event handler any more
+                Log("Initiating QuitButton");
+                InitializeQuitButton();
                 BattlelogBrowser.DocumentReady -= BattlelogBrowser_DocumentReady;
             
 
@@ -351,6 +358,10 @@ namespace BF3WrapperWPF
         private void BattlelogBrowser_LoadingFrameComplete(object sender, FrameEventArgs e)
         {
             InjectScript("asset://local/buttons.js");
+            if (customJSEnabled)
+            {
+                BattlelogBrowser.ExecuteJavascript(customJS);
+            }
         }
 
         #endregion
@@ -515,9 +526,6 @@ namespace BF3WrapperWPF
             Log("Binded QuitWrapper to QuitHandler");
         }
 
-        #endregion
-        #region BetterBattlelog
-        //TODO Add BetterBattlelog :(
         #endregion
         #endregion
 

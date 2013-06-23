@@ -117,12 +117,15 @@
     <Resource Include="buttons.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <SplashScreen Include="Battlelogium.png" />
+    <Content Include="customjs.js" />
     <Content Include="lib\awesomium_process">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="lib\inspector.pak">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Battlelogium.psd" />
     <None Include="loadingtext.psd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
