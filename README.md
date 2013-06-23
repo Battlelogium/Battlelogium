@@ -1,11 +1,11 @@
-![Battlelogium for Steam](https://github.com/ron975/Battlelogium/blob/master/BF3WrapperWPF/Battlelogium.png "Battlelogium for Steam")
+![Battlelogium for Steam](https://github.com/ron975/Battlelogium/blob/master/BF3WrapperWPF/images/BattlelogiumLogoInline.png "Battlelogium for Steam")
 =========================
 
 Battlelogium is a [Battlefield 3 Battlelog](http://battlelog.battlefield.com/) wrapper to allow better integration with Steam, inspired by [Battlelog on Steam](http://forums.steampowered.com/forums/showthread.php?t=2289393)
 
 
 Installation
-===========
+------------
 
 1. Battlelogium requires [.NET Framework 4](http://www.microsoft.com/en-ca/download/details.aspx?id=17851). This should have already been installed if you are on Windows Vista or later and have Windows Update enabled.
 2. Install Origin. You can disable starting at launch, but this is not required, ans Battlelogium will close all Origin processes before starting Origin again.
@@ -14,7 +14,7 @@ Installation
 5. Add Battlelogium.exe to Steam as a Non-Steam Game. You may change the configuration options listed below
 
 Features
-========
+--------
 
 * Powered by [Awesomium](http://awesomium.com/) and [Chromium](http://www.chromium.org/)
 * Built with aesthetics in mind, many details have been fine-tuned to provide the best experience possible. Attention has been paid to the smallest details, such as removing the advertisements and integrating the quit button with the Battlelog webpage through Javascript.
@@ -26,7 +26,7 @@ Features
 
 
 Configuration Options
-=====================
+---------------------
 
 * `style.css` is the CSS that is applied to the Battlelog web page when loaded. By default, it removes footers and advertisements as well as the scrollbar. Any modifications you make to this file will be applied to Battlelog's CSS.
 
@@ -38,7 +38,7 @@ Configuration Options
 The default configuration options should be fine for normal use
 
 Bug reports
-===========
+-----------
 
 Bug reports and support will only given if 3 things are provided.
 * A copy of your config.properties 
@@ -51,21 +51,55 @@ Bug reports and support will only given if 3 things are provided.
     5. Drag all over the output, everythiing from `Initiating Window` to `Free Console` or `Kill SonarHost` if `Free Console` doesn't appear, and press enter.
     6. Paste it somewhere. I recommend [Github Gists](gists.github.com) as you can paste multiple files in one gist. 
     7. Now that your config.properties, style.css and debug output is in a gist, send me the link.
-    
-Licensing
-=========
-Battlelogium is licensed under [GNU GPL v3](http://www.gnu.org/licenses/gpl.html), and the source code is available at [Github](https://github.com/ron975/Battlelogium-for-Steam)
-    
+
+___
 
 Building
-========
+--------
 
 1. Download the [Awesomium SDK](http://awesomium.com/download/). Be sure to install the .NET wrappers, alternatively, though not recommended, copy the files from the libs folder of the project directory from this repo to the bin/Debug and bin/Release folders. Be sure to reference Awesomium.Core and Awesomium.Windows.Controls.
 
 2. Build using Visual Studio 2010 or [Visual C# Express](http://www.microsoft.com/visualstudio/eng/downloads#d-csharp-2010-express)
 
+___
 
+Licensing
+---------
 
+### Battlelogium is licensed under [GNU GPL v3](http://www.gnu.org/licenses/gpl.html), and the source code is available at [Github](https://github.com/ron975/Battlelogium-for-Steam)
+
+> This program is free software: you can redistribute it and/or modify
+> it under the terms of the GNU General Public License as published by
+> the Free Software Foundation, either version 3 of the License, or
+> (at your option) any later version.
+>  
+> This program is distributed in the hope that it will be useful,
+> but WITHOUT ANY WARRANTY; without even the implied warranty of
+> MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+> GNU General Public License for more details.
+> 
+> You should have received a copy of the GNU General Public License
+> along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+Legal
+-----
+
+### EA
+
+> ©2011 Electronic Arts Inc. Battlefield 3, Frostbite and the DICE logo are trademarks of EA Digital Illusions CE AB. 
+> EA, the EA logo, EA SPORTS, the EA SPORTS logo, Pogo, Origin and the Origin logo are trademarks of Electronic Arts Inc.
+> Battlelog (http://battlelog.battlefield.com) © 2013 EA DIGITAL ILLUSIONS CE AB
+
+### Valve
+> © 2013 Valve Corporation. Valve, the Valve logo, Half-Life, the Half-Life logo, the Lambda logo, Steam, the Steam logo, Team Fortress, the Team Fortress logo, Opposing Force, Day of Defeat, the Day of Defeat logo, Counter-Strike, the Counter-Strike logo, Source, the Source logo, Counter-Strike: Condition Zero, Portal, the Portal logo, Dota, the Dota 2 logo, and Defense of the Ancients are trademarks and/or registered trademarks of Valve Corporation. 
+
+### Awesomium
+> © 2013 Awesomium Technologies LLC. Awesomium, the Awesomium logo, the Awesomium libraries, the Awesomium.NET libraries, the Awesomium runtime are trademarks and/or registered trademarks of Awesomium Technologies LLC
+
+### Chromium 
+> © 2012 Google Inc. All rights reserved. Chromium™ open source project is a trademark of Google Inc.
+
+_All other trademarks are property of their respective owners._
 
 
 

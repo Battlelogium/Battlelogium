@@ -19,8 +19,8 @@
     <Grid>
         
             <Grid Canvas.ZIndex="1">
-                <Image Canvas.ZIndex="2" Margin="20,0,0,20" Stretch="UniformToFill" Source="loadingtext.png" HorizontalAlignment="Left" Name="LoadingImageText" VerticalAlignment="Bottom" Height="50" Width="172" />
-                <Image Canvas.ZIndex="1" Stretch="UniformToFill"  Source="loading.jpg" HorizontalAlignment="Center" Name="LoadingImage" VerticalAlignment="Top" />
+                <Image Canvas.ZIndex="2" Margin="20,0,0,20" Stretch="UniformToFill" Source="images\loadingtext.png" HorizontalAlignment="Left" Name="LoadingImageText" VerticalAlignment="Bottom" Height="50" Width="172" />
+                <Image Canvas.ZIndex="1" Stretch="UniformToFill"  Source="images\loading.jpg" HorizontalAlignment="Center" Name="LoadingImage" VerticalAlignment="Top" />
             </Grid>
 
         <aw:WebControl Source="http://battlelog.battlefield.com/" LoadingFrameComplete="BattlelogBrowserLoadingFrameComplete" DocumentReady="BattlelogBrowserDocumentReady" ShowContextMenu="BattlelogBrowserShowContextMenu" HorizontalAlignment="Stretch" Margin="0,0,0,0" Name="BattlelogBrowser" VerticalAlignment="Top" />
