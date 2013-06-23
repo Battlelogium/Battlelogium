@@ -1,12 +1,4 @@
-<<<<<<< HEAD
 ![Battlelogium for Steam](https://github.com/ron975/Battlelogium/blob/master/BF3WrapperWPF/images/BattlelogiumLogoInline.png "Battlelogium for Steam")
-=======
-<<<<<<< HEAD
-![Battlelogium for Steam](https://raw.github.com/ron975/Battlelogium/master/BF3WrapperWPF/Battlelogium.png "Battlelogium for Steam")
-=======
-![Battlelogium for Steam](https://github.com/ron975/Battlelogium/blob/master/BF3WrapperWPF/images/BattlelogiumLogoInline.png "Battlelogium for Steam")
->>>>>>> Organize repo and images
->>>>>>> 44396f6d90d764a5b748aa594ca7171af31fc341
 =========================
 
 Battlelogium is a [Battlefield 3 Battlelog](http://battlelog.battlefield.com/) wrapper to allow better integration with Steam, inspired by [Battlelog on Steam](http://forums.steampowered.com/forums/showthread.php?t=2289393)
@@ -94,18 +86,18 @@ Legal
 
 ### EA
 
-> ©2011 Electronic Arts Inc. Battlefield 3, Frostbite and the DICE logo are trademarks of EA Digital Illusions CE AB. 
+> Â©2011 Electronic Arts Inc. Battlefield 3, Frostbite and the DICE logo are trademarks of EA Digital Illusions CE AB. 
 > EA, the EA logo, EA SPORTS, the EA SPORTS logo, Pogo, Origin and the Origin logo are trademarks of Electronic Arts Inc.
-> Battlelog (http://battlelog.battlefield.com) © 2013 EA DIGITAL ILLUSIONS CE AB
+> Battlelog (http://battlelog.battlefield.com) Â© 2013 EA DIGITAL ILLUSIONS CE AB
 
 ### Valve
-> © 2013 Valve Corporation. Valve, the Valve logo, Half-Life, the Half-Life logo, the Lambda logo, Steam, the Steam logo, Team Fortress, the Team Fortress logo, Opposing Force, Day of Defeat, the Day of Defeat logo, Counter-Strike, the Counter-Strike logo, Source, the Source logo, Counter-Strike: Condition Zero, Portal, the Portal logo, Dota, the Dota 2 logo, and Defense of the Ancients are trademarks and/or registered trademarks of Valve Corporation. 
+> Â© 2013 Valve Corporation. Valve, the Valve logo, Half-Life, the Half-Life logo, the Lambda logo, Steam, the Steam logo, Team Fortress, the Team Fortress logo, Opposing Force, Day of Defeat, the Day of Defeat logo, Counter-Strike, the Counter-Strike logo, Source, the Source logo, Counter-Strike: Condition Zero, Portal, the Portal logo, Dota, the Dota 2 logo, and Defense of the Ancients are trademarks and/or registered trademarks of Valve Corporation. 
 
 ### Awesomium
-> © 2013 Awesomium Technologies LLC. Awesomium, the Awesomium logo, the Awesomium libraries, the Awesomium.NET libraries, the Awesomium runtime are trademarks and/or registered trademarks of Awesomium Technologies LLC
+> Â© 2013 Awesomium Technologies LLC. Awesomium, the Awesomium logo, the Awesomium libraries, the Awesomium.NET libraries, the Awesomium runtime are trademarks and/or registered trademarks of Awesomium Technologies LLC
 
 ### Chromium 
-> © 2012 Google Inc. All rights reserved. Chromium™ open source project is a trademark of Google Inc.
+> Â© 2012 Google Inc. All rights reserved. Chromiumâ„¢ open source project is a trademark of Google Inc.
 
 _All other trademarks are property of their respective owners._
 
