@@ -52,8 +52,6 @@ Bug reports and support will only given if 3 things are provided.
     6. Paste it somewhere. I recommend [Github Gists](gists.github.com) as you can paste multiple files in one gist. 
     7. Now that your config.properties, style.css and debug output is in a gist, send me the link.
 
-___
-
 Building
 --------
 
@@ -66,7 +64,7 @@ ___
 Licensing
 ---------
 
-### Battlelogium is licensed under [GNU GPL v3](http://www.gnu.org/licenses/gpl.html), and the source code is available at [Github](https://github.com/ron975/Battlelogium-for-Steam)
+_Battlelogium is licensed under [GNU GPL v3](http://www.gnu.org/licenses/gpl.html), and the source code is available at [GitHub](https://github.com/ron975/Battlelogium-for-Steam)_
 
 > This program is free software: you can redistribute it and/or modify
 > it under the terms of the GNU General Public License as published by
