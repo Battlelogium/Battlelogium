@@ -4,3 +4,5 @@ Debug/
 Release/
 *.suo
 *.user
+_Resharper.*/
+StyleCop.Cache

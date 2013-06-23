@@ -1,4 +1,4 @@
-﻿<Window x:Class="BF3WrapperWPF.MainWindow"
+﻿<Window x:Class="Battlelogium.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:aw="clr-namespace:Awesomium.Windows.Controls;assembly=Awesomium.Windows.Controls"
@@ -8,11 +8,11 @@
        
     <Window.Resources>
         <Storyboard x:Key="FadeBackground" BeginTime="0:0:2">
-            <DoubleAnimation From="1" To="0" Storyboard.TargetProperty="(UIElement.Opacity)" Duration="0:0:3" Completed="fadeBackground_Completed"/>
+            <DoubleAnimation From="1" To="0" Storyboard.TargetProperty="(UIElement.Opacity)" Duration="0:0:3" Completed="FadeBackgroundCompleted"/>
         </Storyboard>
         
         <Storyboard x:Key="BlinkLoading" BeginTime="0:0:0">
-            <DoubleAnimation From="1" To="0" Storyboard.TargetProperty="(UIElement.Opacity)" Duration="0:0:0.5" AutoReverse="True" DecelerationRatio="0.3" Completed="blinkLoading_Completed"/>
+            <DoubleAnimation From="1" To="0" Storyboard.TargetProperty="(UIElement.Opacity)" Duration="0:0:0.5" AutoReverse="True" DecelerationRatio="0.3" Completed="BlinkLoadingCompleted"/>
         </Storyboard>
     </Window.Resources>
     
@@ -23,7 +23,7 @@
                 <Image Canvas.ZIndex="1" Stretch="UniformToFill"  Source="loading.jpg" HorizontalAlignment="Center" Name="LoadingImage" VerticalAlignment="Top" />
             </Grid>
 
-        <aw:WebControl Source="http://battlelog.battlefield.com/" LoadingFrameComplete="BattlelogBrowser_LoadingFrameComplete" DocumentReady="BattlelogBrowser_DocumentReady" ShowContextMenu="BattlelogBrowser_ShowContextMenu" HorizontalAlignment="Stretch" Margin="0,0,0,0" Name="BattlelogBrowser" VerticalAlignment="Top" />
+        <aw:WebControl Source="http://battlelog.battlefield.com/" LoadingFrameComplete="BattlelogBrowserLoadingFrameComplete" DocumentReady="BattlelogBrowserDocumentReady" ShowContextMenu="BattlelogBrowserShowContextMenu" HorizontalAlignment="Stretch" Margin="0,0,0,0" Name="BattlelogBrowser" VerticalAlignment="Top" />
         
     </Grid>
 </Window>

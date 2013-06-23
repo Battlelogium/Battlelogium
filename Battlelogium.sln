@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BF3WrapperWPF", "BF3WrapperWPF\BF3WrapperWPF.csproj", "{E14FEA8E-FE96-4FEE-9268-46B34A75B668}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BattlelogiumWrapper", "BF3WrapperWPF\BattlelogiumWrapper.csproj", "{E14FEA8E-FE96-4FEE-9268-46B34A75B668}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
