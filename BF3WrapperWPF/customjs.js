@@ -1,1 +1,1 @@
-﻿
+﻿//Do not use alert();

@@ -26,17 +26,21 @@ namespace BF3WrapperWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        private string customJS = "";
-        private bool customJSEnabled = false;
+        #region vars
+
         private Process originProcess;
-        private int waitTimeToCloseOrigin = 10000;
-        private bool startTopmost = true;
         private bool finishedLoading = false;
         private bool loadingTextFinalPlay = false;
         private Storyboard blinkLoading;
         private Storyboard fadeBackground;
 
+
+        #region Config Variables
         //Removes ads and footers
+        private string customJS = "";
+        private bool customJSEnabled = false;
+        private int waitTimeToCloseOrigin = 10000;
+        private bool startTopmost = true;
         private string css = @"
                     .gate-footer {
                         display: none;
@@ -58,11 +62,13 @@ namespace BF3WrapperWPF
                     }
 ";
 
+        #endregion
         /// <summary>
         /// Main Window Constructor
         /// </summary>
         public MainWindow()
         {
+            //Attach a console to process
             AttachConsole(-1);
             Log("Initiating Window");
             InitializeComponent();
@@ -286,7 +292,7 @@ namespace BF3WrapperWPF
                 //Convert from seconds to milliseconds
                 waitTimeToCloseOrigin = int.Parse(config["waitTimeToCloseOrigin"]) * 1000;
                 startTopmost = bool.Parse(config["startTopmost"]);
-                customJSEnabled = bool.Parse(config["customJSEnabled");
+                customJSEnabled = bool.Parse(config["customJSEnabled"]);
 
             }
 
