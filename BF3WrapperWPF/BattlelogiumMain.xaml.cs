@@ -40,7 +40,7 @@ namespace Battlelogium
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class BattlelogiumMain : Window
     {
         #region Fields
 
@@ -121,10 +121,10 @@ namespace Battlelogium
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MainWindow"/> class.
+        /// Initializes a new instance of the <see cref="BattlelogiumMain"/> class.
         /// Main Window Constructor
         /// </summary>
-        public MainWindow()
+        public BattlelogiumMain()
         {
             // Attach a console to process
             AttachConsole(-1);

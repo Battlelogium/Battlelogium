@@ -1,4 +1,4 @@
-﻿<Window x:Class="Battlelogium.MainWindow"
+﻿<Window x:Class="Battlelogium.BattlelogiumMain"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:aw="clr-namespace:Awesomium.Windows.Controls;assembly=Awesomium.Windows.Controls"
