@@ -35,6 +35,8 @@ Configuration Options
 
     -  `startTopmost` is simply whether to start as the topmost window or not. If set to false, when Origin starts, it will most likely go on top of the wrapper for a bit, depending on what `waitTimeToCloseOrigin` has been set to.
     
+* `customJSEnabled` should be enabled if you wish to use custom Javascript in the customjs.js file. It will run at the `LoadingFrameComplete` event.
+
 The default configuration options should be fine for normal use
 
 Bug reports
