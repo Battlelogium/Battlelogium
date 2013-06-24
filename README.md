@@ -48,7 +48,7 @@ Bug reports and support will only given if 3 things are provided.
     2. Type `Battlelogium.exe`
     3. The Battlelogium will run, when it quits, the debug output will be shown on the command prompt window.
     4. Right-click and select **_Mark_**
-    5. Drag all over the output, everythiing from `Initiating Window` to `Free Console` or `Kill SonarHost` if `Free Console` doesn't appear, and press enter.
+    5. Drag all over the output, everythiing from `!---Begin Log---!` to `!---End Log---!`.
     6. Paste it somewhere. I recommend [Github Gists](gists.github.com) as you can paste multiple files in one gist. 
     7. Now that your config.properties, style.css and debug output is in a gist, send me the link.
 

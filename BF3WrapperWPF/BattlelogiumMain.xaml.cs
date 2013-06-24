@@ -129,7 +129,7 @@ namespace Battlelogium
             AttachConsole(-1);
             this.Log("Battlelogium is licensed under GNU GPL v3");
             this.Log("Battlelogium does not come with any warranty neither express nor implied");
-            this.Log("Begin Log");
+            this.Log("!---Begin Log---!");
             this.Log("Version: " + Assembly.GetEntryAssembly().GetName().Version);
             this.Log("==================");
             this.Log(Environment.NewLine);
@@ -511,7 +511,7 @@ namespace Battlelogium
             // We need to kill SonarHost.exe as well
             this.Log("Kill SonarHost");
             this.KillProcess("SonarHost");
-
+            this.Log("!---End Log---!");
             this.Log("Press Enter to Exit. Remember to mark output.");
             this.SendKey(Key.Enter);
             FreeConsole();
