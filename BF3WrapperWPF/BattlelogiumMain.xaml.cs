@@ -25,6 +25,7 @@ namespace Battlelogium
     using System.Diagnostics;
     using System.IO;
     using System.Linq;
+    using System.Reflection;
     using System.Runtime.InteropServices;
     using System.Timers;
     using System.Windows;
@@ -129,6 +130,7 @@ namespace Battlelogium
             this.Log("Battlelogium is licensed under GNU GPL v3");
             this.Log("Battlelogium does not come with any warranty neither express nor implied");
             this.Log("Begin Log");
+            this.Log("Version: " + Assembly.GetEntryAssembly().GetName().Version);
             this.Log("==================");
             this.Log(Environment.NewLine);
             this.Log("Initiating Window");
@@ -145,7 +147,7 @@ namespace Battlelogium
 
         #endregion
 
-        #region Public Methods and Operators
+        #region Console P/Invoke Utils
 
         /// <summary>
         /// Attach a console to program if ran from commandline
@@ -164,7 +166,25 @@ namespace Battlelogium
 
         #endregion
 
-        #region Methods
+        #region Main Methods
+
+        #region Browser Webview
+        /// <summary>
+        /// Creates a WebSession and makes the BattlelogBrowser use it
+        /// </summary>
+        private void InitializeBattlelogBattlelogBrowser()
+        {
+            this.Log("Create WebSession");
+            WebSession session =
+                WebCore.CreateWebSession(
+                    Path.Combine(
+                        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Battlelogium"),
+                    new WebPreferences { CustomCSS = this.css, EnableGPUAcceleration = true, });
+            session.AddDataSource("local", new ResourceDataSource(ResourceType.Packed));
+            this.Log("Registered WebSession");
+            this.BattlelogBrowser.WebSession = session;
+            this.Log("Registered WebSession");
+        }
 
         /// <summary>
         /// Event Handler to fade out background and start quit button JS loop if loaded once
@@ -201,9 +221,9 @@ namespace Battlelogium
             e.Handled = true;
             this.Log("Rightclicked Disabled");
         }
+        #endregion
 
-        // EventHandler to handle application closing
-
+        #region Loading 
         /// <summary>
         /// EventHandler to handle blinkLoading completed, workaround to fade text gracefully after loading as RepeatBehavior.Forever does not fire Completed event
         /// </summary>
@@ -233,27 +253,6 @@ namespace Battlelogium
         }
 
         /// <summary>
-        /// Forces Origin to the background and keeps this wrapper to the top
-        /// </summary>
-        private void BringWrapperToTop()
-        {
-            this.Log("Unset Wrapper Topmost");
-            this.Topmost = false;
-            this.Log("Activate Wrapper");
-            this.Activate();
-            this.originProcess.CloseMainWindow();
-            this.Log("Close Origin Main Window");
-        }
-
-        /// <summary>
-        /// Event Handler to BringWrapperToTop() after Timer Elapses
-        /// </summary>
-        private void DisableTopMostTimerElapsed(object sender, ElapsedEventArgs e)
-        {
-            this.Dispatcher.Invoke(new Action(this.BringWrapperToTop));
-        }
-
-        /// <summary>
         /// EventHandler to hide the background image once fadeBackground is completed so BattlelogBrowser can be interacted with
         /// </summary>
         private void FadeBackgroundCompleted(object sender, EventArgs e)
@@ -273,22 +272,9 @@ namespace Battlelogium
             this.fadeBackground.Begin();
         }
 
-        /// <summary>
-        /// Creates a WebSession and makes the BattlelogBrowser use it
-        /// </summary>
-        private void InitializeBattlelogBattlelogBrowser()
-        {
-            this.Log("Create WebSession");
-            WebSession session =
-                WebCore.CreateWebSession(
-                    Path.Combine(
-                        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Battlelogium"), 
-                    new WebPreferences { CustomCSS = this.css, EnableGPUAcceleration = true, });
-            session.AddDataSource("local", new ResourceDataSource(ResourceType.Packed));
-            this.Log("Registered WebSession");
-            this.BattlelogBrowser.WebSession = session;
-            this.Log("Registered WebSession");
-        }
+    #endregion
+
+        #region Pre Load
 
         /// <summary>
         /// Load configuration options from config if one exists
@@ -328,136 +314,6 @@ namespace Battlelogium
         }
 
         /// <summary>
-        /// Logic for Management of the Origin Process
-        /// </summary>
-        private void InitializeOrigin()
-        {
-            this.StartOriginProcess();
-            this.StartBringWrapperToTopTimer();
-        }
-
-        /// <summary>
-        /// Creates the JSObject where our wrapper will be bound to.
-        /// </summary>
-        private void InitializeQuitButton()
-        {
-            JSObject quitMethod = this.BattlelogBrowser.CreateGlobalJavascriptObject("wrapper");
-            this.Log("Create Javascript Object");
-            quitMethod.Bind("quitWrapper", false, this.JavascriptQuitHandler);
-            this.Log("Binded QuitWrapper to QuitHandler");
-        }
-
-        /// <summary>
-        /// General wrapper logic
-        /// </summary>
-        private void InitializeWrapper()
-        {
-            this.SetupStoryboards();
-            this.Log("Setup Storyboards");
-            this.Topmost = this.startTopmost;
-            this.blinkLoading.Begin();
-        }
-
-        /// <summary>
-        /// Injects a Javascript file to the page. Must be a resource in the root project path
-        /// </summary>
-        /// <param name="scripturl">
-        /// URL of script to inject
-        /// </param>
-        private void InjectScript(string scripturl)
-        {
-            this.BattlelogBrowser.ExecuteJavascript(
-                @"
-                    var script = document.createElement('script');
-                    script.setAttribute('src','" + scripturl + @"');
-                    document.getElementsByTagName('head')[0].appendChild(script);
-                 ");
-            this.Log("Injected script " + scripturl);
-        }
-
-        /// <summary>
-        /// EventHandler to handle when the JS quit button is pressed, quits on button press
-        /// </summary>
-        private void JavascriptQuitHandler(object sender, JavascriptMethodEventArgs e)
-        {
-            this.Close();
-        }
-
-        /// <summary>
-        /// EventHandler to handle when ESC is pressed, quits on ESC press
-        /// </summary>
-        private void KeyDownQuitHandler(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Escape)
-            {
-                this.Close();
-            }
-        }
-
-        /// <summary>
-        /// Kills processes with given name
-        /// </summary>
-        /// <param name="processname">
-        /// Name of process to kill
-        /// </param>
-        private void KillProcess(string processname)
-        {
-            Process[] processes = Process.GetProcessesByName(processname);
-            foreach (Process p in processes)
-            {
-                p.Kill();
-            }
-        }
-
-        /// <summary>
-        /// Appends date and time before writing to console
-        /// </summary>
-        /// <param name="log">
-        /// Text to log
-        /// </param>
-        private void Log(string log)
-        {
-            Console.WriteLine(DateTime.Now.ToString() + " " + log);
-        }
-
-        /// <summary>
-        /// The origin not found.
-        /// </summary>
-        private void OriginNotFound(Exception e)
-        {
-            this.Log("Origin not found");
-            this.Log("Exception type: " + e.GetType());
-            MessageBox.Show("Please install Origin to play Battlefield 3", "Error");
-            Process.Start("http://www.origin.com/download");
-            this.Close();
-        }
-
-        /// <summary>
-        /// Raises a KeyDownEvent
-        /// </summary>
-        /// <param name="key">
-        /// Key to send
-        /// </param>
-        private void SendKey(Key key)
-        {
-            IInputElement target = Keyboard.FocusedElement;
-
-            // Code from http://stackoverflow.com/questions/1645815/
-            try
-            {
-                target.RaiseEvent(
-                    new KeyEventArgs(Keyboard.PrimaryDevice, Keyboard.PrimaryDevice.ActiveSource, 0, key)
-                        {
-                           RoutedEvent = Keyboard.KeyDownEvent 
-                        });
-            }
-            catch (Exception e)
-            {
-                this.Log(e.ToString());
-            }
-        }
-
-        /// <summary>
         /// Finds storyboards and points them to their intended target
         /// </summary>
         private void SetupStoryboards()
@@ -474,15 +330,51 @@ namespace Battlelogium
         }
 
         /// <summary>
-        /// Starts Timer to keep wrapper to top after Origin starts
+        /// General wrapper logic
         /// </summary>
-        private void StartBringWrapperToTopTimer()
+        private void InitializeWrapper()
         {
-            var closeOriginWindowTimer = new Timer(this.waitTimeToCloseOrigin);
-            closeOriginWindowTimer.AutoReset = false;
-            closeOriginWindowTimer.Elapsed += this.DisableTopMostTimerElapsed;
-            this.Log("Starting Timer to keep wrapper on top");
-            closeOriginWindowTimer.Start();
+            this.SetupStoryboards();
+            this.Log("Setup Storyboards");
+            this.Topmost = this.startTopmost;
+            this.blinkLoading.Begin();
+        }
+        #endregion
+
+        #region Origin
+
+        /// <summary>
+        /// The origin not found.
+        /// </summary>
+        private void OriginNotFound(Exception e)
+        {
+            this.Log("Origin not found");
+            this.Log("Exception type: " + e.GetType());
+            MessageBox.Show("Please install Origin to play Battlefield 3", "Error");
+            Process.Start("http://www.origin.com/download");
+            this.Close();
+        }
+
+        /// <summary>
+        /// Logic for Management of the Origin Process
+        /// </summary>
+        private void InitializeOrigin()
+        {
+            this.StartOriginProcess();
+            this.StartBringWrapperToTopTimer();
+        }
+
+        /// <summary>
+        /// Forces Origin to the background and keeps this wrapper to the top
+        /// </summary>
+        private void BringWrapperToTop()
+        {
+            this.Log("Unset Wrapper Topmost");
+            this.Topmost = false;
+            this.Log("Activate Wrapper");
+            this.Activate();
+            this.originProcess.CloseMainWindow();
+            this.Log("Close Origin Main Window");
         }
 
         /// <summary>
@@ -534,6 +426,59 @@ namespace Battlelogium
         }
 
         /// <summary>
+        /// Starts Timer to keep wrapper to top after Origin starts
+        /// </summary>
+        private void StartBringWrapperToTopTimer()
+        {
+            var closeOriginWindowTimer = new Timer(this.waitTimeToCloseOrigin);
+            closeOriginWindowTimer.AutoReset = false;
+            closeOriginWindowTimer.Elapsed += this.DisableTopMostTimerElapsed;
+            this.Log("Starting Timer to keep wrapper on top");
+            closeOriginWindowTimer.Start();
+        }
+
+        /// <summary>
+        /// Event Handler to BringWrapperToTop() after Timer Elapses
+        /// </summary>
+        private void DisableTopMostTimerElapsed(object sender, ElapsedEventArgs e)
+        {
+            this.Dispatcher.Invoke(new Action(this.BringWrapperToTop));
+        }
+        #endregion
+
+        #region Javascript
+        /// <summary>
+        /// Creates the JSObject where our wrapper will be bound to.
+        /// </summary>
+        private void InitializeQuitButton()
+        {
+            JSObject quitMethod = this.BattlelogBrowser.CreateGlobalJavascriptObject("wrapper");
+            this.Log("Create Javascript Object");
+            quitMethod.Bind("quitWrapper", false, this.JavascriptQuitHandler);
+            this.Log("Binded QuitWrapper to QuitHandler");
+        }
+
+        /// <summary>
+        /// Injects a Javascript file to the page. Must be a resource in the root project path
+        /// </summary>
+        /// <param name="scripturl">
+        /// URL of script to inject
+        /// </param>
+        private void InjectScript(string scripturl)
+        {
+            this.BattlelogBrowser.ExecuteJavascript(
+                @"
+                    var script = document.createElement('script');
+                    script.setAttribute('src','" + scripturl + @"');
+                    document.getElementsByTagName('head')[0].appendChild(script);
+                 ");
+            this.Log("Injected script " + scripturl);
+        }
+        #endregion
+
+        #region Quit Handling
+
+        /// <summary>
         /// EventHandler to handle when Battlelogium closes
         /// </summary>
         private void WrapperClosing(object sender, CancelEventArgs e)
@@ -572,6 +517,80 @@ namespace Battlelogium
             FreeConsole();
             this.SendKey(Key.Enter);
         }
+
+        /// <summary>
+        /// EventHandler to handle when the JS quit button is pressed, quits on button press
+        /// </summary>
+        private void JavascriptQuitHandler(object sender, JavascriptMethodEventArgs e)
+        {
+            this.Close();
+        }
+
+        /// <summary>
+        /// EventHandler to handle when ESC is pressed, quits on ESC press
+        /// </summary>
+        private void KeyDownQuitHandler(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                this.Close();
+            }
+        }
+
+        #endregion
+
+        #region Utilities
+        /// <summary>
+        /// Kills processes with given name
+        /// </summary>
+        /// <param name="processname">
+        /// Name of process to kill
+        /// </param>
+        private void KillProcess(string processname)
+        {
+            Process[] processes = Process.GetProcessesByName(processname);
+            foreach (Process p in processes)
+            {
+                p.Kill();
+            }
+        }
+
+        /// <summary>
+        /// Appends date and time before writing to console
+        /// </summary>
+        /// <param name="log">
+        /// Text to log
+        /// </param>
+        private void Log(string log)
+        {
+            Console.WriteLine(DateTime.Now.ToString() + " " + log);
+        }
+
+        /// <summary>
+        /// Raises a KeyDownEvent
+        /// </summary>
+        /// <param name="key">
+        /// Key to send
+        /// </param>
+        private void SendKey(Key key)
+        {
+            IInputElement target = Keyboard.FocusedElement;
+
+            // Code from http://stackoverflow.com/questions/1645815/
+            try
+            {
+                target.RaiseEvent(
+                    new KeyEventArgs(Keyboard.PrimaryDevice, Keyboard.PrimaryDevice.ActiveSource, 0, key)
+                        {
+                           RoutedEvent = Keyboard.KeyDownEvent 
+                        });
+            }
+            catch (Exception e)
+            {
+                this.Log(e.ToString());
+            }
+        }
+        #endregion
 
         #endregion
     }
