@@ -50,7 +50,7 @@ namespace Battlelogium
         private Storyboard blinkLoading;
 
         /// <summary>
-        /// The css.
+        /// Custom CSS that will be applied to Battlelog
         /// </summary>
         private string css = @"
                     .gate-footer {
@@ -78,7 +78,7 @@ namespace Battlelogium
         /// <summary>
         /// Custom Javascript
         /// </summary>
-        private string customJs = string.Empty;
+        private string customJs = String.Empty;
 
         /// <summary>
         /// Whether Custom Javascript is enabled
@@ -117,6 +117,7 @@ namespace Battlelogium
 
         #endregion
 
+        
         #region Constructors and Destructors
 
         /// <summary>
@@ -127,12 +128,15 @@ namespace Battlelogium
         {
             // Attach a console to process
             AttachConsole(-1);
+            Console.WriteLine(String.Empty);
             this.Log("Battlelogium is licensed under GNU GPL v3");
-            this.Log("Battlelogium does not come with any warranty neither express nor implied");
+            this.Log("Battlelogium does not come with any warranty");
+            this.Log("neither express nor implied");
+            Console.WriteLine(String.Empty);
             this.Log("!---Begin Log---!");
             this.Log("Version: " + Assembly.GetEntryAssembly().GetName().Version);
             this.Log("==================");
-            this.Log(Environment.NewLine);
+            Console.WriteLine(String.Empty);
             this.Log("Initiating Window");
             this.InitializeComponent();
             this.Log("Initiating Config");
