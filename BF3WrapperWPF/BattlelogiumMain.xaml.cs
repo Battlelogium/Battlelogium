@@ -36,6 +36,7 @@ namespace Battlelogium
     using Awesomium.Core.Data;
 
     using Microsoft.Win32;
+    using System.Net;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -44,8 +45,9 @@ namespace Battlelogium
     {
         #region Fields
 
+        private SplashScreen splash = new SplashScreen("images/BattlelogiumSplash.png");
         /// <summary>
-        /// The blink loading.
+        /// Loading text blink
         /// </summary>
         private Storyboard blinkLoading;
 
@@ -116,8 +118,7 @@ namespace Battlelogium
         private int waitTimeToCloseOrigin = 10000;
 
         #endregion
-
-        
+   
         #region Constructors and Destructors
 
         /// <summary>
@@ -127,14 +128,16 @@ namespace Battlelogium
         public BattlelogiumMain()
         {
             // Attach a console to process
+
             AttachConsole(-1);
+            splash.Show(true);
             Console.WriteLine(String.Empty);
             this.Log("Battlelogium is licensed under GNU GPL v3");
             this.Log("Battlelogium does not come with any warranty");
             this.Log("neither express nor implied");
             Console.WriteLine(String.Empty);
             this.Log("!---Begin Log---!");
-            this.Log("Version: " + Assembly.GetEntryAssembly().GetName().Version);
+            this.Log("Version: " + Assembly.GetEntryAssembly().GetName().Version.ToString());
             this.Log("==================");
             Console.WriteLine(String.Empty);
             this.Log("Initiating Window");
@@ -206,7 +209,7 @@ namespace Battlelogium
         }
 
         /// <summary>
-        /// The battlelog browser_ loading frame complete.
+        /// When browser finishes loading frame
         /// </summary>
         private void BattlelogBrowserLoadingFrameComplete(object sender, FrameEventArgs e)
         {
@@ -369,19 +372,6 @@ namespace Battlelogium
         }
 
         /// <summary>
-        /// Forces Origin to the background and keeps this wrapper to the top
-        /// </summary>
-        private void BringWrapperToTop()
-        {
-            this.Log("Unset Wrapper Topmost");
-            this.Topmost = false;
-            this.Log("Activate Wrapper");
-            this.Activate();
-            this.originProcess.CloseMainWindow();
-            this.Log("Close Origin Main Window");
-        }
-
-        /// <summary>
         /// Finds and Starts Origin
         /// </summary>
         private void StartOriginProcess()
@@ -436,17 +426,19 @@ namespace Battlelogium
         {
             var closeOriginWindowTimer = new Timer(this.waitTimeToCloseOrigin);
             closeOriginWindowTimer.AutoReset = false;
-            closeOriginWindowTimer.Elapsed += this.DisableTopMostTimerElapsed;
+            closeOriginWindowTimer.Elapsed += delegate
+            {
+                this.Dispatcher.Invoke(new Action(delegate
+                {
+                    this.Log("Unset Wrapper Topmost");
+                    this.Topmost = false;
+                    this.Log("Activate Wrapper");
+                    this.Activate();
+                }));
+            };
             this.Log("Starting Timer to keep wrapper on top");
+ 
             closeOriginWindowTimer.Start();
-        }
-
-        /// <summary>
-        /// Event Handler to BringWrapperToTop() after Timer Elapses
-        /// </summary>
-        private void DisableTopMostTimerElapsed(object sender, ElapsedEventArgs e)
-        {
-            this.Dispatcher.Invoke(new Action(this.BringWrapperToTop));
         }
         #endregion
 
@@ -499,28 +491,29 @@ namespace Battlelogium
                 this.Log(ex.ToString());
             }
 
-            // Kill Origin
-            try
+            Timer killOriginTimer = new Timer(10000);
+            killOriginTimer.AutoReset = false;
+            killOriginTimer.Elapsed += delegate
             {
-                this.Log("Kill Origin");
-                this.originProcess.Kill();
-            }
-            catch (Exception)
-            {
-                // If we can't kill by killing our managed process, just kill all instances of Origin.exe
-                this.Log("Kill Origin");
-                this.KillProcess("Origin");
-            }
+                Dispatcher.Invoke(new Action(delegate
+                {
+                    this.KillProcess("origin");
+                    this.Log("Killed Origin");
+                    this.KillProcess("sonarhost");
+                    this.Log("Killed ESNSonar");
+                    this.Log("!---End Log---!");
+                    this.Log("Press Enter to Exit. Remember to mark output.");
+                    FreeConsole();
+                }));
+            };
 
-            // We need to kill SonarHost.exe as well
-            this.Log("Kill SonarHost");
-            this.KillProcess("SonarHost");
-            this.Log("!---End Log---!");
-            this.Log("Press Enter to Exit. Remember to mark output.");
-            this.SendKey(Key.Enter);
-            FreeConsole();
-            this.SendKey(Key.Enter);
+            this.Log("Waiting 10 seconds to kill Origin");
+            killOriginTimer.Start();
+            this.Hide();
+            System.Threading.Thread.Sleep(15000);
+           
         }
+
 
         /// <summary>
         /// EventHandler to handle when the JS quit button is pressed, quits on button press
@@ -570,32 +563,9 @@ namespace Battlelogium
             Console.WriteLine(DateTime.Now.ToString() + " " + log);
         }
 
-        /// <summary>
-        /// Raises a KeyDownEvent
-        /// </summary>
-        /// <param name="key">
-        /// Key to send
-        /// </param>
-        private void SendKey(Key key)
-        {
-            IInputElement target = Keyboard.FocusedElement;
-
-            // Code from http://stackoverflow.com/questions/1645815/
-            try
-            {
-                target.RaiseEvent(
-                    new KeyEventArgs(Keyboard.PrimaryDevice, Keyboard.PrimaryDevice.ActiveSource, 0, key)
-                        {
-                           RoutedEvent = Keyboard.KeyDownEvent 
-                        });
-            }
-            catch (Exception e)
-            {
-                this.Log(e.ToString());
-            }
-        }
         #endregion
 
         #endregion
     }
 }
+        

@@ -109,7 +109,7 @@
     <Resource Include="buttons.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <SplashScreen Include="images\BattlelogiumSplash.png" />
+    <Resource Include="images\BattlelogiumSplash.png" />
     <Content Include="customjs.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
