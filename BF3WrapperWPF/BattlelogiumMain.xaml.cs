@@ -113,10 +113,14 @@ namespace Battlelogium
         private bool startTopmost = true;
 
         /// <summary>
-        /// How long to wait to close Origin in milliseconds
+        /// How long to wait to hide Origin in milliseconds
         /// </summary>
-        private int waitTimeToCloseOrigin = 10000;
+        private int waitTimeToHideOrigin = 10000;
 
+        /// <summary>
+        /// How long to wait to kill origin in milliseconds
+        /// </summary>
+        private int waitTimeToKillOrigin = 10000;
         #endregion
    
         #region Constructors and Destructors
@@ -300,7 +304,8 @@ namespace Battlelogium
                 }
 
                 // Convert from seconds to milliseconds
-                this.waitTimeToCloseOrigin = int.Parse(config["waitTimeToCloseOrigin"]) * 1000;
+                this.waitTimeToHideOrigin = int.Parse(config["waitTimeToHideOrigin"]) * 1000;
+                this.waitTimeToKillOrigin = int.Parse(config["waitTimeToKillOrigin"]) * 1000;
                 this.startTopmost = bool.Parse(config["startTopmost"]);
                 this.customJsEnabled = bool.Parse(config["customJSEnabled"]);
             }
@@ -316,7 +321,7 @@ namespace Battlelogium
                 this.customJs = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "customjs.js"));
             }
 
-            this.Log("Wait time to close Origin: " + this.waitTimeToCloseOrigin.ToString());
+            this.Log("Wait time to close Origin: " + this.waitTimeToHideOrigin.ToString());
             this.Log("Starting Topmost: " + this.startTopmost.ToString());
         }
 
@@ -424,7 +429,7 @@ namespace Battlelogium
         /// </summary>
         private void StartBringWrapperToTopTimer()
         {
-            var closeOriginWindowTimer = new Timer(this.waitTimeToCloseOrigin);
+            var closeOriginWindowTimer = new Timer(this.waitTimeToHideOrigin);
             closeOriginWindowTimer.AutoReset = false;
             closeOriginWindowTimer.Elapsed += delegate
             {
@@ -491,7 +496,7 @@ namespace Battlelogium
                 this.Log(ex.ToString());
             }
 
-            Timer killOriginTimer = new Timer(10000);
+            Timer killOriginTimer = new Timer(waitTimeToKillOrigin);
             killOriginTimer.AutoReset = false;
             killOriginTimer.Elapsed += delegate
             {
@@ -510,7 +515,7 @@ namespace Battlelogium
             this.Log("Waiting 10 seconds to kill Origin");
             killOriginTimer.Start();
             this.Hide();
-            System.Threading.Thread.Sleep(15000);
+            System.Threading.Thread.Sleep(waitTimeToKillOrigin+5000);
            
         }
 

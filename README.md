@@ -31,11 +31,14 @@ Configuration Options
 * `style.css` is the CSS that is applied to the Battlelog web page when loaded. By default, it removes footers and advertisements as well as the scrollbar. Any modifications you make to this file will be applied to Battlelog's CSS.
 
 * `config.properties` is a simple configuration file with a few configurable options
-    - `waitTimeToCloseOrigin` is the amount of time in seconds to wait for Origin's start window to pop up and then close it. Adjust this if Origin pops up in front of the main Battlelog window and doesn't go bad automatically. Increasing it will make Battlelogium wait for a longer time before closing Origin's window, however, decreasing it by too much might attempt to close Origin's main window before it pops up if you do not have startTopmost set to true.If you have startTopmost set to true, increasing the delay will also make you unable to Alt-Tab out of Battlelogium for the duration of the delay. This is needed because Origin always stays on top of a window unless it is forced own and ignores messages telling it to start minimized. [Bug EA to include a silent launch mode](http://forum.ea.com/eaforum/posts/list/7393477.page).
+    -  `waitTimeToHideOrigin` is the amount of time in seconds to wait for Origin's start window to pop up and then hide it. Adjust this if Origin pops up in front of the main Battlelog window and doesn't go bad automatically. Increasing it will make Battlelogium wait for a longer time before closing Origin's window, however, decreasing it by too much might attempt to close Origin's main window before it pops up if you do not have startTopmost set to true.If you have startTopmost set to true, increasing the delay will also make you unable to Alt-Tab out of Battlelogium for the duration of the delay. This is needed because Origin always stays on top of a window unless it is forced own and ignores messages telling it to start minimized. [Bug EA to include a silent launch mode](http://forum.ea.com/eaforum/posts/list/7393477.page).
 
     -  `startTopmost` is simply whether to start as the topmost window or not. If set to false, when Origin starts, it will most likely go on top of the wrapper for a bit, depending on what `waitTimeToCloseOrigin` has been set to.
     
-* `customJSEnabled` should be enabled if you wish to use custom Javascript in the customjs.js file. It will run at the `LoadingFrameComplete` event.
+	-  `waitTimeToKillOrigin` is the amount of time in seconds to wait to kill Origin after the wrapper has closed. Increase if BF3 saves aren't syncing.
+	
+    -  `customJSEnabled` should be enabled if you wish to use custom Javascript in the customjs.js file. It will run at the `LoadingFrameComplete` event.
+
 
 The default configuration options should be fine for normal use
 
