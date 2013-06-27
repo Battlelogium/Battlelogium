@@ -512,7 +512,7 @@ namespace Battlelogium
                 }));
             };
 
-            this.Log("Waiting 10 seconds to kill Origin");
+            this.Log("Waiting " +waitTimeToKillOrigin+" milliseconds to kill Origin");
             killOriginTimer.Start();
             this.Hide();
             System.Threading.Thread.Sleep(waitTimeToKillOrigin+5000);
