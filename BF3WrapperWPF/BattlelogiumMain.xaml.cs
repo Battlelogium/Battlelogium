@@ -31,6 +31,7 @@ namespace Battlelogium
     using System.Windows;
     using System.Windows.Input;
     using System.Windows.Media.Animation;
+    using System.Management;
 
     using Awesomium.Core;
     using Awesomium.Core.Data;
@@ -108,14 +109,9 @@ namespace Battlelogium
         private Process originProcess;
 
         /// <summary>
-        /// Whether Battlelogium will start topMost
+        /// Whether to keep Origin running when Battlelogium ends
         /// </summary>
-        private bool startTopmost = true;
-
-        /// <summary>
-        /// How long to wait to hide Origin in milliseconds
-        /// </summary>
-        private int waitTimeToHideOrigin = 10000;
+        private bool retainOrigin = false;
 
         /// <summary>
         /// How long to wait to kill origin in milliseconds
@@ -144,6 +140,8 @@ namespace Battlelogium
             this.Log("Version: " + Assembly.GetEntryAssembly().GetName().Version.ToString());
             this.Log("==================");
             Console.WriteLine(String.Empty);
+            this.Log("Initiating Origin");
+            this.InitializeOrigin();
             this.Log("Initiating Window");
             this.InitializeComponent();
             this.Log("Initiating Config");
@@ -152,8 +150,7 @@ namespace Battlelogium
             this.InitializeWrapper();
             this.Log("Initiating Battlelog BattlelogBrowser");
             this.InitializeBattlelogBattlelogBrowser();
-            this.Log("Initiating Origin");
-            this.InitializeOrigin();
+
         }
 
         #endregion
@@ -304,9 +301,7 @@ namespace Battlelogium
                 }
 
                 // Convert from seconds to milliseconds
-                this.waitTimeToHideOrigin = int.Parse(config["waitTimeToHideOrigin"]) * 1000;
                 this.waitTimeToKillOrigin = int.Parse(config["waitTimeToKillOrigin"]) * 1000;
-                this.startTopmost = bool.Parse(config["startTopmost"]);
                 this.customJsEnabled = bool.Parse(config["customJSEnabled"]);
             }
 
@@ -320,9 +315,6 @@ namespace Battlelogium
             {
                 this.customJs = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "customjs.js"));
             }
-
-            this.Log("Wait time to close Origin: " + this.waitTimeToHideOrigin.ToString());
-            this.Log("Starting Topmost: " + this.startTopmost.ToString());
         }
 
         /// <summary>
@@ -348,7 +340,6 @@ namespace Battlelogium
         {
             this.SetupStoryboards();
             this.Log("Setup Storyboards");
-            this.Topmost = this.startTopmost;
             this.blinkLoading.Begin();
         }
         #endregion
@@ -373,7 +364,6 @@ namespace Battlelogium
         private void InitializeOrigin()
         {
             this.StartOriginProcess();
-            this.StartBringWrapperToTopTimer();
         }
 
         /// <summary>
@@ -381,10 +371,69 @@ namespace Battlelogium
         /// </summary>
         private void StartOriginProcess()
         {
+            this.Log("Getting Origin Path");
+
+            string originPath = GetOriginPath();
+
+            var originProcessInfo = new ProcessStartInfo(originPath, "/StartClientMinimized");
+
+            retainOrigin = CheckIfOriginIsRunning();
+
+            if (retainOrigin)
+            {
+                this.Log("Origin is running. Battlelogium will restore Origin after closing");
+            }
+
+            this.KillProcess("Origin");
+            this.Log("Kill any Origin processes already started");
+            //We must relaunch Origin as a child process for Steam to properly apply the overlay hook.
+
+            try
+            {
+                this.originProcess = Process.Start(originProcessInfo);
+                this.Log("Starting Origin");
+            }
+            catch (Exception ex)
+            {
+                this.OriginNotFound(ex);
+                return;
+            }
+        }
+
+        private bool CheckForInternetConnection()
+        {
+            try
+            {
+                using (var client = new WebClient())
+                using (var stream = client.OpenRead("http://battlelog.battlefield.com/"))
+                {
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private bool CheckIfOriginIsRunning()
+        {
+            Process[] pname = Process.GetProcessesByName("Origin");
+            if (pname.Length == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        private string GetOriginPath()
+        {
             string originDefaultPath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "Origin", "Origin.exe");
             string originPath;
-            this.Log("Getting Origin Path");
             try
             {
                 if (Environment.Is64BitOperatingSystem)
@@ -400,50 +449,13 @@ namespace Battlelogium
                         Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Origin", "ClientPath", originDefaultPath).ToString();
                     this.Log("Got " + originPath);
                 }
+                return originPath;
             }
             catch (Exception ex)
             {
                 this.OriginNotFound(ex);
-                return;
+                return originDefaultPath;
             }
-
-            var originProcessInfo = new ProcessStartInfo(originPath);
-
-            this.KillProcess("Origin");
-            this.Log("Kill any Origin processes already started");
-
-            try
-            {
-                this.originProcess = Process.Start(originProcessInfo);
-                this.Log("Starting Origin");
-            }
-            catch (Exception ex)
-            {
-                this.OriginNotFound(ex);
-                return;
-            }
-        }
-
-        /// <summary>
-        /// Starts Timer to keep wrapper to top after Origin starts
-        /// </summary>
-        private void StartBringWrapperToTopTimer()
-        {
-            var closeOriginWindowTimer = new Timer(this.waitTimeToHideOrigin);
-            closeOriginWindowTimer.AutoReset = false;
-            closeOriginWindowTimer.Elapsed += delegate
-            {
-                this.Dispatcher.Invoke(new Action(delegate
-                {
-                    this.Log("Unset Wrapper Topmost");
-                    this.Topmost = false;
-                    this.Log("Activate Wrapper");
-                    this.Activate();
-                }));
-            };
-            this.Log("Starting Timer to keep wrapper on top");
- 
-            closeOriginWindowTimer.Start();
         }
         #endregion
 
@@ -496,24 +508,33 @@ namespace Battlelogium
                 this.Log(ex.ToString());
             }
 
-            Timer killOriginTimer = new Timer(waitTimeToKillOrigin);
-            killOriginTimer.AutoReset = false;
-            killOriginTimer.Elapsed += delegate
+            Timer cleanupOriginTimer = new Timer(waitTimeToKillOrigin);
+            cleanupOriginTimer.AutoReset = false;
+            cleanupOriginTimer.Elapsed += delegate
             {
                 Dispatcher.Invoke(new Action(delegate
                 {
+ 
                     this.KillProcess("origin");
                     this.Log("Killed Origin");
                     this.KillProcess("sonarhost");
                     this.Log("Killed ESNSonar");
+                    if (retainOrigin)
+                    {
+                        this.Log("Restarting Origin");
+                        //We do not want this instance of Origin to be a child process, otherwise Steam will think we're still in Battlefield 3
+                        CreateOrphanedProcess(GetOriginPath(), "/StartClientMinimized");
+                    }
+
                     this.Log("!---End Log---!");
                     this.Log("Press Enter to Exit. Remember to mark output.");
                     FreeConsole();
+                    
                 }));
             };
 
             this.Log("Waiting " +waitTimeToKillOrigin+" milliseconds to kill Origin");
-            killOriginTimer.Start();
+            cleanupOriginTimer.Start();
             this.Hide();
             System.Threading.Thread.Sleep(waitTimeToKillOrigin+5000);
            
@@ -568,6 +589,28 @@ namespace Battlelogium
             Console.WriteLine(DateTime.Now.ToString() + " " + log);
         }
 
+        /// <summary>
+        /// Creates an process orphaned from parent. 
+        /// Code snippet adapted from
+        /// http://stackoverflow.com/questions/12068647/
+        /// </summary>
+        /// <param name="path">Path to executable</param>
+        /// <param name="args">Commandline arguments</param>
+        static void CreateOrphanedProcess(string path, string args)
+        {
+            string commandLine = @"""" + path + @""" " + args;
+            using (var managementClass = new ManagementClass("Win32_Process"))
+            {
+                var processInfo = new ManagementClass("Win32_ProcessStartup");
+                processInfo.Properties["CreateFlags"].Value = 0x00000008;
+
+                var inParameters = managementClass.GetMethodParameters("Create");
+                inParameters["CommandLine"] = commandLine;
+                inParameters["ProcessStartupInformation"] = processInfo;
+
+                var result = managementClass.InvokeMethod("Create", inParameters, null);
+            }
+        }
         #endregion
 
         #endregion
