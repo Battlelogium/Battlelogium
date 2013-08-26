@@ -2,9 +2,9 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:aw="clr-namespace:Awesomium.Windows.Controls;assembly=Awesomium.Windows.Controls"
-        WindowStyle="None" ResizeMode="NoResize"  
+        WindowStyle="None" Title="Battlelogium" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen" WindowState="Maximized"
-        Height="300" Width="600" KeyDown="KeyDownQuitHandler" Closing="WrapperClosing">
+        KeyDown="KeyDownHandler" Closing="WrapperClosing">
        
     <Window.Resources>
         <Storyboard x:Key="FadeBackground" BeginTime="0:0:2">

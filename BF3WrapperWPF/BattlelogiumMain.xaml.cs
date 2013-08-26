@@ -46,11 +46,8 @@ namespace Battlelogium
     {
         #region Fields
 
+        #region Miscellaneous
         private SplashScreen splash = new SplashScreen("images/BattlelogiumSplash.png");
-        /// <summary>
-        /// Loading text blink
-        /// </summary>
-        private Storyboard blinkLoading;
 
         /// <summary>
         /// Custom CSS that will be applied to Battlelog
@@ -84,14 +81,14 @@ namespace Battlelogium
         private string customJs = String.Empty;
 
         /// <summary>
-        /// Whether Custom Javascript is enabled
-        /// </summary>
-        private bool customJsEnabled;
-
-        /// <summary>
         /// Storyboard that fades loading background
         /// </summary>
         private Storyboard fadeBackground;
+
+        /// <summary>
+        /// Loading text blink
+        /// </summary>
+        private Storyboard blinkLoading;
 
         /// <summary>
         /// Whether the page has finished loading once
@@ -103,22 +100,54 @@ namespace Battlelogium
         /// </summary>
         private bool loadingTextFinalPlay;
 
-        /// <summary>
-        /// Represents the Origin process
-        /// </summary>
-        private Process originProcess;
 
         /// <summary>
         /// Whether to keep Origin running when Battlelogium ends
         /// </summary>
         private bool retainOrigin = false;
 
+
+        /// <summary>
+        /// Represents the Origin process
+        /// </summary>
+        private Process originProcess;
+        #endregion
+
+        #region Configuration Options
+        /// <summary>
+        /// Whether Custom Javascript is enabled
+        /// </summary>
+        private bool customJsEnabled;
+
         /// <summary>
         /// How long to wait to kill origin in milliseconds
         /// </summary>
         private int waitTimeToKillOrigin = 10000;
+
+        /// <summary>
+        /// Whether to start Battlelogium in a window
+        /// </summary>
+        private bool windowedMode = false;
+
+        /// <summary>
+        /// If windowed, do we want a maximized window?
+        /// </summary>
+        private bool startMaximized = true;
+
+        /// <summary>
+        /// Height of the window
+        /// </summary>
+        private int windowHeight = 504;
+
+        /// <summary>
+        /// Width of the window
+        /// </summary>
+        private int windowWidth = 896;
+
         #endregion
-   
+
+        #endregion
+
         #region Constructors and Destructors
 
         /// <summary>
@@ -297,12 +326,22 @@ namespace Battlelogium
                 foreach (string row in
                     File.ReadAllLines(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.properties")))
                 {
+                    //Ignore comments and blank lines.
+                    if (row.StartsWith(";")) continue;
+                    if (row.Length == 0) continue;
+
                     config.Add(row.Split('=')[0], string.Join("=", row.Split('=').Skip(1).ToArray()));
                 }
 
                 // Convert from seconds to milliseconds
                 this.waitTimeToKillOrigin = int.Parse(config["waitTimeToKillOrigin"]) * 1000;
                 this.customJsEnabled = bool.Parse(config["customJSEnabled"]);
+                
+                this.windowedMode = bool.Parse(config["windowedMode"]);
+                this.startMaximized = bool.Parse(config["startMaximized"]);
+                this.windowHeight = int.Parse(config["windowHeight"]);
+                this.windowWidth = int.Parse(config["windowWidth"]);
+                
             }
 
             if (File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "style.css")))
@@ -338,6 +377,17 @@ namespace Battlelogium
         /// </summary>
         private void InitializeWrapper()
         {
+            if (this.windowedMode)
+            {
+                this.WindowStyle = WindowStyle.SingleBorderWindow;
+                this.ResizeMode = ResizeMode.CanResizeWithGrip;
+                if (!this.startMaximized)
+                {
+                   this.WindowState = WindowState.Normal;
+                }
+                this.Height = this.windowHeight;
+                this.Width = this.windowWidth;
+            }
             this.SetupStoryboards();
             this.Log("Setup Storyboards");
             this.blinkLoading.Begin();
@@ -490,7 +540,16 @@ namespace Battlelogium
         #endregion
 
         #region Quit Handling
-
+        /// <summary>
+        /// EventHandler to handle when ESC is pressed, quits on ESC press
+        /// </summary>
+        private void KeyDownHandler(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                this.Close();
+            }
+        }
         /// <summary>
         /// EventHandler to handle when Battlelogium closes
         /// </summary>
@@ -547,17 +606,6 @@ namespace Battlelogium
         private void JavascriptQuitHandler(object sender, JavascriptMethodEventArgs e)
         {
             this.Close();
-        }
-
-        /// <summary>
-        /// EventHandler to handle when ESC is pressed, quits on ESC press
-        /// </summary>
-        private void KeyDownQuitHandler(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Escape)
-            {
-                this.Close();
-            }
         }
 
         #endregion
