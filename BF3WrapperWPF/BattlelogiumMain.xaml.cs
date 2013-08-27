@@ -47,6 +47,7 @@ namespace Battlelogium
         #region Fields
 
         #region Miscellaneous
+
         private SplashScreen splash = new SplashScreen("images/BattlelogiumSplash.png");
 
         /// <summary>
@@ -114,6 +115,8 @@ namespace Battlelogium
         #endregion
 
         #region Configuration Options
+        private bool directToCampaign;
+
         /// <summary>
         /// Whether Custom Javascript is enabled
         /// </summary>
@@ -169,17 +172,28 @@ namespace Battlelogium
             this.Log("Version: " + Assembly.GetEntryAssembly().GetName().Version.ToString());
             this.Log("==================");
             Console.WriteLine(String.Empty);
-            this.Log("Initiating Origin");
-            this.InitializeOrigin();
-            this.Log("Initiating Window");
-            this.InitializeComponent();
+
             this.Log("Initiating Config");
             this.InitializeConfig();
-            this.Log("Initiating Wrapper");
-            this.InitializeWrapper();
-            this.Log("Initiating Battlelog BattlelogBrowser");
-            this.InitializeBattlelogBattlelogBrowser();
+            this.Log("Checking for Internet Connection");
+            this.InitializeConnectionCheck();
 
+            if (!this.directToCampaign) //We do not need to initialize Window if we're going directly into the campaign mode
+            {
+                this.Log("Initiating Origin");
+                this.InitializeOrigin();
+                this.Log("Initiating Window");
+                this.InitializeComponent();
+                this.Log("Initiating Wrapper");
+                this.InitializeWrapper();
+                this.Log("Initiating Battlelog BattlelogBrowser");
+                this.InitializeBattlelogBattlelogBrowser();
+            }
+            else
+            {
+                this.LaunchBattlefield3Campaign();
+            }
+           
         }
 
         #endregion
@@ -336,7 +350,8 @@ namespace Battlelogium
                 // Convert from seconds to milliseconds
                 this.waitTimeToKillOrigin = int.Parse(config["waitTimeToKillOrigin"]) * 1000;
                 this.customJsEnabled = bool.Parse(config["customJSEnabled"]);
-                
+                this.directToCampaign = bool.Parse(config["directToCampaign"]);
+
                 this.windowedMode = bool.Parse(config["windowedMode"]);
                 this.startMaximized = bool.Parse(config["startMaximized"]);
                 this.windowHeight = int.Parse(config["windowHeight"]);
@@ -392,6 +407,38 @@ namespace Battlelogium
             this.Log("Setup Storyboards");
             this.blinkLoading.Begin();
         }
+
+        private void InitializeConnectionCheck()
+        {
+
+            if (CheckForInternetConnection())
+            {
+                Window temp = new Window() { Width = 0, Height = 0, WindowStyle = WindowStyle.None };
+                temp.Show();
+                MessageBoxResult startInOfflineMode = MessageBox.Show("Battlelog is not available. Start in Offline Mode", "Battlelog not available", MessageBoxButton.YesNo);
+                if (startInOfflineMode == MessageBoxResult.No)
+                {
+                    this.Close();
+                }
+                else
+                {
+                    this.isOffline = true;
+                    Process battlefield3 = null;
+                    while (battlefield3 == null)
+                    {
+                        Process[] processes = Process.GetProcessesByName("bf3");
+                        if (processes.Length == 1)
+                        {
+                            battlefield3 = processes[0];
+                        }
+                    }
+
+                    battlefield3.WaitForExit();
+                }
+                temp.Close();
+
+            }
+        }
         #endregion
 
         #region Origin
@@ -413,19 +460,19 @@ namespace Battlelogium
         /// </summary>
         private void InitializeOrigin()
         {
-            this.StartOriginProcess();
+            this.StartOriginProcess("/StartClientMinimized");
         }
 
         /// <summary>
         /// Finds and Starts Origin
         /// </summary>
-        private void StartOriginProcess()
+        private void StartOriginProcess(string commandLineOptions)
         {
             this.Log("Getting Origin Path");
 
             string originPath = GetOriginPath();
 
-            var originProcessInfo = new ProcessStartInfo(originPath, "/StartClientMinimized");
+            var originProcessInfo = new ProcessStartInfo(originPath, commandLineOptions);
 
             retainOrigin = CheckIfOriginIsRunning();
 
@@ -661,6 +708,25 @@ namespace Battlelogium
         }
         #endregion
 
+        private void LaunchBattlefield3Campaign(){
+
+
+            StartOriginProcess(@" ""/StartOffline"" ""origin://LaunchGame/70619""");
+
+            Process battlefield3 = null;
+            while (battlefield3 == null)
+            {
+                Process[] processes = Process.GetProcessesByName("bf3");
+                if (processes.Length == 1)
+                {
+                    battlefield3 = processes[0];
+                }
+            }
+            battlefield3.WaitForExit();
+
+            this.Close();
+
+        }
         #endregion
     }
 }
