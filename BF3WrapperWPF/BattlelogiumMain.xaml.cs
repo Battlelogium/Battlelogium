@@ -46,238 +46,143 @@ namespace Battlelogium
     {
         #region Fields
 
-        #region Miscellaneous
+        private readonly SplashScreen splash = new SplashScreen("images/BattlelogiumSplash.png");
 
-        private SplashScreen splash = new SplashScreen("images/BattlelogiumSplash.png");
-
-        /// <summary>
-        /// Custom CSS that will be applied to Battlelog
-        /// </summary>
-        private string css = @"
-                    .gate-footer {
-                        display: none;
-                    }
-
-                    #footer{
-                        display: none;
-                    }
-
-                    .advirticement{
-                        display: none;
-                    }
-
-                    ::-webkit-scrollbar{
-                        visibility: hidden;
-                    }
-                    #feedback-popup-opener-tab{
-                        display: none;
-                    }
-";
-
-        // Removes ads and footers
-
-        /// <summary>
-        /// Custom Javascript
-        /// </summary>
-        private string customJs = String.Empty;
-
-        /// <summary>
-        /// Storyboard that fades loading background
-        /// </summary>
+        /// <summary> Storyboard that fades the background image in the beginning </summary>
         private Storyboard fadeBackground;
 
-        /// <summary>
-        /// Loading text blink
-        /// </summary>
+        /// <summary> Storyboard that blinks the "Loading" text image in the beginning </summary>
         private Storyboard blinkLoading;
 
-        /// <summary>
-        /// Whether the page has finished loading once
-        /// </summary>
+        /// <summary> Whether the page has finished loading once </summary>
         private bool finishedLoading;
 
-        /// <summary>
-        /// Whether it is the loading text's final blink
-        /// </summary>
+        /// <summary> Whether its the "Loading" text's last blink</summary>
         private bool loadingTextFinalPlay;
 
+        /// <summary> Whether to keep Origin running after the user has quit Battlelogium.</summary>
+        private bool retainOrigin;
 
-        /// <summary>
-        /// Whether to keep Origin running when Battlelogium ends
-        /// </summary>
-        private bool retainOrigin = false;
-
-
-        /// <summary>
-        /// Represents the Origin process
-        /// </summary>
-        private Process originProcess;
+        private BattlelogiumConfiguration config;
         #endregion
 
-        #region Configuration Options
-        private bool directToCampaign;
-
-        /// <summary>
-        /// Whether Custom Javascript is enabled
-        /// </summary>
-        private bool customJsEnabled;
-
-        /// <summary>
-        /// How long to wait to kill origin in milliseconds
-        /// </summary>
-        private int waitTimeToKillOrigin = 10000;
-
-        /// <summary>
-        /// Whether to start Battlelogium in a window
-        /// </summary>
-        private bool windowedMode = false;
-
-        /// <summary>
-        /// If windowed, do we want a maximized window?
-        /// </summary>
-        private bool startMaximized = true;
-
-        /// <summary>
-        /// Height of the window
-        /// </summary>
-        private int windowHeight = 504;
-
-        /// <summary>
-        /// Width of the window
-        /// </summary>
-        private int windowWidth = 896;
-
-        #endregion
-
-        #endregion
-
-        #region Constructors and Destructors
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BattlelogiumMain"/> class.
-        /// Main Window Constructor
-        /// </summary>
         public BattlelogiumMain()
         {
-            // Attach a console to process
-
-            AttachConsole(-1);
+            // Attach a console instance to process
+            Utilities.AttachConsole(-1);
+            //We need to show the splash screen this way otherwise the Steam Overlay will not work. 
             splash.Show(true);
             Console.WriteLine(String.Empty);
-            this.Log("Battlelogium is licensed under GNU GPL v3");
-            this.Log("Battlelogium does not come with any warranty");
-            this.Log("neither express nor implied");
+            Utilities.Log("Battlelogium is licensed under GNU GPL v3");
+            Utilities.Log("Battlelogium does not come with any warranty");
+            Utilities.Log("neither express nor implied");
             Console.WriteLine(String.Empty);
-            this.Log("!---Begin Log---!");
-            this.Log("Version: " + Assembly.GetEntryAssembly().GetName().Version.ToString());
-            this.Log("==================");
+            Utilities.Log("!---Begin Log---!");
+            Utilities.Log("Version: " + Assembly.GetEntryAssembly().GetName().Version.ToString());
+            Utilities.Log("==================");
             Console.WriteLine(String.Empty);
 
-            this.Log("Initiating Config");
-            this.InitializeConfig();
-            this.Log("Checking for Internet Connection");
-            this.InitializeConnectionCheck();
+            Utilities.Log("new BattlelogiumConfiguration()");
+            config = new BattlelogiumConfiguration();
+            Utilities.Log(config.ConfigDump());
 
-            if (!this.directToCampaign) //We do not need to initialize Window if we're going directly into the campaign mode
+            Utilities.Log("StartupConnectionCheck()");
+            this.StartupConnectionCheck();
+           
+
+            if (config.DirectToCampaign) //If we're going directly to campaign, there is no need to initialize the main window
             {
-                this.Log("Initiating Origin");
-                this.InitializeOrigin();
-                this.Log("Initiating Window");
-                this.InitializeComponent();
-                this.Log("Initiating Wrapper");
-                this.InitializeWrapper();
-                this.Log("Initiating Battlelog BattlelogBrowser");
-                this.InitializeBattlelogBattlelogBrowser();
+                Utilities.Log("StartBF3Campaign");
+                this.StartBF3Campaign();
             }
             else
             {
-                this.LaunchBattlefield3Campaign();
+                Utilities.Log("StartOriginProcess(/StartClientMinimized)");
+                this.StartOriginProcess("/StartClientMinimized");
+
+                Utilities.Log("InitializeComponent()");
+                this.InitializeComponent();
+
+                Utilities.Log("SetupStoryboards()");
+                this.SetupStoryboards();
+
+                Utilities.Log("ApplyWindowedModeSettings()");
+                this.ApplyWindowedModeSettings();
+
+                Utilities.Log("blinkLoading.Begin()");
+                this.blinkLoading.Begin();
+
+                Utilities.Log("CreateBattlelogWebSession()");
+                this.CreateBattlelogWebSession();
             }
-           
         }
 
-        #endregion
+        #region Handlers
 
-        #region Console P/Invoke Utils
-
-        /// <summary>
-        /// Attach a console to program if ran from commandline
-        /// </summary>
-        /// <param name="processId">
-        /// Id of process to attach console to. Attach -1 for this process.
-        /// </param>
-        [DllImport("Kernel32.dll")]
-        public static extern bool AttachConsole(int processId);
-
-        /// <summary>
-        /// Frees Console before quit
-        /// </summary>
-        [DllImport("kernel32.dll")]
-        public static extern bool FreeConsole();
-
-        #endregion
-
-        #region Main Methods
-
-        #region Browser Webview
-        /// <summary>
-        /// Creates a WebSession and makes the BattlelogBrowser use it
-        /// </summary>
-        private void InitializeBattlelogBattlelogBrowser()
+        #region Quit Handlers
+        private void KeyDownHandler(object sender, KeyEventArgs e)
         {
-            this.Log("Create WebSession");
-            WebSession session =
-                WebCore.CreateWebSession(
-                    Path.Combine(
-                        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Battlelogium"),
-                    new WebPreferences { CustomCSS = this.css, EnableGPUAcceleration = true, });
-            session.AddDataSource("local", new ResourceDataSource(ResourceType.Packed));
-            this.Log("Registered WebSession");
-            this.BattlelogBrowser.WebSession = session;
-            this.Log("Registered WebSession");
-        }
-
-        /// <summary>
-        /// Event Handler to fade out background and start quit button JS loop if loaded once
-        /// </summary>
-        private void BattlelogBrowserDocumentReady(object sender, UrlEventArgs e)
-        {
-            // Fade out the loading image for the first time
-            this.FadeOutLoadingImage();
-            this.Log("Begin Start Fade Image");
-
-            // We don't need this event handler any more
-            this.Log("Initiating QuitButton");
-            this.InitializeQuitButton();
-            this.BattlelogBrowser.DocumentReady -= this.BattlelogBrowserDocumentReady;
-        }
-
-        /// <summary>
-        /// When browser finishes loading frame
-        /// </summary>
-        private void BattlelogBrowserLoadingFrameComplete(object sender, FrameEventArgs e)
-        {
-            this.InjectScript("asset://local/buttons.js");
-            if (this.customJsEnabled)
+            if (e.Key == Key.Escape)
             {
-                this.BattlelogBrowser.ExecuteJavascript(this.customJs);
+                this.Close();
             }
         }
 
-        /// <summary>
-        /// EventHandler to disable Context Menu in BattlelogBrowser
-        /// </summary>
-        private void BattlelogBrowserShowContextMenu(object sender, ContextMenuEventArgs e)
+
+        private void WrapperClosing(object sender, CancelEventArgs e)
         {
-            e.Handled = true;
-            this.Log("Rightclicked Disabled");
+            // Shutdown WebCore
+            try
+            {
+                Utilities.Log("WebCore.Shutdown()");
+                WebCore.Shutdown();
+            }
+            catch (Exception ex)
+            {
+                Utilities.Log("Exception occured when WebCore shutdown");
+                Utilities.Log(ex.ToString());
+            }
+
+            Timer cleanupOriginTimer = new Timer(config.WaitTimeToKillOrigin);
+            cleanupOriginTimer.AutoReset = false;
+            cleanupOriginTimer.Elapsed += delegate
+            {
+                Dispatcher.Invoke(new Action(delegate
+                {
+
+                    Utilities.Log("KillProcess(origin)");
+                    Utilities.KillProcess("origin");
+
+                    Utilities.Log("KillProcess(sonarhost)");
+                    Utilities.KillProcess("sonarhost");
+
+                    if (retainOrigin)
+                    {
+
+                        Utilities.Log("retainOrigin True");
+                        //We do not want this instance of Origin to be a child process, otherwise Steam will think we're still in Battlefield 3
+                       
+                        Utilities.Log("CreateOrphanedProcess(GetOriginPath(), /StartClientMinimized");
+                        Utilities.CreateOrphanedProcess(GetOriginPath(), "/StartClientMinimized");
+                    }
+
+                    Utilities.Log("!---End Log---!");
+                    Utilities.Log("Press Enter to Exit. Remember to mark output.");
+                    Utilities.FreeConsole();
+
+                }));
+            };
+
+            Utilities.Log("Waiting " + config.WaitTimeToKillOrigin * 1000 + " milliseconds to kill Origin");
+            cleanupOriginTimer.Start();
+            this.Hide();
+            System.Threading.Thread.Sleep(config.WaitTimeToKillOrigin * 1000 + 5000);
+
         }
+
         #endregion
 
-        #region Loading 
-        /// <summary>
-        /// EventHandler to handle blinkLoading completed, workaround to fade text gracefully after loading as RepeatBehavior.Forever does not fire Completed event
-        /// </summary>
+        #region Storyboard Handlers
         private void BlinkLoadingCompleted(object sender, EventArgs e)
         {
             /* 
@@ -287,15 +192,15 @@ namespace Battlelogium
              */
             if (this.loadingTextFinalPlay)
             {
+                Utilities.Log("LoadingImageText.Visibility = Visibility.Hidden");
                 this.LoadingImageText.Visibility = Visibility.Hidden;
-                this.Log("Hid LoadingImageText");
             }
             else if (this.finishedLoading)
             {
                 this.loadingTextFinalPlay = true;
                 this.blinkLoading.AutoReverse = false;
                 this.blinkLoading.Begin();
-                this.Log("Final blink of LoadingImageText");
+                Utilities.Log("LoadingImageText Final Blink Started");
             }
             else
             {
@@ -303,192 +208,180 @@ namespace Battlelogium
             }
         }
 
-        /// <summary>
-        /// EventHandler to hide the background image once fadeBackground is completed so BattlelogBrowser can be interacted with
-        /// </summary>
         private void FadeBackgroundCompleted(object sender, EventArgs e)
         {
+            Utilities.Log("FadeBackgroundCompleted()");
+            Utilities.Log("LoadingImage.Visibility = Visibility.Hidden");
             this.LoadingImage.Visibility = Visibility.Hidden;
-            this.Log("Hide Loading Image");
+          
         }
+        #endregion
 
-        /// <summary>
-        /// Fades out the loading background image
-        /// </summary>
-        private void FadeOutLoadingImage()
+        #region Awesomium Handlers
+        //Single run event handler for DocumentReady
+        private void BattlelogDocumentReady(object sender, UrlEventArgs e)
         {
+            // Fade out the loading image for the first time
+
+            Utilities.Log("finishedLoading = true");
             this.finishedLoading = true;
-            this.Log("Set finishedLoading to true to allow LoadingImageText to stop gracefully");
-            this.Log("Begin fadeoutBackground");
+            
+            Utilities.Log("fadeBackground.Begin()");
             this.fadeBackground.Begin();
+
+            //Register the handler for the javascript Quit Button
+            Utilities.Log("CreateGlobalJavascriptObject(wrapper)");
+            JSObject quitMethod = this.Battlelog.CreateGlobalJavascriptObject("wrapper");
+
+            Utilities.Log("quitMethod.Bind");
+            quitMethod.Bind("quitWrapper", false, new JavascriptMethodEventHandler(delegate
+            {
+                Utilities.Log("Javascript QuitButton pressed");
+                this.Close();
+            }));
+
+            Utilities.Log("Battlelog.DocumentReady -= this.BattlelogDocumentReady");
+            // Disable this one time EventHandler
+            this.Battlelog.DocumentReady -= this.BattlelogDocumentReady;
         }
 
-    #endregion
-
-        #region Pre Load
-
-        /// <summary>
-        /// Load configuration options from config if one exists
-        /// </summary>
-        private void InitializeConfig()
+        //Disable the context menu in Awesomium
+        private void BattlelogShowContextMenu(object sender, ContextMenuEventArgs e)
         {
-            if (File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.properties")))
-            {
-                var config = new Dictionary<string, string>();
-
-                // Properties loading code from http://stackoverflow.com/questions/485659/
-                foreach (string row in
-                    File.ReadAllLines(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.properties")))
-                {
-                    //Ignore comments and blank lines.
-                    if (row.StartsWith(";")) continue;
-                    if (row.Length == 0) continue;
-
-                    config.Add(row.Split('=')[0], string.Join("=", row.Split('=').Skip(1).ToArray()));
-                }
-
-                // Convert from seconds to milliseconds
-                this.waitTimeToKillOrigin = int.Parse(config["waitTimeToKillOrigin"]) * 1000;
-                this.customJsEnabled = bool.Parse(config["customJSEnabled"]);
-                this.directToCampaign = bool.Parse(config["directToCampaign"]);
-
-                this.windowedMode = bool.Parse(config["windowedMode"]);
-                this.startMaximized = bool.Parse(config["startMaximized"]);
-                this.windowHeight = int.Parse(config["windowHeight"]);
-                this.windowWidth = int.Parse(config["windowWidth"]);
-                
-            }
-
-            if (File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "style.css")))
-            {
-                this.css = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "style.css"));
-            }
-
-            if (File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "customjs.js"))
-                && this.customJsEnabled)
-            {
-                this.customJs = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "customjs.js"));
-            }
+            e.Handled = true;
         }
 
-        /// <summary>
-        /// Finds storyboards and points them to their intended target
-        /// </summary>
+        //Inject button javascript and custom javascript
+        private void BattlelogLoadingFrameComplete(object sender, FrameEventArgs e)
+        {
+            Utilities.Log("BattlelogLoadingFrameComplete");
+            this.InjectScript("asset://local/buttons.js");
+            if (config.CustomJsEnabled)
+            {
+                this.Battlelog.ExecuteJavascript(config.CustomJavascript);
+            }
+        }
+        #endregion
+        #endregion
+
+        #region UI Code
+
+        private void InjectScript(string scripturl)
+        {
+            this.Battlelog.ExecuteJavascript(
+                @"
+                    var script = document.createElement('script');
+                    script.setAttribute('src','" + scripturl + @"');
+                    document.getElementsByTagName('head')[0].appendChild(script);
+                 ");
+            Utilities.Log("Injected script " + scripturl);
+        }
+
         private void SetupStoryboards()
         {
+            Utilities.Log("FindResource(BlinkLoading)");
             this.blinkLoading = this.FindResource("BlinkLoading") as Storyboard;
-            this.Log("Found blinkLoading Storyboard");
-            this.fadeBackground = this.FindResource("FadeBackground") as Storyboard;
-            this.Log("Found fadeBackground Storyboard");
 
+            Utilities.Log("FindResource(FadeBackground)");
+            this.fadeBackground = this.FindResource("FadeBackground") as Storyboard;
+
+            Utilities.Log("Storyboard.SetTarget(this.blinkLoading, this.LoadingImageText)");
             Storyboard.SetTarget(this.blinkLoading, this.LoadingImageText);
-            this.Log("Set Target of blinkLoading to LoadingImageText");
+
+            Utilities.Log("Storyboard.SetTarget(this.fadeBackground, this.LoadingImage)");
             Storyboard.SetTarget(this.fadeBackground, this.LoadingImage);
-            this.Log("Set Target of fadeBackground to LoadingImage");
+            
         }
 
-        /// <summary>
-        /// General wrapper logic
-        /// </summary>
-        private void InitializeWrapper()
+        private void ApplyWindowedModeSettings()
         {
-            if (this.windowedMode)
+            if (config.WindowedMode)
             {
                 this.WindowStyle = WindowStyle.SingleBorderWindow;
                 this.ResizeMode = ResizeMode.CanResizeWithGrip;
-                if (!this.startMaximized)
+                if (!config.StartMaximized)
                 {
-                   this.WindowState = WindowState.Normal;
+                    Utilities.Log("!config.StartMinimized");
+                    this.WindowState = WindowState.Normal;
                 }
-                this.Height = this.windowHeight;
-                this.Width = this.windowWidth;
+                this.Height = config.WindowHeight;
+                this.Width = config.WindowWidth;
             }
-            this.SetupStoryboards();
-            this.Log("Setup Storyboards");
-            this.blinkLoading.Begin();
         }
 
-        private void InitializeConnectionCheck()
+        private void CreateBattlelogWebSession()
         {
+            Utilities.Log("CreateWebSession()");
+            WebSession session =
+                WebCore.CreateWebSession(
+                    Path.Combine(
+                        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Battlelogium"),
+                    new WebPreferences { CustomCSS = config.CSS, EnableGPUAcceleration = true, });
+            session.AddDataSource("local", new ResourceDataSource(ResourceType.Packed));
 
-            if (CheckForInternetConnection())
+            Utilities.Log("Battlelog.Websession = session");
+            this.Battlelog.WebSession = session;
+            
+        }
+
+        private void StartupConnectionCheck()
+        {
+            Utilities.Log("StartupConnectionCheck()");
+            if (!CheckForBattlelogConnection())
             {
+                Utilities.Log("new Window() {width = 0, Height = 0, WindowStyle = WindowStyle.None}");
                 Window temp = new Window() { Width = 0, Height = 0, WindowStyle = WindowStyle.None };
                 temp.Show();
-                MessageBoxResult startInOfflineMode = MessageBox.Show("Battlelog is not available. Start in Offline Mode", "Battlelog not available", MessageBoxButton.YesNo);
+
+                Utilities.Log("MessageBox startInOfflineMode");
+                MessageBoxResult startInOfflineMode = MessageBox.Show("Battlelog is not available. Launch Campaign instead?", "Battlelog not available", MessageBoxButton.YesNo);
                 if (startInOfflineMode == MessageBoxResult.No)
                 {
+                    Utilities.Log("startInOfflineMode = No");
                     this.Close();
                 }
                 else
                 {
-                    this.isOffline = true;
-                    Process battlefield3 = null;
-                    while (battlefield3 == null)
-                    {
-                        Process[] processes = Process.GetProcessesByName("bf3");
-                        if (processes.Length == 1)
-                        {
-                            battlefield3 = processes[0];
-                        }
-                    }
-
-                    battlefield3.WaitForExit();
+                    Utilities.Log("startInOfflineMode = Yes");
+                    config.DirectToCampaign = true;
                 }
                 temp.Close();
-
             }
         }
         #endregion
 
         #region Origin
 
-        /// <summary>
-        /// The origin not found.
-        /// </summary>
         private void OriginNotFound(Exception e)
         {
-            this.Log("Origin not found");
-            this.Log("Exception type: " + e.GetType());
+            Utilities.Log("Origin not found");
+            Utilities.Log("Exception type: " + e.GetType());
             MessageBox.Show("Please install Origin to play Battlefield 3", "Error");
             Process.Start("http://www.origin.com/download");
             this.Close();
         }
 
-        /// <summary>
-        /// Logic for Management of the Origin Process
-        /// </summary>
-        private void InitializeOrigin()
-        {
-            this.StartOriginProcess("/StartClientMinimized");
-        }
-
-        /// <summary>
-        /// Finds and Starts Origin
-        /// </summary>
         private void StartOriginProcess(string commandLineOptions)
         {
-            this.Log("Getting Origin Path");
-
+            Utilities.Log("GetOriginPath()");
             string originPath = GetOriginPath();
-
             var originProcessInfo = new ProcessStartInfo(originPath, commandLineOptions);
-
+            
+            Utilities.Log("CheckIfOriginIsRunning()");
             retainOrigin = CheckIfOriginIsRunning();
-
             if (retainOrigin)
             {
-                this.Log("Origin is running. Battlelogium will restore Origin after closing");
+                Utilities.Log("Origin is running. Battlelogium will restore Origin after closing");
             }
 
-            this.KillProcess("Origin");
-            this.Log("Kill any Origin processes already started");
+            Utilities.Log("KillProcess(Origin)");
+            Utilities.KillProcess("Origin");
+         
             //We must relaunch Origin as a child process for Steam to properly apply the overlay hook.
-
             try
             {
-                this.originProcess = Process.Start(originProcessInfo);
-                this.Log("Starting Origin");
+                Utilities.Log("Process.Start(originProcessInfo)");
+                Process.Start(originProcessInfo); 
             }
             catch (Exception ex)
             {
@@ -497,18 +390,20 @@ namespace Battlelogium
             }
         }
 
-        private bool CheckForInternetConnection()
+        private bool CheckForBattlelogConnection()
         {
             try
             {
                 using (var client = new WebClient())
                 using (var stream = client.OpenRead("http://battlelog.battlefield.com/"))
                 {
+                    Utilities.Log("Battlelog Accessible");
                     return true;
                 }
             }
             catch
             {
+                Utilities.Log("Battlelog Unaccessible");
                 return false;
             }
         }
@@ -518,10 +413,12 @@ namespace Battlelogium
             Process[] pname = Process.GetProcessesByName("Origin");
             if (pname.Length == 0)
             {
+                Utilities.Log("Origin is not running");
                 return false;
             }
             else
             {
+                Utilities.Log("Origin is running");
                 return true;
             }
         }
@@ -538,13 +435,13 @@ namespace Battlelogium
                     originPath =
                         Registry.GetValue(
                             @"HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Origin", "ClientPath", originDefaultPath).ToString();
-                    this.Log("Got " + originPath);
+                    Utilities.Log("Got " + originPath);
                 }
                 else
                 {
                     originPath =
                         Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Origin", "ClientPath", originDefaultPath).ToString();
-                    this.Log("Got " + originPath);
+                    Utilities.Log("Got " + originPath);
                 }
                 return originPath;
             }
@@ -554,179 +451,28 @@ namespace Battlelogium
                 return originDefaultPath;
             }
         }
-        #endregion
 
-        #region Javascript
-        /// <summary>
-        /// Creates the JSObject where our wrapper will be bound to.
-        /// </summary>
-        private void InitializeQuitButton()
+        /// <summary> Start Origin, then get the bf3.exe handle to be able to close Battlelogium once we're done.
+        private void StartBF3Campaign()
         {
-            JSObject quitMethod = this.BattlelogBrowser.CreateGlobalJavascriptObject("wrapper");
-            this.Log("Create Javascript Object");
-            quitMethod.Bind("quitWrapper", false, this.JavascriptQuitHandler);
-            this.Log("Binded QuitWrapper to QuitHandler");
-        }
-
-        /// <summary>
-        /// Injects a Javascript file to the page. Must be a resource in the root project path
-        /// </summary>
-        /// <param name="scripturl">
-        /// URL of script to inject
-        /// </param>
-        private void InjectScript(string scripturl)
-        {
-            this.BattlelogBrowser.ExecuteJavascript(
-                @"
-                    var script = document.createElement('script');
-                    script.setAttribute('src','" + scripturl + @"');
-                    document.getElementsByTagName('head')[0].appendChild(script);
-                 ");
-            this.Log("Injected script " + scripturl);
-        }
-        #endregion
-
-        #region Quit Handling
-        /// <summary>
-        /// EventHandler to handle when ESC is pressed, quits on ESC press
-        /// </summary>
-        private void KeyDownHandler(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Escape)
-            {
-                this.Close();
-            }
-        }
-        /// <summary>
-        /// EventHandler to handle when Battlelogium closes
-        /// </summary>
-        private void WrapperClosing(object sender, CancelEventArgs e)
-        {
-            // Shutdown WebCore
-            try
-            {
-                WebCore.Shutdown();
-                this.Log("Shut down WebCore");
-            }
-            catch (Exception ex)
-            {
-                this.Log("Webcore unable to be shut down");
-                this.Log(ex.ToString());
-            }
-
-            Timer cleanupOriginTimer = new Timer(waitTimeToKillOrigin);
-            cleanupOriginTimer.AutoReset = false;
-            cleanupOriginTimer.Elapsed += delegate
-            {
-                Dispatcher.Invoke(new Action(delegate
-                {
- 
-                    this.KillProcess("origin");
-                    this.Log("Killed Origin");
-                    this.KillProcess("sonarhost");
-                    this.Log("Killed ESNSonar");
-                    if (retainOrigin)
-                    {
-                        this.Log("Restarting Origin");
-                        //We do not want this instance of Origin to be a child process, otherwise Steam will think we're still in Battlefield 3
-                        CreateOrphanedProcess(GetOriginPath(), "/StartClientMinimized");
-                    }
-
-                    this.Log("!---End Log---!");
-                    this.Log("Press Enter to Exit. Remember to mark output.");
-                    FreeConsole();
-                    
-                }));
-            };
-
-            this.Log("Waiting " +waitTimeToKillOrigin+" milliseconds to kill Origin");
-            cleanupOriginTimer.Start();
-            this.Hide();
-            System.Threading.Thread.Sleep(waitTimeToKillOrigin+5000);
-           
-        }
-
-
-        /// <summary>
-        /// EventHandler to handle when the JS quit button is pressed, quits on button press
-        /// </summary>
-        private void JavascriptQuitHandler(object sender, JavascriptMethodEventArgs e)
-        {
-            this.Close();
-        }
-
-        #endregion
-
-        #region Utilities
-        /// <summary>
-        /// Kills processes with given name
-        /// </summary>
-        /// <param name="processname">
-        /// Name of process to kill
-        /// </param>
-        private void KillProcess(string processname)
-        {
-            Process[] processes = Process.GetProcessesByName(processname);
-            foreach (Process p in processes)
-            {
-                p.Kill();
-            }
-        }
-
-        /// <summary>
-        /// Appends date and time before writing to console
-        /// </summary>
-        /// <param name="log">
-        /// Text to log
-        /// </param>
-        private void Log(string log)
-        {
-            Console.WriteLine(DateTime.Now.ToString() + " " + log);
-        }
-
-        /// <summary>
-        /// Creates an process orphaned from parent. 
-        /// Code snippet adapted from
-        /// http://stackoverflow.com/questions/12068647/
-        /// </summary>
-        /// <param name="path">Path to executable</param>
-        /// <param name="args">Commandline arguments</param>
-        static void CreateOrphanedProcess(string path, string args)
-        {
-            string commandLine = @"""" + path + @""" " + args;
-            using (var managementClass = new ManagementClass("Win32_Process"))
-            {
-                var processInfo = new ManagementClass("Win32_ProcessStartup");
-                processInfo.Properties["CreateFlags"].Value = 0x00000008;
-
-                var inParameters = managementClass.GetMethodParameters("Create");
-                inParameters["CommandLine"] = commandLine;
-                inParameters["ProcessStartupInformation"] = processInfo;
-
-                var result = managementClass.InvokeMethod("Create", inParameters, null);
-            }
-        }
-        #endregion
-
-        private void LaunchBattlefield3Campaign(){
-
-
-            StartOriginProcess(@" ""/StartOffline"" ""origin://LaunchGame/70619""");
-
+            StartOriginProcess(@" ""/StartOffline"" ""origin://LaunchGame/70619"""); //Starts Origin in offline mode, autolaunching Battlefield 3
             Process battlefield3 = null;
+            Utilities.Log("while (Process battlefield3 == null)");
             while (battlefield3 == null)
             {
+                //Continuously loop through all processes until we find BF3.
                 Process[] processes = Process.GetProcessesByName("bf3");
                 if (processes.Length == 1)
                 {
                     battlefield3 = processes[0];
                 }
             }
+
+            Utilities.Log("Process battlefield3.WaitForExit");
             battlefield3.WaitForExit();
-
             this.Close();
-
         }
+
         #endregion
     }
 }

@@ -13,7 +13,7 @@ directToCampaign=false
 ;Below options only take effect if windowedMode is enabled
 
 ;Start in a Maximized window?
-startMaximized=false
+startMaximized=true
 ;Height of the window
 windowHeight=504
 ;Width of the window
