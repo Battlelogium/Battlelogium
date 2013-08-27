@@ -39,9 +39,6 @@ namespace Battlelogium
     using Microsoft.Win32;
     using System.Net;
 
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class BattlelogiumMain : Window
     {
         #region Fields

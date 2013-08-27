@@ -30,23 +30,29 @@ Configuration Options
 
 * `style.css` is the CSS that is applied to the Battlelog web page when loaded. By default, it removes footers and advertisements as well as the scrollbar. Any modifications you make to this file will be applied to Battlelog's CSS.
 
-* `config.properties` is a simple configuration file with a few configurable options
-    -  `waitTimeToHideOrigin` is the amount of time in seconds to wait for Origin's start window to pop up and then hide it. Adjust this if Origin pops up in front of the main Battlelog window and doesn't go bad automatically. Increasing it will make Battlelogium wait for a longer time before closing Origin's window, however, decreasing it by too much might attempt to close Origin's main window before it pops up if you do not have startTopmost set to true.If you have startTopmost set to true, increasing the delay will also make you unable to Alt-Tab out of Battlelogium for the duration of the delay. This is needed because Origin always stays on top of a window unless it is forced own and ignores messages telling it to start minimized. [Bug EA to include a silent launch mode](http://forum.ea.com/eaforum/posts/list/7393477.page).
-
-    -  `startTopmost` is simply whether to start as the topmost window or not. If set to false, when Origin starts, it will most likely go on top of the wrapper for a bit, depending on what `waitTimeToCloseOrigin` has been set to.
+* `config.txt` is a simple configuration file with a few configurable options
     
 	-  `waitTimeToKillOrigin` is the amount of time in seconds to wait to kill Origin after the wrapper has closed. Increase if BF3 saves aren't syncing.
 	
-    -  `customJSEnabled` should be enabled if you wish to use custom Javascript in the customjs.js file. It will run at the `LoadingFrameComplete` event.
+    -  `customJsEnabled` should be true if you wish to use custom Javascript in the customjs.js file. It will run at the `LoadingFrameComplete` event.
 
+	-  `directToCampaign` should be true if you want to skip Battlelog and go directly to campaign mode. If no internet connection is detected, this will also be the default behaviour
+	
+	-  `windowedMode` should be true if you want to run Battlelogium in a window instead of fullscreen. Using windowedMode also applies the below options
+	
+	    -  `startMaximized` should be true if, when running in a window, the window is maximized by default.
+		
+		-  `windowHeight` is the height of the window in pixels at the start. 
+		
+		-  `windowWidth` is the width of the window in pixels at the start.
 
-The default configuration options should be fine for normal use
+The default windowHeight and windowWidth result in a 16:9 resolution.
 
 Bug reports
 -----------
 
 Bug reports and support will only given if 3 things are provided.
-* A copy of your config.properties 
+* A copy of your config.txt
 * A copy of your style.css  
 * A copy of the debug output. To get debug output on Windows 7:
     1. Shift-Rightclick where Battlelogium.exe is located, and click on **_Open Command Window Here_**, or open a Command Prompt and `cd` into where Battlelogium.exe is located.
@@ -55,7 +61,7 @@ Bug reports and support will only given if 3 things are provided.
     4. Right-click and select **_Mark_**
     5. Drag all over the output, everythiing from `!---Begin Log---!` to `!---End Log---!`.
     6. Paste it somewhere. I recommend [Github Gists](gists.github.com) as you can paste multiple files in one gist. 
-    7. Now that your config.properties, style.css and debug output is in a gist, send me the link.
+    7. Now that your config.txt, style.css and debug output is in a gist, send me the link.
 
 Building
 --------
