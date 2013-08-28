@@ -1,42 +1,17 @@
-﻿function addServerBrowserButton() {
-    var quitButtonElement = document.getElementById('serverBrowserButton');
-    if (quitButtonElement == null) {
+﻿//Adds a button to the Battlelog playbar
+function addButton(elementid, label, onclick) {
+    var buttonElement = document.getElementById(elementid);
+    if (buttonElement == null) {
         var playbar = document.getElementsByClassName('main-loggedin-playbar')[0];
         var button = document.createElement('button');
-        button.innerHTML = "<p>SERVER BROWSER</p>";
+        button.innerHTML = "".concat("<p>", label, "</p>");
         button.setAttribute('class', 'common-button-large main-loggedin-playbutton');
-        button.setAttribute('onclick', 'location.href = "http://battlelog.battlefield.com/bf3/servers/"');
-        button.setAttribute('id', 'serverBrowserButton');
+        button.setAttribute('onclick', onclick);
+        button.setAttribute('id', elementid);
         playbar.appendChild(button);
     }
 }
 
-function addQuitButton() {
-    var quitButtonElement = document.getElementById('wrapperQuitButton');
-    if (quitButtonElement == null) {
-        var playbar = document.getElementsByClassName('main-loggedin-playbar')[0];
-        var button = document.createElement('button');
-        button.innerHTML = "<p>QUIT</p>";
-        button.setAttribute('class', 'common-button-large main-loggedin-playbutton');
-        button.setAttribute('onclick', 'wrapper.quitWrapper()');
-        button.setAttribute('id', 'wrapperQuitButton');
-        playbar.appendChild(button);
-    }
-}
-
-function addSettingsButton() {
-    var settingsButtonElement = document.getElementById('wrapperSettingsButton');
-    if (settingsButtonElement == null) {
-        var playbar = document.getElementsByClassName('main-loggedin-playbar')[0];
-        var button = document.createElement('button');
-        button.innerHTML = "<p>SETTINGS</p>";
-        button.setAttribute('class', 'common-button-large main-loggedin-playbutton');
-        button.setAttribute('onclick', 'wrapper.showSettings()');
-        button.setAttribute('id', 'wrapperSettingsButton');
-        playbar.appendChild(button);
-    }
-}
-
-addServerBrowserButton();
-addSettingsButton();
-addQuitButton();
+addButton('serverBrowserButton', 'SERVERS', 'location.href = "http://battlelog.battlefield.com/bf3/servers/"');
+addButton('wrapperSettingsButton', 'SETTINGS', 'wrapper.showSettings()');
+addButton('wrapperQuitButton', 'QUIT', 'wrapper.quitWrapper()');
