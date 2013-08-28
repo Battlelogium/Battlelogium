@@ -67,7 +67,7 @@ namespace Battlelogium
         {
             // Attach a console instance to process
             Utilities.AttachConsole(-1);
-            //We need to show the splash screen this way otherwise the Steam Overlay will not work. 
+            //The Steam Overlay will not work if we show splash by the SplashScreen build action, so we manually show it.
             splash.Show(true);
             Console.WriteLine(String.Empty);
             Utilities.Log("Battlelogium is licensed under GNU GPL v3");
@@ -89,6 +89,9 @@ namespace Battlelogium
 
             if (config.DirectToCampaign) //If we're going directly to campaign, there is no need to initialize the main window
             {
+                splash.Close(TimeSpan.Zero); //Close the splash screen or it will hang.
+                Utilities.Log("Closing += WrapperClosing");
+                this.Closing += WrapperClosing; //Since we don't call InitializeComponent, we need to manually add the closing event handler
                 Utilities.Log("StartBF3Campaign");
                 this.StartBF3Campaign();
             }
@@ -452,6 +455,7 @@ namespace Battlelogium
         /// <summary> Start Origin, then get the bf3.exe handle to be able to close Battlelogium once we're done.
         private void StartBF3Campaign()
         {
+            Utilities.Log("StartOriginProcess(/StartOffline origin://LaunchGame/70619)");
             StartOriginProcess(@" ""/StartOffline"" ""origin://LaunchGame/70619"""); //Starts Origin in offline mode, autolaunching Battlefield 3
             Process battlefield3 = null;
             Utilities.Log("while (Process battlefield3 == null)");
@@ -467,6 +471,7 @@ namespace Battlelogium
 
             Utilities.Log("Process battlefield3.WaitForExit");
             battlefield3.WaitForExit();
+            Utilities.Log("Battlefield 3 has close");
             this.Close();
         }
 
