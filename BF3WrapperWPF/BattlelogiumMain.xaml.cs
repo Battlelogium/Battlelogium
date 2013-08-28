@@ -122,10 +122,7 @@ namespace Battlelogium
         #region Quit Handlers
         private void KeyDownHandler(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Escape)
-            {
-                this.Close();
-            }
+          
         }
 
 
