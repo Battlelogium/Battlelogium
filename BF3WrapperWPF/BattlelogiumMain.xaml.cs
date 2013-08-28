@@ -471,7 +471,7 @@ namespace Battlelogium
 
             Utilities.Log("Process battlefield3.WaitForExit");
             battlefield3.WaitForExit();
-            Utilities.Log("Battlefield 3 has close");
+            Utilities.Log("Battlefield 3 has closed");
             this.Close();
         }
 
