@@ -120,11 +120,6 @@ namespace Battlelogium
         #region Handlers
 
         #region Quit Handlers
-        private void KeyDownHandler(object sender, KeyEventArgs e)
-        {
-          
-        }
-
 
         private void WrapperClosing(object sender, CancelEventArgs e)
         {
@@ -227,14 +222,18 @@ namespace Battlelogium
             this.fadeBackground.Begin();
 
             //Register the handler for the javascript Quit Button
-            Utilities.Log("CreateGlobalJavascriptObject(wrapper)");
-            JSObject quitMethod = this.Battlelog.CreateGlobalJavascriptObject("wrapper");
 
-            Utilities.Log("quitMethod.Bind");
-            quitMethod.Bind("quitWrapper", false, new JavascriptMethodEventHandler(delegate
+            Utilities.Log("CreateGlobalJavascriptObject(wrapper)");
+            JSObject wrapperObject = this.Battlelog.CreateGlobalJavascriptObject("wrapper");
+            wrapperObject.Bind("quitWrapper", false, new JavascriptMethodEventHandler(delegate
             {
                 Utilities.Log("Javascript QuitButton pressed");
                 this.Close();
+            }));
+            wrapperObject.Bind("showSettings", false, new JavascriptMethodEventHandler(delegate
+            {
+                Utilities.Log("Javascript Settings pressed");
+                MessageBox.Show("Settings Go Here");
             }));
 
             Utilities.Log("Battlelog.DocumentReady -= this.BattlelogDocumentReady");
@@ -258,6 +257,7 @@ namespace Battlelogium
                 this.Battlelog.ExecuteJavascript(config.CustomJavascript);
             }
         }
+
         #endregion
         #endregion
 

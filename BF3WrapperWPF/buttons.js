@@ -24,5 +24,19 @@ function addQuitButton() {
     }
 }
 
+function addSettingsButton() {
+    var settingsButtonElement = document.getElementById('wrapperSettingsButton');
+    if (settingsButtonElement == null) {
+        var playbar = document.getElementsByClassName('main-loggedin-playbar')[0];
+        var button = document.createElement('button');
+        button.innerHTML = "<p>SETTINGS</p>";
+        button.setAttribute('class', 'common-button-large main-loggedin-playbutton');
+        button.setAttribute('onclick', 'wrapper.showSettings()');
+        button.setAttribute('id', 'wrapperSettingsButton');
+        playbar.appendChild(button);
+    }
+}
+
 addServerBrowserButton();
+addSettingsButton();
 addQuitButton();
