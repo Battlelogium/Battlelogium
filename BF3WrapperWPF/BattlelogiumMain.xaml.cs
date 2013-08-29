@@ -315,6 +315,7 @@ namespace Battlelogium
             }
         }
 
+        /// <summary>Enable right click dragging of the window</summary>
         private void EnableRightClickMove()
         {
             Point startPosition = new Point();
