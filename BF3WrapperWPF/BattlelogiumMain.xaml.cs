@@ -32,7 +32,9 @@ namespace Battlelogium
     using System.Windows.Input;
     using System.Windows.Media.Animation;
     using System.Management;
-
+    using System.Windows.Threading;
+    using System.Security.Permissions;
+    
     using Awesomium.Core;
     using Awesomium.Core.Data;
 
@@ -60,7 +62,10 @@ namespace Battlelogium
         /// <summary> Whether to keep Origin running after the user has quit Battlelogium.</summary>
         private bool retainOrigin;
 
+        private bool clearCache; 
+
         private BattlelogiumConfiguration config;
+
         #endregion
 
         public BattlelogiumMain()
@@ -78,14 +83,11 @@ namespace Battlelogium
             Utilities.Log("Version: " + Assembly.GetEntryAssembly().GetName().Version.ToString());
             Utilities.Log("==================");
             Console.WriteLine(String.Empty);
-
             Utilities.Log("new BattlelogiumConfiguration()");
             config = new BattlelogiumConfiguration();
             Utilities.Log(config.ConfigDump());
-
             Utilities.Log("StartupConnectionCheck()");
             this.StartupConnectionCheck();
-           
 
             if (config.DirectToCampaign) //If we're going directly to campaign, there is no need to initialize the main window
             {
@@ -112,17 +114,22 @@ namespace Battlelogium
                 Utilities.Log("blinkLoading.Begin()");
                 this.blinkLoading.Begin();
 
-                Utilities.Log("CreateBattlelogWebSession()");
-                this.CreateBattlelogWebSession();
+                Utilities.Log("Battlelog.Websession = CreateBattlelogWebSession()");
+                this.Battlelog.WebSession = CreateBattlelogWebSession();
             }
         }
 
         #region Handlers
-
+        
         #region Quit Handlers
 
         private void WrapperClosing(object sender, CancelEventArgs e)
         {
+            if (GetBattlefield3Process() != null)
+            {
+               this.Battlelog.ExecuteJavascript("showDialog(okDialog('Battlefield 3 is still running', 'Quit Battlefield 3 before closing Battlelogium'))");
+               e.Cancel = true;
+            }
             // Shutdown WebCore
             try
             {
@@ -148,7 +155,23 @@ namespace Battlelogium
                     Utilities.Log("KillProcess(sonarhost)");
                     Utilities.KillProcess("sonarhost");
 
-                    if (retainOrigin)
+                    if (this.clearCache)
+                    {
+                        Utilities.Log("clearCache True");
+
+                        try
+                        {
+                            Directory.Delete(Path.Combine(
+                                     AppDomain.CurrentDomain.BaseDirectory, "Battlelogium", "WebSession"), true);
+                        }
+                        catch
+                        {
+                            Utilities.Log("Exception occured when clearing cache");
+                        }
+
+                    }
+
+                    if (this.retainOrigin)
                     {
 
                         Utilities.Log("retainOrigin True");
@@ -225,16 +248,8 @@ namespace Battlelogium
 
             Utilities.Log("CreateGlobalJavascriptObject(wrapper)");
             JSObject wrapperObject = this.Battlelog.CreateGlobalJavascriptObject("wrapper");
-            wrapperObject.Bind("quitWrapper", false, new JavascriptMethodEventHandler(delegate
-            {
-                Utilities.Log("Javascript QuitButton pressed");
-                this.Close();
-            }));
-            wrapperObject.Bind("showSettings", false, new JavascriptMethodEventHandler(delegate
-            {
-                Utilities.Log("Javascript Settings pressed");
-                MessageBox.Show("Settings Go Here");
-            }));
+
+            BindJavascriptEvents(wrapperObject);
 
             Utilities.Log("Battlelog.DocumentReady -= this.BattlelogDocumentReady");
             // Disable this one time EventHandler
@@ -251,7 +266,7 @@ namespace Battlelogium
         private void BattlelogLoadingFrameComplete(object sender, FrameEventArgs e)
         {
             Utilities.Log("BattlelogLoadingFrameComplete");
-            this.InjectScript("asset://local/buttons.js");
+            this.InjectScript("asset://local/battlelogium.js");
             if (config.CustomJsEnabled)
             {
                 this.Battlelog.ExecuteJavascript(config.CustomJavascript);
@@ -262,17 +277,6 @@ namespace Battlelogium
         #endregion
 
         #region UI Code
-
-        private void InjectScript(string scripturl)
-        {
-            this.Battlelog.ExecuteJavascript(
-                @"
-                    var script = document.createElement('script');
-                    script.setAttribute('src','" + scripturl + @"');
-                    document.getElementsByTagName('head')[0].appendChild(script);
-                 ");
-            Utilities.Log("Injected script " + scripturl);
-        }
 
         private void SetupStoryboards()
         {
@@ -306,43 +310,22 @@ namespace Battlelogium
             }
         }
 
-        private void CreateBattlelogWebSession()
-        {
-            Utilities.Log("CreateWebSession()");
-            WebSession session =
-                WebCore.CreateWebSession(
-                    Path.Combine(
-                        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Battlelogium"),
-                    new WebPreferences { CustomCSS = config.CSS, EnableGPUAcceleration = true, });
-            session.AddDataSource("local", new ResourceDataSource(ResourceType.Packed));
-
-            Utilities.Log("Battlelog.Websession = session");
-            this.Battlelog.WebSession = session;
-            
-        }
-
         private void StartupConnectionCheck()
         {
-            Utilities.Log("StartupConnectionCheck()");
             if (!CheckForBattlelogConnection())
             {
-                Utilities.Log("new Window() {width = 0, Height = 0, WindowStyle = WindowStyle.None}");
-                Window temp = new Window() { Width = 0, Height = 0, WindowStyle = WindowStyle.None };
-                temp.Show();
-
+     
                 Utilities.Log("MessageBox startInOfflineMode");
-                MessageBoxResult startInOfflineMode = MessageBox.Show("Battlelog is not available. Launch Campaign instead?", "Battlelog not available", MessageBoxButton.YesNo);
-                if (startInOfflineMode == MessageBoxResult.No)
+                if (Utilities.ShowChoiceDialog("Battlelog is not available. Launch Campaign instead?", "Battlelog not available", "Launch Campaign", "Quit"))
                 {
-                    Utilities.Log("startInOfflineMode = No");
+                    Utilities.Log("startInOfflineMode = false");
                     this.Close();
                 }
                 else
                 {
-                    Utilities.Log("startInOfflineMode = Yes");
+                    Utilities.Log("startInOfflineMode = true");
                     config.DirectToCampaign = true;
                 }
-                temp.Close();
             }
         }
         #endregion
@@ -449,6 +432,19 @@ namespace Battlelogium
             }
         }
 
+        private Process GetBattlefield3Process()
+        {
+            Process[] processes = Process.GetProcessesByName("bf3");
+            if (processes.Length == 1)
+            {
+                return processes[0];
+            }
+            else
+            {
+                return null;
+            }
+
+        }
         /// <summary> Start Origin, then get the bf3.exe handle to be able to close Battlelogium once we're done.
         private void StartBF3Campaign()
         {
@@ -459,10 +455,9 @@ namespace Battlelogium
             while (battlefield3 == null)
             {
                 //Continuously loop through all processes until we find BF3.
-                Process[] processes = Process.GetProcessesByName("bf3");
-                if (processes.Length == 1)
+                if (GetBattlefield3Process() != null)
                 {
-                    battlefield3 = processes[0];
+                    battlefield3 = GetBattlefield3Process();
                 }
             }
 
@@ -473,6 +468,81 @@ namespace Battlelogium
         }
 
         #endregion
+
+        #region Javascript
+
+        private WebSession CreateBattlelogWebSession()
+        {
+            Utilities.Log("CreateWebSession()");
+            WebSession session =
+                WebCore.CreateWebSession(
+                    Path.Combine(
+                        AppDomain.CurrentDomain.BaseDirectory, "Battlelogium", "WebSession"),
+                    new WebPreferences { CustomCSS = config.CSS, EnableGPUAcceleration = true, });
+            session.AddDataSource("local", new ResourceDataSource(ResourceType.Packed));
+
+            return session;
+        }
+
+        private void InjectScript(string scripturl)
+        {
+            this.Battlelog.ExecuteJavascript(
+                @"
+                    var script = document.createElement('script');
+                    script.setAttribute('src','" + scripturl + @"');
+                    document.getElementsByTagName('head')[0].appendChild(script);
+                 ");
+            Utilities.Log("Injected script " + scripturl);
+        }
+
+        private void BindJavascriptEvents(JSObject jsObject)
+        {
+            jsObject.Bind("quitConfirm", false, new JavascriptMethodEventHandler(delegate
+            {
+                Utilities.Log("Javascript QuitButton pressed");
+                this.Battlelog.ExecuteJavascript("showDialog(askToQuitDialog('Are you sure you want to quit?', 'Do you want to quit?'))");
+            }));
+
+            jsObject.Bind("quitWrapper", false, new JavascriptMethodEventHandler(delegate
+            {
+                Utilities.Log("Quit requested from Javascript call");
+                this.Close();
+            }));
+
+            jsObject.Bind("clearCache", false, new JavascriptMethodEventHandler(delegate
+            {
+                Utilities.Log("Javascript ClearCache pressed");
+                this.clearCache = true;
+                this.Battlelog.ExecuteJavascript("showDialog(askToQuitDialog('The cache will be cleared on restart', 'Do you wish to quit Battlelogium now?'))");
+            }));
+
+
+            jsObject.Bind("editSettings", false, new JavascriptMethodEventHandler(delegate
+            {
+                Utilities.Log("Javascript EditSettings pressed");
+
+                //Run this in a background worker so we can show the askToQuitDialog after notepad.exe has quit without hanging UI thread.
+                BackgroundWorker worker = new BackgroundWorker();
+                worker.DoWork += delegate
+                {
+                    Process.Start("notepad.exe", Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.ini")).WaitForExit();
+                };
+                
+                worker.RunWorkerCompleted += delegate
+                {
+
+                   Dispatcher.Invoke(new Action(delegate {
+                       this.Battlelog.ExecuteJavascript("showDialog(askToQuitDialog('Settings will be saved on restart', 'Do you wish to quit Battlelogium now?'))");
+                   }));
+
+                };
+
+                worker.RunWorkerAsync();
+            }));
+        }
+
+        #endregion
+
     }
 }
         

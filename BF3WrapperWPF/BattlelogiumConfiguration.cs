@@ -44,7 +44,7 @@
 
         }
 
-        public BattlelogiumConfiguration() : this("config.txt", "style.css", "customjs.js") { }
+        public BattlelogiumConfiguration() : this("config.ini", "style.css", "customjs.js") { }
 
         public string ConfigDump()
         {

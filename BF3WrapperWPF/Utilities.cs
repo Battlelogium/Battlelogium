@@ -7,6 +7,8 @@
     using System.Runtime.InteropServices;
     using System.Diagnostics;
     using System.Management;
+    using System.Windows;
+    using WPFCustomMessageBox;
 
     public static class Utilities
     {
@@ -64,5 +66,21 @@
                 var result = managementClass.InvokeMethod("Create", inParameters, null);
             }
         }
+
+        public static bool ShowChoiceDialog(string messageBoxText, string caption, string okButtonText, string cancelButtonText)
+        {
+            MessageBoxResult messageBox = CustomMessageBox.ShowOKCancel(messageBoxText, caption, okButtonText, cancelButtonText);
+            
+            if (messageBox == MessageBoxResult.Cancel)
+            {
+                return false;
+                
+            }
+            else
+            {
+                return true;
+            }
+        }
+
     }
 }

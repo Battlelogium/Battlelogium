@@ -65,12 +65,14 @@
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
+  <PropertyGroup />
   <ItemGroup>
     <Reference Include="Awesomium.Core, Version=1.7.1.0, Culture=neutral, PublicKeyToken=e1a0d7c8071a5214, processorArchitecture=x86" />
     <Reference Include="Awesomium.Windows.Controls, Version=1.7.1.0, Culture=neutral, PublicKeyToken=7a34e179b8b61c39, processorArchitecture=x86" />
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -109,7 +111,7 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Resource Include="buttons.js">
+    <Resource Include="battlelogium.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="images\BattlelogiumSplash.png" />
@@ -154,9 +156,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="config.txt">
+    <None Include="config.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </None>
     <Content Include="lib\avcodec-53.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -199,7 +201,12 @@
     <Resource Include="images\loadingtext.png" />
     <Resource Include="images\loading.jpg" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\WPFCustomMessageBox\WPFCustomMessageBox.csproj">
+      <Project>{ED02D418-7C0E-4E6C-99A9-BE4357122AE7}</Project>
+      <Name>WPFCustomMessageBox</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
