@@ -18,6 +18,7 @@
         private readonly int windowHeight;
         private readonly int windowWidth;
         private readonly string customJavascript;
+        private readonly bool noBorder;
         #endregion
 
         public BattlelogiumConfiguration(string configFileName, string cssFileName, string jsFileName){
@@ -36,8 +37,9 @@
             if (!int.TryParse(config.GetValueOrDefault("waitTimeToKillOrigin"), out waitTimeToKillOrigin)) waitTimeToKillOrigin = 10;
             if (!bool.TryParse(config.GetValueOrDefault("windowedMode"), out windowedMode)) windowedMode = false;
             if (!bool.TryParse(config.GetValueOrDefault("startMaximized"), out startMaximized)) startMaximized = false;
-            if (!int.TryParse(config.GetValueOrDefault("windowHeight"), out windowHeight)) windowHeight = 504;
-            if (!int.TryParse(config.GetValueOrDefault("windowWidth"), out windowWidth)) windowWidth = 896;
+            if (!int.TryParse(config.GetValueOrDefault("windowHeight"), out windowHeight)) windowHeight = 1280;
+            if (!int.TryParse(config.GetValueOrDefault("windowWidth"), out windowWidth)) windowWidth = 720;
+            if (!bool.TryParse(config.GetValueOrDefault("noBorder"), out noBorder)) noBorder = false;
 
             this.css = GetCascadingStyleSheet(cssFileName);
             this.customJavascript = GetCustomJavascript(jsFileName);
@@ -128,6 +130,15 @@
             get
             {
                 return this.windowWidth;
+            }
+        }
+
+        /// <summary>If we're in windowed mode, whether the window has a border</summary>
+        public bool NoBorder
+        {
+            get
+            {
+                return this.noBorder;
             }
         }
 

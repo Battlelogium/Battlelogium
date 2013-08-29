@@ -34,7 +34,8 @@ namespace Battlelogium
     using System.Management;
     using System.Windows.Threading;
     using System.Security.Permissions;
-    
+    using WPFCustomMessageBox;
+
     using Awesomium.Core;
     using Awesomium.Core.Data;
 
@@ -298,13 +299,32 @@ namespace Battlelogium
         {
             if (config.WindowedMode)
             {
-                this.WindowStyle = WindowStyle.SingleBorderWindow;
-                this.ResizeMode = ResizeMode.CanResizeWithGrip;
                 if (!config.StartMaximized)
                 {
-                    Utilities.Log("!config.StartMinimized");
+                    Utilities.Log("!config.StartMaximized");
                     this.WindowState = WindowState.Normal;
                 }
+                if (!config.NoBorder)
+                {
+                    this.WindowStyle = WindowStyle.SingleBorderWindow;
+                    this.ResizeMode = ResizeMode.CanResizeWithGrip;
+                }
+                Point startPosition = new Point();
+                this.PreviewMouseRightButtonDown += (sender, e) =>
+                {
+                startPosition = e.GetPosition(this);
+                };
+                 
+                this.PreviewMouseMove += (sender, e) =>
+                {
+                  if (e.RightButton == MouseButtonState.Pressed)
+                  {
+                     Point endPosition = e.GetPosition(this);
+                     Vector vector = endPosition - startPosition;
+                     this.Left += vector.X;
+                     this.Top += vector.Y;
+                  }
+                };
                 this.Height = config.WindowHeight;
                 this.Width = config.WindowWidth;
             }
@@ -449,7 +469,7 @@ namespace Battlelogium
         private void StartBF3Campaign()
         {
             Utilities.Log("StartOriginProcess(/StartOffline origin://LaunchGame/70619)");
-            StartOriginProcess(@" ""/StartOffline"" ""origin://LaunchGame/70619"""); //Starts Origin in offline mode, autolaunching Battlefield 3
+            StartOriginProcess(@"""/StartOffline"" ""origin://LaunchGame/70619"""); //Starts Origin in offline mode, autolaunching Battlefield 3
             Process battlefield3 = null;
             Utilities.Log("while (Process battlefield3 == null)");
             while (battlefield3 == null)
