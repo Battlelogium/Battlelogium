@@ -184,6 +184,8 @@
                 {
                     //Ignore comments and blank lines.
                     if (row.StartsWith("//")) continue;
+                    if (row.StartsWith("[") && row.EndsWith("]")) continue;
+
                     if (row.Length == 0) continue;
 
                     config.Add(row.Split('=')[0], string.Join("=", row.Split('=').Skip(1).ToArray()));
