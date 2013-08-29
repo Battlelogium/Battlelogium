@@ -309,25 +309,30 @@ namespace Battlelogium
                     this.WindowStyle = WindowStyle.SingleBorderWindow;
                     this.ResizeMode = ResizeMode.CanResizeWithGrip;
                 }
-                Point startPosition = new Point();
-                this.PreviewMouseRightButtonDown += (sender, e) =>
-                {
-                startPosition = e.GetPosition(this);
-                };
-                 
-                this.PreviewMouseMove += (sender, e) =>
-                {
-                  if (e.RightButton == MouseButtonState.Pressed)
-                  {
-                     Point endPosition = e.GetPosition(this);
-                     Vector vector = endPosition - startPosition;
-                     this.Left += vector.X;
-                     this.Top += vector.Y;
-                  }
-                };
+                EnableRightClickMove();
                 this.Height = config.WindowHeight;
                 this.Width = config.WindowWidth;
             }
+        }
+
+        private void EnableRightClickMove()
+        {
+            Point startPosition = new Point();
+            this.PreviewMouseRightButtonDown += (sender, e) =>
+            {
+                startPosition = e.GetPosition(this);
+            };
+
+            this.PreviewMouseMove += (sender, e) =>
+            {
+                if (e.RightButton == MouseButtonState.Pressed)
+                {
+                    Point endPosition = e.GetPosition(this);
+                    Vector vector = endPosition - startPosition;
+                    this.Left += vector.X;
+                    this.Top += vector.Y;
+                }
+            };
         }
 
         private void StartupConnectionCheck()
@@ -336,10 +341,10 @@ namespace Battlelogium
             {
      
                 Utilities.Log("MessageBox startInOfflineMode");
-                if (Utilities.ShowChoiceDialog("Battlelog is not available. Launch Campaign instead?", "Battlelog not available", "Launch Campaign", "Quit"))
+                if (!Utilities.ShowChoiceDialog("Battlelog is not available. Launch Campaign instead?", "Battlelog not available", "Launch Campaign", "Quit"))
                 {
                     Utilities.Log("startInOfflineMode = false");
-                    this.Close();
+                    Environment.Exit(0); //this.Close fires too late for some reason and we manage to start Origin before quitting, so we force quit.
                 }
                 else
                 {
