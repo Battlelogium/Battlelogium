@@ -76,7 +76,7 @@ function addMinimizeCloseButtonsLeft() {
     }
     if (closeButtonElement == null) {
         var closeButton = document.createElement('li');
-        closeButton.innerHTML = '<a onclick="wrapper.quitConfirm()" href="#">X</a>';
+        closeButton.innerHTML = '<a onclick="wrapper.quitWrapper()" href="#">X</a>';
         closeButton.setAttribute('id', 'titleCloseButtonLeft');
 
         navList.appendChild(closeButton);
