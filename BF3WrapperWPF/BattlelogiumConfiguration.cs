@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Text;
     using System.IO;
+    using System.Text.RegularExpressions;
 
     public class BattlelogiumConfiguration
     {
@@ -21,10 +22,16 @@
         private readonly string customJavascript;
         private readonly bool noBorder;
         private readonly bool useSoftwareRender;
+        private readonly string configFileName;
+        private readonly string cssFileName;
+        private readonly string jsFileName;
         #endregion
 
         public BattlelogiumConfiguration(string configFileName, string cssFileName, string jsFileName){
 
+            this.configFileName = configFileName;
+            this.jsFileName = jsFileName;
+            this.cssFileName = cssFileName;
             Utilities.Log(String.Empty);
             Utilities.Log("=========================================");
             Utilities.Log("New BattlelogiumConfiguration Initialized");
@@ -33,7 +40,7 @@
             Utilities.Log("jsFileName is " + jsFileName);
             Utilities.Log("=========================================");
             Utilities.Log(String.Empty);
-            Dictionary<string, string> config = GetConfigurationData(configFileName);
+            Dictionary<string, string> config = GetConfigurationData();
             if (!bool.TryParse(config.GetValueOrDefault("directToCampaign"), out directToCampaign)) directToCampaign = false;
             if (!bool.TryParse(config.GetValueOrDefault("customJsEnabled"), out customJsEnabled)) customJsEnabled = false;
             if (!bool.TryParse(config.GetValueOrDefault("checkUpdates"), out checkUpdates)) checkUpdates = true;
@@ -45,9 +52,8 @@
             if (!bool.TryParse(config.GetValueOrDefault("noBorder"), out noBorder)) noBorder = false;
             if (!bool.TryParse(config.GetValueOrDefault("useSoftwareRender"), out useSoftwareRender)) useSoftwareRender = false;
 
-            this.css = GetCascadingStyleSheet(cssFileName);
-            this.customJavascript = GetCustomJavascript(jsFileName);
-
+            this.css = GetCascadingStyleSheet();
+            this.customJavascript = GetCustomJavascript();
         }
 
         public BattlelogiumConfiguration() : this("config.ini", "style.css", "customjs.js") { }
@@ -66,6 +72,20 @@
             configBuilder.AppendLine("WindowWidth = " + WindowWidth.ToString());
 
             return configBuilder.ToString();
+        }
+
+        public void WriteConfig(string key, string value)
+        {
+            value = value.ToLowerInvariant();
+            string configFile = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, this.configFileName));
+            Regex regex = new Regex(String.Format(@"(?<=(?<!//){0}=)(\w+)",key));
+            try{ 
+                configFile = regex.Replace(configFile, value);
+                File.WriteAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, this.configFileName), configFile);
+            }catch{
+                Utilities.Log("Unable to change value");
+                throw;
+            }
         }
 
         #region Accessors
@@ -205,15 +225,15 @@
     #endregion
 
         #region Getters
-        private Dictionary<string, string> GetConfigurationData(string fileName)
+        private Dictionary<string, string> GetConfigurationData()
         {
-            if (File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName)))
+            if (File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, this.configFileName)))
             {
                 var config = new Dictionary<string, string>();
 
                 // Properties loading code from http://stackoverflow.com/questions/485659/
                 foreach (string row in
-                    File.ReadAllLines(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName)))
+                    File.ReadAllLines(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, this.configFileName)))
                 {
                     //Ignore comments and blank lines.
                     if (row.StartsWith("//")) continue;
@@ -229,20 +249,20 @@
             return null;
         }
 
-        private string GetCascadingStyleSheet(string fileName)
+        private string GetCascadingStyleSheet()
         {
-            if (File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName)))
+            if (File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, this.cssFileName)))
             {
-                return File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName));
+                return File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, this.cssFileName));
             }
             return null;
         }
 
-        private string GetCustomJavascript(string fileName)
+        private string GetCustomJavascript()
         {
-            if (File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName)))
+            if (File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, this.jsFileName)))
             {
-                return File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName));
+                return File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, this.jsFileName));
             }
             return null;
         }

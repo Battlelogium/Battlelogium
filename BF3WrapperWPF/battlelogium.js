@@ -35,6 +35,31 @@ function fixEAPlaybarButtons() {
     }
 }
 
+function addMinimizeCloseButtons() {
+
+    var navBar = document.getElementsByClassName('sections-nav')[0];
+    var navList = navBar.getElementsByTagName('ul')[0];
+
+    var minimizeButtonElement = document.getElementById('titleMinimizeButton');
+    var closeButtonElement = document.getElementById('titleCloseButton');
+
+    if (minimizeButtonElement == null) {
+        var minimizeButton = document.createElement('li');
+        minimizeButton.setAttribute('id', 'titleMinimizeButton');
+        minimizeButton.innerHTML = '<a onclick="wrapper.minimize()" href="#">_</a>';
+
+        navList.appendChild(minimizeButton);
+    }
+    if (closeButtonElement == null) {
+        var closeButton = document.createElement('li');
+        closeButton.innerHTML = '<a onclick="wrapper.quitConfirm()" href="#">X</a>';
+        closeButton.setAttribute('id', 'titleCloseButton');
+
+        navList.appendChild(closeButton);
+    }
+}
+
+addMinimizeCloseButtons();
 fixEAPlaybarButtons();
 addPlaybarButton('serverBrowserButton', 'SERVERS', 'View Servers', 'location.href = "http://battlelog.battlefield.com/bf3/servers/"');
 addPlaybarButton('wrapperSettingsButton', 'SETTINGS', 'Change Battlelogium Settings', 'showDialog(settingsDialog())');

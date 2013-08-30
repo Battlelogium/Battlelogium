@@ -92,6 +92,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BattlelogiumConfigEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BattlelogiumConfigEditor.Designer.cs">
+      <DependentUpon>BattlelogiumConfigEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="UpdateNotifier.cs" />
     <Compile Include="Utilities.cs" />
     <Page Include="BattlelogiumMain.xaml">
@@ -207,6 +213,11 @@
       <Project>{ED02D418-7C0E-4E6C-99A9-BE4357122AE7}</Project>
       <Name>WPFCustomMessageBox</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="BattlelogiumConfigEditor.resx">
+      <DependentUpon>BattlelogiumConfigEditor.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
