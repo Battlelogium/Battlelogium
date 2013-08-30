@@ -98,6 +98,11 @@
     <Compile Include="BattlelogiumConfigEditor.Designer.cs">
       <DependentUpon>BattlelogiumConfigEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="CustomMessageBox\CustomMessageBox.cs" />
+    <Compile Include="CustomMessageBox\CustomMessageBoxUtils.cs" />
+    <Compile Include="CustomMessageBox\CustomMessageBoxWindow.xaml.cs">
+      <DependentUpon>CustomMessageBoxWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UpdateNotifier.cs" />
     <Compile Include="Utilities.cs" />
     <Page Include="BattlelogiumMain.xaml">
@@ -112,6 +117,10 @@
       <DependentUpon>BattlelogiumMain.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="CustomMessageBox\CustomMessageBoxWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BattlelogiumConfiguration.cs" />
@@ -207,12 +216,6 @@
     </Content>
     <Resource Include="images\loadingtext.png" />
     <Resource Include="images\loading.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\WPFCustomMessageBox\WPFCustomMessageBox.csproj">
-      <Project>{ED02D418-7C0E-4E6C-99A9-BE4357122AE7}</Project>
-      <Name>WPFCustomMessageBox</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="BattlelogiumConfigEditor.resx">

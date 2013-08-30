@@ -90,6 +90,7 @@ namespace Battlelogium
             config = new BattlelogiumConfiguration();
             Utilities.Log(config.ConfigDump());
 
+            CustomMessageBox.Show("HELLO");
             Utilities.Log("StartupConnectionCheck()");
             this.StartupConnectionCheck();
 

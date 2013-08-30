@@ -15,7 +15,7 @@ namespace WPFCustomMessageBox
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    internal static class Util
+    internal static class CustomMessageBoxUtils
     {
         internal static ImageSource ToImageSource(this Icon icon)
         {
