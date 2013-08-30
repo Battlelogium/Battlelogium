@@ -244,7 +244,6 @@ namespace Battlelogium
             Utilities.Log("FadeBackgroundCompleted()");
             Utilities.Log("LoadingImage.Visibility = Visibility.Hidden");
             this.LoadingImage.Visibility = Visibility.Hidden;
-          
         }
         #endregion
 
@@ -323,10 +322,9 @@ namespace Battlelogium
                 {
                     this.WindowStyle = WindowStyle.SingleBorderWindow;
                     this.ResizeMode = ResizeMode.CanResizeWithGrip;
-                }
+                } 
                 EnableRightClickMove();
-                //this.MaxHeight = SystemParameters.PrimaryScreenHeight;
-                //this.MaxWidth = SystemParameters.PrimaryScreenWidth;
+               
                 this.Height = config.WindowHeight;
                 this.Width = config.WindowWidth;
             }

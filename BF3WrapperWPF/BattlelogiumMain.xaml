@@ -15,14 +15,15 @@
             <DoubleAnimation From="1" To="0" Storyboard.TargetProperty="(UIElement.Opacity)" Duration="0:0:0.5" AutoReverse="True" DecelerationRatio="0.3" Completed="BlinkLoadingCompleted"/>
         </Storyboard>
     </Window.Resources>
-    
-    <Grid>
-            <Grid Canvas.ZIndex="1">
-                <Image Canvas.ZIndex="2" Margin="20,0,0,20" Stretch="UniformToFill" Source="images\loadingtext.png" HorizontalAlignment="Left" Name="LoadingImageText" VerticalAlignment="Bottom" Height="50" Width="172" />
-                <Image Canvas.ZIndex="1" Stretch="UniformToFill"  Source="images\loading.jpg" HorizontalAlignment="Center" Name="LoadingImage" VerticalAlignment="Top" />
-            </Grid>
+    <Border BorderBrush="Black" BorderThickness="1">
+        <Grid>
+             <Grid Canvas.ZIndex="1">
+                 <Image Canvas.ZIndex="2" Margin="20,0,0,20" Stretch="UniformToFill" Source="images\loadingtext.png" HorizontalAlignment="Left" Name="LoadingImageText" VerticalAlignment="Bottom" Height="50" Width="172" />
+                 <Image Canvas.ZIndex="1" Stretch="UniformToFill"  Source="images\loading.jpg" HorizontalAlignment="Center" Name="LoadingImage" VerticalAlignment="Top" />
+             </Grid>
+               <aw:WebControl Source="http://battlelog.battlefield.com/" LoadingFrameComplete="BattlelogLoadingFrameComplete" DocumentReady="BattlelogDocumentReady" ShowContextMenu="BattlelogShowContextMenu" HorizontalAlignment="Stretch" Margin="0,0,0,0" Name="Battlelog" VerticalAlignment="Top" />
         
-        <aw:WebControl Source="http://battlelog.battlefield.com/" LoadingFrameComplete="BattlelogLoadingFrameComplete" DocumentReady="BattlelogDocumentReady" ShowContextMenu="BattlelogShowContextMenu" HorizontalAlignment="Stretch" Margin="0,0,0,0" Name="Battlelog" VerticalAlignment="Top" />
-        
-    </Grid>
+         </Grid>
+    </Border>
+
 </Window>

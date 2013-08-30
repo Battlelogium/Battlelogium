@@ -35,17 +35,17 @@ function fixEAPlaybarButtons() {
     }
 }
 
-function addMinimizeCloseButtons() {
+function addMinimizeCloseButtonsRight() {
 
-    var navBar = document.getElementsByClassName('sections-nav')[0];
+    var navBar = document.getElementsByClassName('secondary-nav')[0];
     var navList = navBar.getElementsByTagName('ul')[0];
 
-    var minimizeButtonElement = document.getElementById('titleMinimizeButton');
-    var closeButtonElement = document.getElementById('titleCloseButton');
+    var minimizeButtonElement = document.getElementById('titleMinimizeButtonRight');
+    var closeButtonElement = document.getElementById('titleCloseButtonRight');
 
     if (minimizeButtonElement == null) {
         var minimizeButton = document.createElement('li');
-        minimizeButton.setAttribute('id', 'titleMinimizeButton');
+        minimizeButton.setAttribute('id', 'titleMinimizeButtonRight');
         minimizeButton.innerHTML = '<a onclick="wrapper.minimize()" href="#">_</a>';
 
         navList.appendChild(minimizeButton);
@@ -53,13 +53,38 @@ function addMinimizeCloseButtons() {
     if (closeButtonElement == null) {
         var closeButton = document.createElement('li');
         closeButton.innerHTML = '<a onclick="wrapper.quitConfirm()" href="#">X</a>';
-        closeButton.setAttribute('id', 'titleCloseButton');
+        closeButton.setAttribute('id', 'titleCloseButtonRight');
 
         navList.appendChild(closeButton);
     }
 }
 
-addMinimizeCloseButtons();
+function addMinimizeCloseButtonsLeft() {
+
+    var navBar = document.getElementsByClassName('sections-nav')[0];
+    var navList = navBar.getElementsByTagName('ul')[0];
+
+    var minimizeButtonElement = document.getElementById('titleMinimizeButtonLeft');
+    var closeButtonElement = document.getElementById('titleCloseButtonLeft');
+
+    if (minimizeButtonElement == null) {
+        var minimizeButton = document.createElement('li');
+        minimizeButton.setAttribute('id', 'titleMinimizeButtonLeft');
+        minimizeButton.innerHTML = '<a onclick="wrapper.minimize()" href="#">_</a>';
+
+        navList.appendChild(minimizeButton);
+    }
+    if (closeButtonElement == null) {
+        var closeButton = document.createElement('li');
+        closeButton.innerHTML = '<a onclick="wrapper.quitConfirm()" href="#">X</a>';
+        closeButton.setAttribute('id', 'titleCloseButtonLeft');
+
+        navList.appendChild(closeButton);
+    }
+}
+
+//addMinimizeCloseButtonsLeft();
+addMinimizeCloseButtonsRight();
 fixEAPlaybarButtons();
 addPlaybarButton('serverBrowserButton', 'SERVERS', 'View Servers', 'location.href = "http://battlelog.battlefield.com/bf3/servers/"');
 addPlaybarButton('wrapperSettingsButton', 'SETTINGS', 'Change Battlelogium Settings', 'showDialog(settingsDialog())');

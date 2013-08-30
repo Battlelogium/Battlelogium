@@ -8,11 +8,11 @@
     using System.Diagnostics;
     using System.Management;
     using System.Windows;
+
     using WPFCustomMessageBox;
 
     public static class Utilities
     {
-
         /// <summary> Extention method to return null if a key isn't found in the dictionary instead of KeyNotFoundException. </summary>
         public static TValue GetValueOrDefault<TKey, TValue>(this Dictionary<TKey, TValue> dictionary, TKey key)
         {
@@ -83,4 +83,5 @@
         }
 
     }
+
 }
