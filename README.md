@@ -30,29 +30,38 @@ Configuration Options
 
 * `style.css` is the CSS that is applied to the Battlelog web page when loaded. By default, it removes footers and advertisements as well as the scrollbar. Any modifications you make to this file will be applied to Battlelog's CSS.
 
-* `config.txt` is a simple configuration file with a few configurable options
+* `config.ini` is a simple configuration file with a few configurable options
     
-	-  `waitTimeToKillOrigin` is the amount of time in seconds to wait to kill Origin after the wrapper has closed. Increase if BF3 saves aren't syncing.
+	-   General Options
+	    -  `waitTimeToKillOrigin` is the amount of time in seconds to wait to kill Origin after the wrapper has closed. Increase if BF3 saves aren't syncing.
 	
-    -  `customJsEnabled` should be true if you wish to use custom Javascript in the customjs.js file. It will run at the `LoadingFrameComplete` event.
+        -  `customJsEnabled` should be true if you wish to use custom Javascript in the customjs.js file. It will run at the `LoadingFrameComplete` event.
 
-	-  `directToCampaign` should be true if you want to skip Battlelog and go directly to campaign mode. If no internet connection is detected, this will also be the default behaviour
+	    -  `directToCampaign` should be true if you want to skip Battlelog and go directly to campaign mode. If no internet connection is detected, this will also be the default behaviour
+	 
+	    -  `checkUpdates` should be true if you want Battlelogium to check for updates, and notify you of them.
+		
+		-  `useSoftwareRender` should be true if you want WPF to render without hardware acceleration. This is useful if the Steam Overlay is causing problems in Battlelogium, as it will disable it in. **The Steam Overlay in Battlefield 3 will still work with this on**
 	
-	-  `windowedMode` should be true if you want to run Battlelogium in a window instead of fullscreen. Using windowedMode also applies the below options
+	-   Window Options
 	
-	    -  `startMaximized` should be true if, when running in a window, the window is maximized by default.
+	    -  `windowedMode` should be true if you want to run Battlelogium in a window instead of fullscreen.
+	
+	    -  `startMaximized` The window by maximized by default if this is true. This only applies when `windowedMode` is true
+		
+		-  `noBorder` There won't be a border or title bar on the window. This means you will not be able to resize the window. You can drag the window around with rightclick, however
 		
 		-  `windowHeight` is the height of the window in pixels at the start. 
 		
 		-  `windowWidth` is the width of the window in pixels at the start.
 
-The default windowHeight and windowWidth result in a 16:9 resolution.
+The default windowHeight and windowWidth are 720p (1280x720). You are able to drag and move the window with a rightclick anywhere on the window.
 
 Bug reports
 -----------
 
 Bug reports and support will only given if 3 things are provided.
-* A copy of your config.txt
+* A copy of your config.ini
 * A copy of your style.css  
 * A copy of the debug output. To get debug output on Windows 7:
     1. Shift-Rightclick where Battlelogium.exe is located, and click on **_Open Command Window Here_**, or open a Command Prompt and `cd` into where Battlelogium.exe is located.
@@ -61,12 +70,12 @@ Bug reports and support will only given if 3 things are provided.
     4. Right-click and select **_Mark_**
     5. Drag all over the output, everythiing from `!---Begin Log---!` to `!---End Log---!`.
     6. Paste it somewhere. I recommend [Github Gists](gists.github.com) as you can paste multiple files in one gist. 
-    7. Now that your config.txt, style.css and debug output is in a gist, send me the link.
+    7. Now that your config.ini, style.css and debug output is in a gist, send me the link.
 
 Building
 --------
 
-1. Download the [Awesomium SDK](http://awesomium.com/download/). Be sure to install the .NET wrappers, alternatively, though not recommended, copy the files from the libs folder of the project directory from this repo to the bin/Debug and bin/Release folders. Be sure to reference Awesomium.Core and Awesomium.Windows.Controls.
+1. It is recommended that you download the [Awesomium SDK](http://awesomium.com/download/). Be sure to install the .NET wrappers, be sure to reference Awesomium.Core and Awesomium.Windows.Controls.
 
 2. Build using Visual Studio 2010 or [Visual C# Express](http://www.microsoft.com/visualstudio/eng/downloads#d-csharp-2010-express)
 
