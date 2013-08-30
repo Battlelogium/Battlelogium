@@ -79,6 +79,11 @@ Building
 
 2. Build using Visual Studio 2010 or [Visual C# Express](http://www.microsoft.com/visualstudio/eng/downloads#d-csharp-2010-express)
 
+Special thanks
+--------------
+
+Special thanks to [ProfDoctorMrSaibot](http://steamcommunity.com/id/ProfDoctorMrSaibot) for many sugguestions and testing
+
 ___
 
 Licensing
