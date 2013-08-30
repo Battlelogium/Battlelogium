@@ -132,6 +132,7 @@ namespace Battlelogium
                     Utilities.Log("RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly");
                     RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly;
                 }
+
             }
         }
 
@@ -325,6 +326,8 @@ namespace Battlelogium
                     this.ResizeMode = ResizeMode.CanResizeWithGrip;
                 }
                 EnableRightClickMove();
+                //this.MaxHeight = SystemParameters.PrimaryScreenHeight;
+                //this.MaxWidth = SystemParameters.PrimaryScreenWidth;
                 this.Height = config.WindowHeight;
                 this.Width = config.WindowWidth;
             }
@@ -544,6 +547,12 @@ namespace Battlelogium
                 this.Battlelog.ExecuteJavascript("showDialog(askToQuitDialog('Are you sure you want to quit?', 'Do you want to quit?'))");
             }));
 
+            jsObject.Bind("minimize", false, new JavascriptMethodEventHandler(delegate
+            {
+                Utilities.Log("Javascript Minimize pressed");
+                this.WindowState = WindowState.Minimized;
+            }));
+
             jsObject.Bind("quitWrapper", false, new JavascriptMethodEventHandler(delegate
             {
                 Utilities.Log("Quit requested from Javascript call");
@@ -561,24 +570,15 @@ namespace Battlelogium
             jsObject.Bind("editSettings", false, new JavascriptMethodEventHandler(delegate
             {
                 Utilities.Log("Javascript EditSettings pressed");
-
-                //Run this in a background worker so we can show the askToQuitDialog after notepad.exe has quit without hanging UI thread.
-                BackgroundWorker worker = new BackgroundWorker();
-                worker.DoWork += delegate
+                using (var configEditor = new BattlelogiumConfigEditor(config))
                 {
-                    Process.Start("notepad.exe", Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.ini")).WaitForExit();
-                };
-                
-                worker.RunWorkerCompleted += delegate
-                {
+                    var result = configEditor.ShowDialog();
+                    if (result == System.Windows.Forms.DialogResult.OK)
+                    {
+                        this.Battlelog.ExecuteJavascript("showDialog(askToQuitDialog('Settings will be saved on restart', 'Do you wish to quit Battlelogium now?'))");
+                    }
 
-                   Dispatcher.Invoke(new Action(delegate {
-                       this.Battlelog.ExecuteJavascript("showDialog(askToQuitDialog('Settings will be saved on restart', 'Do you wish to quit Battlelogium now?'))");
-                   }));
-
-                };
-
-                worker.RunWorkerAsync();
+                }
             }));
         }
 
