@@ -8,7 +8,7 @@ Installation
 ------------
 
 1. Battlelogium requires [.NET Framework 4](http://www.microsoft.com/en-ca/download/details.aspx?id=17851). This should have already been installed if you are on Windows Vista or later and have Windows Update enabled.
-2. Install Origin. You can disable starting at launch, but this is not required, ans Battlelogium will close all Origin processes before starting Origin again.
+2. Install Origin. You can disable starting at launch, but this is not required, as Battlelogium will close all Origin processes before starting Origin again.
 3. Install the [latest Battlefield 3 Web Plugins](http://battlelog-cdn.battlefield.com/public/download/battlelog-web-plugins_2.1.7_115.exe)
 4. If you have downloaded the package from [my website](http://punyman.com/projects/Battlelogium.zip), simply unzip to any folder along with the supplied Awesomium runtime libraries
 5. Add Battlelogium.exe to Steam as a Non-Steam Game. You may change the configuration options listed below
