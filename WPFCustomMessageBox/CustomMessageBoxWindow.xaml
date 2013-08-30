@@ -7,7 +7,7 @@
         ShowInTaskbar="False" Topmost="True"
         ResizeMode="NoResize" SizeToContent="WidthAndHeight"
         TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="ClearType" UseLayoutRounding="True"
-        Title="" MinHeight="155" MaxWidth="470" MinWidth="154">
+        Title="" MinHeight="155" MaxWidth="470" MinWidth="154" Loaded="Window_Loaded">
     <!-- todo: The TextOptions properties above fix a minor blurry image issue, but are only compatible with >= .NET 4.0 -->
     <Grid>
         <Grid.RowDefinitions>

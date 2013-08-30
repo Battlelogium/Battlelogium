@@ -31,6 +31,8 @@ namespace Battlelogium
     using System.Windows;
     using System.Windows.Input;
     using System.Windows.Media.Animation;
+    using System.Windows.Media;
+    using System.Windows.Interop;
     using System.Management;
     using System.Windows.Threading;
     using System.Security.Permissions;
@@ -87,6 +89,7 @@ namespace Battlelogium
             Utilities.Log("new BattlelogiumConfiguration()");
             config = new BattlelogiumConfiguration();
             Utilities.Log(config.ConfigDump());
+
             Utilities.Log("StartupConnectionCheck()");
             this.StartupConnectionCheck();
 
@@ -117,6 +120,18 @@ namespace Battlelogium
 
                 Utilities.Log("Battlelog.Websession = CreateBattlelogWebSession()");
                 this.Battlelog.WebSession = CreateBattlelogWebSession();
+
+                if (config.CheckUpdates)
+                {
+                    Utilities.Log("new UpdateNotifier(Assembly.GetEntryAssembly().GetName().Version).run()");
+                    new UpdateNotifier(Assembly.GetEntryAssembly().GetName().Version, this.Dispatcher).run();
+                }
+
+                if (config.UseSoftwareRender)
+                {
+                    Utilities.Log("RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly");
+                    RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly;
+                }
             }
         }
 

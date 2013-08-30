@@ -38,7 +38,7 @@ function fixEAPlaybarButtons() {
 fixEAPlaybarButtons();
 addPlaybarButton('serverBrowserButton', 'SERVERS', 'View Servers', 'location.href = "http://battlelog.battlefield.com/bf3/servers/"');
 addPlaybarButton('wrapperSettingsButton', 'SETTINGS', 'Change Battlelogium Settings', 'showDialog(settingsDialog())');
-addPlaybarButton('wrapperQuitButton', 'QUIT', 'Quit Battlefield 3', 'wrapper.quitConfirm()');
+addPlaybarButton('wrapperQuitButton', 'QUIT', 'Quit Battlelogium', 'wrapper.quitConfirm()');
 
 //Dialog functions
 
@@ -73,7 +73,7 @@ function settingsDialog() {
 }
 
 function askToQuitDialog(header, reason) {
-    var quitBattlelogiumButton = createDialogButton('quitBattlelogiumButton', 'wrapper.quitWrapper()', " Close Battlelogium ", "Quit Battlelogium and Battlefield 3", false);
+    var quitBattlelogiumButton = createDialogButton('quitBattlelogiumButton', 'wrapper.quitWrapper()', " Close Battlelogium ", "Quit Battlelogium", false);
     var closeDialogButton = createDialogButton('closeDialogButton', 'closeDialog()', " Cancel ", null, true);
     return createDialog("Confirm Closing", header, reason, false, [quitBattlelogiumButton, closeDialogButton]);
 }

@@ -13,12 +13,14 @@
         private bool directToCampaign;
         private readonly bool customJsEnabled;
         private readonly int waitTimeToKillOrigin;
+        private readonly bool checkUpdates;
         private readonly bool windowedMode;
         private readonly bool startMaximized;
         private readonly int windowHeight;
         private readonly int windowWidth;
         private readonly string customJavascript;
         private readonly bool noBorder;
+        private readonly bool useSoftwareRender;
         #endregion
 
         public BattlelogiumConfiguration(string configFileName, string cssFileName, string jsFileName){
@@ -34,12 +36,14 @@
             Dictionary<string, string> config = GetConfigurationData(configFileName);
             if (!bool.TryParse(config.GetValueOrDefault("directToCampaign"), out directToCampaign)) directToCampaign = false;
             if (!bool.TryParse(config.GetValueOrDefault("customJsEnabled"), out customJsEnabled)) customJsEnabled = false;
+            if (!bool.TryParse(config.GetValueOrDefault("checkUpdates"), out checkUpdates)) checkUpdates = true;
             if (!int.TryParse(config.GetValueOrDefault("waitTimeToKillOrigin"), out waitTimeToKillOrigin)) waitTimeToKillOrigin = 10;
             if (!bool.TryParse(config.GetValueOrDefault("windowedMode"), out windowedMode)) windowedMode = false;
             if (!bool.TryParse(config.GetValueOrDefault("startMaximized"), out startMaximized)) startMaximized = false;
             if (!int.TryParse(config.GetValueOrDefault("windowHeight"), out windowHeight)) windowHeight = 1280;
             if (!int.TryParse(config.GetValueOrDefault("windowWidth"), out windowWidth)) windowWidth = 720;
             if (!bool.TryParse(config.GetValueOrDefault("noBorder"), out noBorder)) noBorder = false;
+            if (!bool.TryParse(config.GetValueOrDefault("useSoftwareRender"), out useSoftwareRender)) useSoftwareRender = false;
 
             this.css = GetCascadingStyleSheet(cssFileName);
             this.customJavascript = GetCustomJavascript(jsFileName);
@@ -114,6 +118,15 @@
                 return this.startMaximized;
             }
         }
+        
+        /// <summary>Whether to check for Updates?</summary>
+        public bool CheckUpdates
+        {
+            get
+            {
+                return this.checkUpdates;
+            }
+        }
 
         /// <summary>If we're in windowed mode, the height of the Window</summary>
         public int WindowHeight
@@ -139,6 +152,15 @@
             get
             {
                 return this.noBorder;
+            }
+        }
+
+        /// <summary>Whether to use the software renderer</summary>
+        public bool UseSoftwareRender
+        {
+            get
+            {
+                return this.useSoftwareRender;
             }
         }
 

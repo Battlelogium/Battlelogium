@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Windows;
+using System.Windows.Interop;
 
 namespace WPFCustomMessageBox
 {
@@ -226,6 +227,14 @@ namespace WPFCustomMessageBox
         {
             Result = MessageBoxResult.No;
             Close();
-        }        
+        }
+
+        /// <summary>Force rendering the messagebox window in software mode so Steam can't overlay ontop of it</summary>
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            HwndSource hwndSource = PresentationSource.FromVisual(this) as HwndSource;
+            HwndTarget hwndTarget = hwndSource.CompositionTarget;
+            hwndTarget.RenderMode = RenderMode.SoftwareOnly;
+        }
     }
 }
