@@ -323,8 +323,12 @@ namespace Battlelogium
                     this.WindowStyle = WindowStyle.SingleBorderWindow;
                     this.ResizeMode = ResizeMode.CanResizeWithGrip;
                 } 
+                if (config.NoBorder)
+                {
+                    this.BorderBrush = new LinearGradientBrush(Color.FromRgb(128, 128, 128), Color.FromRgb(208, 208, 208), 90);
+                    this.BorderThickness = new Thickness(1D);
+                }
                 EnableRightClickMove();
-               
                 this.Height = config.WindowHeight;
                 this.Width = config.WindowWidth;
             }
