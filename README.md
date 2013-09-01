@@ -79,6 +79,60 @@ Building
 
 2. Build using Visual Studio 2010 or [Visual C# Express](http://www.microsoft.com/visualstudio/eng/downloads#d-csharp-2010-express)
 
+
+Changelogs
+----------
+
+###Release 1.21
+>* User Experience
+>    - Steam Overlay now works again in Battlefield 3
+>    - Changed waitTimeToCloseOrigin config name to waitTimeToHideOrigin
+>    - Added config waitTimeToKillOrigin
+>    - Now waits a configurable amount of time before killing Origin and ESNSonar, to allow Origin to sync saves with cloud
+>
+>* Code
+>    - All timers now use delegates for cleaner code.
+>    - Changed some comments to be more descriptive
+>    - Changed AssemblyFileVersion to 1.2.1
+>    - Updated README.md to reflect config changes
+>    - Removed SendKeys() method, is no longer needed.
+>    - Wrapper will sleep for 5 seconds more than waitTimeToKillOrigin on closing to allow origin kill thread to, well, kill Origin
+
+###Release 1.3
+>* User Experience
+>   - Now supports going directly to campaign with Steam Overlay support. 
+>	- Will ask if you want to go to campaign if a connection to Battlelog is unable to be estalblished.
+>	- Uses Origin's `/StartClientMinimized` commandline parameter instead of timers to keep Origin in the background
+>	- Added a windowed mode
+>	- Added a borderless window mode
+>	- Added the ability to force rendering using software (CPU) renderer to disable Steam Overlay in Battlelogium
+>	- Added the ability to clear the cache
+>	- Changed cache location to Battlelogium's start directory
+>	- Added a user friendly settings editor 
+>	- Changed configuration format to an easier to use INI-type format
+>	- Added update notifications
+>	- Shortened the default playbar buttons, i.e "Play Campaign" to simply "Campaign"
+>	- Added minimize and close buttons to Battlelog
+>	- Removed "for Steam" in the splash screen.
+>	- Automatically restart Origin if it's already running before Battlelogium starts
+>	- Remove quitting by escape key
+>	- Will now prompt before quitting using the quit button.
+>
+>* Code
+>   - Refactored much of the original code
+>   - Delegates are used more frequently, replacing one or 2 lined event handlers.
+>	- Utilities has been moved into their own classes
+>	- Created a Configuration API to separate settings from UI code.
+>	- Removed useless wrapper functions in BattlelogiumMain() constructor
+>	- Removed most docstrings. They clutter the code that was pretty self-explanatory anyways.
+>	- MessageBoxes use a custom class using WPF to enable verbs instead of "OK" and "Cancel"
+>	- Logging reflects the method calls the code makes more accurately
+>	- Refactored adding playbar buttons into a resuable method
+>	- Created a rudimentary hacky API to create dialogs in Battlelog DOM. It's not the best code, but it's what I can make do with Battlelog's ugly mess of a web page.
+>	- Changed some method names to be more clear.
+>	- Sorted out code #regions
+	
+	
 Special thanks
 --------------
 
