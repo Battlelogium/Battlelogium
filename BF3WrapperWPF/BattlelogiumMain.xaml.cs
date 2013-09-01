@@ -145,6 +145,7 @@ namespace Battlelogium
             {
                this.Battlelog.ExecuteJavascript("showDialog(okDialog('Battlefield 3 is still running', 'Quit Battlefield 3 before closing Battlelogium'))");
                e.Cancel = true;
+               return;
             }
             // Shutdown WebCore
             try
@@ -547,7 +548,7 @@ namespace Battlelogium
                 Utilities.Log("Javascript QuitButton pressed");
                 this.Battlelog.ExecuteJavascript("showDialog(askToQuitDialog('Are you sure you want to quit?', 'Do you want to quit?'))");
             }));
-
+            
             jsObject.Bind("minimize", false, new JavascriptMethodEventHandler(delegate
             {
                 Utilities.Log("Javascript Minimize pressed");
@@ -584,7 +585,6 @@ namespace Battlelogium
         }
 
         #endregion
-
     }
 }
         

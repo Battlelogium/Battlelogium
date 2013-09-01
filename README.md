@@ -136,8 +136,10 @@ Changelogs
 Special thanks
 --------------
 
-Special thanks to [ProfDoctorMrSaibot](http://steamcommunity.com/id/ProfDoctorMrSaibot) for many sugguestions and testing
 
+Thanks to..
+* [ProfDoctorMrSaibot](http://steamcommunity.com/id/ProfDoctorMrSaibot) for many sugguestions and testing
+* [Frohman :D](http://forums.steampowered.com/forums/member.php?u=974602) for the original _Battlelog on STEAM_
 ___
 
 Licensing
