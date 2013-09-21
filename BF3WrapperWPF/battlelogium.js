@@ -35,56 +35,45 @@ function fixEAPlaybarButtons() {
     }
 }
 
-function addMinimizeCloseButtonsRight() {
+function createToolsButton(onclick, id){
+    var toolsButton = document.createElement('li');
+    toolsButton.setAttribute('onclick', onclick);
+    toolsButton.setAttribute('id', "".concat(id, "Button"));
+    var toolsDiv = document.createElement('div');
+    toolsDiv.setAttribute('class', "".concat("tools-item log ", id));
+    toolsButton.appendChild(toolsDiv);
+    return toolsButton
+}
 
-    var navBar = document.getElementsByClassName('secondary-nav')[0];
-    var navList = navBar.getElementsByTagName('ul')[0];
-
-    var minimizeButtonElement = document.getElementById('titleMinimizeButtonRight');
-    var closeButtonElement = document.getElementById('titleCloseButtonRight');
-
-    if (minimizeButtonElement == null) {
-        var minimizeButton = document.createElement('li');
-        minimizeButton.setAttribute('id', 'titleMinimizeButtonRight');
-        minimizeButton.innerHTML = '<a onclick="wrapper.minimize()" href="#">_</a>';
-
-        navList.appendChild(minimizeButton);
+function addChromeButtons() {
+    var headerTools = document.getElementById('base-header-user-tools').getElementsByClassName('tools pull-right')[0];
+    var avatarLi = document.getElementById('base-header-user-tools').getElementsByClassName('tools pull-right')[0].getElementsByClassName('comcenter-toggle tools-item')[0].previousElementSibling; //Insert our chrome buttons before the avatar list item. 
+    var closeButton = createToolsButton("wrapper.quitWrapper()", 'close');
+    var minimizeButton = createToolsButton("wrapper.minimize()", 'minimize');
+    var reloadButton = createToolsButton("location.reload()", 'reload');
+   
+    if (document.getElementById('reloadButton') == null) {
+        headerTools.insertBefore(reloadButton, avatarLi);
     }
-    if (closeButtonElement == null) {
-        var closeButton = document.createElement('li');
-        closeButton.innerHTML = '<a onclick="wrapper.quitConfirm()" href="#">X</a>';
-        closeButton.setAttribute('id', 'titleCloseButtonRight');
-
-        navList.appendChild(closeButton);
+    if (document.getElementById('minimizeButton') == null) {
+        headerTools.insertBefore(minimizeButton, avatarLi);
+    }
+    if (document.getElementById('closeButton') == null) {
+        headerTools.insertBefore(closeButton, avatarLi);
     }
 }
 
-function addMinimizeCloseButtonsLeft() {
-
-    var navBar = document.getElementsByClassName('sections-nav')[0];
-    var navList = navBar.getElementsByTagName('ul')[0];
-
-    var minimizeButtonElement = document.getElementById('titleMinimizeButtonLeft');
-    var closeButtonElement = document.getElementById('titleCloseButtonLeft');
-
-    if (minimizeButtonElement == null) {
-        var minimizeButton = document.createElement('li');
-        minimizeButton.setAttribute('id', 'titleMinimizeButtonLeft');
-        minimizeButton.innerHTML = '<a onclick="wrapper.minimize()" href="#">_</a>';
-
-        navList.appendChild(minimizeButton);
-    }
-    if (closeButtonElement == null) {
-        var closeButton = document.createElement('li');
-        closeButton.innerHTML = '<a onclick="wrapper.quitWrapper()" href="#">X</a>';
-        closeButton.setAttribute('id', 'titleCloseButtonLeft');
-
-        navList.appendChild(closeButton);
-    }
+function applyChromeCSS() {
+    var head = document.getElementsByTagName('head')[0];
+    var chromeCSS = document.createElement('link');
+    chromeCSS.setAttribute('rel', 'stylesheet');
+    chromeCSS.setAttribute('type', 'text/css');
+    chromeCSS.setAttribute('href', 'asset://local/bf3icons.css'); 
+    head.appendChild(chromeCSS);
 }
 
-//addMinimizeCloseButtonsLeft();
-addMinimizeCloseButtonsRight();
+applyChromeCSS(); //Add our modified spritesheet for the false chrome buttons
+addChromeButtons(); //Add the false window chrome buttons to DOM
 fixEAPlaybarButtons();
 addPlaybarButton('serverBrowserButton', 'SERVERS', 'View Servers', 'location.href = "http://battlelog.battlefield.com/bf3/servers/"');
 addPlaybarButton('wrapperSettingsButton', 'SETTINGS', 'Change Battlelogium Settings', 'showDialog(settingsDialog())');
@@ -114,7 +103,6 @@ function okDialog(header, reason) {
 }
 
 function settingsDialog() {
-
     var clearCacheButton = createDialogButton('clearCacheButton', 'showDialog(clearCacheDialog())', " Clear Cache ", "Clear Battlelogium Webcache", false);
     var editSettingsButton = createDialogButton('editSettingsButton', 'wrapper.editSettings()', " Edit Settings ", "Open the settings editor", false);
     var closeSettingsButton = createDialogButton('closeSettingsButton', 'closeDialog()', " Close ", "Close this dialog", true);
