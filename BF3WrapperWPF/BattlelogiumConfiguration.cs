@@ -17,6 +17,7 @@
         private readonly bool checkUpdates;
         private readonly bool windowedMode;
         private readonly bool startMaximized;
+        private readonly bool handleOrigin; 
         private readonly int windowHeight;
         private readonly int windowWidth;
         private readonly string customJavascript;
@@ -51,6 +52,8 @@
             if (!int.TryParse(config.GetValueOrDefault("windowWidth"), out windowWidth)) windowWidth = 720;
             if (!bool.TryParse(config.GetValueOrDefault("noBorder"), out noBorder)) noBorder = false;
             if (!bool.TryParse(config.GetValueOrDefault("useSoftwareRender"), out useSoftwareRender)) useSoftwareRender = false;
+            if (!bool.TryParse(config.GetValueOrDefault("handleOrigin"), out handleOrigin)) handleOrigin = true;
+
 
             this.css = GetCascadingStyleSheet();
             this.customJavascript = GetCustomJavascript();
@@ -70,6 +73,7 @@
             configBuilder.AppendLine("StatMaximized = " + StartMaximized.ToString());
             configBuilder.AppendLine("WindowHeight = " + WindowHeight.ToString());
             configBuilder.AppendLine("WindowWidth = " + WindowWidth.ToString());
+            configBuilder.AppendLine("HandleOrigin = " + HandleOrigin.ToString());
 
             return configBuilder.ToString();
         }
@@ -181,6 +185,15 @@
             get
             {
                 return this.useSoftwareRender;
+            }
+        }
+
+        /// <summary>Whether to start or handle Origin</summary>
+        public bool HandleOrigin
+        {
+            get
+            {
+                return this.handleOrigin;
             }
         }
 

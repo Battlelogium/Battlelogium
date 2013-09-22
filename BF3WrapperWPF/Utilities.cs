@@ -8,6 +8,7 @@
     using System.Diagnostics;
     using System.Management;
     using System.Windows;
+    using System.IO;
 
     using WPFCustomMessageBox;
 

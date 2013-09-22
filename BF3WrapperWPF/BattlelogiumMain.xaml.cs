@@ -91,6 +91,7 @@ namespace Battlelogium
             Utilities.Log(config.ConfigDump());
             Utilities.Log("StartupConnectionCheck()");
             this.StartupConnectionCheck();
+            
 
             if (config.DirectToCampaign) //If we're going directly to campaign, there is no need to initialize the main window
             {
@@ -102,8 +103,11 @@ namespace Battlelogium
             }
             else
             {
-                Utilities.Log("StartOriginProcess(/StartClientMinimized)");
-                this.StartOriginProcess("/StartClientMinimized");
+                if (config.HandleOrigin)
+                {
+                    Utilities.Log("StartOriginProcess(/StartClientMinimized)");
+                    this.StartOriginProcess("/StartClientMinimized");
+                }
 
                 Utilities.Log("InitializeComponent()");
                 this.InitializeComponent();
@@ -131,7 +135,6 @@ namespace Battlelogium
                     Utilities.Log("RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly");
                     RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly;
                 }
-
             }
         }
 
@@ -165,10 +168,11 @@ namespace Battlelogium
             {
                 Dispatcher.Invoke(new Action(delegate
                 {
-
-                    Utilities.Log("KillProcess(origin)");
-                    Utilities.KillProcess("origin");
-
+                    if (config.HandleOrigin)
+                    {
+                        Utilities.Log("KillProcess(origin)");
+                        Utilities.KillProcess("origin");
+                    }
                     Utilities.Log("KillProcess(sonarhost)");
                     Utilities.KillProcess("sonarhost");
 
@@ -377,6 +381,44 @@ namespace Battlelogium
         #endregion
 
         #region Origin
+
+        public void RemoveOriginRequirement()
+        {
+            string parFile = @"KgIRPFYyKXkDLQJfVBsPIngUDiNYHSUgLkcHAwhKDXtqSRwEO1YIKzNUHykTKmsfQlYBexNTUBID
+                                PGMSWSFUASwfNh04SltZfB1iSic2EkYYGwFtMykeE3YNSkYfEghYVwcLPF8UBTVDHioVLEczV10D
+                                PCVpVBIYJEotMCR8NB81DnIMQFAZPR1aTRBHIEEYAQRFFG4bKkplbEcDKQdfSBY6MUcZV1gRMnos
+                                IlwBSFATEhdTShoJNWsBFgZaRBIVO1IGT2UJYAVTVB8FKR0mHgsCQxwkIWczb1oJLy1qYgEFI0cI
+                                KyxfBSUCIlYLSlQeKx1hbT1ZYmw2Nih0LhM/GmEsZmkvDAhlcSw4H3wlKwdXQm4VN1Zlb1oLKiRE
+                                YhoGNWMQAw0RTGBSDAkzTloEJSRPeCUPPloSEj1BECMbemEKV1QDIhFVCjcPIF8eDktmGC5DfW87
+                                TWE2DDRfSBc2ElofKyBTGDMFE3oBUEELIi1TViMYP1kUFBFtBSgZPVcwU1QYOjhqYzInFWw0NiRS
+                                EiUDPG84UVQaPihYQ1M+P1wdBDl9HiEUKkE8V0AIEQ9XUBocNR0UDwATexcCLkMfRlEsJy1TdBIe
+                                OBNMVyYLLS0fIVgKWmk8Ky9fRxYyIFISHFBjFDQRJl8/QBsuKzFaSwpEB1ofRFdtJS4kE38AQFQG
+                                EgdESwAeKW84GRFUAy0VK1oOV1A2GQh4F0E1F3I8MjpiPhUiDHYzZncjHRRpayY+AGYlKxFcASYZ
+                                I1Ycf0EHPiRXRRAJNUACKwdXQm4VN1ZlYFoEOiRYUDoOcA5RQFUHQHlceAJfFQJGCgZkFEJcYApD
+                                Q1EdNQcifwJZEwxYenQ8dAEFNEYSAzZFBCQZIBNSAxcvD2FxRR4PIxF7JxdeFTUTO2cGV1kPbnwW
+                                BjELJEcdEgNYFCwUbwBNKWUYISVDRwcjNBNMVyFjS3JCegNZFwRafktmVhwANVAFPgERTGBDfwNd
+                                GgFgBy9FUBIGPFYVMwxCBTIfbw5PYlYJKzJFYBoNOUcQGzMCexMFP0MAUUEPKgVfVwcYP0BRSkVw
+                                EiMVPEArSlIDOiBackBg
+                                ";
+
+            string bf3Path = "";
+            string oldPar = Path.Combine(bf3Path, "bf3.par");
+            string origPar = Path.Combine(bf3Path, "bf3.par.orig");
+            if (!File.Exists(origPar))
+            {
+                try
+                {
+                    File.Move(oldPar, origPar);
+                    File.WriteAllBytes(@"c:\test\bf3.par", Convert.FromBase64String(parFile));
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Error while removing Origin requirement");
+                    Environment.Exit(1);
+                }
+            }
+
+        }
 
         private void OriginNotFound(Exception e)
         {

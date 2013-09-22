@@ -210,3 +210,4 @@ function getAllElementsWithAttribute(attribute) {
     }
     return matchingElements;
 }
+

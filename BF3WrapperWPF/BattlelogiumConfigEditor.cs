@@ -7,13 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Windows;
+using System.Runtime.InteropServices;
 
 namespace Battlelogium
 {
     public partial class BattlelogiumConfigEditor : Form
     {
         BattlelogiumConfiguration config;
-        
+
         public BattlelogiumConfigEditor(BattlelogiumConfiguration config)
         {
             System.Windows.Forms.Application.EnableVisualStyles();
@@ -26,6 +27,7 @@ namespace Battlelogium
             this.directToCampaign_input.Checked = config.DirectToCampaign;
             this.checkUpdates_input.Checked = config.CheckUpdates;
             this.useSoftwareRender_input.Checked = config.UseSoftwareRender;
+            this.startOrigin_input.Checked = config.HandleOrigin;
 
             //Apply window height maximum and minimums
             this.windowHeight_input.Maximum = (decimal) SystemParameters.PrimaryScreenHeight;
@@ -40,7 +42,7 @@ namespace Battlelogium
             this.noBorder_input.Checked = config.NoBorder;
             this.windowHeight_input.Value = config.WindowHeight;
             this.windowWidth_input.Value = config.WindowWidth;
-
+            this.Refresh();
    
         }
 
@@ -71,6 +73,7 @@ namespace Battlelogium
             this.config.WriteConfig("directToCampaign", this.directToCampaign_input.Checked.ToString());
             this.config.WriteConfig("checkUpdates", this.checkUpdates_input.Checked.ToString());
             this.config.WriteConfig("useSoftwareRender", this.useSoftwareRender_input.Checked.ToString());
+            this.config.WriteConfig("handleOrigin", this.startOrigin_input.Checked.ToString());
 
             this.config.WriteConfig("windowedMode", this.windowedMode_input.Checked.ToString());
             this.config.WriteConfig("startMaximized", this.startMaximized_input.Checked.ToString());
@@ -106,6 +109,7 @@ namespace Battlelogium
             {
                 e.Graphics.FillRectangle(new SolidBrush(Color.LightGray), e.CellBounds);
             }
-        }  
+        }
+
     }
 }

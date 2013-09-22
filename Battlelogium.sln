@@ -1,20 +1,37 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BattlelogiumWrapper", "BF3WrapperWPF\BattlelogiumWrapper.csproj", "{E14FEA8E-FE96-4FEE-9268-46B34A75B668}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoveOriginRequirement", "RemoveOriginRequirement\RemoveOriginRequirement.csproj", "{4D7D59E0-F783-4433-A44A-03F4619CDE4D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
 		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E14FEA8E-FE96-4FEE-9268-46B34A75B668}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{E14FEA8E-FE96-4FEE-9268-46B34A75B668}.Debug|x86.ActiveCfg = Debug|x86
 		{E14FEA8E-FE96-4FEE-9268-46B34A75B668}.Debug|x86.Build.0 = Debug|x86
+		{E14FEA8E-FE96-4FEE-9268-46B34A75B668}.Release|Any CPU.ActiveCfg = Release|x86
 		{E14FEA8E-FE96-4FEE-9268-46B34A75B668}.Release|x86.ActiveCfg = Release|x86
 		{E14FEA8E-FE96-4FEE-9268-46B34A75B668}.Release|x86.Build.0 = Release|x86
+		{4D7D59E0-F783-4433-A44A-03F4619CDE4D}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{4D7D59E0-F783-4433-A44A-03F4619CDE4D}.Debug|x86.ActiveCfg = Debug|x86
+		{4D7D59E0-F783-4433-A44A-03F4619CDE4D}.Debug|x86.Build.0 = Debug|x86
+		{4D7D59E0-F783-4433-A44A-03F4619CDE4D}.Release|Any CPU.ActiveCfg = Release|x86
+		{4D7D59E0-F783-4433-A44A-03F4619CDE4D}.Release|x86.ActiveCfg = Release|x86
+		{4D7D59E0-F783-4433-A44A-03F4619CDE4D}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AD34491B-FC26-4287-88F8-6D0B1DD27841}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD34491B-FC26-4287-88F8-6D0B1DD27841}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD34491B-FC26-4287-88F8-6D0B1DD27841}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD34491B-FC26-4287-88F8-6D0B1DD27841}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
