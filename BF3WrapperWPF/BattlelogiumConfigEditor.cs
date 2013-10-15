@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Windows;
 using System.Runtime.InteropServices;
+using System.Diagnostics;
 
 namespace Battlelogium
 {
@@ -110,6 +111,16 @@ namespace Battlelogium
                 e.Graphics.FillRectangle(new SolidBrush(Color.LightGray), e.CellBounds);
             }
         }
+
+        private void installParFix_Click(object sender, EventArgs e)
+        {
+            
+            ProcessStartInfo removeOrigin = new ProcessStartInfo("RemoveOriginRequirement");
+            Process removeOriginProcess = Process.Start(removeOrigin);
+            removeOriginProcess.WaitForExit();
+            if (removeOriginProcess.ExitCode == 0) this.startOrigin_input.Checked = false;
+        }
+
 
     }
 }

@@ -479,6 +479,37 @@
             <param name="s">The string to encode. </param>
             <param name="output">The TextWriter output stream containing the encoded string. </param>
         </member>
+        <member name="T:Awesomium.Core.LogSeverity">
+            <summary>
+            Specifies the severity level for a log message.
+            </summary>
+            <seealso cref="M:Awesomium.Core.WebCore.Log(System.String,Awesomium.Core.LogSeverity,System.String,System.Int32)"/>
+        </member>
+        <member name="F:Awesomium.Core.LogSeverity.Info">
+            <summary>
+            Info message.
+            </summary>
+        </member>
+        <member name="F:Awesomium.Core.LogSeverity.Warning">
+            <summary>
+            Warning message.
+            </summary>
+        </member>
+        <member name="F:Awesomium.Core.LogSeverity.Error">
+            <summary>
+            Error message.
+            </summary>
+        </member>
+        <member name="F:Awesomium.Core.LogSeverity.ErrorReport">
+            <summary>
+            Error report message.
+            </summary>
+        </member>
+        <member name="F:Awesomium.Core.LogSeverity.Fatal">
+            <summary>
+            Fatal error message, terminates application.
+            </summary>
+        </member>
         <member name="T:Awesomium.Core.NavigationRequest">
             <summary>
             Provides information for a navigation request.
@@ -7324,7 +7355,8 @@
             Reloads the current page.
             </summary>
             <param name="ignoreCache">
-            Indicates if cached resources should be reloaded as well.
+            Indicates if cached resources should be ignored when reloading.
+            When this is <c>true</c>, all resources will be reloaded from the server.
             </param>
             <returns>
             <c>true</c> if the command was successfully sent. <c>false</c> otherwise.
@@ -7928,6 +7960,20 @@
             info. Information will be retrieved through the 
             <see cref="E:Awesomium.Core.IWebView.ShowPageInfo"/> event.
             </summary>
+            <exception cref="T:System.InvalidOperationException">
+            The member is called on an invalid view. (See: <see cref="P:Awesomium.Core.IWebView.IsLive"/>)
+            </exception>
+        </member>
+        <member name="M:Awesomium.Core.IWebView.ReduceMemoryUsage">
+            <summary>
+            Forces V8 to release as much memory as possible (collects garbage, dumps
+            cached structures, etc) and also clears WebKit cache. This helps to
+            reduce memory accumulated within the process associated with this view.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">
+            The member is called on an invalid view. (See: <see cref="P:Awesomium.Core.IWebView.IsLive"/>)
+            </exception>
+            <seealso cref="P:Awesomium.Core.WebConfig.ReduceMemoryUsageOnNavigation"/>
         </member>
         <member name="M:Awesomium.Core.IWebView.CancelLogin(System.Int32)">
             <summary>
@@ -7975,6 +8021,11 @@
         <member name="E:Awesomium.Core.IWebView.SelectionChanged">
             <summary>
             Occurs when the selection in the current page, changes.
+            </summary>
+        </member>
+        <member name="E:Awesomium.Core.IWebView.SelectionComplete">
+            <summary>
+            Occurs when selecting content in the current page, completes.
             </summary>
         </member>
         <member name="E:Awesomium.Core.IWebView.ProcessCreated">
@@ -9476,6 +9527,12 @@
             Gets or sets the user input that should be processed by a technology specific <c>WebControl</c>.
             The default is <see cref="F:Awesomium.Core.ViewInput.All"/>.
             </summary>
+            <remarks>
+            <note>
+            This property can only be set on technology-specific controls that wrap an <i>offscreen</i> 
+            view (see <see cref="P:Awesomium.Core.IWebView.ViewType"/>). <i>Windowed</i> views process all input by default at native level.
+            </note>
+            </remarks>
         </member>
         <member name="P:Awesomium.Core.IWebView.IsResponsive">
             <summary>
@@ -12282,15 +12339,6 @@
             assembly, be visible from the Awesomium.Windows.Forms.Design assembly.
             </remarks>
         </member>
-        <member name="F:Awesomium.Core.ReleaseInfo.SWF_MONO_PUBLIC_KEY">
-            <summary>
-            Specifies the full Public Key of the Awesomium.Mono.Forms assembly's Strong Name.
-            </summary>
-            <remarks>
-            This is used with the InternalsVisibleToAttribute to allow the internals of this
-            assembly, be visible from the Awesomium.Mono.Forms assembly.
-            </remarks>
-        </member>
         <member name="F:Awesomium.Core.ReleaseInfo.UNITY_PUBLIC_KEY">
             <summary>
             Specifies the full Public Key of the Awesomium.Unity assembly's Strong Name.
@@ -12298,15 +12346,6 @@
             <remarks>
             This is used with the InternalsVisibleToAttribute to allow the internals of this
             assembly, be visible from the Awesomium.Unity assembly.
-            </remarks>
-        </member>
-        <member name="F:Awesomium.Core.ReleaseInfo.GTK_PUBLIC_KEY">
-            <summary>
-            Specifies the full Public Key of the Awesomium.Mono.Gtk assembly's Strong Name.
-            </summary>
-            <remarks>
-            This is used with the InternalsVisibleToAttribute to allow the internals of this
-            assembly, be visible from the Awesomium.Mono.Gtk assembly.
             </remarks>
         </member>
         <member name="F:Awesomium.Core.ReleaseInfo.SETUP_PUBLIC_KEY">
@@ -13161,6 +13200,61 @@
             The returned mime type depends on the file's extension. 
             </remarks>
         </member>
+        <member name="M:Awesomium.Core.Utilities.MinifyJavascript(System.String)">
+            <summary>
+            Minifies JavaScript code.
+            </summary>
+            <param name="script">
+            A <see cref="T:System.String"/> representing the JavaScript code
+            to minify.
+            </param>
+            <returns>
+            Minified, single-line JavaScript code.
+            </returns>
+            <remarks>
+            This is only a helper function that performs simple cleanup of
+            JavaScript code. This function:
+            <list type="bullet">
+            <item>
+            <description>
+            Removes unnecessary whitespace.
+            </description>
+            </item>
+            <item>
+            <description>
+            Removes comments.
+            </description>
+            </item>
+            <item>
+            <description>
+            Removes line breaks (turns multiline to single-line code).
+            </description>
+            </item>
+            <item>
+            <description>
+            Does not remove unnecessary semicolons, brackets etc..
+            </description>
+            </item>
+            <item>
+            <description>
+            Does not compress the code by applying encodings.
+            </description>
+            </item>
+            <item>
+            <description>
+            Does not compress the code by checking the scope or semantics
+            of variables or functions and renaming them.
+            </description>
+            </item>
+            </list>
+            <note>
+            This function uses compiled regular expressions and string manipulation.
+            Though fast enough, if you use the same code multiple times in scenarios 
+            that demand maximum performance, it is suggested that you cache the minified
+            code once in a static variable.
+            </note>
+            </remarks>
+        </member>
         <member name="M:Awesomium.Core.Utilities.ToUri(System.String)">
             <summary>
             Gets a <see cref="T:System.Uri"/> instance for this string.
@@ -13170,8 +13264,54 @@
             </param>
             <returns>
             A <see cref="T:System.Uri"/> instance for the string provided,
-            or a <see cref="T:System.Uri"/> representing <c>about:blank</c>,
+            or a <see cref="T:System.Uri"/> representing <c>about:error</c>,
             if the string provided was not a well formatted URI.
+            </returns>
+            <remarks>
+            <note>
+            If <see cref="P:System.Uri.AbsoluteUri"/> of the returned <see cref="T:System.Uri"/> equals
+            <c>about:error</c>, you can get the original erroneous URI string
+            through <see cref="M:System.Object.ToString"/>.
+            </note>
+            </remarks>
+        </member>
+        <member name="M:Awesomium.Core.Utilities.ToUri(System.String,System.Uri)">
+            <summary>
+            Gets a <see cref="T:System.Uri"/> instance for this string, using the specified base and 
+            relative URI instances.
+            </summary>
+            <param name="uriString">
+            The relative URI to add to the <paramref name="baseUri"/>.
+            </param>
+            <param name="baseUri">
+            The base <see cref="T:System.Uri"/>.
+            </param>
+            <returns>
+            A <see cref="T:System.Uri"/> instance for the string provided,
+            or a <see cref="T:System.Uri"/> representing <c>about:error</c>,
+            if the <paramref name="baseUri"/> or string provided,
+            were not well formatted URIs.
+            </returns>
+            <remarks>
+            <note>
+            If <see cref="P:System.Uri.AbsoluteUri"/> of the returned <see cref="T:System.Uri"/> equals
+            <c>about:error</c>, you can get the original erroneous URI string
+            through <see cref="M:System.Object.ToString"/>.
+            </note>
+            </remarks>
+        </member>
+        <member name="M:Awesomium.Core.Utilities.IsBlank(System.Uri)">
+            <summary>
+            Gets if the specified <see cref="T:System.Uri"/>, represents the special
+            <c>about:blank</c> URL.
+            </summary>
+            <param name="uri">
+            A <see cref="T:System.Uri"/> instance representing the URI to check.
+            </param>
+            <returns>
+            <c>true</c>, if the specified <paramref name="uri"/> represents the 
+            special <c>about:blank</c> URL or if a <c>null</c> reference (<c>Nothing</c>
+            in Visual Basic) is specified; <c>false</c> otherwise.
             </returns>
         </member>
         <member name="M:Awesomium.Core.Utilities.ParseQueryString(System.Uri)">
@@ -15049,6 +15189,13 @@
             
             </summary>
         </member>
+        <member name="P:Awesomium.Core.WebConfig.ReduceMemoryUsageOnNavigation">
+            <summary>
+            Gets or sets if we should automatically attempt to reduce process memory 
+            on each page navigation.
+            </summary>
+            <seealso cref="M:Awesomium.Core.IWebView.ReduceMemoryUsage"/>
+        </member>
         <member name="P:Awesomium.Core.WebConfig.AdditionalOptions">
             <summary>
             Gets or sets additional command-line options for Chromium.
@@ -15703,6 +15850,36 @@
             thread where <see cref="T:Awesomium.Core.WebCore"/> was created.
             </exception>
         </member>
+        <member name="M:Awesomium.Core.WebCore.Log(System.String,Awesomium.Core.LogSeverity,System.String,System.Int32)">
+            <summary>
+            Logs a message to the log (print to the console and log file).
+            </summary>
+            <param name="message">The message to print.</param>
+            <param name="severity">The severity of the message.</param>
+            <param name="file">The code file where logging occurs.</param>
+            <param name="line">The code file's line where logging occurs.</param>
+            <exception cref="T:System.InvalidOperationException">
+            The member is called on a <see cref="T:Awesomium.Core.WebCore"/> that has not been started, or has been shut down.
+            </exception>
+            <seealso cref="P:Awesomium.Core.WebConfig.LogPath"/>
+        </member>
+        <member name="M:Awesomium.Core.WebCore.Log(System.String,Awesomium.Core.LogSeverity)">
+            <summary>
+            Logs a message to the log (print to the console and log file).
+            </summary>
+            <param name="message">The message to print.</param>
+            <param name="severity">The severity of the message.</param>
+            <exception cref="T:System.InvalidOperationException">
+            The member is called on a <see cref="T:Awesomium.Core.WebCore"/> that has not been started, or has been shut down.
+            </exception>
+            <seealso cref="P:Awesomium.Core.WebConfig.LogPath"/>
+        </member>
+        <member name="M:Awesomium.Core.WebCore.UpdateTimer">
+            <summary>
+            Should be called by platform-specific wrappers that implement
+            their own synchronous auto-update timer.
+            </summary>
+        </member>
         <member name="E:Awesomium.Core.WebCore.Starting">
             <summary>
             Occurs when the <see cref="T:Awesomium.Core.WebCore"/> is starting.
@@ -16202,7 +16379,8 @@
             <summary>
             Reloads the current page.
             </summary><param name="ignoreCache">
-            Indicates if cached resources should be reloaded as well.
+            Indicates if cached resources should be ignored when reloading.
+            When this is <c>true</c>, all resources will be reloaded from the server.
             </param><returns>
             <c>true</c> if the command was successfully sent. <c>false</c> otherwise.
             </returns>
@@ -16542,7 +16720,18 @@
             Issues a request for the currently loaded page's security
             info. Information will be retrieved through the 
             <see cref="E:Awesomium.Core.IWebView.ShowPageInfo"/> event.
-            </summary>
+            </summary><exception cref="T:System.InvalidOperationException">
+            The member is called on an invalid view. (See: <see cref="P:Awesomium.Core.IWebView.IsLive"/>)
+            </exception>
+        </member>
+        <member name="M:Awesomium.Core.WebView.ReduceMemoryUsage">
+            <summary>
+            Forces V8 to release as much memory as possible (collects garbage, dumps
+            cached structures, etc) and also clears WebKit cache. This helps to
+            reduce memory accumulated within the process associated with this view.
+            </summary><exception cref="T:System.InvalidOperationException">
+            The member is called on an invalid view. (See: <see cref="P:Awesomium.Core.IWebView.IsLive"/>)
+            </exception><seealso cref="P:Awesomium.Core.WebConfig.ReduceMemoryUsageOnNavigation"/>
         </member>
         <member name="M:Awesomium.Core.WebView.#ctor(System.IntPtr)">
             <summary>
@@ -16662,6 +16851,11 @@
         <member name="M:Awesomium.Core.WebView.OnSelectionChanged(Awesomium.Core.WebSelectionEventArgs)">
             <summary>
             Triggers the <see cref="E:Awesomium.Core.WebView.SelectionChanged"/> event.
+            </summary>
+        </member>
+        <member name="M:Awesomium.Core.WebView.OnSelectionComplete(Awesomium.Core.WebSelectionEventArgs)">
+            <summary>
+            Triggers the <see cref="E:Awesomium.Core.WebView.SelectionComplete"/> event.
             </summary>
         </member>
         <member name="M:Awesomium.Core.WebView.OnProcessCreated(Awesomium.Core.WebViewEventArgs)">
@@ -17475,6 +17669,11 @@
         <member name="E:Awesomium.Core.WebView.SelectionChanged">
             <summary>
             Occurs when the selection in the current page, changes.
+            </summary>
+        </member>
+        <member name="E:Awesomium.Core.WebView.SelectionComplete">
+            <summary>
+            Occurs when selecting content in the current page, completes.
             </summary>
         </member>
         <member name="E:Awesomium.Core.WebView.ProcessCreated">
@@ -19121,6 +19320,50 @@
             <summary>
             Represents an item in a menu. This is used for Popup Menus.
             </summary>
+            <seealso cref="T:Awesomium.Core.WebPopupMenuInfo"/>
+            <seealso cref="E:Awesomium.Core.IWebView.ShowPopupMenu"/>
+        </member>
+        <member name="F:Awesomium.Core.WebMenuItem.Empty">
+            <summary>
+            An empty <see cref="T:Awesomium.Core.WebMenuItem"/>.
+            </summary>
+        </member>
+        <member name="M:Awesomium.Core.WebMenuItem.GetHashCode">
+            <inheritdoc />
+        </member>
+        <member name="M:Awesomium.Core.WebMenuItem.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Awesomium.Core.WebMenuItem.ToString">
+            <inheritdoc />
+        </member>
+        <member name="M:Awesomium.Core.WebMenuItem.op_Equality(Awesomium.Core.WebMenuItem,Awesomium.Core.WebMenuItem)">
+            <summary>
+            Tests whether two specified <see cref="T:Awesomium.Core.WebMenuItem"/> instances are equivalent.
+            </summary>
+            <param name="wmi1">
+            The <see cref="T:Awesomium.Core.WebMenuItem"/> instance that is to the left of the equality operator.
+            </param>
+            <param name="wmi2">
+            The <see cref="T:Awesomium.Core.WebMenuItem"/> instance that is to the right of the equality operator.
+            </param>
+            <returns>
+            <c>true</c> if <paramref name="wmi1"/> and <paramref name="wmi2"/> are equal; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Awesomium.Core.WebMenuItem.op_Inequality(Awesomium.Core.WebMenuItem,Awesomium.Core.WebMenuItem)">
+            <summary>
+            Tests whether two specified <see cref="T:Awesomium.Core.WebMenuItem"/> instances are not equal.
+            </summary>
+            <param name="wmi1">
+            The <see cref="T:Awesomium.Core.WebMenuItem"/> instance that is to the left of the inequality operator.
+            </param>
+            <param name="wmi2">
+            The <see cref="T:Awesomium.Core.WebMenuItem"/> instance that is to the right of the inequality operator.
+            </param>
+            <returns>
+            <c>true</c> if <paramref name="wmi1"/> and <paramref name="wmi2"/> are unequal; otherwise, <c>false</c>.
+            </returns>
         </member>
         <member name="P:Awesomium.Core.WebMenuItem.IsInitialSelection">
             <summary>
@@ -19179,6 +19422,12 @@
             Gets if this menu item is checked (only used with
             <see cref="F:Awesomium.Core.WebMenuItemType.CheckableOption"/>).
             </summary>
+        </member>
+        <member name="P:Awesomium.Core.WebMenuItem.IsEmpty">
+            <summary>
+            Gets if this an invalid, empty <see cref="T:Awesomium.Core.WebMenuItem"/>.
+            </summary>
+            <seealso cref="F:Awesomium.Core.WebMenuItem.Empty"/>
         </member>
         <member name="M:Awesomium.Core.WebMenuItemCollection.#ctor(System.Collections.Generic.IList{Awesomium.Core.WebMenuItem})">
             <inheritdoc />
@@ -19266,6 +19515,12 @@
             <exception cref="T:System.ArgumentOutOfRangeException">
             The specified index is out of range.
             </exception>
+        </member>
+        <member name="P:Awesomium.Core.WebPopupMenuInfo.IsValid">
+            <summary>
+            Gets if this is a valid <see cref="T:Awesomium.Core.WebPopupMenuInfo"/> instance
+            that has not been completed or canceled.
+            </summary>
         </member>
         <member name="P:Awesomium.Core.WebPopupMenuInfo.Bounds">
             <summary>
@@ -19779,6 +20034,11 @@
         <member name="M:Awesomium.Core.WebSession.ClearCookies">
             <summary>
             Clears all cookies asynchronously.
+            </summary>
+        </member>
+        <member name="M:Awesomium.Core.WebSession.ClearCache">
+            <summary>
+            Clears the cache asynchronously.
             </summary>
         </member>
         <member name="M:Awesomium.Core.WebSession.GetZoomForURL(System.Uri)">

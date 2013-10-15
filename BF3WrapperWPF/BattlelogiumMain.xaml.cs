@@ -65,8 +65,6 @@ namespace Battlelogium
         /// <summary> Whether to keep Origin running after the user has quit Battlelogium.</summary>
         private bool retainOrigin;
 
-        private bool clearCache; 
-
         private BattlelogiumConfiguration config;
 
         #endregion
@@ -175,22 +173,6 @@ namespace Battlelogium
                     }
                     Utilities.Log("KillProcess(sonarhost)");
                     Utilities.KillProcess("sonarhost");
-
-                    if (this.clearCache)
-                    {
-                        Utilities.Log("clearCache True");
-
-                        try
-                        {
-                            Directory.Delete(Path.Combine(
-                                     AppDomain.CurrentDomain.BaseDirectory, "Battlelogium", "WebSession"), true);
-                        }
-                        catch
-                        {
-                            Utilities.Log("Exception occured when clearing cache");
-                        }
-
-                    }
 
                     if (this.retainOrigin)
                     {
@@ -499,6 +481,10 @@ namespace Battlelogium
         /// <summary> Start Origin, then get the bf3.exe handle to be able to close Battlelogium once we're done.
         private void StartBF3Campaign()
         {
+            if (!this.config.HandleOrigin)
+            {
+                Process.Start(Path.Combine(GetBF3Path(), "bf3.exe"), @"-webMode SP -requestState State_ResumeCampaign -onlineEnvironment prod -requestStateParams""<data levelmode=\""sp\""></data>").WaitForExit();
+            }
             Utilities.Log("StartOriginProcess(/StartOffline origin://LaunchGame/70619)");
             StartOriginProcess(@"""/StartOffline"" ""origin://LaunchGame/70619"""); //Starts Origin in offline mode, autolaunching Battlefield 3
             Process battlefield3 = null;
@@ -518,6 +504,32 @@ namespace Battlelogium
             this.Close();
         }
 
+        private string GetBF3Path()
+        {
+            string bf3Path;
+            try
+            {
+                if (Environment.Is64BitOperatingSystem)
+                {
+                    bf3Path =
+                        Registry.GetValue(
+                            @"HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\EA Games\Battlefield 3", "Install Dir", "").ToString();
+
+                }
+                else
+                {
+                    bf3Path =
+                        Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EA Games\Battlefield 3", "Install Dir", "").ToString();
+
+                }
+                if (bf3Path == "") throw new Exception(); //throw if BF3 path not found
+                return bf3Path;
+            }
+            catch (Exception)
+            {
+                throw new FileNotFoundException("Battlefield 3 not found");
+            }
+        }
         #endregion
 
         #region Javascript
@@ -569,8 +581,10 @@ namespace Battlelogium
             jsObject.Bind("clearCache", false, new JavascriptMethodEventHandler(delegate
             {
                 Utilities.Log("Javascript ClearCache pressed");
-                this.clearCache = true;
-                this.Battlelog.ExecuteJavascript("showDialog(askToQuitDialog('The cache will be cleared on restart', 'Do you wish to quit Battlelogium now?'))");
+                this.Battlelog.ExecuteJavascript("showDialog(okDialog('Cache and cookies cleared', 'The cache and cookies have been cleared'))");
+                this.Battlelog.WebSession.ClearCache();
+                this.Battlelog.WebSession.ClearCookies();
+                this.Battlelog.Reload(true);
             }));
 
 

@@ -483,6 +483,7 @@
             this.installParFix.TabIndex = 4;
             this.installParFix.Text = "Remove Origin Requirement";
             this.installParFix.UseVisualStyleBackColor = true;
+            this.installParFix.Click += new System.EventHandler(this.installParFix_Click);
             // 
             // tableLayoutPanel1
             // 
@@ -523,7 +524,6 @@
             this.Name = "BattlelogiumConfigEditor";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Battlelogium";
-            this.Load += new System.EventHandler(this.formLoad);
             this.windowSettings.ResumeLayout(false);
             this.windowSettingsLayout.ResumeLayout(false);
             this.windowSettingsLayout.PerformLayout();

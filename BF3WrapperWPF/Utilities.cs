@@ -32,6 +32,10 @@
         public static void Log(string log)
         {
             Console.WriteLine(DateTime.Now.ToString() + " " + log);
+            StreamWriter file = new StreamWriter(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"battlelogium.log"), true);
+            file.WriteLine(DateTime.Now.ToString() + " " + log);
+            file.Close();
+
         }
 
         public static void KillProcess(string processname)

@@ -87,6 +87,11 @@
             Triggers the <see cref="E:Awesomium.Windows.Controls.WebControl.SelectionChanged"/> event.
             </summary>
         </member>
+        <member name="M:Awesomium.Windows.Controls.WebControl.OnSelectionComplete(Awesomium.Core.WebSelectionEventArgs)">
+            <summary>
+            Triggers the <see cref="E:Awesomium.Windows.Controls.WebControl.SelectionComplete"/> event.
+            </summary>
+        </member>
         <member name="M:Awesomium.Windows.Controls.WebControl.OnProcessCreated(Awesomium.Core.WebViewEventArgs)">
             <summary>
             Triggers the <see cref="E:Awesomium.Windows.Controls.WebControl.ProcessCreated"/> event.
@@ -365,7 +370,8 @@
             <summary>
             Reloads the current page.
             </summary><param name="ignoreCache">
-            Indicates if cached resources should be reloaded as well.
+            Indicates if cached resources should be ignored when reloading.
+            When this is <c>true</c>, all resources will be reloaded from the server.
             </param><returns>
             <c>true</c> if the command was successfully sent. <c>false</c> otherwise.
             </returns>
@@ -705,7 +711,18 @@
             Issues a request for the currently loaded page's security
             info. Information will be retrieved through the 
             <see cref="E:Awesomium.Core.IWebView.ShowPageInfo"/> event.
-            </summary>
+            </summary><exception cref="T:System.InvalidOperationException">
+            The member is called on an invalid view. (See: <see cref="P:Awesomium.Core.IWebView.IsLive"/>)
+            </exception>
+        </member>
+        <member name="M:Awesomium.Windows.Controls.WebControl.ReduceMemoryUsage">
+            <summary>
+            Forces V8 to release as much memory as possible (collects garbage, dumps
+            cached structures, etc) and also clears WebKit cache. This helps to
+            reduce memory accumulated within the process associated with this view.
+            </summary><exception cref="T:System.InvalidOperationException">
+            The member is called on an invalid view. (See: <see cref="P:Awesomium.Core.IWebView.IsLive"/>)
+            </exception><seealso cref="P:Awesomium.Core.WebConfig.ReduceMemoryUsageOnNavigation"/>
         </member>
         <member name="M:Awesomium.Windows.Controls.WebControl.#ctor">
             <summary>
@@ -1136,6 +1153,11 @@
         <member name="E:Awesomium.Windows.Controls.WebControl.SelectionChanged">
             <summary>
             Occurs when the selection in the current page, changes.
+            </summary>
+        </member>
+        <member name="E:Awesomium.Windows.Controls.WebControl.SelectionComplete">
+            <summary>
+            Occurs when selecting content in the current page, completes.
             </summary>
         </member>
         <member name="E:Awesomium.Windows.Controls.WebControl.ProcessCreated">
@@ -2406,12 +2428,6 @@
             to a <see cref="M:Awesomium.Windows.Controls.WebControl.RaisePropertyChanged(System.String,System.Int32)"/>.
             </summary>
         </member>
-        <member name="P:Awesomium.Windows.Controls.WebControl.CanRecreateView">
-            <summary>
-            Gets if this control wraps a previously crashed
-            view that can be recreated.
-            </summary>
-        </member>
         <member name="P:Awesomium.Windows.Controls.WebControl.NativeWindow">
             <summary>
             Gets the actual window handle that was created by this <see cref="T:Awesomium.Core.IWebView"/> instance.
@@ -3176,7 +3192,12 @@
             <summary>
             Gets or sets the user input that should be processed by a technology specific <c>WebControl</c>.
             The default is <see cref="F:Awesomium.Core.ViewInput.All"/>.
-            </summary>
+            </summary><remarks>
+            <note>
+            This property can only be set on technology-specific controls that wrap an <i>offscreen</i> 
+            view (see <see cref="P:Awesomium.Core.IWebView.ViewType"/>). <i>Windowed</i> views process all input by default at native level.
+            </note>
+            </remarks>
         </member>
         <member name="P:Awesomium.Windows.Controls.WebControl.ViewType">
             <summary>
@@ -3278,6 +3299,18 @@
             <exception cref="T:System.NotSupportedException">
             You cannot change the value of this property when the underlying web-view of this control, has already been created.
             </exception>
+        </member>
+        <member name="T:Awesomium.Windows.Controls.UrlConverter">
+            <summary>
+            Represents a converter that converts a <see cref="T:System.Uri"/> representing a URL address, 
+            into a readable string.
+            </summary>
+        </member>
+        <member name="M:Awesomium.Windows.Controls.UrlConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <inheritdoc cref="M:System.Windows.Data.IValueConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)"/>
+        </member>
+        <member name="M:Awesomium.Windows.Controls.UrlConverter.ConvertBack(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <inheritdoc cref="M:System.Windows.Data.IValueConverter.ConvertBack(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)"/>
         </member>
         <member name="T:Awesomium.Windows.Controls.FileSizeConverter">
             <summary>
@@ -4609,10 +4642,22 @@
         <member name="M:Awesomium.Windows.Controls.WebViewHost.BuildWindowCore(System.Runtime.InteropServices.HandleRef)">
             <inheritdoc />
         </member>
+        <member name="M:Awesomium.Windows.Controls.WebViewHost.TranslateAcceleratorCore(System.Windows.Interop.MSG@,System.Windows.Input.ModifierKeys)">
+            <inheritdoc />
+        </member>
         <member name="M:Awesomium.Windows.Controls.WebViewHost.WndProc(System.IntPtr,System.Int32,System.IntPtr,System.IntPtr,System.Boolean@)">
             <inheritdoc />
         </member>
         <member name="M:Awesomium.Windows.Controls.WebViewHost.DestroyWindowCore(System.Runtime.InteropServices.HandleRef)">
+            <inheritdoc />
+        </member>
+        <member name="M:Awesomium.Windows.Controls.WebViewHost.OnGotFocus(System.Windows.RoutedEventArgs)">
+            <inheritdoc />
+        </member>
+        <member name="M:Awesomium.Windows.Controls.WebViewHost.OnLostFocus(System.Windows.RoutedEventArgs)">
+            <inheritdoc />
+        </member>
+        <member name="M:Awesomium.Windows.Controls.WebViewHost.OnLostKeyboardFocus(System.Windows.Input.KeyboardFocusChangedEventArgs)">
             <inheritdoc />
         </member>
         <member name="M:Awesomium.Windows.Controls.WebViewHost.ShowToolTip(System.String)">
@@ -4841,8 +4886,8 @@
         <member name="P:Awesomium.Windows.Controls.WebViewPresenter.DeviceTransform">
             <summary>
             Gets a device transformation matrix, useful to determine the current DPI settings,
-            or <c>null</c> (<c>Nothing</c> in Visual Basic) if the presenter is not added to a visual
-            tree or is not yet loaded for presentation.
+            or the default if the presenter is not added to a visual tree or is not yet loaded 
+            for presentation.
             </summary>
         </member>
         <member name="P:Awesomium.Windows.Controls.WebViewPresenter.Image">

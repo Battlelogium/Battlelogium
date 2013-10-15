@@ -13,9 +13,9 @@ namespace RemoveOriginRequirement
     {
         static void Main(string[] args)
         {
-
+            Program.RemoveOriginRequirement();
         }
-        public void RemoveOriginRequirement()
+        public static void RemoveOriginRequirement()
         {
             string parFile = @"KgIRPFYyKXkDLQJfVBsPIngUDiNYHSUgLkcHAwhKDXtqSRwEO1YIKzNUHykTKmsfQlYBexNTUBID
                                 PGMSWSFUASwfNh04SltZfB1iSic2EkYYGwFtMykeE3YNSkYfEghYVwcLPF8UBTVDHioVLEczV10D
@@ -53,6 +53,7 @@ namespace RemoveOriginRequirement
                 {
                     File.Move(parPath, origPar);
                     File.WriteAllBytes(parPath, Convert.FromBase64String(parFile));
+                    MessageBox.Show("Complete");
                 }
                 catch (Exception)
                 {
@@ -63,7 +64,7 @@ namespace RemoveOriginRequirement
 
         }
 
-        private string GetBF3Path()
+        private static string GetBF3Path()
         {
             string bf3Path;
             try
