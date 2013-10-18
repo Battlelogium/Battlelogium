@@ -67,6 +67,8 @@ namespace Battlelogium
 
         private BattlelogiumConfiguration config;
 
+        private ManagedOrigin managedOrigin;
+
         #endregion
 
         public BattlelogiumMain()
@@ -104,7 +106,13 @@ namespace Battlelogium
                 if (config.HandleOrigin)
                 {
                     Utilities.Log("StartOriginProcess(/StartClientMinimized)");
-                    this.StartOriginProcess("/StartClientMinimized");
+                    this.retainOrigin = ManagedOrigin.CheckIfOriginIsRunning();
+                    this.managedOrigin = new ManagedOrigin("/StartClientMinimized");
+                    try{
+                        this.managedOrigin.StartOriginProcess();
+                    }catch(Exception e){
+                        HandleOriginException(e);
+                    }
                 }
 
                 Utilities.Log("InitializeComponent()");
@@ -168,8 +176,8 @@ namespace Battlelogium
                 {
                     if (config.HandleOrigin)
                     {
-                        Utilities.Log("KillProcess(origin)");
-                        Utilities.KillProcess("origin");
+                        Utilities.Log("KillOriginProcess");
+                        managedOrigin.KillOriginProcess();
                     }
                     Utilities.Log("KillProcess(sonarhost)");
                     Utilities.KillProcess("sonarhost");
@@ -180,8 +188,8 @@ namespace Battlelogium
                         Utilities.Log("retainOrigin True");
                         //We do not want this instance of Origin to be a child process, otherwise Steam will think we're still in Battlefield 3
                        
-                        Utilities.Log("CreateOrphanedProcess(GetOriginPath(), /StartClientMinimized");
-                        Utilities.CreateOrphanedProcess(GetOriginPath(), "/StartClientMinimized");
+                        Utilities.Log("CreateUnmanagedInstance");
+                        ManagedOrigin.CreateUnmanagedInstance();
                     }
 
                     Utilities.Log("!---End Log---!");
@@ -365,42 +373,13 @@ namespace Battlelogium
         #region Origin
 
 
-        private void OriginNotFound(Exception e)
+        private void HandleOriginException(Exception e)
         {
             Utilities.Log("Origin not found");
             Utilities.Log("Exception type: " + e.GetType());
             MessageBox.Show("Please install Origin to play Battlefield 3", "Error");
-            Process.Start("http://www.origin.com/download");
+            Process.Start("http://www.managedOrigin.com/download");
             this.Close();
-        }
-
-        private void StartOriginProcess(string commandLineOptions)
-        {
-            Utilities.Log("GetOriginPath()");
-            string originPath = GetOriginPath();
-            var originProcessInfo = new ProcessStartInfo(originPath, commandLineOptions);
-            
-            Utilities.Log("CheckIfOriginIsRunning()");
-            retainOrigin = CheckIfOriginIsRunning();
-            if (retainOrigin)
-            {
-                Utilities.Log("Origin is running. Battlelogium will restore Origin after closing");
-            }
-
-            Utilities.Log("KillProcess(Origin)");
-            Utilities.KillProcess("Origin");
-         
-            //We must relaunch Origin as a child process for Steam to properly apply the overlay hook.
-            try
-            {
-                Utilities.Log("Process.Start(originProcessInfo)");
-                Process.Start(originProcessInfo); 
-            }
-            catch (Exception ex)
-            {
-                this.OriginNotFound(ex);
-                return;
-            }
         }
 
         private bool CheckForBattlelogConnection()
@@ -418,50 +397,6 @@ namespace Battlelogium
             {
                 Utilities.Log("Battlelog Unaccessible");
                 return false;
-            }
-        }
-
-        private bool CheckIfOriginIsRunning()
-        {
-            Process[] pname = Process.GetProcessesByName("Origin");
-            if (pname.Length == 0)
-            {
-                Utilities.Log("Origin is not running");
-                return false;
-            }
-            else
-            {
-                Utilities.Log("Origin is running");
-                return true;
-            }
-        }
-
-        private string GetOriginPath()
-        {
-            string originDefaultPath = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "Origin", "Origin.exe");
-            string originPath;
-            try
-            {
-                if (Environment.Is64BitOperatingSystem)
-                {
-                    originPath =
-                        Registry.GetValue(
-                            @"HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Origin", "ClientPath", originDefaultPath).ToString();
-                    Utilities.Log("Got " + originPath);
-                }
-                else
-                {
-                    originPath =
-                        Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Origin", "ClientPath", originDefaultPath).ToString();
-                    Utilities.Log("Got " + originPath);
-                }
-                return originPath;
-            }
-            catch (Exception ex)
-            {
-                this.OriginNotFound(ex);
-                return originDefaultPath;
             }
         }
 
@@ -484,9 +419,11 @@ namespace Battlelogium
             if (!this.config.HandleOrigin)
             {
                 Process.Start(Path.Combine(GetBF3Path(), "bf3.exe"), @"-webMode SP -requestState State_ResumeCampaign -onlineEnvironment prod -requestStateParams""<data levelmode=\""sp\""></data>").WaitForExit();
+                this.Close();
             }
-            Utilities.Log("StartOriginProcess(/StartOffline origin://LaunchGame/70619)");
-            StartOriginProcess(@"""/StartOffline"" ""origin://LaunchGame/70619"""); //Starts Origin in offline mode, autolaunching Battlefield 3
+            Utilities.Log("StartOriginProcess(/StartOffline managedOrigin://LaunchGame/70619)");
+            this.managedOrigin = new ManagedOrigin(@"""/StartOffline"" ""managedOrigin://LaunchGame/70619"""); //Starts Origin in offline mode, autolaunching Battlefield 3
+            managedOrigin.StartOriginProcess();
             Process battlefield3 = null;
             Utilities.Log("while (Process battlefield3 == null)");
             while (battlefield3 == null)

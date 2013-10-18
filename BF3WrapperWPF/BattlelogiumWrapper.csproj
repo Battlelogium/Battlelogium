@@ -103,6 +103,7 @@
     <Compile Include="CustomMessageBox\CustomMessageBoxWindow.xaml.cs">
       <DependentUpon>CustomMessageBoxWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ManagedOrigin.cs" />
     <Compile Include="UpdateNotifier.cs" />
     <Compile Include="Utilities.cs" />
     <Page Include="BattlelogiumMain.xaml">
