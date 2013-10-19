@@ -22,7 +22,6 @@ namespace Battlelogium
     {
         string originPath;
         string commandLineOptions;
-        bool retainOrigin;
         bool battlelogConnection;
         Process originProcess;
         public ManagedOrigin(string originPath, string commandLineOptions)

@@ -110,7 +110,7 @@ function settingsDialog() {
     return createDialog("Battlelogium Settings", "Battlelogium Settings", "Clear the cache if you have problems<br />Edit settings to open the settings editor. Settings will be applied on restart", true, [clearCacheButton, editSettingsButton, closeSettingsButton]);
 }
 
-function askToQuitDialog(header, reason) {
+function quitConfirmDialog(header, reason) {
     var quitBattlelogiumButton = createDialogButton('quitBattlelogiumButton', 'wrapper.quitWrapper()', " Close Battlelogium ", "Quit Battlelogium", false);
     var closeDialogButton = createDialogButton('closeDialogButton', 'closeDialog()', " Cancel ", null, true);
     return createDialog("Confirm Closing", header, reason, false, [quitBattlelogiumButton, closeDialogButton]);
@@ -132,7 +132,7 @@ function createDialogButton(id, onclick, text, tooltip, grey) {
     }
     dialogButton.setAttribute('id', id);
     dialogButton.setAttribute('onclick', onclick);
-    if (tooltip != null) {
+    if ((tooltip != null) && (tooltip != "null")) {
         dialogButton.setAttribute('data-tooltip', tooltip);
     }
     dialogButton.innerHTML = text;

@@ -38,6 +38,8 @@ namespace Battlelogium
     using System.Security.Permissions;
     using WPFCustomMessageBox;
 
+    using BattlelogDialog;
+
     using Awesomium.Core;
     using Awesomium.Core.Data;
 
@@ -152,7 +154,7 @@ namespace Battlelogium
         {
             if (GetBattlefield3Process() != null)
             {
-               this.Battlelog.ExecuteJavascript("showDialog(okDialog('Battlefield 3 is still running', 'Quit Battlefield 3 before closing Battlelogium'))");
+               this.Battlelog.ExecuteJavascript(JSDialog.ShowJavascriptDialog(new OKDialog("Battlefield 3 is still running", "Quit Battlefield 3 before closing Battlelogium")));
                e.Cancel = true;
                return;
             }
@@ -372,7 +374,6 @@ namespace Battlelogium
 
         #region Origin
 
-
         private void HandleOriginException(Exception e)
         {
             Utilities.Log("Origin not found");
@@ -500,9 +501,9 @@ namespace Battlelogium
             jsObject.Bind("quitConfirm", false, new JavascriptMethodEventHandler(delegate
             {
                 Utilities.Log("Javascript QuitButton pressed");
-                this.Battlelog.ExecuteJavascript("showDialog(askToQuitDialog('Are you sure you want to quit?', 'Do you want to quit?'))");
+                this.Battlelog.ExecuteJavascript(JSDialog.ShowJavascriptDialog(new QuitConfirmDialog("Are you sure you want to quit?", "Do you want to quit?")));
             }));
-            
+
             jsObject.Bind("minimize", false, new JavascriptMethodEventHandler(delegate
             {
                 Utilities.Log("Javascript Minimize pressed");
@@ -518,7 +519,6 @@ namespace Battlelogium
             jsObject.Bind("clearCache", false, new JavascriptMethodEventHandler(delegate
             {
                 Utilities.Log("Javascript ClearCache pressed");
-                this.Battlelog.ExecuteJavascript("showDialog(okDialog('Cache and cookies cleared', 'The cache and cookies have been cleared'))");
                 this.Battlelog.WebSession.ClearCache();
                 this.Battlelog.WebSession.ClearCookies();
                 this.Battlelog.Reload(true);
@@ -533,7 +533,7 @@ namespace Battlelogium
                     var result = configEditor.ShowDialog();
                     if (result == System.Windows.Forms.DialogResult.OK)
                     {
-                        this.Battlelog.ExecuteJavascript("showDialog(askToQuitDialog('Settings will be saved on restart', 'Do you wish to quit Battlelogium now?'))");
+                        this.Battlelog.ExecuteJavascript(JSDialog.ShowJavascriptDialog(new QuitConfirmDialog("Settings will be saved on restart", "Do you wish to quit Battlelogium now?")));
                     }
 
                 }
