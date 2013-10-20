@@ -225,7 +225,7 @@ namespace Battlelogium
                         managedOrigin.KillOriginProcess();
                     }
                     Utilities.Log("KillProcess(sonarhost)");
-                    Utilities.KillProcess("sonarhost");
+                    Utilities.KillProcess("sonarhost",false,false);
 
                     if (this.retainOrigin)
                     {

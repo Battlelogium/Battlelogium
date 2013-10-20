@@ -29,6 +29,9 @@
         [DllImport("kernel32.dll")]
         public static extern bool FreeConsole();
 
+        [DllImport("kernel32.dll", SetLastError = true)]
+        static extern bool TerminateProcess(IntPtr hProcess, uint uExitCode);
+
         public static void Log(string log)
         {
             Console.WriteLine(DateTime.Now.ToString() + " " + log);
@@ -38,15 +41,35 @@
 
         }
 
-        public static void KillProcess(string processname)
+        public static void KillProcess(string processname, bool waitForExit,bool closeMainWindow)
         {
             Process[] processes = Process.GetProcessesByName(processname);
             foreach (Process p in processes)
             {
-                p.Kill();
+                KillProcess(p, waitForExit, closeMainWindow);
             }
         }
 
+        public static void KillProcess(Process process, bool waitForExit, bool closeMainWindow)
+        {
+            try
+            {
+                if (closeMainWindow) {
+                    process.CloseMainWindow(); 
+                } else {
+                    process.Kill(); 
+                }
+            }
+            catch (Exception)
+            {
+                TerminateProcess(process.Handle, 0); //Forcibly kill the process
+            }
+
+            if (waitForExit) process.WaitForExit();
+            process.Dispose();
+        }
+
+        
 
         /// <summary>
         /// Creates an process orphaned from parent. 
