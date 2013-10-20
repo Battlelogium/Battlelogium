@@ -42,7 +42,7 @@ namespace Battlelogium
             string originPath = GetOriginPath();
             var originProcessInfo = new ProcessStartInfo(this.originPath, this.commandLineOptions);
             Utilities.Log("KillProcess(Origin)");
-            Utilities.KillProcess("Origin", true, true);
+            Utilities.KillProcess("Origin", true, false);
             //We must relaunch Origin as a child process for Steam to properly apply the overlay hook.
             Utilities.Log("Process.Start(originProcessInfo)");
             this.originProcess = Process.Start(originProcessInfo);
@@ -112,7 +112,7 @@ namespace Battlelogium
 
         public void KillOriginProcess()
         {
-            Utilities.KillProcess(this.originProcess, true, true);
+            Utilities.KillProcess(this.originProcess, true, false);
         }
 
         public static void CreateUnmanagedInstance()
