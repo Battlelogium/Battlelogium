@@ -185,6 +185,10 @@ namespace Battlelogium
                         }
                         e.Handled = true;
                         break;
+                    case Key.C:
+                        this.Battlelog.ExecuteJavascript("document.getElementById('btnCampaign').click()");
+                        e.Handled = true;
+                        break;
                 }
             }
         }

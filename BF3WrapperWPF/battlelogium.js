@@ -1,65 +1,75 @@
 ﻿//Adds a button to the Battlelog playbar
 function addPlaybarButton(elementid, label, tooltip, onclick) {
-    var buttonElement = document.getElementById(elementid);
-    if (buttonElement == null) {
-        var playbar = document.getElementsByClassName('main-loggedin-playbar')[0];
-        var button = document.createElement('button');
-        button.innerHTML = "".concat("<p>", label, "</p>");
-        button.setAttribute('class', 'common-button-large main-loggedin-playbutton');
-        button.setAttribute('onclick', onclick);
-        button.setAttribute('id', elementid);
-        button.setAttribute('data-tooltip', tooltip);
-        playbar.appendChild(button);
+    if ($('#'+elementid).length == 0) {
+        $("<button/>", {
+            id: elementid,
+            onclick: onclick,
+            class: 'common-button-large main-loggedin-playbutton',
+            'data-tooltip': tooltip
+        })
+        .html("".concat("<p>", label, "</p>"))
+        .appendTo($('.main-loggedin-playbar')[0]);
     }
 }
 
 function fixEAPlaybarButtons() {
 
-    var eaPlaybarButtons = getAllElementsWithAttribute('data-track');
-    if (eaPlaybarButtons != null) {
-        for (var i = 0; i < eaPlaybarButtons.length; i++) {
 
-            if (eaPlaybarButtons[i].getAttribute('data-track') == 'actionbar.quickmatch') {
-                eaPlaybarButtons[i].setAttribute('data-tooltip', 'Play a quick match');
-                //For some reason this doesn't work. Oh well.
-            }
-            if (eaPlaybarButtons[i].getAttribute('data-track') == 'actionbar.coop') {
-                eaPlaybarButtons[i].setAttribute('data-tooltip', 'Play a Co-Op Match');
-                eaPlaybarButtons[i].innerHTML = "<p>CO-OP</p>";
-            }
-            if (eaPlaybarButtons[i].getAttribute('data-track') == 'actionbar.campaign') {
-                eaPlaybarButtons[i].setAttribute('data-tooltip', 'Start Campaign');
-                eaPlaybarButtons[i].innerHTML = "<p>CAMPAIGN</p>";
-            }
-        }
+    //Fix Quick Match Button
+    if ($('btnQuickMatch').length == 0) {
+        var btnQuickMatch = $("button[data-track='actionbar.quickmatch']")
+        btnQuickMatch.attr('id', 'btnQuickMatch');
+        $("#btnQuickMatch").mouseover(); //Workaround to get the tooltip to appear
+        $("#btnQuickMatch").mouseout();
+        $('.tooltip').find('.tooltip-body:contains("Loading")').html("Play a Quick Match");
+    }
+
+    //Fix Co-Op Button
+    if ($('btnCoOp').length == 0) {
+        var btnCoOp = $("button[data-track='actionbar.coop']")
+        btnCoOp.attr('id', 'btnCoOp');
+        btnCoOp.attr('data-tooltip', 'Play a Co-Op Match');
+        btnCoOp.html("<p>CO-OP</p>");
+    }
+
+    //Fix Campaign Button
+    if ($('btnCampaign').length == 0) {
+        var btnCampaign = $("button[data-track='actionbar.campaign']")
+        btnCampaign.attr('id', 'btnCampaign')
+        btnCampaign.attr('data-tooltip', 'Play Campaign Mode');
+        btnCampaign.html("<p>CAMPAIGN</p>");
     }
 }
 
-function createToolsButton(onclick, id){
-    var toolsButton = document.createElement('li');
-    toolsButton.setAttribute('onclick', onclick);
-    toolsButton.setAttribute('id', "".concat(id, "Button"));
-    var toolsDiv = document.createElement('div');
-    toolsDiv.setAttribute('class', "".concat("tools-item log ", id));
-    toolsButton.appendChild(toolsDiv);
+function createToolsButton(onclick, id) {
+    var toolsButton =
+    $('<li/>', {
+        onclick: onclick,
+        id: "".concat(id, "Button")
+    });
+
+    $('<div/>', {
+        class: "".concat("tools-item log ", id)
+    }).appendTo(toolsButton);
+
     return toolsButton
 }
 
 function addChromeButtons() {
-    var headerTools = document.getElementById('base-header-user-tools').getElementsByClassName('tools pull-right')[0];
-    var avatarLi = document.getElementById('base-header-user-tools').getElementsByClassName('tools pull-right')[0].getElementsByClassName('comcenter-toggle tools-item')[0].previousElementSibling; //Insert our chrome buttons before the avatar list item. 
+    //var headerTools = document.getElementById('base-header-user-tools').getElementsByClassName('tools pull-right')[0];
+    var avatarLi = $('#base-header-user-tools .tools.pull-right .comcenter-toggle.tools-item').prev(); //Insert our chrome buttons before the avatar list item. 
     var closeButton = createToolsButton("wrapper.quitWrapper()", 'close');
     var minimizeButton = createToolsButton("wrapper.minimize()", 'minimize');
     var reloadButton = createToolsButton("location.reload()", 'reload');
    
-    if (document.getElementById('reloadButton') == null) {
-        headerTools.insertBefore(reloadButton, avatarLi);
+    if ($('#reloadButton').length == 0) {
+        reloadButton.insertBefore(avatarLi);
     }
-    if (document.getElementById('minimizeButton') == null) {
-        headerTools.insertBefore(minimizeButton, avatarLi);
+    if ($('#minimizeButton').length == 0) {
+        minimizeButton.insertBefore(avatarLi);
     }
-    if (document.getElementById('closeButton') == null) {
-        headerTools.insertBefore(closeButton, avatarLi);
+    if ($('#closeButton').length == 0) {
+        closeButton.insertBefore(avatarLi);
     }
 }
 
@@ -72,12 +82,19 @@ function applyChromeCSS() {
     head.appendChild(chromeCSS);
 }
 
+function applyChromeCSS() {
+    $('<link/>', {
+        rel: 'stylesheet',
+        type: 'text/css',
+        href: 'asset://local/bf3icons.css'
+    }).appendTo($('head'));
+}
+
 applyChromeCSS(); //Add our modified spritesheet for the false chrome buttons
 addChromeButtons(); //Add the false window chrome buttons to DOM
 fixEAPlaybarButtons();
 addPlaybarButton('serverBrowserButton', 'SERVERS', 'View Servers', 'location.href = "http://battlelog.battlefield.com/bf3/servers/"');
 addPlaybarButton('wrapperSettingsButton', 'SETTINGS', 'Change Battlelogium Settings', 'showDialog(settingsDialog())');
-//addPlaybarButton('wrapperQuitButton', 'QUIT', 'Quit Battlelogium', 'wrapper.quitConfirm()'); We have the close button on the fake chrome.
 
 //Dialog functions
 
@@ -85,17 +102,18 @@ function showDialog(dialog) {
     //Close any previously opened dialog
     closeDialog();
 
-    //Get the dialog container
-    var dialogContainer = document.getElementById("dialog-container");
+    var dialogContainer = $("#dialog-container"); //Get the dialogContainer
 
-    //Create the modal overlay
-    var modalOverlay = document.createElement('div');
-    modalOverlay.setAttribute('class', 'modal-overlay show')
-    dialogContainer.appendChild(modalOverlay);
-    dialogContainer.appendChild(dialog);
+    $('<div/>', {  //Create the modal overlay
+        class: 'modal-overlay show'
+    }).appendTo(dialogContainer);
 
+    dialogContainer.append(dialog);
 }
 
+function closeDialog() {
+    $("#dialog-container").empty();
+}
 
 function okDialog(header, reason) {
     var okButton = createDialogButton('okButton', 'closeDialog()', " OK ", "OK", true);
@@ -121,6 +139,8 @@ function clearCacheDialog() {
     var closeDialogButton = createDialogButton('closeDialogButton', 'closeDialog()', " Cancel ", null, true);
     return createDialog("Clear the Cache?", "Clear the Cache?", "Are you sure you want to clear cache and cookies? This can not be undone", false, [clearCacheButton, closeDialogButton]);
 }
+
+//Todo port dialog API to jQuery
 
 function createDialogButton(id, onclick, text, tooltip, grey) {
     var dialogButton = document.createElement('button');
@@ -194,20 +214,4 @@ function createDialog(dialogHeaderText, dialogBodyHeaderText, dialogBodyText, sh
     return dialogWindow;
 }
 
-function closeDialog() {
-    var dialogContainer = document.getElementById("dialog-container");
-    dialogContainer.innerHTML = "";
-}
-
-function getAllElementsWithAttribute(attribute) {
-    var matchingElements = [];
-    var allElements = document.getElementsByTagName('*');
-    for (var i = 0; i < allElements.length; i++) {
-        if (allElements[i].getAttribute(attribute)) {
-            // Element exists with attribute. Add to array.
-            matchingElements.push(allElements[i]);
-        }
-    }
-    return matchingElements;
-}
 
