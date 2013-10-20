@@ -4,7 +4,7 @@
         xmlns:aw="clr-namespace:Awesomium.Windows.Controls;assembly=Awesomium.Windows.Controls"
         WindowStyle="None" Title="Battlelogium" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen" WindowState="Maximized"
-        Closing="WrapperClosing" MinHeight="400" MinWidth="400" Background="Black">
+        Closing="WrapperClosing" MinHeight="400" MinWidth="400" Background="Black" PreviewKeyDown="HotkeyHandler">
        
     <Window.Resources>
         <Storyboard x:Key="FadeBackground" BeginTime="0:0:2">

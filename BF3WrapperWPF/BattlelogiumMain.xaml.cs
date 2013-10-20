@@ -67,10 +67,20 @@ namespace Battlelogium
         /// <summary> Whether to keep Origin running after the user has quit Battlelogium.</summary>
         private bool retainOrigin;
 
+        /// <summary> Battlelogium's Configuration data</summary>
         private BattlelogiumConfiguration config;
 
+        /// <summary> Represents an instance of Origin managed by Battlelogium</summary>
         private ManagedOrigin managedOrigin;
 
+        /// <summary> An event handler required for right-click dragging of the window<summary>
+        private MouseButtonEventHandler rightDragBtnDown;
+
+        /// <summary> An event handler required for right-click dragging of the window<summary>
+        private MouseEventHandler rightDragMove;
+
+        /// <summary> Whether Battlelogium is currently in Fullscreen or Windowed Mode</summary>
+        private bool fullScreen = true;
         #endregion
 
         public BattlelogiumMain()
@@ -123,8 +133,11 @@ namespace Battlelogium
                 Utilities.Log("SetupStoryboards()");
                 this.SetupStoryboards();
 
-                Utilities.Log("ApplyWindowedModeSettings()");
-                this.ApplyWindowedModeSettings();
+                Utilities.Log("if config.WindowedMode SetWindowed()");
+                if (config.WindowedMode)
+                {
+                    SetWindowed();
+                }
 
                 Utilities.Log("blinkLoading.Begin()");
                 this.blinkLoading.Begin();
@@ -147,8 +160,34 @@ namespace Battlelogium
         }
 
         #region Handlers
-        
-        #region Quit Handlers
+
+        private void HotkeyHandler(object sender, KeyEventArgs e)
+        {
+
+            if (e.KeyboardDevice.Modifiers == ModifierKeys.Alt)
+            {
+                ///We put e.Handled = true to suppress the beep that sounds if we don't.
+                switch (e.SystemKey)
+                {
+                    case Key.N:
+                        this.WindowState = WindowState.Minimized;
+                        e.Handled = true;
+                        break;
+                    case Key.Enter: //Replicate Alt+Enter functionailty
+                        switch (this.fullScreen)
+                        {
+                            case true:
+                                SetWindowed();
+                                break;
+                            case false:
+                                SetFullScreen();
+                                break;
+                        }
+                        e.Handled = true;
+                        break;
+                }
+            }
+        }
 
         private void WrapperClosing(object sender, CancelEventArgs e)
         {
@@ -207,8 +246,6 @@ namespace Battlelogium
             System.Threading.Thread.Sleep(config.WaitTimeToKillOrigin * 1000 + 5000);
 
         }
-
-        #endregion
 
         #region Storyboard Handlers
         private void BlinkLoadingCompleted(object sender, EventArgs e)
@@ -304,52 +341,6 @@ namespace Battlelogium
             Utilities.Log("Storyboard.SetTarget(this.fadeBackground, this.LoadingImage)");
             Storyboard.SetTarget(this.fadeBackground, this.LoadingImage);
             
-        }
-
-        private void ApplyWindowedModeSettings()
-        {
-            if (config.WindowedMode)
-            {
-                if (!config.StartMaximized)
-                {
-                    Utilities.Log("!config.StartMaximized");
-                    this.WindowState = WindowState.Normal;
-                }
-                if (!config.NoBorder)
-                {
-                    this.WindowStyle = WindowStyle.SingleBorderWindow;
-                    this.ResizeMode = ResizeMode.CanResizeWithGrip;
-                } 
-                if (config.NoBorder)
-                {
-                    this.BorderBrush = new LinearGradientBrush(Color.FromRgb(128, 128, 128), Color.FromRgb(208, 208, 208), 90);
-                    this.BorderThickness = new Thickness(1D);
-                }
-                EnableRightClickMove();
-                this.Height = config.WindowHeight;
-                this.Width = config.WindowWidth;
-            }
-        }
-
-        /// <summary>Enable right click dragging of the window</summary>
-        private void EnableRightClickMove()
-        {
-            Point startPosition = new Point();
-            this.PreviewMouseRightButtonDown += (sender, e) =>
-            {
-                startPosition = e.GetPosition(this);
-            };
-
-            this.PreviewMouseMove += (sender, e) =>
-            {
-                if (e.RightButton == MouseButtonState.Pressed)
-                {
-                    Point endPosition = e.GetPosition(this);
-                    Vector vector = endPosition - startPosition;
-                    this.Left += vector.X;
-                    this.Top += vector.Y;
-                }
-            };
         }
 
         private void StartupConnectionCheck()
@@ -538,6 +529,83 @@ namespace Battlelogium
 
                 }
             }));
+        }
+
+        #endregion
+
+        #region Window
+
+        private void SetWindowed()
+        {
+            SetWindowed(this.config.StartMaximized, this.config.NoBorder, this.config.WindowWidth, this.config.WindowHeight);
+        }
+
+        private void SetWindowed(bool maximizedWindow, bool noBorder, int windowWidth, int windowHeight)
+        {
+            if (!maximizedWindow)
+            {
+                Utilities.Log("!config.StartMaximized");
+                this.WindowState = WindowState.Normal;
+            }
+            if (!noBorder)
+            {
+                this.WindowStyle = WindowStyle.SingleBorderWindow;
+                this.ResizeMode = ResizeMode.CanResizeWithGrip;
+            }
+            if (noBorder)
+            {
+                this.BorderBrush = new LinearGradientBrush(Color.FromRgb(128, 128, 128), Color.FromRgb(208, 208, 208), 90);
+                this.BorderThickness = new Thickness(1D);
+            }
+            EnableRightClickMove();
+            this.Width = windowWidth;
+            this.Height = windowHeight;
+            this.fullScreen = false;
+        }
+
+        private void SetFullScreen()
+        {
+            this.WindowState = WindowState.Maximized;
+            this.WindowStyle = WindowStyle.None;
+            this.BorderBrush = null;
+            this.BorderThickness = new Thickness(0);
+            this.ResizeMode = ResizeMode.NoResize;
+            DisableRightClickMove();
+            //Hide the taskbar
+            this.Hide();
+            this.Show();
+            this.BringIntoView();
+            //Set fullscreen indicator
+            this.fullScreen = true;
+        }
+
+        /// <summary>Enable right click dragging of the window</summary>
+        private void EnableRightClickMove()
+        {
+            Point startPosition = new Point();
+            this.rightDragBtnDown = (sender, e) =>
+            {
+                startPosition = e.GetPosition(this);
+            };
+            this.rightDragMove += (sender, e) =>
+            {
+                if (e.RightButton == MouseButtonState.Pressed)
+                {
+                    Point endPosition = e.GetPosition(this);
+                    Vector vector = endPosition - startPosition;
+                    this.Left += vector.X;
+                    this.Top += vector.Y;
+                }
+            };
+
+            this.PreviewMouseRightButtonDown += this.rightDragBtnDown;
+            this.PreviewMouseMove += this.rightDragMove;
+        }
+
+        private void DisableRightClickMove()
+        {
+            this.PreviewMouseRightButtonDown -= this.rightDragBtnDown;
+            this.PreviewMouseMove -= this.rightDragMove;
         }
 
         #endregion

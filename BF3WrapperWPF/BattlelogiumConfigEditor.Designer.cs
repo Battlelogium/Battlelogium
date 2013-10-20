@@ -259,7 +259,7 @@
             this.windowedMode_label.Name = "windowedMode_label";
             this.windowedMode_label.Size = new System.Drawing.Size(175, 52);
             this.windowedMode_label.TabIndex = 9;
-            this.windowedMode_label.Text = "Windowed Mode";
+            this.windowedMode_label.Text = "SetWindowed Mode";
             this.windowedMode_label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.toolTip.SetToolTip(this.windowedMode_label, "Run Battlelogium in a Window instead of fullscreen");
             // 

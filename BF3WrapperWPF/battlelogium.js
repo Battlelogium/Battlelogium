@@ -77,7 +77,7 @@ addChromeButtons(); //Add the false window chrome buttons to DOM
 fixEAPlaybarButtons();
 addPlaybarButton('serverBrowserButton', 'SERVERS', 'View Servers', 'location.href = "http://battlelog.battlefield.com/bf3/servers/"');
 addPlaybarButton('wrapperSettingsButton', 'SETTINGS', 'Change Battlelogium Settings', 'showDialog(settingsDialog())');
-addPlaybarButton('wrapperQuitButton', 'QUIT', 'Quit Battlelogium', 'wrapper.quitConfirm()');
+//addPlaybarButton('wrapperQuitButton', 'QUIT', 'Quit Battlelogium', 'wrapper.quitConfirm()'); We have the close button on the fake chrome.
 
 //Dialog functions
 

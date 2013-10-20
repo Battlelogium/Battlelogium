@@ -125,7 +125,7 @@
             }
         }
 
-        /// <summary>Whether to start Battlelogium in Windowed Mode</summary>
+        /// <summary>Whether to start Battlelogium in SetWindowed Mode</summary>
         public bool WindowedMode
         {
             get
