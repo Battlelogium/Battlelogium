@@ -7,7 +7,7 @@ function addPlaybarButton(elementid, label, tooltip, onclick) {
             class: 'common-button-large main-loggedin-playbutton',
             'data-tooltip': tooltip
         })
-        .html("".concat("<p>", label, "</p>"))
+        .html("<p>" + label + "</p>")
         .appendTo($('.main-loggedin-playbar')[0]);
     }
 }
@@ -45,18 +45,17 @@ function createToolsButton(onclick, id) {
     var toolsButton =
     $('<li/>', {
         onclick: onclick,
-        id: "".concat(id, "Button")
+        id: id + "Button"
     });
 
     $('<div/>', {
-        class: "".concat("tools-item log ", id)
+        class: "tools-item log " + id
     }).appendTo(toolsButton);
 
     return toolsButton
 }
 
 function addChromeButtons() {
-    //var headerTools = document.getElementById('base-header-user-tools').getElementsByClassName('tools pull-right')[0];
     var avatarLi = $('#base-header-user-tools .tools.pull-right .comcenter-toggle.tools-item').prev(); //Insert our chrome buttons before the avatar list item. 
     var closeButton = createToolsButton("wrapper.quitWrapper()", 'close');
     var minimizeButton = createToolsButton("wrapper.minimize()", 'minimize');
@@ -140,78 +139,78 @@ function clearCacheDialog() {
     return createDialog("Clear the Cache?", "Clear the Cache?", "Are you sure you want to clear cache and cookies? This can not be undone", false, [clearCacheButton, closeDialogButton]);
 }
 
-//Todo port dialog API to jQuery
-
 function createDialogButton(id, onclick, text, tooltip, grey) {
-    var dialogButton = document.createElement('button');
-
+    var dialogButton = $('<button/>', {
+        id: id,
+        onclick: onclick
+    });
     if (grey) {
-        dialogButton.setAttribute('class', 'btn btn-continue');
+        dialogButton.attr('class', 'btn btn-continue');
     } else {
-        dialogButton.setAttribute('class', 'btn btn-primary');
+        dialogButton.attr('class', 'btn btn-primary');
     }
-    dialogButton.setAttribute('id', id);
-    dialogButton.setAttribute('onclick', onclick);
     if ((tooltip != null) && (tooltip != "null")) {
-        dialogButton.setAttribute('data-tooltip', tooltip);
+        dialogButton.attr('data-tooltip', tooltip);
     }
-    dialogButton.innerHTML = text;
+    dialogButton.html(text);
     return dialogButton;
 }
 
 function createDialog(dialogHeaderText, dialogBodyHeaderText, dialogBodyText, showCloseX, dialogButtons) {
     //Create the dialogWindow
-    var dialogWindow = document.createElement('div');
-    dialogWindow.setAttribute('class', 'dialog hide in');
-    dialogWindow.setAttribute('id', 'dialog-1');
-    dialogWindow.setAttribute('style', 'display: block;');
-    dialogWindow.setAttribute('tabindex', '-1');
-    dialogWindow.setAttribute('role', 'dialog');
-    dialogWindow.setAttribute('aria-hidden', 'false');
+    var dialogWindow = $('<div/>', {
+        class: 'dialog hide in',
+        id: 'dialog-1',
+        style: 'display: block;',
+        tabindex: '-1',
+        role: 'dialog',
+        'aria-hidden': false
+    });
 
     //Create the dialogWindow header eleent
-    var dialogWindowHeader = document.createElement('header');
+    var dialogWindowHeader = $('<header/>');
 
     if (!showCloseX) {
-        dialogWindowHeader.innerHTML = "".concat("<h3>", dialogHeaderText, "</h3>");
+        dialogWindowHeader.html('<h3>' + dialogHeaderText + '</h3>');
     } else {
-        dialogWindowHeader.innerHTML = "".concat('<a class="icon-custom icon-close " href="#" onclick="closeDialog()">Close</a>', "<h3>", dialogHeaderText, "</h3>");
+        dialogWindowHeader.html('<a class="icon-custom icon-close " href="#" onclick="closeDialog()">Close</a>' + '<h3>' + dialogHeaderText, '</h3>');
     }
 
-    //Create the main section of the dialog window
-    var dialogWindowMain = document.createElement('section');
-    dialogWindowMain.setAttribute('style', 'height: auto;');
-    dialogWindowMain.setAttribute('class', 'dialog-body ');
-
-    //Create the dialog logo
-    var dialogLogo = document.createElement('div');
-    dialogLogo.setAttribute('class', 'popup-prompt-logo');
+    //Create the main section of the dialog window and the logo
+    var dialogWindowMain = $('<section/>', {
+        style: 'height: auto;',
+        class: 'dialog-body '
+    })
+    .append($('<div/>', {
+        class: 'popup-prompt-logo'
+    }));
 
     //Create the dialog text
-    var dialogWindowText = document.createElement('div');
-    dialogWindowText.setAttribute('class', 'popup-prompt-body');
-    dialogWindowText.innerHTML = "".concat("<h2>", dialogBodyHeaderText, "</h2><p>", dialogBodyText, "</p>");
+    var dialogWindowText = $('<div/>', {
+        class: 'popup-prompt-body'
+    });
+    dialogWindowText.html('<h2>' + dialogBodyHeaderText + '</h2><p>' + dialogBodyText + '</p>');
+
     //Create the footer with the buttons
-    var dialogWindowFooter = document.createElement('footer');
-    var dialogWindowFooterDiv = document.createElement('div');
-    dialogWindowFooterDiv.setAttribute('class', 'popup-prompt-buttons');
+    var dialogWindowFooterButtons = $('<div/>', {
+        class: 'popup-prompt-buttons'
+    });
 
     if (dialogButtons != null) {
-        for (var i = 0; i < dialogButtons.length; i++) {
-            dialogWindowFooterDiv.appendChild(dialogButtons[i]);
+        for (var i = 0; i < dialogButtons.length; i++) { //Still the fastest, most readable way to do this in jQuery.
+            dialogWindowFooterButtons.append(dialogButtons[i]);
         }
     }
 
-    dialogWindowFooter.appendChild(dialogWindowFooterDiv);
+    var dialogWindowFooter = $('<footer/>').append(dialogWindowFooterButtons);
 
-    dialogWindowMain.appendChild(dialogLogo);
-    dialogWindowMain.appendChild(dialogWindowText);
+    dialogWindowMain.append(dialogWindowText);
 
-    dialogWindow.appendChild(dialogWindowHeader);
-    dialogWindow.appendChild(dialogWindowMain);
-    dialogWindow.appendChild(dialogWindowFooter);
+    dialogWindow
+    .append(dialogWindowHeader)
+    .append(dialogWindowMain)
+    .append(dialogWindowFooter);
 
     return dialogWindow;
 }
-
 
