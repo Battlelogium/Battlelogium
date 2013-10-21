@@ -8,18 +8,18 @@
        
     <Window.Resources>
         <Storyboard x:Key="FadeBackground" BeginTime="0:0:2">
-            <DoubleAnimation From="1" To="0" Storyboard.TargetProperty="(UIElement.Opacity)" Duration="0:0:3" Completed="FadeBackgroundCompleted"/>
+            <DoubleAnimation From="1" To="0" Storyboard.TargetProperty="(UIElement.Opacity)" Duration="0:0:0.75" Completed="FadeBackgroundCompleted"/>
         </Storyboard>
         
         <Storyboard x:Key="BlinkLoading" BeginTime="0:0:0">
-            <DoubleAnimation From="1" To="0" Storyboard.TargetProperty="(UIElement.Opacity)" Duration="0:0:0.5" AutoReverse="True" DecelerationRatio="0.3" Completed="BlinkLoadingCompleted"/>
+            <DoubleAnimation From="1" To="0" Storyboard.TargetProperty="(UIElement.Opacity)" Duration="0:0:0.25" AutoReverse="True" DecelerationRatio="0.3" Completed="BlinkLoadingCompleted"/>
         </Storyboard>
     </Window.Resources>
     
     <Grid>
         <Grid Canvas.ZIndex="1">
-                 <Image Canvas.ZIndex="2" Margin="20,0,0,20" Stretch="UniformToFill" Source="images\loadingtext.png" HorizontalAlignment="Left" Name="LoadingImageText" VerticalAlignment="Bottom" Height="50" Width="172" />
-                 <Image Canvas.ZIndex="1" Stretch="UniformToFill" StretchDirection="DownOnly" Source="images\loading.jpg" HorizontalAlignment="Center" Name="LoadingImage" VerticalAlignment="Top"/>
+                 <Image Canvas.ZIndex="2" Stretch="None" Margin="0,0,20,20" Source="images\loadingicon.png" HorizontalAlignment="Right" Name="LoadingIcon" VerticalAlignment="Bottom"/>
+                 <Image Canvas.ZIndex="1" Stretch="UniformToFill" StretchDirection="DownOnly" Source="images\loadingbackground.jpg" HorizontalAlignment="Center" Name="LoadingImage" VerticalAlignment="Top"/>
              </Grid>
                <aw:WebControl Source="http://battlelog.battlefield.com/" LoadingFrameComplete="BattlelogLoadingFrameComplete" DocumentReady="BattlelogDocumentReady" ShowContextMenu="BattlelogShowContextMenu" HorizontalAlignment="Stretch" Margin="0,0,0,0" Name="Battlelog" VerticalAlignment="Top" />
         

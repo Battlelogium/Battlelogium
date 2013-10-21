@@ -261,15 +261,15 @@ namespace Battlelogium
              */
             if (this.loadingTextFinalPlay)
             {
-                Utilities.Log("LoadingImageText.Visibility = Visibility.Hidden");
-                this.LoadingImageText.Visibility = Visibility.Hidden;
+                Utilities.Log("LoadingIcon.Visibility = Visibility.Hidden");
+                this.LoadingIcon.Visibility = Visibility.Hidden;
             }
             else if (this.finishedLoading)
             {
                 this.loadingTextFinalPlay = true;
                 this.blinkLoading.AutoReverse = false;
                 this.blinkLoading.Begin();
-                Utilities.Log("LoadingImageText Final Blink Started");
+                Utilities.Log("LoadingIcon Final Blink Started");
             }
             else
             {
@@ -339,8 +339,8 @@ namespace Battlelogium
             Utilities.Log("FindResource(FadeBackground)");
             this.fadeBackground = this.FindResource("FadeBackground") as Storyboard;
 
-            Utilities.Log("Storyboard.SetTarget(this.blinkLoading, this.LoadingImageText)");
-            Storyboard.SetTarget(this.blinkLoading, this.LoadingImageText);
+            Utilities.Log("Storyboard.SetTarget(this.blinkLoading, this.LoadingIcon)");
+            Storyboard.SetTarget(this.blinkLoading, this.LoadingIcon);
 
             Utilities.Log("Storyboard.SetTarget(this.fadeBackground, this.LoadingImage)");
             Storyboard.SetTarget(this.fadeBackground, this.LoadingImage);

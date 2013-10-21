@@ -223,8 +223,8 @@
     <Content Include="style.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="images\loadingtext.png" />
-    <Resource Include="images\loading.jpg" />
+    <Resource Include="images\loadingicon.png" />
+    <Resource Include="images\loadingbackground.jpg" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="BattlelogiumConfigEditor.resx">
