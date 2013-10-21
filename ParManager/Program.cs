@@ -7,13 +7,15 @@ using System.Windows.Forms;
 using Microsoft.Win32;
 
 
-namespace RemoveOriginRequirement
+namespace ParManager
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Program.RemoveOriginRequirement();
+            if (args.Length == 0) return;
+            if (args[0] == "remove") Program.RemoveOriginRequirement();
+            if (args[0] == "restore") Program.RestoreOriginRequirement();
         }
         public static void RemoveOriginRequirement()
         {
@@ -34,7 +36,6 @@ namespace RemoveOriginRequirement
                                 EiMVPEArSlIDOiBackBg
                                 ";
 
-
             string bf3Path = "";
             try
             {
@@ -44,6 +45,7 @@ namespace RemoveOriginRequirement
             {
                 MessageBox.Show("Battlefield 3 Not Found");
                 Environment.Exit(1);
+                return;
             }
             string parPath = Path.Combine(bf3Path, "bf3.par");
             string origPar = Path.Combine(bf3Path, "bf3.par.orig");
@@ -53,15 +55,51 @@ namespace RemoveOriginRequirement
                 {
                     File.Move(parPath, origPar);
                     File.WriteAllBytes(parPath, Convert.FromBase64String(parFile));
-                    MessageBox.Show("Complete");
+                    Environment.Exit(0);
+                    return;
                 }
                 catch (Exception)
                 {
                     MessageBox.Show("Error while removing Origin requirement");
                     Environment.Exit(1);
+                    return;
                 }
             }
 
+        }
+
+        public static void RestoreOriginRequirement()
+        {
+            string bf3Path;
+            try
+            {
+                bf3Path = GetBF3Path();
+            }
+            catch
+            {
+                MessageBox.Show("Battlefield 3 Not Found");
+                Environment.Exit(1);
+                return;
+            }
+            if (!File.Exists(Path.Combine(bf3Path,"bf3.par.orig")))
+            {
+                MessageBox.Show("Origin Requirement Already Present");
+                Environment.Exit(1);
+                return;
+            }
+            try
+            {
+                File.Delete(Path.Combine(bf3Path, "bf3.par"));
+                File.Move(Path.Combine(bf3Path, "bf3.par.orig"), Path.Combine(bf3Path, "bf3.par"));
+                Environment.Exit(0);
+                return;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error occured when restoring Origin requirement");
+                Environment.Exit(1);
+                return;
+            }
         }
 
         private static string GetBF3Path()
@@ -74,13 +112,11 @@ namespace RemoveOriginRequirement
                     bf3Path =
                         Registry.GetValue(
                             @"HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\EA Games\Battlefield 3", "Install Dir", "").ToString();
-               
                 }
                 else
                 {
                     bf3Path =
                         Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EA Games\Battlefield 3", "Install Dir", "").ToString();
-                   
                 }
                 if (bf3Path == "") throw new Exception(); //throw if BF3 path not found
                 return bf3Path;

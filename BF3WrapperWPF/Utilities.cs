@@ -9,6 +9,7 @@
     using System.Management;
     using System.Windows;
     using System.IO;
+    using Microsoft.Win32;
 
     using WPFCustomMessageBox;
 
@@ -69,6 +70,32 @@
             process.Dispose();
         }
 
+        public static string GetBF3Path()
+        {
+            string bf3Path;
+            try
+            {
+                if (Environment.Is64BitOperatingSystem)
+                {
+                    bf3Path =
+                        Registry.GetValue(
+                            @"HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\EA Games\Battlefield 3", "Install Dir", "").ToString();
+
+                }
+                else
+                {
+                    bf3Path =
+                        Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EA Games\Battlefield 3", "Install Dir", "").ToString();
+
+                }
+                if (bf3Path == "") throw new Exception(); //throw if BF3 path not found
+                return bf3Path;
+            }
+            catch (Exception)
+            {
+                throw new FileNotFoundException("Battlefield 3 not found");
+            }
+        }
         
 
         /// <summary>

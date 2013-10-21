@@ -8,8 +8,8 @@
     <ProjectGuid>{4D7D59E0-F783-4433-A44A-03F4619CDE4D}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RemoveOriginRequirement</RootNamespace>
-    <AssemblyName>RemoveOriginRequirement</AssemblyName>
+    <RootNamespace>ParManager</RootNamespace>
+    <AssemblyName>ParManager</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -34,7 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>RemoveOriginRequirement.Program</StartupObject>
+    <StartupObject>ParManager.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>bf3.ico</ApplicationIcon>

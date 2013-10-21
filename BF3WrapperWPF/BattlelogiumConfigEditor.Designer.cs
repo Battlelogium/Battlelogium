@@ -59,7 +59,7 @@
             this.customJsEnabled_input = new System.Windows.Forms.CheckBox();
             this.startOriginChoices = new System.Windows.Forms.SplitContainer();
             this.startOrigin_input = new System.Windows.Forms.CheckBox();
-            this.installParFix = new System.Windows.Forms.Button();
+            this.parFixBtn = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.windowSettings.SuspendLayout();
@@ -457,7 +457,7 @@
             // 
             // startOriginChoices.Panel2
             // 
-            this.startOriginChoices.Panel2.Controls.Add(this.installParFix);
+            this.startOriginChoices.Panel2.Controls.Add(this.parFixBtn);
             this.startOriginChoices.Size = new System.Drawing.Size(176, 43);
             this.startOriginChoices.SplitterDistance = 37;
             this.startOriginChoices.TabIndex = 11;
@@ -474,16 +474,16 @@
             this.startOrigin_input.TabIndex = 10;
             this.startOrigin_input.UseVisualStyleBackColor = false;
             // 
-            // installParFix
+            // parFixBtn
             // 
-            this.installParFix.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.installParFix.Location = new System.Drawing.Point(0, 0);
-            this.installParFix.Name = "installParFix";
-            this.installParFix.Size = new System.Drawing.Size(135, 43);
-            this.installParFix.TabIndex = 4;
-            this.installParFix.Text = "Remove Origin Requirement";
-            this.installParFix.UseVisualStyleBackColor = true;
-            this.installParFix.Click += new System.EventHandler(this.installParFix_Click);
+            this.parFixBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.parFixBtn.Location = new System.Drawing.Point(0, 0);
+            this.parFixBtn.Name = "parFixBtn";
+            this.parFixBtn.Size = new System.Drawing.Size(135, 43);
+            this.parFixBtn.TabIndex = 4;
+            this.parFixBtn.Text = "Remove Origin Requirement";
+            this.parFixBtn.UseVisualStyleBackColor = true;
+            this.parFixBtn.Click += new System.EventHandler(this.parFixBtn_Click);
             // 
             // tableLayoutPanel1
             // 
@@ -577,7 +577,7 @@
         private System.Windows.Forms.Label startOrigin_label;
         private System.Windows.Forms.SplitContainer startOriginChoices;
         private System.Windows.Forms.CheckBox startOrigin_input;
-        private System.Windows.Forms.Button installParFix;
+        private System.Windows.Forms.Button parFixBtn;
 
     }
 }

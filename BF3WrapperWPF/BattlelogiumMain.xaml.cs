@@ -81,6 +81,7 @@ namespace Battlelogium
 
         /// <summary> Whether Battlelogium is currently in Fullscreen or Windowed Mode</summary>
         private bool fullScreen = true;
+
         #endregion
 
         public BattlelogiumMain()
@@ -103,11 +104,11 @@ namespace Battlelogium
             Utilities.Log(config.ConfigDump());
             Utilities.Log("StartupConnectionCheck()");
             this.StartupConnectionCheck();
+            splash.Close(TimeSpan.Zero); //Close the splash screen or it will hang.
             
 
             if (config.DirectToCampaign) //If we're going directly to campaign, there is no need to initialize the main window
             {
-                splash.Close(TimeSpan.Zero); //Close the splash screen or it will hang.
                 Utilities.Log("Closing += WrapperClosing");
                 this.Closing += WrapperClosing; //Since we don't call InitializeComponent, we need to manually add the closing event handler
                 Utilities.Log("StartBF3Campaign");
@@ -129,6 +130,7 @@ namespace Battlelogium
 
                 Utilities.Log("InitializeComponent()");
                 this.InitializeComponent();
+                this.VersionLabel.Content = "Battlelogium " + Assembly.GetEntryAssembly().GetName().Version.ToString();
 
                 Utilities.Log("SetupStoryboards()");
                 this.SetupStoryboards();
@@ -156,6 +158,8 @@ namespace Battlelogium
                     Utilities.Log("RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly");
                     RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly;
                 }
+
+                this.ForceWindowToTop();
             }
         }
 
@@ -261,8 +265,9 @@ namespace Battlelogium
              */
             if (this.loadingTextFinalPlay)
             {
-                Utilities.Log("LoadingIcon.Visibility = Visibility.Hidden");
+                Utilities.Log("LoadingImageText.Visibility = Visibility.Hidden");
                 this.LoadingIcon.Visibility = Visibility.Hidden;
+                this.VersionLabel.Visibility = Visibility.Hidden;
             }
             else if (this.finishedLoading)
             {
@@ -409,12 +414,13 @@ namespace Battlelogium
             }
 
         }
+
         /// <summary> Start Origin, then get the bf3.exe handle to be able to close Battlelogium once we're done.
         private void StartBF3Campaign()
         {
             if (!this.config.HandleOrigin)
             {
-                Process.Start(Path.Combine(GetBF3Path(), "bf3.exe"), @"-webMode SP -requestState State_ResumeCampaign -onlineEnvironment prod -requestStateParams""<data levelmode=\""sp\""></data>").WaitForExit();
+                Process.Start(Path.Combine(Utilities.GetBF3Path(), "bf3.exe"), @"-webMode SP -requestState State_ResumeCampaign -onlineEnvironment prod -requestStateParams""<data levelmode=\""sp\""></data>").WaitForExit();
                 this.Close();
             }
             Utilities.Log("StartOriginProcess(/StartOffline managedOrigin://LaunchGame/70619)");
@@ -437,32 +443,7 @@ namespace Battlelogium
             this.Close();
         }
 
-        private string GetBF3Path()
-        {
-            string bf3Path;
-            try
-            {
-                if (Environment.Is64BitOperatingSystem)
-                {
-                    bf3Path =
-                        Registry.GetValue(
-                            @"HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\EA Games\Battlefield 3", "Install Dir", "").ToString();
-
-                }
-                else
-                {
-                    bf3Path =
-                        Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\EA Games\Battlefield 3", "Install Dir", "").ToString();
-
-                }
-                if (bf3Path == "") throw new Exception(); //throw if BF3 path not found
-                return bf3Path;
-            }
-            catch (Exception)
-            {
-                throw new FileNotFoundException("Battlefield 3 not found");
-            }
-        }
+      
         #endregion
 
         #region Javascript
@@ -574,11 +555,9 @@ namespace Battlelogium
             this.BorderBrush = null;
             this.BorderThickness = new Thickness(0);
             this.ResizeMode = ResizeMode.NoResize;
-            DisableRightClickMove();
+            this.DisableRightClickMove();
             //Hide the taskbar
-            this.Hide();
-            this.Show();
-            this.BringIntoView();
+            this.ForceWindowToTop();
             //Set fullscreen indicator
             this.fullScreen = true;
         }
@@ -612,6 +591,16 @@ namespace Battlelogium
             this.PreviewMouseMove -= this.rightDragMove;
         }
 
+        private void ForceWindowToTop()
+        {
+            this.Hide();
+            this.Show();
+            this.Focus();
+            this.BringIntoView();
+            this.Topmost = true;
+            System.Threading.Thread.Sleep(100);
+            this.Topmost = false;
+        }
         #endregion
     }
 }

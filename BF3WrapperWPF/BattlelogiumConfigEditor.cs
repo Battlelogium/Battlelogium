@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Windows;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
+using System.IO;
 
 namespace Battlelogium
 {
@@ -43,6 +44,10 @@ namespace Battlelogium
             this.noBorder_input.Checked = config.NoBorder;
             this.windowHeight_input.Value = config.WindowHeight;
             this.windowWidth_input.Value = config.WindowWidth;
+
+            if (this.CheckForParFix()) this.parFixBtn.Text = "Restore Origin Requirement";
+            if (!File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ParManager.exe"))) this.parFixBtn.Enabled = false;
+            
             this.Refresh();
    
         }
@@ -112,13 +117,36 @@ namespace Battlelogium
             }
         }
 
-        private void installParFix_Click(object sender, EventArgs e)
+        /// <summary>Checks if the Par Fix is installed</summary>
+        private bool CheckForParFix()
         {
-            
-            ProcessStartInfo removeOrigin = new ProcessStartInfo("RemoveOriginRequirement");
-            Process removeOriginProcess = Process.Start(removeOrigin);
-            removeOriginProcess.WaitForExit();
-            if (removeOriginProcess.ExitCode == 0) this.startOrigin_input.Checked = false;
+            if (!File.Exists(Path.Combine(Utilities.GetBF3Path(), "bf3.par.orig")))
+            {
+                return false; //return false if fix is not installed
+            }
+            if (File.Exists(Path.Combine(Utilities.GetBF3Path(), "bf3.par.orig")))
+            {
+                return true; //return true if fix is installed
+            }
+            return false;
+        }
+
+        private void parFixBtn_Click(object sender, EventArgs e)
+        {
+            ProcessStartInfo parFix = new ProcessStartInfo("ParManager.exe");
+            bool startOrigin = true;
+            if(!CheckForParFix()){
+                parFix.Arguments = "remove";
+                startOrigin = false;
+            }
+            if(CheckForParFix()){
+                parFix.Arguments = "restore";
+                startOrigin = true;
+            }
+            Process parFixProcess = Process.Start(parFix);
+            parFixProcess.WaitForExit();
+            if (parFixProcess.ExitCode == 0) this.startOrigin_input.Checked = startOrigin;
+            this.parFixBtn.Enabled = false;
         }
 
 
