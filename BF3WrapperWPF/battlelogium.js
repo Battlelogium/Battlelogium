@@ -111,7 +111,7 @@ fixEAPlaybarButtons();
 removeBF4Preorder();
 addSecondaryNavOption('settingsBtn', 'showDialog(settingsDialog())', '#', 'Settings');
 hijackSettingsLink();
-addPlaybarButton('serverBrowserButton', 'SERVERS', 'View Servers', 'location.href = "http://battlelog.battlefield.com/bf3/servers/"');
+addPlaybarButton('serverBrowserButton', 'SERVERS', 'Browse servers', 'location.href = "http://battlelog.battlefield.com/bf3/servers/"');
 
 //Dialog functions
 
@@ -131,23 +131,31 @@ function getDialogOverlay() {
     return overlaycontainer;
 }
 
-function showDialog(dialog) {
+
+function showDialog(dialog, removeOverlay) {
+
+    if (arguments.length == 1) removeOverlay = true; //Assume we want to remove the overlay unless specified otherwise
     //Close any previously opened dialog
-    closeDialog();
+    closeDialog(removeOverlay);
 
     var dialogContainer = $("#dialog-container"); //Get the dialogContainer
-    getDialogOverlay().appendTo(dialogContainer).fadeIn(); //Add the overlay container to the dialog container
-    dialog.appendTo(dialogContainer).fadeIn(); //fade in the dialog (hopefully this solution is temporary, I want an ease in)
+
+    if (removeOverlay) {
+        getDialogOverlay().appendTo(dialogContainer).fadeIn();
+    } //Add the overlay container to the dialog container
+
+    dialog.appendTo(dialogContainer);
 }
 
-function closeDialog() {
-    $(".overlay.show").fadeOut(400, function(){ 
-        $(".overlay-container").hide(); 
-        $(this).show(); 
-    }) //Fade out the overlay
-    $("#dialog-battlelogium").hide(); //hide the dialog (hopefully this solution is temporary, I want an ease in)
+function closeDialog(removeOverlay) {
+    if (arguments.length == 0) removeOverlay = true; //Assume we want to remove the overlay unless specified otherwise
+    if (removeOverlay) {
+        $(".overlay.show").fadeOut(400, function () {
+            $(".overlay-container").hide();
+            $(this).show();
+        }) //Fade out the overlay
+    }
     $("#dialog-battlelogium").remove();
-
 }
 
 function okDialog(header, reason) {
@@ -156,7 +164,7 @@ function okDialog(header, reason) {
 }
 
 function settingsDialog() {
-    var clearCacheButton = createDialogButton('clearCacheButton', 'showDialog(clearCacheDialog())', " Clear Cache ", "Clear all cache and cookies", false);
+    var clearCacheButton = createDialogButton('clearCacheButton', 'showDialog(clearCacheDialog(), false)', " Clear Cache ", "Clear all cache and cookies", false);
     var editSettingsButton = createDialogButton('editSettingsButton', 'wrapper.editSettings()', " Battlelogium Settings ", "Open the settings editor", false);
     var userSettingsButton = createDialogButton('userSettingsButton', 'location.href = "http://battlelog.battlefield.com/bf3/profile/edit/"', " User Settings ", "Edit your Battlelog profile", false);
     var closeSettingsButton = createDialogButton('closeSettingsButton', 'closeDialog()', " Close ", "Close this dialog", true);
