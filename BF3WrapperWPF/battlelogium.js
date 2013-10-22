@@ -137,12 +137,15 @@ function showDialog(dialog) {
 
     var dialogContainer = $("#dialog-container"); //Get the dialogContainer
     getDialogOverlay().appendTo(dialogContainer).fadeIn(); //Add the overlay container to the dialog container
-    dialog.appendTo(dialogContainer).fadeIn();
+    dialog.appendTo(dialogContainer).fadeIn(); //fade in the dialog (hopefully this solution is temporary, I want an ease in)
 }
 
 function closeDialog() {
-    $("div .overlay-container").hide();
-    $("#dialog-battlelogium").hide();
+    $(".overlay.show").fadeOut(400, function(){ 
+        $(".overlay-container").hide(); 
+        $(this).show(); 
+    }) //Fade out the overlay
+    $("#dialog-battlelogium").hide(); //hide the dialog (hopefully this solution is temporary, I want an ease in)
     $("#dialog-battlelogium").remove();
 
 }
