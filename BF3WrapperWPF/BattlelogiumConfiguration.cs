@@ -268,7 +268,7 @@
             {
                 return File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, this.cssFileName));
             }
-            return null;
+            return "";
         }
 
         private string GetCustomJavascript()
@@ -277,7 +277,7 @@
             {
                 return File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, this.jsFileName));
             }
-            return null;
+            return "";
         }
 
         #endregion

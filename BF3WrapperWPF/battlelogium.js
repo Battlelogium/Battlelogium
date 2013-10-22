@@ -14,9 +14,8 @@ function addPlaybarButton(elementid, label, tooltip, onclick) {
 
 function fixEAPlaybarButtons() {
 
-
     //Fix Quick Match Button
-    if ($('btnQuickMatch').length == 0) {
+    if ($('#btnQuickMatch').length == 0) {
         var btnQuickMatch = $("button[data-track='actionbar.quickmatch']")
         btnQuickMatch.attr('id', 'btnQuickMatch');
         $("#btnQuickMatch").mouseover(); //Workaround to get the tooltip to appear
@@ -25,7 +24,7 @@ function fixEAPlaybarButtons() {
     }
 
     //Fix Co-Op Button
-    if ($('btnCoOp').length == 0) {
+    if ($('#btnCoOp').length == 0) {
         var btnCoOp = $("button[data-track='actionbar.coop']")
         btnCoOp.attr('id', 'btnCoOp');
         btnCoOp.attr('data-tooltip', 'Play a Co-Op Match');
@@ -33,11 +32,31 @@ function fixEAPlaybarButtons() {
     }
 
     //Fix Campaign Button
-    if ($('btnCampaign').length == 0) {
+    if ($('#btnCampaign').length == 0) {
         var btnCampaign = $("button[data-track='actionbar.campaign']")
         btnCampaign.attr('id', 'btnCampaign')
         btnCampaign.attr('data-tooltip', 'Play Campaign Mode');
         btnCampaign.html("<p>CAMPAIGN</p>");
+    }
+}
+
+function removeBF4Preorder() {
+    var bf4Preorder = $("li[data-page='preorderbf4']");
+    bf4Preorder.remove();
+}
+
+function addSecondaryNavOption(id, onclick, href, text) {
+    if ($('#' + id).length == 0) {
+        $('<a/>', {
+            class: 'wfont base-no-ajax',
+            href: href,
+            onclick: onclick
+        })
+            .html(text)
+            .appendTo($("<li/>", {
+            id: id
+             })
+      .prependTo($("#base-header-secondary-nav").find("ul")));
     }
 }
 
@@ -73,15 +92,6 @@ function addChromeButtons() {
 }
 
 function applyChromeCSS() {
-    var head = document.getElementsByTagName('head')[0];
-    var chromeCSS = document.createElement('link');
-    chromeCSS.setAttribute('rel', 'stylesheet');
-    chromeCSS.setAttribute('type', 'text/css');
-    chromeCSS.setAttribute('href', 'asset://local/bf3icons.css'); 
-    head.appendChild(chromeCSS);
-}
-
-function applyChromeCSS() {
     $('<link/>', {
         rel: 'stylesheet',
         type: 'text/css',
@@ -89,29 +99,52 @@ function applyChromeCSS() {
     }).appendTo($('head'));
 }
 
+function hijackSettingsLink() { //Take over the settings link in the dropdown menu
+    var settingsLink = $('li .edit').children("a[href='/bf3/profile/edit/']");
+    settingsLink.attr('href', '#');
+    settingsLink.attr('onclick', 'showDialog(settingsDialog())');
+}
+
 applyChromeCSS(); //Add our modified spritesheet for the false chrome buttons
 addChromeButtons(); //Add the false window chrome buttons to DOM
 fixEAPlaybarButtons();
+removeBF4Preorder();
+addSecondaryNavOption('settingsBtn', 'showDialog(settingsDialog())', '#', 'Settings');
+hijackSettingsLink();
 addPlaybarButton('serverBrowserButton', 'SERVERS', 'View Servers', 'location.href = "http://battlelog.battlefield.com/bf3/servers/"');
-addPlaybarButton('wrapperSettingsButton', 'SETTINGS', 'Change Battlelogium Settings', 'showDialog(settingsDialog())');
 
 //Dialog functions
+
+function getDialogOverlay() {
+    if ($("div .overlay-container").length == 0) {
+      
+        var overlaycontainer =  $('<div/>', {  //Add the overlay to a container
+            class: 'overlay-container'
+        }).append(
+         $('<div/>', { //Create the modal overlay
+            class: 'overlay show',
+            style: 'display: block; z-index: 2;'
+        }));
+    }else{
+        var overlaycontainer = $("div .overlay-container");
+    }
+    return overlaycontainer;
+}
 
 function showDialog(dialog) {
     //Close any previously opened dialog
     closeDialog();
 
     var dialogContainer = $("#dialog-container"); //Get the dialogContainer
-
-    $('<div/>', {  //Create the modal overlay
-        class: 'modal-overlay show'
-    }).appendTo(dialogContainer);
-
-    dialogContainer.append(dialog);
+    getDialogOverlay().appendTo(dialogContainer).fadeIn(); //Add the overlay container to the dialog container
+    dialog.appendTo(dialogContainer).fadeIn();
 }
 
 function closeDialog() {
-    $("#dialog-container").empty();
+    $("div .overlay-container").hide();
+    $("#dialog-battlelogium").hide();
+    $("#dialog-battlelogium").remove();
+
 }
 
 function okDialog(header, reason) {
@@ -120,11 +153,12 @@ function okDialog(header, reason) {
 }
 
 function settingsDialog() {
-    var clearCacheButton = createDialogButton('clearCacheButton', 'showDialog(clearCacheDialog())', " Clear Cache ", "Clear Battlelogium Webcache", false);
-    var editSettingsButton = createDialogButton('editSettingsButton', 'wrapper.editSettings()', " Edit Settings ", "Open the settings editor", false);
+    var clearCacheButton = createDialogButton('clearCacheButton', 'showDialog(clearCacheDialog())', " Clear Cache ", "Clear all cache and cookies", false);
+    var editSettingsButton = createDialogButton('editSettingsButton', 'wrapper.editSettings()', " Battlelogium Settings ", "Open the settings editor", false);
+    var userSettingsButton = createDialogButton('userSettingsButton', 'location.href = "http://battlelog.battlefield.com/bf3/profile/edit/"', " User Settings ", "Edit your Battlelog profile", false);
     var closeSettingsButton = createDialogButton('closeSettingsButton', 'closeDialog()', " Close ", "Close this dialog", true);
 
-    return createDialog("Battlelogium Settings", "Battlelogium Settings", "Clear the cache if you have problems<br />Edit settings to open the settings editor. Settings will be applied on restart", true, [clearCacheButton, editSettingsButton, closeSettingsButton]);
+    return createDialog("Settings", "Settings", "You may edit your Battlelog profile settings or Battlelogium's settings, or clear the cache to fix any problems " , true, [userSettingsButton, editSettingsButton, clearCacheButton, closeSettingsButton]);
 }
 
 function quitConfirmDialog(header, reason) {
@@ -146,6 +180,7 @@ function createDialogButton(id, onclick, text, tooltip, grey) {
     });
     if (grey) {
         dialogButton.attr('class', 'btn btn-continue');
+        dialogButton.attr('data-bind-action', 'no');
     } else {
         dialogButton.attr('class', 'btn btn-primary');
     }
@@ -160,7 +195,7 @@ function createDialog(dialogHeaderText, dialogBodyHeaderText, dialogBodyText, sh
     //Create the dialogWindow
     var dialogWindow = $('<div/>', {
         class: 'dialog hide in',
-        id: 'dialog-1',
+        id: 'dialog-battlelogium',
         style: 'display: block;',
         tabindex: '-1',
         role: 'dialog',
@@ -173,7 +208,7 @@ function createDialog(dialogHeaderText, dialogBodyHeaderText, dialogBodyText, sh
     if (!showCloseX) {
         dialogWindowHeader.html('<h3>' + dialogHeaderText + '</h3>');
     } else {
-        dialogWindowHeader.html('<a class="icon-custom icon-close " href="#" onclick="closeDialog()">Close</a>' + '<h3>' + dialogHeaderText, '</h3>');
+        dialogWindowHeader.html('<a class="icon-custom icon-close" onclick="closeDialog()" href="#">Close</a>' + '<h3>' + dialogHeaderText, '</h3>');
     }
 
     //Create the main section of the dialog window and the logo
