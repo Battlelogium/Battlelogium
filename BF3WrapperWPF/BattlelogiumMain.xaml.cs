@@ -171,12 +171,9 @@ namespace Battlelogium
                     RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly;
                 }
 
-               
-                notifyIcon.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"Battlelogium.exe"));
-                notifyIcon.Text = String.Format("Battlelogium {0} is running",Assembly.GetEntryAssembly().GetName().Version.ToString());
-                notifyIcon.Visible = true;
-
-                this.ForceWindowToTop();
+                this.notifyIcon.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"Battlelogium.exe"));
+                this.notifyIcon.Text = String.Format("Battlelogium {0} is running",Assembly.GetEntryAssembly().GetName().Version.ToString());
+                this.notifyIcon.Visible = true;
             }
         }
 
@@ -272,10 +269,17 @@ namespace Battlelogium
             };
 
             Utilities.Log("Waiting " + config.WaitTimeToKillOrigin * 1000 + " milliseconds to kill Origin");
+            notifyIcon.Text = "Battlelogium is waiting for Origin and ESN Sonar to close";
             cleanupOriginTimer.Start();
             this.Hide();
             System.Threading.Thread.Sleep(config.WaitTimeToKillOrigin * 1000 + 5000);
+            notifyIcon.Visible = false; 
+        }
 
+        private void Window_ContentRendered(object sender, EventArgs e)
+        {
+            this.Topmost = false;
+            this.ForceWindowToTop();
         }
 
         #region Storyboard Handlers
@@ -636,7 +640,7 @@ namespace Battlelogium
             Utilities.Log("ForceWindowToTop() called");
             this.Hide();
             this.Show();
-            this.BringIntoView();
+            this.Activate();
         }
 
         #endregion
