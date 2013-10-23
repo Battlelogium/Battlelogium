@@ -43,6 +43,7 @@ Configuration Options
 		
 		-  `useSoftwareRender` should be true if you want WPF to render without hardware acceleration. This is useful if the Steam Overlay is causing problems in Battlelogium, as it will disable it in. **The Steam Overlay in Battlefield 3 will still work with this on**
 	
+		-  `handleOrigin` should only be false if you have the "par fix" installed and so Origin does need to be running while playing Battlefield 3. See [BattlelogiumParManager](#BattlelogiumParManager)
 	-   Window Options
 	
 	    -  `windowedMode` should be true if you want to run Battlelogium in a window instead of fullscreen.
@@ -57,20 +58,18 @@ Configuration Options
 
 The default windowHeight and windowWidth are 720p (1280x720). You are able to drag and move the window with a rightclick anywhere on the window.
 
+BattlelogiumParManager
+----------------------
+`BattlelogiumParManager.exe` is a helper application to modify the Origin Parameter file for Battlefield 3 (`bf3.par`). A file sourced from http://par.nofate.me has been hard-coded into the application. This file removes the requirement for Origin to be running while playing Battlefield 3. If installed, it is recommended that `handleOrigin` be set to false. 
+
+To access this feature, there is an option in the Battlelogium settings menu that can be accessed by going to Settings -> Battlelogium Settings -> Remove Origin Requirement, or manually by starting `BattlelogiumParManager.exe remove` and then changing `handleOrigin` to false.
 Bug reports
 -----------
 
 Bug reports and support will only given if 3 things are provided.
 * A copy of your config.ini
 * A copy of your style.css  
-* A copy of the debug output. To get debug output on Windows 7:
-    1. Shift-Rightclick where Battlelogium.exe is located, and click on **_Open Command Window Here_**, or open a Command Prompt and `cd` into where Battlelogium.exe is located.
-    2. Type `Battlelogium.exe`
-    3. The Battlelogium will run, when it quits, the debug output will be shown on the command prompt window.
-    4. Right-click and select **_Mark_**
-    5. Drag all over the output, everythiing from `!---Begin Log---!` to `!---End Log---!`.
-    6. Paste it somewhere. I recommend [Github Gists](gists.github.com) as you can paste multiple files in one gist. 
-    7. Now that your config.ini, style.css and debug output is in a gist, send me the link.
+* A copy of a fresh battlelogium.log. **Delete any existing log file and run Battlelogium fresh to generate a new log file before submitting**
 
 Building
 --------
@@ -131,15 +130,43 @@ Changelogs
 >	- Created a rudimentary hacky API to create dialogs in Battlelog DOM. It's not the best code, but it's what I can make do with Battlelog's ugly mess of a web page.
 >	- Changed some method names to be more clear.
 >	- Sorted out code #regions
-	
+
+###Pre-Release 1.4
+>* User Experience
+>   - Added an option in the settings menu in which the requirement for Origin to be running while playing Battlefield 3 can be removed
+>	- If `handleOrigin` is false and the Origin requirement was removed, going directly to campaign will not require logging into Origin
+>	- Removed the "Quit" button on the play bar in favour of the faux window chrome buttons on the top menubar of Battlelog
+>	- Moved the "Settings" button on to the secondary Battlelog nav bar
+>	- Settings can also be accessed through the "Settings" link under the profile dropdown menu on the top menubar.
+>   - Added an option to access Battlelog profile settings in the Battlelogium settings dialog
+>	- Added an Alt+Enter functionality to toggle between fullscreen and windowed mode
+>	- Battlelog dialogs created by Battlelogium now use the new overlay and fade in and out over 400 ms.
+>	- New loading background 
+>	- Added a version indicator on the bottom left of the loading screen
+>	- Removed the flashing "LOADING" text when loading
+>	- Added a Battlelog style flashing blue blink to replace "LOADING" text
+>	- Removed BF4 Pre-Order ads
+>   - There is no longer a need to mark output. Simply submit battlelogium.log
+>
+>* Code
+>   - Upgraded to Awesomium 1.7.2
+>   - The Battlelog dialog API now has a C# wrapper for easy manipulation in C# code.
+>	- Ported the dialog API to jQuery for shorter and more readable code
+>	- Added "ParManager" to handle `bf3.par` file
+>	- Refactored Origin handling to `ManagedOrigin.cs`
+>	- Added `SetWindowed()` and `SetFullScreen()` to set between fullscreen and windowed mode
+>	- Added css and icons for faux window chrome buttons
+>   - Utilities.Log() now writes to a file for logging.
 	
 Special thanks
 --------------
 
-
 Thanks to..
+* [JJBoonie](http://steamcommunity.com/id/JJBoonie/) for suggestions and testing
 * [ProfDoctorMrSaibot](http://steamcommunity.com/id/ProfDoctorMrSaibot) for many sugguestions and testing
 * [Frohman :D](http://forums.steampowered.com/forums/member.php?u=974602) for the original _Battlelog on STEAM_
+
+_Find me on [Steam](http://steamcommunity.com/id/ron975/home/) or on GitHub and offer feature or bug requests!_
 ___
 
 Licensing

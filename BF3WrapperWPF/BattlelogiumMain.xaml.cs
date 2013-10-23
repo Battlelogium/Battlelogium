@@ -99,27 +99,30 @@ namespace Battlelogium
             Utilities.Log("Version: " + Assembly.GetEntryAssembly().GetName().Version.ToString());
             Utilities.Log("==================");
             Console.WriteLine(String.Empty);
-            Utilities.Log("new BattlelogiumConfiguration()");
-            config = new BattlelogiumConfiguration();
+            Utilities.Log("BattlelogiumMain.config = new BattlelogiumConfiguration()");
+            this.config = new BattlelogiumConfiguration();
             Utilities.Log(config.ConfigDump());
-            Utilities.Log("StartupConnectionCheck()");
+            Utilities.Log("BattlelogiumMain.StartupConnectionCheck()");
             this.StartupConnectionCheck();
             splash.Close(TimeSpan.Zero); //Close the splash screen or it will hang.
             
 
             if (config.DirectToCampaign) //If we're going directly to campaign, there is no need to initialize the main window
             {
-                Utilities.Log("Closing += WrapperClosing");
+                Utilities.Log("BattlelogiumMain.Closing += WrapperClosing");
                 this.Closing += WrapperClosing; //Since we don't call InitializeComponent, we need to manually add the closing event handler
-                Utilities.Log("StartBF3Campaign");
+                Utilities.Log("BattlelogiumMain.StartBF3Campaign()");
                 this.StartBF3Campaign();
             }
             else
             {
                 if (config.HandleOrigin)
                 {
-                    Utilities.Log("StartOriginProcess(/StartClientMinimized)");
+                    Utilities.Log("BattlelogiumMain.StartOriginProcess(/StartClientMinimized)");
                     this.retainOrigin = ManagedOrigin.CheckIfOriginIsRunning();
+                    Utilities.Log("retainOrigin = " + retainOrigin.ToString());
+
+                    Utilities.Log("this.managedOrigin = new ManagedOrigin(/StartClientMinimized)");
                     this.managedOrigin = new ManagedOrigin("/StartClientMinimized");
                     try{
                         this.managedOrigin.StartOriginProcess();
@@ -128,28 +131,28 @@ namespace Battlelogium
                     }
                 }
 
-                Utilities.Log("InitializeComponent()");
+                Utilities.Log("BattlelogiumMain.InitializeComponent()");
                 this.InitializeComponent();
                 this.VersionLabel.Content = "Battlelogium " + Assembly.GetEntryAssembly().GetName().Version.ToString();
 
-                Utilities.Log("SetupStoryboards()");
+                Utilities.Log("BattlelogiumMain.SetupStoryboards()");
                 this.SetupStoryboards();
 
-                Utilities.Log("if config.WindowedMode SetWindowed()");
                 if (config.WindowedMode)
                 {
-                    SetWindowed();
+                    Utilities.Log("BattlelogiumMain.SetWindowed()");
+                    this.SetWindowed();
                 }
 
-                Utilities.Log("blinkLoading.Begin()");
+                Utilities.Log("this.blinkLoading.Begin()");
                 this.blinkLoading.Begin();
 
-                Utilities.Log("Battlelog.Websession = CreateBattlelogWebSession()");
+                Utilities.Log("this.Battlelog.Websession = CreateBattlelogWebSession()");
                 this.Battlelog.WebSession = CreateBattlelogWebSession();
 
                 if (config.CheckUpdates)
                 {
-                    Utilities.Log("new UpdateNotifier(Assembly.GetEntryAssembly().GetName().Version).run()");
+                    Utilities.Log("Check Updates: new UpdateNotifier(Assembly.GetEntryAssembly().GetName().Version).run()");
                     new UpdateNotifier(Assembly.GetEntryAssembly().GetName().Version, this.Dispatcher).run();
                 }
 
@@ -167,13 +170,14 @@ namespace Battlelogium
 
         private void HotkeyHandler(object sender, KeyEventArgs e)
         {
-
+            Utilities.Log("BattlelogiumMain.HotkeyHandler() called");
             if (e.KeyboardDevice.Modifiers == ModifierKeys.Alt)
             {
                 ///We put e.Handled = true to suppress the beep that sounds if we don't.
                 switch (e.SystemKey)
                 {
                     case Key.N:
+                        Utilities.Log("KeyEventArgs.Handled, Key.N");
                         this.WindowState = WindowState.Minimized;
                         e.Handled = true;
                         break;
@@ -181,16 +185,19 @@ namespace Battlelogium
                         switch (this.fullScreen)
                         {
                             case true:
-                                SetWindowed();
+                                Utilities.Log("KeyEventArgs.Handled, Key.Enter, this.SetWindowed()");
+                                this.SetWindowed();
                                 break;
                             case false:
-                                SetFullScreen();
+                                Utilities.Log("KeyEventArgs.Handled, Key.Enter, this.SetFullScreen()");
+                                this.SetFullScreen();
                                 break;
                         }
                         e.Handled = true;
                         break;
                     case Key.C:
-                        this.Battlelog.ExecuteJavascript("document.getElementById('btnCampaign').click()");
+                        Utilities.Log("KeyEventArgs.Handled, Key.C");
+                        this.Battlelog.ExecuteJavascript("document.getElementById('btnCampaign').click()"); //todo add more gamemode hotkeys
                         e.Handled = true;
                         break;
                 }
@@ -199,8 +206,10 @@ namespace Battlelogium
 
         private void WrapperClosing(object sender, CancelEventArgs e)
         {
+            Utilities.Log("this.WrapperClosing() called");
             if (GetBattlefield3Process() != null)
             {
+               Utilities.Log("GetBattlefield3Process() != null");
                this.Battlelog.ExecuteJavascript(JSDialog.ShowJavascriptDialog(new OKDialog("Battlefield 3 is still running", "Quit Battlefield 3 before closing Battlelogium")));
                e.Cancel = true;
                return;
@@ -225,24 +234,24 @@ namespace Battlelogium
                 {
                     if (config.HandleOrigin)
                     {
-                        Utilities.Log("KillOriginProcess");
+                        Utilities.Log("managedOrigin.KillOriginProcess()");
                         managedOrigin.KillOriginProcess();
                     }
-                    Utilities.Log("KillProcess(sonarhost)");
+                    Utilities.Log("Utilities.KillProcess(sonarhost)");
                     Utilities.KillProcess("sonarhost",false,false);
 
                     if (this.retainOrigin)
                     {
 
-                        Utilities.Log("retainOrigin True");
+                        Utilities.Log("retainOrigin = True");
                         //We do not want this instance of Origin to be a child process, otherwise Steam will think we're still in Battlefield 3
                        
-                        Utilities.Log("CreateUnmanagedInstance");
+                        Utilities.Log("ManagedOrigin.CreateUnmanagedInstance");
                         ManagedOrigin.CreateUnmanagedInstance();
                     }
 
                     Utilities.Log("!---End Log---!");
-                    Utilities.Log("Press Enter to Exit. Remember to mark output.");
+                    Utilities.Log("Press Enter to Exit. Remember to submit battlelogium.log");
                     Utilities.FreeConsole();
 
                 }));
@@ -338,10 +347,11 @@ namespace Battlelogium
 
         private void SetupStoryboards()
         {
-            Utilities.Log("FindResource(BlinkLoading)");
+            Utilities.Log("BattlelogiumMain.SetupStoryboards() Called");
+            Utilities.Log("this.FindResource(this.BlinkLoading)");
             this.blinkLoading = this.FindResource("BlinkLoading") as Storyboard;
 
-            Utilities.Log("FindResource(FadeBackground)");
+            Utilities.Log("this.FindResource(this.FadeBackground)");
             this.fadeBackground = this.FindResource("FadeBackground") as Storyboard;
 
             Utilities.Log("Storyboard.SetTarget(this.blinkLoading, this.LoadingIcon)");
@@ -354,10 +364,11 @@ namespace Battlelogium
 
         private void StartupConnectionCheck()
         {
+            Utilities.Log("BattlelogiumMain.StartupConnectionCheck() Called");
             if (!CheckForBattlelogConnection())
             {
      
-                Utilities.Log("MessageBox startInOfflineMode");
+                Utilities.Log("Utilities.ShowChoiceDialog(startInOfflineMode)");
                 if (!Utilities.ShowChoiceDialog("Battlelog is not available. Launch Campaign instead?", "Battlelog not available", "Launch Campaign", "Quit"))
                 {
                     Utilities.Log("startInOfflineMode = false");
@@ -376,7 +387,8 @@ namespace Battlelogium
 
         private void HandleOriginException(Exception e)
         {
-            Utilities.Log("Origin not found");
+            Utilities.Log("BattlelogiumMain.HandleOriginException() Called");
+            Utilities.Log("Exception while doing Origin related task");
             Utilities.Log("Exception type: " + e.GetType());
             MessageBox.Show("Please install Origin to play Battlefield 3", "Error");
             Process.Start("http://www.managedOrigin.com/download");
@@ -385,6 +397,7 @@ namespace Battlelogium
 
         private bool CheckForBattlelogConnection()
         {
+            Utilities.Log("CheckForBattlelogConnection() Called");
             try
             {
                 using (var client = new WebClient())
@@ -403,6 +416,7 @@ namespace Battlelogium
 
         private Process GetBattlefield3Process()
         {
+            Utilities.Log("BattlelogiumMain.GetBattlefield3Process() Called");
             Process[] processes = Process.GetProcessesByName("bf3");
             if (processes.Length == 1)
             {
@@ -418,13 +432,15 @@ namespace Battlelogium
         /// <summary> Start Origin, then get the bf3.exe handle to be able to close Battlelogium once we're done.
         private void StartBF3Campaign()
         {
+            Utilities.Log("BattlelogiumMain.StartBF3Campaign() Called");
             if (!this.config.HandleOrigin)
             {
+                Utilities.Log("!this.config.HandleOrigin");
                 Process.Start(Path.Combine(Utilities.GetBF3Path(), "bf3.exe"), @"-webMode SP -requestState State_ResumeCampaign -onlineEnvironment prod -requestStateParams""<data levelmode=\""sp\""></data>").WaitForExit();
                 this.Close();
             }
-            Utilities.Log("StartOriginProcess(/StartOffline managedOrigin://LaunchGame/70619)");
-            this.managedOrigin = new ManagedOrigin(@"""/StartOffline"" ""managedOrigin://LaunchGame/70619"""); //Starts Origin in offline mode, autolaunching Battlefield 3
+            Utilities.Log("this.managedOrigin = new ManagedOrigin(/StartOffline origin://LaunchGame/70619)");
+            this.managedOrigin = new ManagedOrigin(@"""/StartOffline"" ""origin://LaunchGame/70619"""); //Starts Origin in offline mode, autolaunching Battlefield 3
             managedOrigin.StartOriginProcess();
             Process battlefield3 = null;
             Utilities.Log("while (Process battlefield3 == null)");
@@ -443,14 +459,13 @@ namespace Battlelogium
             this.Close();
         }
 
-      
         #endregion
 
         #region Javascript
 
         private WebSession CreateBattlelogWebSession()
         {
-            Utilities.Log("CreateWebSession()");
+            Utilities.Log("BattlelogiumMain.CreateBattlelogWebSession() Called");
             WebSession session =
                 WebCore.CreateWebSession(
                     Path.Combine(
@@ -463,6 +478,7 @@ namespace Battlelogium
 
         private void InjectScript(string scripturl)
         {
+            Utilities.Log(String.Format("BattlelogiumMain.InjectScript({0}) Called",scripturl));
             this.Battlelog.ExecuteJavascript(
                 @"
                     var script = document.createElement('script');
@@ -474,23 +490,27 @@ namespace Battlelogium
 
         private void BindJavascriptEvents(JSObject jsObject)
         {
+            Utilities.Log("BattlelogiumMain.BindJavascriptEvents Called");
             jsObject.Bind("quitConfirm", false, new JavascriptMethodEventHandler(delegate
             {
                 Utilities.Log("Javascript QuitButton pressed");
                 this.Battlelog.ExecuteJavascript(JSDialog.ShowJavascriptDialog(new QuitConfirmDialog("Are you sure you want to quit?", "Do you want to quit?")));
             }));
+            Utilities.Log("Bound wrapper.quitConfirm()");
 
             jsObject.Bind("minimize", false, new JavascriptMethodEventHandler(delegate
             {
                 Utilities.Log("Javascript Minimize pressed");
                 this.WindowState = WindowState.Minimized;
             }));
+            Utilities.Log("Bound wrapper.minimize()");
 
             jsObject.Bind("quitWrapper", false, new JavascriptMethodEventHandler(delegate
             {
                 Utilities.Log("Quit requested from Javascript call");
                 this.Close();
             }));
+            Utilities.Log("Bound wrapper.quitWrapper()");
 
             jsObject.Bind("clearCache", false, new JavascriptMethodEventHandler(delegate
             {
@@ -499,6 +519,7 @@ namespace Battlelogium
                 this.Battlelog.WebSession.ClearCookies();
                 this.Battlelog.Reload(true);
             }));
+            Utilities.Log("Bound wrapper.clearCache()");
 
 
             jsObject.Bind("editSettings", false, new JavascriptMethodEventHandler(delegate
@@ -514,6 +535,7 @@ namespace Battlelogium
 
                 }
             }));
+            Utilities.Log("Bound wrapper.editSettings()");
         }
 
         #endregion
@@ -527,6 +549,7 @@ namespace Battlelogium
 
         private void SetWindowed(bool maximizedWindow, bool noBorder, int windowWidth, int windowHeight)
         {
+            Utilities.Log(String.Format("BattlelogiumMain.SetWindowed({0}, {1}, {2}, {3}) Called", maximizedWindow, noBorder, windowWidth, windowHeight));
             if (!maximizedWindow)
             {
                 Utilities.Log("!config.StartMaximized");
@@ -550,6 +573,7 @@ namespace Battlelogium
 
         private void SetFullScreen()
         {
+            Utilities.Log("BattlelogiumMain.SetFullScreen() called");
             this.WindowState = WindowState.Maximized;
             this.WindowStyle = WindowStyle.None;
             this.BorderBrush = null;
@@ -565,6 +589,7 @@ namespace Battlelogium
         /// <summary>Enable right click dragging of the window</summary>
         private void EnableRightClickMove()
         {
+            Utilities.Log("BattlelogiumMain.EnableRightClickMove() called");
             Point startPosition = new Point();
             this.rightDragBtnDown = (sender, e) =>
             {
@@ -587,12 +612,14 @@ namespace Battlelogium
 
         private void DisableRightClickMove()
         {
+            Utilities.Log("BattlelogiumMain.DisableRightClickMove() called");
             this.PreviewMouseRightButtonDown -= this.rightDragBtnDown;
             this.PreviewMouseMove -= this.rightDragMove;
         }
 
         private void ForceWindowToTop()
         {
+            Utilities.Log("ForceWindowToTop() called");
             this.Hide();
             this.Show();
             this.Focus();

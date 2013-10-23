@@ -133,7 +133,7 @@ namespace Battlelogium
 
         private void parFixBtn_Click(object sender, EventArgs e)
         {
-            ProcessStartInfo parFix = new ProcessStartInfo("ParManager.exe");
+            ProcessStartInfo parFix = new ProcessStartInfo("BattlelogiumParManager.exe");
             bool startOrigin = true;
             if(!CheckForParFix()){
                 parFix.Arguments = "remove";
