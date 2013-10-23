@@ -208,7 +208,17 @@ namespace Battlelogium
                         break;
                     case Key.C:
                         Utilities.Log("KeyEventArgs.Handled, Key.C");
-                        this.Battlelog.ExecuteJavascript("document.getElementById('btnCampaign').click()"); //todo add more gamemode hotkeys
+                        this.Battlelog.ExecuteJavascript("$('#btnCampaign').click()"); 
+                        e.Handled = true;
+                        break;
+                    case Key.Q:
+                        Utilities.Log("KeyEventArgs.Handled, Key.Q");
+                        this.Battlelog.ExecuteJavascript("$('#btnQuickMatch').click()"); 
+                        e.Handled = true;
+                        break;
+                    case Key.P:
+                        Utilities.Log("KeyEventArgs.Handled, Key.P");
+                        this.Battlelog.ExecuteJavascript("$('#btnCoOp').click()"); 
                         e.Handled = true;
                         break;
                 }

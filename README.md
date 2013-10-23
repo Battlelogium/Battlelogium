@@ -147,6 +147,10 @@ Changelogs
 >	- Added a Battlelog style flashing blue blink to replace "LOADING" text
 >	- Removed BF4 Pre-Order ads
 >   - There is no longer a need to mark output. Simply submit battlelogium.log
+>   - Added hotkeys to start game modes quickly
+>      - Alt+C to start Campaign Mode
+>      - Alt+P to start Co-Op Mode
+>      - Alt+Q to start Quick Match
 >
 >* Code
 >   - Upgraded to Awesomium 1.7.2
