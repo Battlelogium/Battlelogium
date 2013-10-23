@@ -52,6 +52,8 @@ namespace Battlelogium
 
         private readonly SplashScreen splash = new SplashScreen("images/BattlelogiumSplash.png");
 
+        private System.Windows.Forms.NotifyIcon notifyIcon = new System.Windows.Forms.NotifyIcon();
+
         /// <summary> Storyboard that fades the background image in the beginning </summary>
         private Storyboard fadeBackground;
 
@@ -168,6 +170,11 @@ namespace Battlelogium
                     Utilities.Log("RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly");
                     RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly;
                 }
+
+               
+                notifyIcon.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"Battlelogium.exe"));
+                notifyIcon.Text = String.Format("Battlelogium {0} is running",Assembly.GetEntryAssembly().GetName().Version.ToString());
+                notifyIcon.Visible = true;
 
                 this.ForceWindowToTop();
             }
@@ -537,7 +544,7 @@ namespace Battlelogium
                     var result = configEditor.ShowDialog();
                     if (result == System.Windows.Forms.DialogResult.OK)
                     {
-                        this.Battlelog.ExecuteJavascript(JSDialog.ShowJavascriptDialog(new QuitConfirmDialog("Settings will be saved on restart", "Do you wish to quit Battlelogium now?")));
+                        this.Battlelog.ExecuteJavascript(JSDialog.ShowJavascriptDialog(new QuitConfirmDialog("Settings will be saved on restart", "Do you wish to quit Battlelogium now?"), false));
                     }
 
                 }
@@ -629,12 +636,9 @@ namespace Battlelogium
             Utilities.Log("ForceWindowToTop() called");
             this.Hide();
             this.Show();
-            this.Focus();
             this.BringIntoView();
-            this.Topmost = true;
-            System.Threading.Thread.Sleep(100);
-            this.Topmost = false;
         }
+
         #endregion
     }
 }

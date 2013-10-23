@@ -39,7 +39,12 @@ namespace Battlelogium.BattlelogDialog
         /// <summary> Creates a method call to createDialog(). Call ExecuteJavascript() with this.</summary>
         public static string ShowJavascriptDialog(JSDialog dialog)
         {
-            return String.Format("showDialog({0})", dialog.ToString());
+            return ShowJavascriptDialog(dialog, true);
+        }
+
+        public static string ShowJavascriptDialog(JSDialog dialog, bool removeOverlay)
+        {
+            return String.Format("showDialog({0}, {1})", dialog.ToString(), removeOverlay.ToString().ToLowerInvariant());
         }
 
         public override string ToString()
