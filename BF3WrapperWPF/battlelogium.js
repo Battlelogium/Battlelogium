@@ -141,7 +141,7 @@ function showDialog(dialog, removeOverlay) {
     var dialogContainer = $("#dialog-container"); //Get the dialogContainer
 
     if (removeOverlay) {
-        getDialogOverlay().appendTo(dialogContainer).fadeIn();
+        getDialogOverlay().appendTo(dialogContainer).fadeIn(200);
     } //Add the overlay container to the dialog container
 
     dialog.appendTo(dialogContainer);
@@ -150,7 +150,7 @@ function showDialog(dialog, removeOverlay) {
 function closeDialog(removeOverlay) {
     if (arguments.length == 0) removeOverlay = true; //Assume we want to remove the overlay unless specified otherwise
     if (removeOverlay) {
-        $(".overlay.show").fadeOut(400, function () {
+        $(".overlay.show").fadeOut(200, function () {
             $(".overlay-container").hide();
             $(this).show();
         }) //Fade out the overlay

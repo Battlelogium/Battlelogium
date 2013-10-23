@@ -20,7 +20,7 @@
         <Grid Canvas.ZIndex="1">
             <Label Canvas.ZIndex="2" Foreground="Gray" Content="Battlelogium Version" Height="28" HorizontalAlignment="Left" Margin="3,0,0,0" Name="VersionLabel" VerticalAlignment="Bottom" />
             <Image Canvas.ZIndex="2" Stretch="None" Margin="0,0,20,20" Source="images\loadingicon.png" HorizontalAlignment="Right" Name="LoadingIcon" VerticalAlignment="Bottom" />
-            <Image Canvas.ZIndex="1" Stretch="UniformToFill" StretchDirection="DownOnly" Source="images\loadingbackground.jpg" HorizontalAlignment="Center" Name="LoadingImage" VerticalAlignment="Top" Margin="0,0,-41,0" />
+            <Image Canvas.ZIndex="1" Stretch="UniformToFill" Source="images\loadingbackground.jpg" HorizontalAlignment="Center" Name="LoadingImage" VerticalAlignment="Top" Height="1080" Width="1920" />
         </Grid>
                <aw:WebControl Source="http://battlelog.battlefield.com/" LoadingFrameComplete="BattlelogLoadingFrameComplete" DocumentReady="BattlelogDocumentReady" ShowContextMenu="BattlelogShowContextMenu" HorizontalAlignment="Stretch" Margin="0,0,0,0" Name="Battlelog" VerticalAlignment="Top" />
         

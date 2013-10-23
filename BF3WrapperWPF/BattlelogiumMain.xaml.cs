@@ -99,6 +99,13 @@ namespace Battlelogium
             Utilities.Log("Version: " + Assembly.GetEntryAssembly().GetName().Version.ToString());
             Utilities.Log("==================");
             Console.WriteLine(String.Empty);
+            if (Process.GetProcessesByName("Battlelogium").Length > 0)
+            {
+                Utilities.Log("Process.GetProcessesByName(Battlelogium).Length > 0");
+                CustomMessageBox.Show("There can only be one instance of Battlelogium running at a time. Wait for the other instance to close and try again");
+                this.Close();
+                return;
+            }
             Utilities.Log("BattlelogiumMain.config = new BattlelogiumConfiguration()");
             this.config = new BattlelogiumConfiguration();
             Utilities.Log(config.ConfigDump());
@@ -416,7 +423,7 @@ namespace Battlelogium
 
         private Process GetBattlefield3Process()
         {
-            Utilities.Log("BattlelogiumMain.GetBattlefield3Process() Called");
+            Utilities.Log("Utilities.GetBattlefield3Process() Called");
             Process[] processes = Process.GetProcessesByName("bf3");
             if (processes.Length == 1)
             {
