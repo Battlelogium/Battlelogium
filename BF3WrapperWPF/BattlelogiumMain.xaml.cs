@@ -99,9 +99,9 @@ namespace Battlelogium
             Utilities.Log("Version: " + Assembly.GetEntryAssembly().GetName().Version.ToString());
             Utilities.Log("==================");
             Console.WriteLine(String.Empty);
-            if (Process.GetProcessesByName("Battlelogium").Length > 0)
+            if (Process.GetProcessesByName("Battlelogium").Length > 1)
             {
-                Utilities.Log("Process.GetProcessesByName(Battlelogium).Length > 0");
+                Utilities.Log("Process.GetProcessesByName(Battlelogium).Length > 1");
                 CustomMessageBox.Show("There can only be one instance of Battlelogium running at a time. Wait for the other instance to close and try again");
                 this.Close();
                 return;
