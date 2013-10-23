@@ -46,7 +46,7 @@ namespace Battlelogium
             this.windowWidth_input.Value = config.WindowWidth;
 
             if (this.CheckForParFix()) this.parFixBtn.Text = "Restore Origin Requirement";
-            if (!File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ParManager.exe"))) this.parFixBtn.Enabled = false;
+            if (!File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "BattlelogiumParManager.exe"))) this.parFixBtn.Enabled = false;
             
             this.Refresh();
    
