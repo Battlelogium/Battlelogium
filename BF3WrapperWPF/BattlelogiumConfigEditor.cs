@@ -120,15 +120,22 @@ namespace Battlelogium
         /// <summary>Checks if the Par Fix is installed</summary>
         private bool CheckForParFix()
         {
-            if (!File.Exists(Path.Combine(Utilities.GetBF3Path(), "bf3.par.orig")))
+            try
             {
-                return false; //return false if fix is not installed
+                if (!File.Exists(Path.Combine(Utilities.GetBF3Path(), "bf3.par.orig")))
+                {
+                    return false; //return false if fix is not installed
+                }
+                if (File.Exists(Path.Combine(Utilities.GetBF3Path(), "bf3.par.orig")))
+                {
+                    return true; //return true if fix is installed
+                }
+                return false;
             }
-            if (File.Exists(Path.Combine(Utilities.GetBF3Path(), "bf3.par.orig")))
+            catch (FileNotFoundException)
             {
-                return true; //return true if fix is installed
+                return false; //Return false if Battlefield 3 not found. It's ParManager's job to tell the user.
             }
-            return false;
         }
 
         private void parFixBtn_Click(object sender, EventArgs e)

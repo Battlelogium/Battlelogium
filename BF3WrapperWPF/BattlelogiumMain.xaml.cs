@@ -118,8 +118,8 @@ namespace Battlelogium
 
             if (config.DirectToCampaign) //If we're going directly to campaign, there is no need to initialize the main window
             {
-                Utilities.Log("BattlelogiumMain.Closing += WrapperClosing");
-                this.Closing += WrapperClosing; //Since we don't call InitializeComponent, we need to manually add the closing event handler
+                Utilities.Log("BattlelogiumMain.Closing += Window_Closing");
+                this.Closing += Window_Closing; //Since we don't call InitializeComponent, we need to manually add the closing event handler
                 Utilities.Log("BattlelogiumMain.StartBF3Campaign()");
                 this.StartBF3Campaign();
             }
@@ -179,9 +179,15 @@ namespace Battlelogium
 
         #region Handlers
 
-        private void HotkeyHandler(object sender, KeyEventArgs e)
+        #region Window Handlers
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            Utilities.Log("BattlelogiumMain.HotkeyHandler() called");
+            Utilities.Log("BattlelogiumMain.Window_PreviewKeyDown() called");
+            if (e.Key == Key.F5)
+            {
+                this.Battlelog.Reload(false);
+                return;
+            }
             if (e.KeyboardDevice.Modifiers == ModifierKeys.Alt)
             {
                 ///We put e.Handled = true to suppress the beep that sounds if we don't.
@@ -208,26 +214,50 @@ namespace Battlelogium
                         break;
                     case Key.C:
                         Utilities.Log("KeyEventArgs.Handled, Key.C");
-                        this.Battlelog.ExecuteJavascript("$('#btnCampaign').click()"); 
+                        if (this.Battlelog.Source.ToString() == "http://battlelog.battlefield.com/bf3/")
+                        {
+                            this.Battlelog.ExecuteJavascript("$('#btnCampaign').click()");
+                        }
+                        else
+                        {
+                            this.Battlelog.Source = new Uri("http://battlelog.battlefield.com/bf3/campaign/");
+                        }
                         e.Handled = true;
                         break;
                     case Key.Q:
                         Utilities.Log("KeyEventArgs.Handled, Key.Q");
-                        this.Battlelog.ExecuteJavascript("$('#btnQuickMatch').click()"); 
+                        this.Battlelog.ExecuteJavascript("$('#btnQuickMatchBig').click()"); 
                         e.Handled = true;
                         break;
                     case Key.P:
                         Utilities.Log("KeyEventArgs.Handled, Key.P");
-                        this.Battlelog.ExecuteJavascript("$('#btnCoOp').click()"); 
+                        this.Battlelog.Source = new Uri("http://battlelog.battlefield.com/bf3/coop/");
+                        e.Handled = true;
+                        break;
+                    case Key.S:
+                        Utilities.Log("KeyEventArgs.Handled, Key.S");
+                        this.Battlelog.Source = new Uri("http://battlelog.battlefield.com/bf3/servers/");
+                        e.Handled = true;
+                        break;
+                    case Key.H:
+                        Utilities.Log("KeyEventArgs.Handled, Key.H");
+                        this.Battlelog.GoToHome();
                         e.Handled = true;
                         break;
                 }
             }
         }
 
-        private void WrapperClosing(object sender, CancelEventArgs e)
+        /// <summary> Unset top most and force the window on top of the task bar. Required to have fullscreen window be on top at start</summary>
+        private void Window_ContentRendered(object sender, EventArgs e)
         {
-            Utilities.Log("this.WrapperClosing() called");
+            this.Topmost = false;
+            this.ForceWindowToTop();
+        } 
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            Utilities.Log("this.Window_Closing() called");
             if (GetBattlefield3Process() != null)
             {
                Utilities.Log("GetBattlefield3Process() != null");
@@ -285,15 +315,10 @@ namespace Battlelogium
             System.Threading.Thread.Sleep(config.WaitTimeToKillOrigin * 1000 + 5000);
             notifyIcon.Visible = false; 
         }
-
-        private void Window_ContentRendered(object sender, EventArgs e)
-        {
-            this.Topmost = false;
-            this.ForceWindowToTop();
-        }
-
+        #endregion
+    
         #region Storyboard Handlers
-        private void BlinkLoadingCompleted(object sender, EventArgs e)
+        private void BlinkLoading_Completed(object sender, EventArgs e)
         {
             /* 
              * We don't use Storyboard.RepeatBehavior = RepeatBehavior.Forever because that does not fire the 
@@ -319,17 +344,26 @@ namespace Battlelogium
             }
         }
 
-        private void FadeBackgroundCompleted(object sender, EventArgs e)
+        private void FadeBackground_Completed(object sender, EventArgs e)
         {
-            Utilities.Log("FadeBackgroundCompleted()");
+            Utilities.Log("FadeBackground_Completed()");
             Utilities.Log("LoadingImage.Visibility = Visibility.Hidden");
             this.LoadingImage.Visibility = Visibility.Hidden;
         }
         #endregion
 
         #region Awesomium Handlers
+        //Prevent stray "Save As" dialogs from popping up
+        private void WebCore_Download(object sender, DownloadEventArgs e)
+        {
+            if ((e.MimeType == "text/html")) 
+            {
+                e.Cancel = true;
+            }
+        }
+
         //Single run event handler for DocumentReady
-        private void BattlelogDocumentReady(object sender, UrlEventArgs e)
+        private void Battlelog_DocumentReady(object sender, UrlEventArgs e)
         {
             // Fade out the loading image for the first time
 
@@ -346,21 +380,21 @@ namespace Battlelogium
 
             BindJavascriptEvents(wrapperObject);
 
-            Utilities.Log("Battlelog.DocumentReady -= this.BattlelogDocumentReady");
+            Utilities.Log("Battlelog.DocumentReady -= this.Battlelog_DocumentReady");
             // Disable this one time EventHandler
-            this.Battlelog.DocumentReady -= this.BattlelogDocumentReady;
+            this.Battlelog.DocumentReady -= this.Battlelog_DocumentReady;
         }
 
         //Disable the context menu in Awesomium
-        private void BattlelogShowContextMenu(object sender, ContextMenuEventArgs e)
+        private void Battlelog_ShowContextMenu(object sender, ContextMenuEventArgs e)
         {
             e.Handled = true;
         }
 
         //Inject button javascript and custom javascript
-        private void BattlelogLoadingFrameComplete(object sender, FrameEventArgs e)
+        private void Battlelog_LoadingFrameComplete(object sender, FrameEventArgs e)
         {
-            Utilities.Log("BattlelogLoadingFrameComplete");
+            Utilities.Log("Battlelog_LoadingFrameComplete");
             this.InjectScript("asset://local/battlelogium.js");
             if (config.CustomJsEnabled)
             {
@@ -372,6 +406,20 @@ namespace Battlelogium
         #endregion
 
         #region UI Code
+        private WebSession CreateBattlelogWebSession()
+        {
+            Utilities.Log("BattlelogiumMain.CreateBattlelogWebSession() Called");
+            WebSession session =
+                WebCore.CreateWebSession(
+                    Path.Combine(
+                        AppDomain.CurrentDomain.BaseDirectory, "Battlelogium", "WebSession"),
+                    new WebPreferences { CustomCSS = config.CSS, EnableGPUAcceleration = true, });
+            session.AddDataSource("local", new ResourceDataSource(ResourceType.Packed));
+
+            WebCore.HomeURL = new Uri("http://battlelog.battlefield.com/bf3");
+            WebCore.Download += new DownloadEventHandler(WebCore_Download);
+            return session;
+        }
 
         private void SetupStoryboards()
         {
@@ -464,8 +512,15 @@ namespace Battlelogium
             if (!this.config.HandleOrigin)
             {
                 Utilities.Log("!this.config.HandleOrigin");
-                Process.Start(Path.Combine(Utilities.GetBF3Path(), "bf3.exe"), @"-webMode SP -requestState State_ResumeCampaign -onlineEnvironment prod -requestStateParams""<data levelmode=\""sp\""></data>").WaitForExit();
-                this.Close();
+                try
+                {
+                    Process.Start(Path.Combine(Utilities.GetBF3Path(), "bf3.exe"), @"-webMode SP -requestState State_ResumeCampaign -onlineEnvironment prod -requestStateParams""<data levelmode=\""sp\""></data>").WaitForExit();
+                }
+                catch (FileNotFoundException)
+                {
+                    CustomMessageBox.Show("Battlefield 3 Not Found. Please install Battlefield 3 before playing");
+                }
+                    this.Close();
             }
             Utilities.Log("this.managedOrigin = new ManagedOrigin(/StartOffline origin://LaunchGame/70619)");
             this.managedOrigin = new ManagedOrigin(@"""/StartOffline"" ""origin://LaunchGame/70619"""); //Starts Origin in offline mode, autolaunching Battlefield 3
@@ -490,19 +545,6 @@ namespace Battlelogium
         #endregion
 
         #region Javascript
-
-        private WebSession CreateBattlelogWebSession()
-        {
-            Utilities.Log("BattlelogiumMain.CreateBattlelogWebSession() Called");
-            WebSession session =
-                WebCore.CreateWebSession(
-                    Path.Combine(
-                        AppDomain.CurrentDomain.BaseDirectory, "Battlelogium", "WebSession"),
-                    new WebPreferences { CustomCSS = config.CSS, EnableGPUAcceleration = true, });
-            session.AddDataSource("local", new ResourceDataSource(ResourceType.Packed));
-
-            return session;
-        }
 
         private void InjectScript(string scripturl)
         {
@@ -568,7 +610,7 @@ namespace Battlelogium
 
         #endregion
 
-        #region Window
+        #region Window Modes
 
         private void SetWindowed()
         {

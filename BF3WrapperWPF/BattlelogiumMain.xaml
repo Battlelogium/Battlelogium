@@ -5,15 +5,15 @@
         WindowStyle="None" Title="Battlelogium" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen" WindowState="Maximized"
         Topmost="True"
-        Closing="WrapperClosing" MinHeight="400" MinWidth="400" Background="Black" PreviewKeyDown="HotkeyHandler" ContentRendered="Window_ContentRendered">
+        Closing="Window_Closing" MinHeight="400" MinWidth="400" Background="Black" PreviewKeyDown="Window_PreviewKeyDown" ContentRendered="Window_ContentRendered">
        
     <Window.Resources>
         <Storyboard x:Key="FadeBackground" BeginTime="0:0:2">
-            <DoubleAnimation From="1" To="0" Storyboard.TargetProperty="(UIElement.Opacity)" Duration="0:0:0.75" Completed="FadeBackgroundCompleted"/>
+            <DoubleAnimation From="1" To="0" Storyboard.TargetProperty="(UIElement.Opacity)" Duration="0:0:0.75" Completed="FadeBackground_Completed"/>
         </Storyboard>
         
         <Storyboard x:Key="BlinkLoading" BeginTime="0:0:0">
-            <DoubleAnimation From="1" To="0" Storyboard.TargetProperty="(UIElement.Opacity)" Duration="0:0:0.25" AutoReverse="True" DecelerationRatio="0.3" Completed="BlinkLoadingCompleted"/>
+            <DoubleAnimation From="1" To="0" Storyboard.TargetProperty="(UIElement.Opacity)" Duration="0:0:0.25" AutoReverse="True" DecelerationRatio="0.3" Completed="BlinkLoading_Completed"/>
         </Storyboard>
     </Window.Resources>
     
@@ -23,7 +23,7 @@
             <Image Canvas.ZIndex="2" Stretch="None" Margin="0,0,20,20" Source="images\loadingicon.png" HorizontalAlignment="Right" Name="LoadingIcon" VerticalAlignment="Bottom" />
             <Image Canvas.ZIndex="1" Stretch="UniformToFill" Source="images\loadingbackground.jpg" HorizontalAlignment="Center" Name="LoadingImage" VerticalAlignment="Top" Height="1080" Width="1920" />
         </Grid>
-               <aw:WebControl Source="http://battlelog.battlefield.com/" LoadingFrameComplete="BattlelogLoadingFrameComplete" DocumentReady="BattlelogDocumentReady" ShowContextMenu="BattlelogShowContextMenu" HorizontalAlignment="Stretch" Margin="0,0,0,0" Name="Battlelog" VerticalAlignment="Top" />
+               <aw:WebControl Source="http://battlelog.battlefield.com/" LoadingFrameComplete="Battlelog_LoadingFrameComplete" DocumentReady="Battlelog_DocumentReady" ShowContextMenu="Battlelog_ShowContextMenu" HorizontalAlignment="Stretch" Margin="0,0,0,0" Name="Battlelog" VerticalAlignment="Top" />
         
          </Grid>
 </Window>

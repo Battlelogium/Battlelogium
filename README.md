@@ -140,6 +140,7 @@ Changelogs
 >	- Settings can also be accessed through the "Settings" link under the profile dropdown menu on the top menubar.
 >   - Added an option to access Battlelog profile settings in the Battlelogium settings dialog
 >	- Added an Alt+Enter functionality to toggle between fullscreen and windowed mode
+>   - Added F5 to reload the page
 >	- Battlelog dialogs created by Battlelogium now use the new overlay and fade in and out over 400 ms.
 >	- New loading background 
 >	- Added a version indicator on the bottom left of the loading screen
@@ -147,10 +148,12 @@ Changelogs
 >	- Added a Battlelog style flashing blue blink to replace "LOADING" text
 >	- Removed BF4 Pre-Order ads
 >   - There is no longer a need to mark output. Simply submit battlelogium.log
->   - Added hotkeys to start game modes quickly
+>   - Added hotkeys to start game modes quickly 
 >      - Alt+C to start Campaign Mode
 >      - Alt+P to start Co-Op Mode
 >      - Alt+Q to start Quick Match
+>      - Alt+S to go to the Server Browser
+>      - Alt+H to go back to Battlelog Home
 >
 >* Code
 >   - Upgraded to Awesomium 1.7.2
@@ -161,6 +164,8 @@ Changelogs
 >	- Added `SetWindowed()` and `SetFullScreen()` to set between fullscreen and windowed mode
 >	- Added css and icons for faux window chrome buttons
 >   - Utilities.Log() now writes to a file for logging.
+>   - Reverted all event handlers to standard conventions 
+>   - Various bug fixes
 	
 Special thanks
 --------------

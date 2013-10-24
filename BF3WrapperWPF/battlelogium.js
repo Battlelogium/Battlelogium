@@ -12,18 +12,31 @@ function addPlaybarButton(elementid, label, tooltip, onclick) {
     }
 }
 
-function fixEAPlaybarButtons() {
-
-    //Fix Quick Match Button
+function fixQuickMatchButtons() {
     if ($('#btnQuickMatch').length == 0) {
         var btnQuickMatch = $("button[data-track='actionbar.quickmatch']")
-        btnQuickMatch.attr('id', 'btnQuickMatch');
-        $("#btnQuickMatch").mouseover(); //Workaround to get the tooltip to appear
-        $("#btnQuickMatch").mouseout();
-        $('.tooltip').find('.tooltip-body:contains("Loading")').html("Play a Quick Match");
+        .attr('id', 'btnQuickMatch')
+        .mouseover()
+        .mouseout(); //Workaround to get the tooltip to appear
     }
+    
+     var btnQuickMatchBig = $("button[data-track='menudropdown.quickmatch']")
+     .attr('id', 'btnQuickMatchBig')
+     .mouseover() //Workaround to get the tooltip to appear
+     .mouseout();
+   
+   
+     var btnQuickMatchServerBrowser = $("button[data-track='serverbrowser.server.quickmatch']")
+    .attr('id', 'btnQuickMatchServerBrowser')
+    .mouseover() //Workaround to get the tooltip to appear
+    .mouseout();
+    
+    $('.tooltip').find('.tooltip-body:contains("Loading")').html("Play a Quick Match");
+   
+}
+function fixEAPlaybarButtons() {
 
-    //Fix Co-Op Button
+     //Fix Co-Op Button
     if ($('#btnCoOp').length == 0) {
         var btnCoOp = $("button[data-track='actionbar.coop']")
         btnCoOp.attr('id', 'btnCoOp');
@@ -108,10 +121,11 @@ function hijackSettingsLink() { //Take over the settings link in the dropdown me
 applyChromeCSS(); //Add our modified spritesheet for the false chrome buttons
 addChromeButtons(); //Add the false window chrome buttons to DOM
 fixEAPlaybarButtons();
+fixQuickMatchButtons(); //Fix the quick match buttons (tooltips)
 removeBF4Preorder();
-addSecondaryNavOption('settingsBtn', 'showDialog(settingsDialog())', '#', 'Settings');
+addSecondaryNavOption('btnSettings', 'showDialog(settingsDialog())', '#', 'Settings');
 hijackSettingsLink();
-addPlaybarButton('serverBrowserButton', 'SERVERS', 'Browse servers', 'location.href = "http://battlelog.battlefield.com/bf3/servers/"');
+addPlaybarButton('btnServers', 'SERVERS', 'Browse servers', 'location.href = "http://battlelog.battlefield.com/bf3/servers/"');
 
 //Dialog functions
 
