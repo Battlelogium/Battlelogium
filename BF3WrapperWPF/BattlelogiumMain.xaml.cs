@@ -467,7 +467,7 @@ namespace Battlelogium
             Utilities.Log("Exception while doing Origin related task");
             Utilities.Log("Exception type: " + e.GetType());
             MessageBox.Show("Please install Origin to play Battlefield 3", "Error");
-            Process.Start("http://www.managedOrigin.com/download");
+            Process.Start("http://www.origin.com/download");
             this.Close();
         }
 
