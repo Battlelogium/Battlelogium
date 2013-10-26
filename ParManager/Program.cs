@@ -20,7 +20,7 @@ namespace ParManager
             {
                 if (args[0] == "remove")
                 {
-                    DialogResult confirmRemove = MessageBox.Show(String.Format("Note: Multiplayer will continue to be functional without the Origin requirement, and will not affect PunkBuster or your Origin account.{0}{0}Battlefield 3 and your other games will remain playable through Origin. This process is fully revertable{0}{0}This will disable cloud syncing for Battlefield 3{0}{0}As a disclaimer, you are solely responsible anything that happens to your EA, Battlelog or Origin account.{0}{0}Are you sure you want to continue?", Environment.NewLine), "Confirm Remove", MessageBoxButtons.OKCancel);
+                    DialogResult confirmRemove = MessageBox.Show(String.Format("Note: Multiplayer will continue to be functional without the Origin requirement, and will not affect PunkBuster or your Origin account.{0}{0}Battlefield 3 and your other games will remain playable through Origin. This process is fully revertable{0}{0}This will disable automatic cloud syncing and updating for Battlefield 3.{0}To update or sync to the cloud, simply start Battlefield through Origin.{0}{0}As a disclaimer, you are solely responsible anything that happens to your EA, Battlelog or Origin account.{0}{0}Are you sure you want to continue?", Environment.NewLine), "Confirm Remove", MessageBoxButtons.OKCancel);
                     if (confirmRemove == DialogResult.OK) Program.RemoveOriginRequirement();
                 }
                 if (args[0] == "restore") Program.RestoreOriginRequirement();
