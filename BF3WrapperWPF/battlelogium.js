@@ -53,11 +53,6 @@ function fixEAPlaybarButtons() {
     }
 }
 
-function removeBF4Preorder() {
-    var bf4Preorder = $("li[data-page='preorderbf4']");
-    bf4Preorder.remove();
-}
-
 function addSecondaryNavOption(id, onclick, href, text) {
     if ($('#' + id).length == 0) {
         $('<a/>', {
@@ -122,8 +117,8 @@ applyChromeCSS(); //Add our modified spritesheet for the false chrome buttons
 addChromeButtons(); //Add the false window chrome buttons to DOM
 fixEAPlaybarButtons();
 fixQuickMatchButtons(); //Fix the quick match buttons (tooltips)
-removeBF4Preorder();
 addSecondaryNavOption('btnSettings', 'showDialog(settingsDialog())', '#', 'Settings');
+$("#base-header-secondary-nav>ul>li>a[href='/bf4/store/']").remove(); //Remove the buy BF4 link
 hijackSettingsLink();
 addPlaybarButton('btnServers', 'SERVERS', 'Browse servers', 'location.href = "http://battlelog.battlefield.com/bf3/servers/"');
 
