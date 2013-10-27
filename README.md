@@ -131,7 +131,7 @@ Changelogs
 >	- Changed some method names to be more clear.
 >	- Sorted out code #regions
 
-###Release 1.4
+###Release 1.4.0.1
 >* User Experience
 >	- Added an option in the settings menu in which the requirement for Origin to be running while playing Battlefield 3 can be removed
 >	- If `handleOrigin` is false and the Origin requirement was removed, going directly to campaign will not require logging into Origin
@@ -156,7 +156,7 @@ Changelogs
 >		- Alt+H to go back to Battlelog Home
 >
 >* Code
-	- Upgraded to Awesomium 1.7.2
+>	- Upgraded to Awesomium 1.7.2
 > 	- The Battlelog dialog API now has a C# wrapper for easy manipulation in C# code.
 >	- Ported the dialog API to jQuery for shorter and more readable code
 >	- Added "ParManager" to handle `bf3.par` file
