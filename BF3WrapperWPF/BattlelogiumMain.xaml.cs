@@ -416,7 +416,7 @@ namespace Battlelogium
                     new WebPreferences { CustomCSS = config.CSS, EnableGPUAcceleration = true, });
             session.AddDataSource("local", new ResourceDataSource(ResourceType.Packed));
 
-            WebCore.HomeURL = new Uri("http://battlelog.battlefield.com/bf3");
+            WebCore.HomeURL = new Uri("http://battlelog.battlefield.com/bf3/");
             WebCore.Download += new DownloadEventHandler(WebCore_Download);
             return session;
         }
@@ -591,6 +591,12 @@ namespace Battlelogium
             }));
             Utilities.Log("Bound wrapper.clearCache()");
 
+            jsObject.Bind("openSettingsDialog", false, new JavascriptMethodEventHandler(delegate
+            {
+                Utilities.Log("Javascript openSettingsDialog()");
+                this.Battlelog.ExecuteJavascript("showDialog(settingsDialog(), true)");
+            }));
+            Utilities.Log("Bound wrapper.clearCache()");
 
             jsObject.Bind("editSettings", false, new JavascriptMethodEventHandler(delegate
             {
@@ -604,7 +610,8 @@ namespace Battlelogium
                     }
 
                 }
-            }));
+            }
+            ));
             Utilities.Log("Bound wrapper.editSettings()");
         }
 

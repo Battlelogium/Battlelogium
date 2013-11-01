@@ -107,19 +107,23 @@ function applyChromeCSS() {
     }).appendTo($('head'));
 }
 
-function hijackSettingsLink() { //Take over the settings link in the dropdown menu
-    var settingsLink = $('li .edit').children("a[href='/bf3/profile/edit/']");
-    settingsLink.attr('href', '#');
-    settingsLink.attr('onclick', 'showDialog(settingsDialog())');
+function handleSettingsLink() {
+    if (location.pathname.toLowerCase().indexOf("bf3") >= 0) {
+        var settingsLink = $('li .edit').children("a[href='/bf3/profile/edit/']");
+        settingsLink.attr('href', '#');
+        settingsLink.attr('onclick', 'wrapper.openSettingsDialog()');
+        addSecondaryNavOption('btnSettings', 'wrapper.openSettingsDialog()', '#', 'Settings');
+    } else {
+        addSecondaryNavOption('btnReturn', '', 'http://battlelog.battlefield.com/bf3', 'Return to Battlefield 3');
+    }
 }
 
 applyChromeCSS(); //Add our modified spritesheet for the false chrome buttons
 addChromeButtons(); //Add the false window chrome buttons to DOM
 fixEAPlaybarButtons();
 fixQuickMatchButtons(); //Fix the quick match buttons (tooltips)
-addSecondaryNavOption('btnSettings', 'showDialog(settingsDialog())', '#', 'Settings');
-$("#base-header-secondary-nav>ul>li>a[href='/bf4/store/']").remove(); //Remove the buy BF4 link
-hijackSettingsLink();
+$("#base-header-secondary-nav>ul>li>a:contains('Buy Battlefield 4')").remove(); //Remove the buy BF4 link
+handleSettingsLink();
 addPlaybarButton('btnServers', 'SERVERS', 'Browse servers', 'location.href = "http://battlelog.battlefield.com/bf3/servers/"');
 
 //Dialog functions
@@ -142,8 +146,6 @@ function getDialogOverlay() {
 
 
 function showDialog(dialog, removeOverlay) {
-
-    if (arguments.length == 1) removeOverlay = true; //Assume we want to remove the overlay unless specified otherwise
     //Close any previously opened dialog
     closeDialog(removeOverlay);
 
@@ -157,7 +159,6 @@ function showDialog(dialog, removeOverlay) {
 }
 
 function closeDialog(removeOverlay) {
-    if (arguments.length == 0) removeOverlay = true; //Assume we want to remove the overlay unless specified otherwise
     if (removeOverlay) {
         $(".overlay.show").fadeOut(200, function () {
             $(".overlay-container").hide();
@@ -168,7 +169,7 @@ function closeDialog(removeOverlay) {
 }
 
 function okDialog(header, reason) {
-    var okButton = createDialogButton('okButton', 'closeDialog()', " OK ", "OK", true);
+    var okButton = createDialogButton('okButton', 'closeDialog(true)', " OK ", "OK", true);
     return createDialog(header, header, reason, false, [okButton]);
 }
 
@@ -176,20 +177,20 @@ function settingsDialog() {
     var clearCacheButton = createDialogButton('clearCacheButton', 'showDialog(clearCacheDialog(), false)', " Clear Cache ", "Clear all cache and cookies", false);
     var editSettingsButton = createDialogButton('editSettingsButton', 'wrapper.editSettings()', " Battlelogium Settings ", "Open the settings editor", false);
     var userSettingsButton = createDialogButton('userSettingsButton', 'location.href = "http://battlelog.battlefield.com/bf3/profile/edit/"', " User Settings ", "Edit your Battlelog profile", false);
-    var closeSettingsButton = createDialogButton('closeSettingsButton', 'closeDialog()', " Close ", "Close this dialog", true);
+    var closeSettingsButton = createDialogButton('closeSettingsButton', 'closeDialog(true)', " Close ", "Close this dialog", true);
 
     return createDialog("Settings", "Settings", "You may edit your Battlelog profile settings or Battlelogium's settings, or clear the cache to fix any problems " , true, [userSettingsButton, editSettingsButton, clearCacheButton, closeSettingsButton]);
 }
 
 function quitConfirmDialog(header, reason) {
     var quitBattlelogiumButton = createDialogButton('quitBattlelogiumButton', 'wrapper.quitWrapper()', " Close Battlelogium ", "Quit Battlelogium", false);
-    var closeDialogButton = createDialogButton('closeDialogButton', 'closeDialog()', " Cancel ", null, true);
+    var closeDialogButton = createDialogButton('closeDialogButton', 'closeDialog(true)', " Cancel ", null, true);
     return createDialog("Confirm Closing", header, reason, false, [quitBattlelogiumButton, closeDialogButton]);
 }
 
 function clearCacheDialog() {
     var clearCacheButton = createDialogButton('clearCacheDialogButton', 'wrapper.clearCache()', " Clear the Cache ", null, false);
-    var closeDialogButton = createDialogButton('closeDialogButton', 'closeDialog()', " Cancel ", null, true);
+    var closeDialogButton = createDialogButton('closeDialogButton', 'closeDialog(true)', " Cancel ", null, true);
     return createDialog("Clear the Cache?", "Clear the Cache?", "Are you sure you want to clear cache and cookies? This can not be undone", false, [clearCacheButton, closeDialogButton]);
 }
 
@@ -228,7 +229,7 @@ function createDialog(dialogHeaderText, dialogBodyHeaderText, dialogBodyText, sh
     if (!showCloseX) {
         dialogWindowHeader.html('<h3>' + dialogHeaderText + '</h3>');
     } else {
-        dialogWindowHeader.html('<a class="icon-custom icon-close" onclick="closeDialog()" href="#">Close</a>' + '<h3>' + dialogHeaderText, '</h3>');
+        dialogWindowHeader.html('<a class="icon-custom icon-close" onclick="closeDialog(true)" href="#">Close</a>' + '<h3>' + dialogHeaderText, '</h3>');
     }
 
     //Create the main section of the dialog window and the logo

@@ -65,5 +65,13 @@ namespace Battlelogium.BattlelogDialog
         public QuitConfirmDialog(string header, string reason) : base("Confirm Closing", header, reason, false, new JSButton("quitBattlelogiumButton", "wrapper.quitWrapper()", " Close Battlelogium ", "Quit Battlelogium", false), new JSButton("closeDialogButton", "closeDialog()", " Cancel ", "null", true)) { }
     }
 
+    public class SettingsDialog : JSDialog{
+        public SettingsDialog()
+            : base("Settings", "Settings", "You may edit your Battlelog profile settings or Battlelogium's settings, or clear the cache to fix any problems ", true,
+                new JSButton("clearCacheButton", "showDialog(clearCacheDialog(), false)", " Clear Cache ", "Clear all cache and cookies", false),
+                new JSButton("editSettingsButton", "wrapper.editSettings()", " Battlelogium Settings ", "Open the settings editor", false),
+                new JSButton("userSettingsButton", @"location.href = ""http://battlelog.battlefield.com/bf3/profile/edit/""", " User Settings ", "Edit your Battlelog profile", false),
+                new JSButton("closeSettingsButton", "closeDialog(true)", " Close ", "Close this dialog", true)) { }
+    }
 
 }

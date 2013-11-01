@@ -36,3 +36,4 @@ namespace Battlelogium.BattlelogDialog{
 
     }
 }
+
