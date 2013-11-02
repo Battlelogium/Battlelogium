@@ -12,28 +12,42 @@ function addPlaybarButton(elementid, label, tooltip, onclick) {
     }
 }
 
+
 function fixQuickMatchButtons() {
-    if ($('#btnQuickMatch').length == 0) {
-        var btnQuickMatch = $("button[data-track='actionbar.quickmatch']")
-        .attr('id', 'btnQuickMatch')
-        .mouseover()
-        .mouseout(); //Workaround to get the tooltip to appear
-    }
-    
-     var btnQuickMatchBig = $("button[data-track='menudropdown.quickmatch']")
-     .attr('id', 'btnQuickMatchBig')
-     .mouseover() //Workaround to get the tooltip to appear
-     .mouseout();
-   
-   
-     var btnQuickMatchServerBrowser = $("button[data-track='serverbrowser.server.quickmatch']")
-    .attr('id', 'btnQuickMatchServerBrowser')
-    .mouseover() //Workaround to get the tooltip to appear
-    .mouseout();
-    
-    $('.tooltip').find('.tooltip-body:contains("Loading")').html("Play a Quick Match");
-   
+        if ($('#btnQuickMatch').length == 0) {
+         var btnQuickMatch = $("button[data-track='actionbar.quickmatch']")
+            .attr('id', 'btnQuickMatch')
+            .hide(0)
+            .mouseover()
+            .mouseout()
+            .show(0); //Workaround to get the tooltip to appear
+        }
+
+        if ($('#btnQuickMatchBig').length == 0) {
+            var btnQuickMatchBig = $("button[data-track='menudropdown.quickmatch']")
+             .attr('id', 'btnQuickMatchBig')
+             .hide(0)
+             .mouseover() //Workaround to get the tooltip to appear
+             .mouseout()
+             .show(0);
+        }
+
+        if ($('#btnQuickMatchServerBrowser').length == 0) {
+            var btnQuickMatchServerBrowser = $("button[data-track='serverbrowser.server.quickmatch']")
+             .attr('id', 'btnQuickMatchServerBrowser')
+             .hide(0)
+             .mouseover() //Workaround to get the tooltip to appear
+             .mouseout()
+             .show(0);
+        }
+
+        if ($('.tooltip').find('.tooltip-body:contains("Loading")').length > 0) {
+            $('.tooltip').find('.tooltip-body:contains("Loading")').html("Play a Quick Match");
+            $('#btnQuickMatchServerBrowser').load();
+            $('#btnQuickMatchBig').load();
+        }
 }
+
 function fixEAPlaybarButtons() {
 
      //Fix Co-Op Button
@@ -121,7 +135,7 @@ function handleSettingsLink() {
 applyChromeCSS(); //Add our modified spritesheet for the false chrome buttons
 addChromeButtons(); //Add the false window chrome buttons to DOM
 fixEAPlaybarButtons();
-fixQuickMatchButtons(); //Fix the quick match buttons (tooltips)
+window.setInterval(fixQuickMatchButtons,1) //Fix the quick match buttons (tooltips)
 $("#base-header-secondary-nav>ul>li>a:contains('Buy Battlefield 4')").remove(); //Remove the buy BF4 link
 handleSettingsLink();
 addPlaybarButton('btnServers', 'SERVERS', 'Browse servers', 'location.href = "http://battlelog.battlefield.com/bf3/servers/"');

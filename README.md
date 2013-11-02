@@ -167,6 +167,12 @@ Changelogs
 >	- Reverted all event handlers to standard conventions 
 >	- Various bug fixes
 	
+###Release 1.4.0.3
+>* User Experience
+>  - Disable settings dialog on Battlefield 4 and MOHW
+>  - Fix Quick Match tooltips not showing in some cases
+>  - Suppress flashes of the Quick Match tooltips when setting them
+
 Special thanks
 --------------
 
