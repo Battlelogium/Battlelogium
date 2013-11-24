@@ -173,6 +173,10 @@ Changelogs
 >  - Fix Quick Match tooltips not showing in some cases
 >  - Suppress flashes of the Quick Match tooltips when setting them
 
+###Release 1.4.0.4
+>* Code
+>  - Update to Awesomium 1.7.3
+
 Special thanks
 --------------
 
