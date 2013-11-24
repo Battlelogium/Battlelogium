@@ -373,7 +373,7 @@ namespace Battlelogium
             Utilities.Log("fadeBackground.Begin()");
             this.fadeBackground.Begin();
 
-            //Register the handler for the javascript Quit Button
+            //Register the handler for the javascript
 
             Utilities.Log("CreateGlobalJavascriptObject(wrapper)");
             JSObject wrapperObject = this.Battlelog.CreateGlobalJavascriptObject("wrapper");
@@ -411,11 +411,15 @@ namespace Battlelogium
             Utilities.Log("BattlelogiumMain.CreateBattlelogWebSession() Called");
             WebSession session =
                 WebCore.CreateWebSession(
-                    Path.Combine(
-                        AppDomain.CurrentDomain.BaseDirectory, "Battlelogium", "WebSession"),
-                    new WebPreferences { CustomCSS = config.CSS, EnableGPUAcceleration = true, });
-            session.AddDataSource("local", new ResourceDataSource(ResourceType.Packed));
+                    Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Battlelogium", "WebSession"),
+                    new WebPreferences { 
+                        CustomCSS = config.CSS, 
+                        EnableGPUAcceleration = true, 
+                    }
+                );
 
+
+            session.AddDataSource("local", new ResourceDataSource(ResourceType.Packed));
             WebCore.HomeURL = new Uri("http://battlelog.battlefield.com/bf3/");
             WebCore.Download += new DownloadEventHandler(WebCore_Download);
             return session;
