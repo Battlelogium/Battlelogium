@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>CefSharp.Wpf</id>
+    <version>1.25.5</version>
+    <title>CefSharp.Wpf</title>
+    <authors>CefSharp community</authors>
+    <owners>CefSharp community</owners>
+    <projectUrl>https://github.com/perlun/cefsharp</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>The CefSharp Chromium-based browser component (WPF version).</description>
+    <releaseNotes />
+    <copyright>Copyright © 2010-2013 The CefSharp Project</copyright>
+    <language />
+    <tags>wpf chrome browser</tags>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.ComponentModel.DataAnnotations" targetFramework="" />
+      <frameworkAssembly assemblyName="System.Windows.Browser" targetFramework="Silverlight5.0" />
+      <frameworkAssembly assemblyName="System.Windows.Controls" targetFramework="Silverlight5.0" />
+      <frameworkAssembly assemblyName="System.Windows.Controls.Navigation" targetFramework="Silverlight5.0" />
+    </frameworkAssemblies>
+  </metadata>
+</package>
