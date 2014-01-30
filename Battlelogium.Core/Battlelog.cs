@@ -82,7 +82,7 @@ namespace Battlelogium.Core
             document.getElementsByTagName('head')[0].appendChild(script);", jsURL));
         }
 
-        private static bool CheckForBattlelogConnection()
+        public static bool CheckBattlelogConnection()
         {
             try
             {

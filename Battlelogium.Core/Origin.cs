@@ -19,31 +19,37 @@
         string commandLineOptions;
         bool battlelogConnection;
         Process originProcess;
-        public Origin(string originPath, string commandLineOptions)
-        {
-            this.originPath = originPath;
-            this.commandLineOptions = commandLineOptions;
-            this.battlelogConnection = CheckForBattlelogConnection();
-        }
+        bool restartOrigin;
 
-        public Origin(string commandLineOptions) : this(Origin.GetOriginPath(), commandLineOptions) { }
+        public delegate void OriginCloseEvent(object sender, OriginCloseEventArgs args);
+        public event OriginCloseEvent OriginClose;
+        public Origin(string commandLineOptions)
+        {
+            this.commandLineOptions = commandLineOptions;
+            this.battlelogConnection = Battlelog.CheckBattlelogConnection();
+            this.OriginClose += Origin_OriginClose;
+        }
+        public Origin() : this("/StartClientMinimized") { } //Minimized Origin by default
 
 
         #region Origin
+        private void Origin_OriginClose(object sender, OriginCloseEventArgs args)
+        {
+            if (args.restartOrigin) Origin.CreateUnmanagedInstance();
+        }
 
         public void StartOrigin()
         {
-           
-            string originPath = GetOriginPath();
+            this.originPath = GetOriginPath();
+
             var originProcessInfo = new ProcessStartInfo(this.originPath, this.commandLineOptions);
-           
-            ProcessTools.KillProcess("Origin", true, false);
-            //We must relaunch Origin as a child process for Steam to properly apply the overlay hook.
-          
+            if (OriginRunning())  //We must relaunch Origin as a child process for Steam to properly apply the overlay hook.
+            {
+                ProcessTools.KillProcess("Origin", true, false);
+                this.restartOrigin = true;
+            }
             this.originProcess = Process.Start(originProcessInfo);
-
         }
-
 
         public static bool OriginRunning()
         {
@@ -54,7 +60,6 @@
             }
             else
             {
-           
                 return true;
             }
         }
@@ -71,13 +76,13 @@
                     originPath =
                         Registry.GetValue(
                             @"HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Origin", "ClientPath", originDefaultPath).ToString();
-                    
+
                 }
                 else
                 {
                     originPath =
                         Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Origin", "ClientPath", originDefaultPath).ToString();
-                  
+
                 }
                 return originPath;
             }
@@ -89,6 +94,7 @@
 
         public void KillOrigin()
         {
+            OriginClose(this, new OriginCloseEventArgs(this.restartOrigin));
             ProcessTools.KillProcess(this.originProcess, true, false);
         }
 
@@ -97,5 +103,14 @@
             ProcessTools.CreateOrphanedProcess(GetOriginPath(), "/StartClientMinimized");
         }
         #endregion
+    }
+
+    public class OriginCloseEventArgs
+    {
+        public bool restartOrigin;
+        public OriginCloseEventArgs(bool restartOrigin)
+        {
+            this.restartOrigin = restartOrigin;
+        }
     }
 }
