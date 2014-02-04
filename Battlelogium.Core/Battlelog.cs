@@ -103,6 +103,14 @@ namespace Battlelogium.Core
 
     public class Battlefield3 : Battlelog
     {
-        public Battlefield3(Window battlelogiumWindow, List<string> javascriptPaths) : base("http://battlelog.battlefield.com/bf3/", "Battlefield 3", "BF3", "bf3.exe", "70619", battlelogiumWindow, javascriptPaths) { }
+        public Battlefield3(Window battlelogiumWindow, List<string> javascriptPaths) : base("http://battlelog.battlefield.com/bf3/", "Battlefield 3", "BF3", "bf3.exe", "70619", battlelogiumWindow, javascriptPaths) {
+            this.battlelogWebview.LoadCompleted += battlelogWebview_LoadCompleted;
+        }
+
+        private void battlelogWebview_LoadCompleted(object sender, LoadCompletedEventArgs url)
+        {
+            this.InjectJS("http://localhost/battlelogium/button/battlelog.bf3.button.js");
+            this.InjectJS("http://localhost/battlelogium/dialog/battlelog.bf3.dialog.js");
+        }
     }
 }

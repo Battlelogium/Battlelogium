@@ -9,6 +9,7 @@
     using System.Diagnostics;
     using System.IO;
     using Battlelogium.Core.Utilities;
+    using System.Threading;
 
     /// <summary>
     /// TODO: Update summary.
@@ -41,7 +42,6 @@
         public void StartOrigin()
         {
             this.originPath = GetOriginPath();
-
             var originProcessInfo = new ProcessStartInfo(this.originPath, this.commandLineOptions);
             if (OriginRunning())  //We must relaunch Origin as a child process for Steam to properly apply the overlay hook.
             {
@@ -98,6 +98,7 @@
             ProcessTools.KillProcess(this.originProcess, true, false);
         }
 
+     
         public static void CreateUnmanagedInstance()
         {
             ProcessTools.CreateOrphanedProcess(GetOriginPath(), "/StartClientMinimized");

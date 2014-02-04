@@ -65,6 +65,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Javascript\button\battlelog.bf3.button.js" />
+    <Content Include="Javascript\dialog\battlelog.bf3.dialog.js" />
     <Content Include="Javascript\misc\battlelog.helper.js" />
     <Content Include="Javascript\misc\battlelog.adblock.css" />
     <Content Include="Javascript\windowchrome\battlelog.windowchrome.css">
@@ -77,9 +79,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Javascript\dialog\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
