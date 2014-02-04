@@ -10,6 +10,7 @@
     using System.IO;
     using Battlelogium.Core.Utilities;
     using System.Threading;
+    using System.Windows.Threading;
 
     /// <summary>
     /// TODO: Update summary.
@@ -96,8 +97,16 @@
         {
             OriginClose(this, new OriginCloseEventArgs(this.restartOrigin));
             ProcessTools.KillProcess(this.originProcess, true, false);
+            ProcessTools.KillProcess("sonarhost", false, false);
         }
 
+        public void KillOrigin(int timeout)
+        {
+
+            Thread.Sleep(timeout);
+            this.KillOrigin();
+            
+        }
      
         public static void CreateUnmanagedInstance()
         {
