@@ -8,6 +8,7 @@ using System.Windows;
 using Battlelogium.Core.Javascript;
 using CefSharp;
 using System.Net;
+using System.IO;
 
 namespace Battlelogium.Core
 {
@@ -49,6 +50,10 @@ namespace Battlelogium.Core
             browserSettings.FileAccessFromFileUrlsAllowed = true;
             browserSettings.UniversalAccessFromFileUrlsAllowed = true;
             browserSettings.DeveloperToolsDisabled = false;
+            
+            Settings settings = new Settings();
+            settings.CachePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "cache");
+            CEF.Initialize(settings);
             //browserSettings.WebSecurityDisabled = true;
            
             this.battlelogWebview = new WebView(this.battlelogURL, browserSettings);

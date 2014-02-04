@@ -3,9 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Battlelogium.Window", "Battlelogium\Battlelogium.Window.csproj", "{681833D3-9B2A-4528-ADF4-5EDCDA071FD6}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Battlelogium.Test", "Battlelogium.Test\Battlelogium.Test.csproj", "{A6538CAF-C5BF-4BEF-8C01-5E42C94720D9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Battlelogium.UI", "Battlelogium.Test\Battlelogium.UI.csproj", "{A6538CAF-C5BF-4BEF-8C01-5E42C94720D9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Battlelogium.Core", "Battlelogium.Core\Battlelogium.Core.csproj", "{74847B27-2DFA-404B-9BAF-BFDD69604091}"
 EndProject
@@ -30,20 +28,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{681833D3-9B2A-4528-ADF4-5EDCDA071FD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{681833D3-9B2A-4528-ADF4-5EDCDA071FD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{681833D3-9B2A-4528-ADF4-5EDCDA071FD6}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{681833D3-9B2A-4528-ADF4-5EDCDA071FD6}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{681833D3-9B2A-4528-ADF4-5EDCDA071FD6}.Debug|Win32.ActiveCfg = Debug|Any CPU
-		{681833D3-9B2A-4528-ADF4-5EDCDA071FD6}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{681833D3-9B2A-4528-ADF4-5EDCDA071FD6}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{681833D3-9B2A-4528-ADF4-5EDCDA071FD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{681833D3-9B2A-4528-ADF4-5EDCDA071FD6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{681833D3-9B2A-4528-ADF4-5EDCDA071FD6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{681833D3-9B2A-4528-ADF4-5EDCDA071FD6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{681833D3-9B2A-4528-ADF4-5EDCDA071FD6}.Release|Win32.ActiveCfg = Release|Any CPU
-		{681833D3-9B2A-4528-ADF4-5EDCDA071FD6}.Release|x64.ActiveCfg = Release|Any CPU
-		{681833D3-9B2A-4528-ADF4-5EDCDA071FD6}.Release|x86.ActiveCfg = Release|Any CPU
 		{A6538CAF-C5BF-4BEF-8C01-5E42C94720D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A6538CAF-C5BF-4BEF-8C01-5E42C94720D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6538CAF-C5BF-4BEF-8C01-5E42C94720D9}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU

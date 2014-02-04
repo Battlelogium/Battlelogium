@@ -7,7 +7,7 @@
     <ProjectGuid>{A6538CAF-C5BF-4BEF-8C01-5E42C94720D9}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Battlelogium.Test</RootNamespace>
+    <RootNamespace>Battlelogium.UI</RootNamespace>
     <AssemblyName>Battlelogium.Test</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -34,6 +34,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Battlelogium.UI.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CefSharp, Version=1.25.5.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=x86">

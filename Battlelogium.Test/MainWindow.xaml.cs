@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 using Battlelogium.Core;
 using CefSharp.Wpf;
 using Battlelogium;
-namespace Battlelogium.Test
+namespace Battlelogium.UI
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -27,12 +27,8 @@ namespace Battlelogium.Test
         public MainWindow()
         {
             InitializeComponent();
-
             Battlefield3 bf3blog = new Battlefield3(this, new List<string>());
-            BattlelogiumProcess process = new BattlelogiumProcess(bf3blog, this, this.MainGrid);
-            
-            System.Threading.Thread.Sleep(10000);
-           
+            UICore process = new UICore(bf3blog, this, this.MainGrid);
         }
     }
 }

@@ -9,10 +9,10 @@ using System.Threading;
 
 namespace Battlelogium.Core
 {
-    public class BattlelogiumProcess
+    public class UICore
     {
         Origin managedOrigin;
-        public BattlelogiumProcess(Battlelog battlelog, Window mainWindow, Grid mainGrid)
+        public UICore(Battlelog battlelog, Window mainWindow, Grid mainGrid)
         {
             mainGrid.Children.Add(battlelog.battlelogWebview);
             this.managedOrigin = new Origin();
@@ -25,7 +25,5 @@ namespace Battlelogium.Core
         {
             this.managedOrigin.KillOrigin();
         }
-
-
     }
 }

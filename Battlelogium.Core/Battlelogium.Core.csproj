@@ -58,7 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Battlelog.cs" />
-    <Compile Include="BattlelogiumProcess.cs" />
+    <Compile Include="UICore.cs" />
     <Compile Include="Javascript\JavascriptObject.cs" />
     <Compile Include="Origin.cs" />
     <Compile Include="Utilities\Process.cs" />
