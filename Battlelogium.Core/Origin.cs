@@ -11,7 +11,8 @@
     using Battlelogium.Core.Utilities;
     using System.Threading;
     using System.Windows.Threading;
-
+    using System.Windows;
+    using System.Threading.Tasks;
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
@@ -102,9 +103,8 @@
 
         public void KillOrigin(int timeout)
         {
-
             Thread.Sleep(timeout);
-            this.KillOrigin();
+            this.KillOrigin(); 
             
         }
      

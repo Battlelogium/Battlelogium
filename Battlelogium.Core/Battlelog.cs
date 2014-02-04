@@ -36,7 +36,7 @@ namespace Battlelogium.Core
             this.executableName = executableName;
             this.originCode = originCode;
 
-            this.SetupWebview();
+            this.SetupWebview(true); //we're debugging.
 
         }
 
@@ -44,27 +44,31 @@ namespace Battlelogium.Core
 
         public Battlelog(string battlelogURL, string battlefieldName, string battlefieldShortname, string executableName, string originCode, Window battlelogiumWindow, List<string> javascriptPaths) : this(battlelogURL, battlefieldName, battlefieldShortname, executableName, originCode, new JavascriptObject(battlelogiumWindow), javascriptPaths) { }
 
-        protected void SetupWebview()
+        protected void SetupWebview(bool debug=false)
         {
-            BrowserSettings browserSettings = new BrowserSettings();
-            browserSettings.FileAccessFromFileUrlsAllowed = true;
-            browserSettings.UniversalAccessFromFileUrlsAllowed = true;
-            browserSettings.DeveloperToolsDisabled = false;
-            
-            Settings settings = new Settings();
-            settings.CachePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "cache");
+            BrowserSettings browserSettings = new BrowserSettings
+            {
+                FileAccessFromFileUrlsAllowed = true,
+                UniversalAccessFromFileUrlsAllowed = true,
+                DeveloperToolsDisabled = !debug
+            };
+            Settings settings = new Settings
+            {
+                PackLoadingDisabled = !debug,
+                CachePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "cache")
+            };
             CEF.Initialize(settings);
             //browserSettings.WebSecurityDisabled = true;
            
             this.battlelogWebview = new WebView(this.battlelogURL, browserSettings);
             this.battlelogWebview.RegisterJsObject("app", javascriptObject);
             this.battlelogWebview.LoadCompleted += this.LoadCompleted;
+            if (debug) this.battlelogWebview.ShowDevTools();
          
         }
 
         public void LoadCompleted(object sender, EventArgs e)
         {
-            this.battlelogWebview.ShowDevTools();
             //WindowChrome
             this.InjectCSS("http://localhost/battlelogium/windowchrome/battlelog.windowchrome.css");
             this.InjectJS("http://localhost/battlelogium/windowchrome/battlelog.windowchrome.js");
