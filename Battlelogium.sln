@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Battlelogium.UI", "Battlelogium.Test\Battlelogium.UI.csproj", "{A6538CAF-C5BF-4BEF-8C01-5E42C94720D9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Battlelogium.UI", "Battlelogium.UI\Battlelogium.UI.csproj", "{A6538CAF-C5BF-4BEF-8C01-5E42C94720D9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Battlelogium.Core", "Battlelogium.Core\Battlelogium.Core.csproj", "{74847B27-2DFA-404B-9BAF-BFDD69604091}"
 EndProject
