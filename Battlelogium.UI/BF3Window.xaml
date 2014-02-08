@@ -1,0 +1,9 @@
+﻿<Window x:Class="Battlelogium.UI.BF3.BF3Window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="720" Width="1280"
+        >
+    <Grid x:Name="MainGrid">
+
+    </Grid>
+</Window>
