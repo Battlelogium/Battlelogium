@@ -27,7 +27,7 @@ namespace Battlelogium.UI
         public MainWindow()
         {
             InitializeComponent();
-            Battlefield3 bf3blog = new Battlefield3(this, new List<string>());
+            Battlefield3 bf3blog = new Battlefield3(this);
             UICore process = new UICore(bf3blog, this, this.MainGrid);
         }
     }

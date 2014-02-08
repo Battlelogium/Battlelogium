@@ -17,18 +17,18 @@ namespace Battlelogium.Core
 
         public WebView battlelogWebview;
         public JavascriptObject javascriptObject;
-        public List<string> javascriptPaths;
 
         public string battlelogURL;
         public string battlefieldName;
         public string battlefieldShortname;
         public string executableName;
         public string originCode;
+        public string javascriptURL;
         
-        public Battlelog(string battlelogURL, string battlefieldName, string battlefieldShortname, string executableName, string originCode, JavascriptObject battlelogiumApp, List<string> javascriptPaths)
+        public Battlelog(string battlelogURL, string battlefieldName, string battlefieldShortname, string executableName, string originCode, string javascriptPath, JavascriptObject battlelogiumApp)
         {
             this.javascriptObject = battlelogiumApp;
-            this.javascriptPaths = javascriptPaths;
+            this.javascriptURL = javascriptPath;
 
             this.battlelogURL = battlelogURL;
             this.battlefieldName = battlefieldName;
@@ -40,9 +40,7 @@ namespace Battlelogium.Core
 
         }
 
-        public Battlelog(string battlelogURL, string battlefieldName, string battlefieldShortname, string executableName, string originCode, Window battlelogiumWindow) : this(battlelogURL, battlefieldName, battlefieldShortname, executableName, originCode , new JavascriptObject(battlelogiumWindow), new List<string>()) { }
-
-        public Battlelog(string battlelogURL, string battlefieldName, string battlefieldShortname, string executableName, string originCode, Window battlelogiumWindow, List<string> javascriptPaths) : this(battlelogURL, battlefieldName, battlefieldShortname, executableName, originCode, new JavascriptObject(battlelogiumWindow), javascriptPaths) { }
+        public Battlelog(string battlelogURL, string battlefieldName, string battlefieldShortname, string executableName, string originCode, string javascriptPath, Window battlelogiumWindow) : this(battlelogURL, battlefieldName, battlefieldShortname, executableName, originCode , javascriptPath, new JavascriptObject(battlelogiumWindow)) { }
 
         protected void SetupWebview()
         {
@@ -65,28 +63,21 @@ namespace Battlelogium.Core
         public void LoadCompleted(object sender, EventArgs e)
         {
             this.battlelogWebview.ShowDevTools();
-            //WindowChrome
-            this.InjectCSS("http://localhost/battlelogium/windowchrome/battlelog.windowchrome.css");
-            this.InjectJS("http://localhost/battlelogium/windowchrome/battlelog.windowchrome.js");
-        }
+            if (!this.battlelogWebview.Address.Contains(battlelogURL)) this.battlelogWebview.Load(battlelogURL);
 
-        public void InjectCSS(string cssURL){
-            this.battlelogWebview.ExecuteScript(String.Format(@"
-            var script = document.createElement('link');
-            script.setAttribute('rel', 'stylesheet');
-            script.setAttribute('type', 'text/css');
-            script.setAttribute('href', '{0}');
-            document.getElementsByTagName('head')[0].appendChild(script);", cssURL));
+            this.battlelogWebview.ExecuteScript(
+                String.Format(@"
+                    if (document.getElementById('_inject') == null) {
+                        var script = document.createElement('script');
+    	                script.setAttribute('src', '{0}');
+    	                script.setAttribute('id', '_inject');
+    	                document.getElementsByTagName('head')[0].appendChild(script);
+                    }",
+                  this.javascriptURL)
+            );
+            this.battlelogWebview.ExecuteScript("runCustomJS();");
         }
-
-        public void InjectJS(string jsURL)
-        {
-            this.battlelogWebview.ExecuteScript(String.Format(@"
-            var script = document.createElement('script');
-            script.setAttribute('src', '{0}');
-            document.getElementsByTagName('head')[0].appendChild(script);", jsURL));
-        }
-
+    
         public static bool CheckBattlelogConnection()
         {
             try
@@ -102,20 +93,11 @@ namespace Battlelogium.Core
                 return false;
             }
         }
-
-
     }
 
     public class Battlefield3 : Battlelog
     {
-        public Battlefield3(Window battlelogiumWindow, List<string> javascriptPaths) : base("http://battlelog.battlefield.com/bf3/", "Battlefield 3", "BF3", "bf3.exe", "70619", battlelogiumWindow, javascriptPaths) {
-            this.battlelogWebview.LoadCompleted += battlelogWebview_LoadCompleted;
-        }
-
-        private void battlelogWebview_LoadCompleted(object sender, LoadCompletedEventArgs url)
-        {
-            this.InjectJS("http://localhost/battlelogium/button/battlelog.bf3.button.js");
-            this.InjectJS("http://localhost/battlelogium/dialog/battlelog.bf3.dialog.js");
+        public Battlefield3(Window battlelogiumWindow) : base("http://battlelog.battlefield.com/bf3/", "Battlefield 3", "BF3", "bf3.exe", "70619", "http://localhost/battlelogium/battlelog.bf3.inject.js" , battlelogiumWindow) {
         }
     }
 }

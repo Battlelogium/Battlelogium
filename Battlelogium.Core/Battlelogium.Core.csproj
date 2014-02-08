@@ -65,6 +65,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Javascript\battlelog.bf3.inject.js" />
     <Content Include="Javascript\button\battlelog.bf3.button.js" />
     <Content Include="Javascript\dialog\battlelog.bf3.dialog.js" />
     <Content Include="Javascript\misc\battlelog.helper.js" />
