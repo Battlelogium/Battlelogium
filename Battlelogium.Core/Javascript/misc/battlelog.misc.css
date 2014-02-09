@@ -31,3 +31,8 @@
 #feedback-popup-opener-tab{
     display: none;
 }
+
+/*Remove game switching arrow*/
+#community-bar .outerarrow{
+    display: none;
+}

@@ -24,7 +24,7 @@
         Process originProcess;
         bool restartOrigin;
 
-        public delegate void OriginCloseEvent(object sender, OriginCloseEventArgs args);
+        public delegate void OriginCloseEvent(object sender, OriginCloseEventArgs e);
         public event OriginCloseEvent OriginClose;
         public Origin(string commandLineOptions)
         {

@@ -20,11 +20,19 @@ namespace Battlelogium.UI.BF3
 
     public partial class BF3Window : Window
     {
+        Battlefield3 bf3blog;
+        UICore process;
         public BF3Window()
         {
             InitializeComponent();
-            Battlefield3 bf3blog = new Battlefield3(this);
-            UICore process = new UICore(bf3blog, this, this.MainGrid);
+            this.bf3blog = new Battlefield3(this);
+            this.process = new UICore(bf3blog, this, this.MainGrid);
+            
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.bf3blog.battlelogWebview.ShowDevTools();
         }
     }
 }

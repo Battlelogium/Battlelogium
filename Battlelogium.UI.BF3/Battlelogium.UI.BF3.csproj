@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Battlelogium.UI</RootNamespace>
-    <AssemblyName>Battlelogium.UI</AssemblyName>
+    <AssemblyName>Battlelogium.UI.BF3</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -36,7 +36,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Battlelogium.UI.App</StartupObject>
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CefSharp, Version=1.25.5.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=x86">
@@ -67,7 +68,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="BattlelogiumWindow.xaml">
+    <Page Include="BF3Window.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -75,8 +76,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="BattlelogiumWindow.xaml.cs">
-      <DependentUpon>BattlelogiumWindow.xaml</DependentUpon>
+    <Compile Include="BF3Window.xaml.cs">
+      <DependentUpon>BF3Window.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

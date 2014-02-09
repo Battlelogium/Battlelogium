@@ -12,7 +12,7 @@ using System.IO;
 
 namespace Battlelogium.Core
 {
-    public class Battlelog
+    public class Battlelog : IDisposable
     {
 
         public WebView battlelogWebview;
@@ -61,7 +61,7 @@ namespace Battlelogium.Core
             this.battlelogWebview = new WebView(this.battlelogURL, browserSettings);
             this.battlelogWebview.RegisterJsObject("app", javascriptObject);
             this.battlelogWebview.LoadCompleted += this.LoadCompleted;
-            if (debug) this.battlelogWebview.ShowDevTools();
+          //  if (debug) this.battlelogWebview.ShowDevTools();
          
         }
 
@@ -70,14 +70,13 @@ namespace Battlelogium.Core
             if (!this.battlelogWebview.Address.Contains(battlelogURL)) this.battlelogWebview.Load(battlelogURL);
 
             this.battlelogWebview.ExecuteScript(
-                String.Format(@"
+                @"
                     if (document.getElementById('_inject') == null) {
                         var script = document.createElement('script');
-    	                script.setAttribute('src', '{0}');
+    	                script.setAttribute('src', '"+this.javascriptURL+@"');
     	                script.setAttribute('id', '_inject');
     	                document.getElementsByTagName('head')[0].appendChild(script);
-                    }",
-                  this.javascriptURL)
+                    }"
             );
             this.battlelogWebview.ExecuteScript("runCustomJS();");
         }
@@ -96,6 +95,11 @@ namespace Battlelogium.Core
             {
                 return false;
             }
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException(); //TODO implement Dispose properly
         }
     }
 

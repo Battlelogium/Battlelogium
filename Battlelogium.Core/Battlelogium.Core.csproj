@@ -69,7 +69,7 @@
     <Content Include="Javascript\button\battlelog.bf3.button.js" />
     <Content Include="Javascript\dialog\battlelog.bf3.dialog.js" />
     <Content Include="Javascript\misc\battlelog.helper.js" />
-    <Content Include="Javascript\misc\battlelog.adblock.css" />
+    <Content Include="Javascript\misc\battlelog.misc.css" />
     <Content Include="Javascript\windowchrome\battlelog.windowchrome.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -80,7 +80,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
