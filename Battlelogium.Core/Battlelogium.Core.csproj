@@ -58,9 +58,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Battlelog.cs" />
-    <Compile Include="UICore.cs" />
+    <Compile Include="UI\UIWindow.cs" />
+    <Compile Include="Config.cs" />
+    <Compile Include="UI\DragHandler.cs" />
+    <Compile Include="UI\UICore.cs" />
     <Compile Include="Javascript\JavascriptObject.cs" />
     <Compile Include="Origin.cs" />
+    <Compile Include="Utilities\Extensions.cs" />
     <Compile Include="Utilities\Process.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -81,6 +85,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="config.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

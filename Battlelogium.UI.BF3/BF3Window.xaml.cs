@@ -14,25 +14,26 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Battlelogium.Core;
 using CefSharp.Wpf;
-using Battlelogium;
+using Battlelogium.Core.UI;
+
 namespace Battlelogium.UI.BF3
 {
 
-    public partial class BF3Window : Window
+    public partial class BF3Window : UIWindow
     {
-        Battlefield3 bf3blog;
-        UICore process;
         public BF3Window()
         {
             InitializeComponent();
-            this.bf3blog = new Battlefield3(this);
-            this.process = new UICore(bf3blog, this, this.MainGrid);
+            this.battlelog = new Battlefield3(this);
+            this.config = new Config();
+            this.mainGrid = this.MainGrid;
+            this.process = new UICore(this);
             
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            this.bf3blog.battlelogWebview.ShowDevTools();
+           
         }
     }
 }

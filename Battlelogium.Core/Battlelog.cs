@@ -55,10 +55,13 @@ namespace Battlelogium.Core
                 PackLoadingDisabled = !debug,
                 CachePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "cache")
             };
+            
+           //battlelogWebview.this.battlelogWebview.ContentsWidth;
             CEF.Initialize(settings);
             //browserSettings.WebSecurityDisabled = true;
            
             this.battlelogWebview = new WebView(this.battlelogURL, browserSettings);
+            
             this.battlelogWebview.RegisterJsObject("app", javascriptObject);
             this.battlelogWebview.LoadCompleted += this.LoadCompleted;
           //  if (debug) this.battlelogWebview.ShowDevTools();
