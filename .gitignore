@@ -1,4 +1,4 @@
-﻿obj/
+obj/
 bin/
 Debug/
 Release/
@@ -6,3 +6,5 @@ Release/
 *.user
 _Resharper.*/
 StyleCop.Cache
+*.psess
+*.vsp
