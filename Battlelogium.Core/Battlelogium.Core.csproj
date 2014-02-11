@@ -90,6 +90,12 @@
     </Content>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Battlelogium.ThirdParty\Battlelogium.ThirdParty.csproj">
+      <Project>{289c2caa-980e-45ef-a88f-20c881cbc8c7}</Project>
+      <Name>Battlelogium.ThirdParty</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

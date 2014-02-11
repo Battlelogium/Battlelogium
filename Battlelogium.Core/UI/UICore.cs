@@ -34,8 +34,6 @@ namespace Battlelogium.Core.UI
             mainWindow.Closed += mainWindow_Closed;
             mainWindow.Height = config.WindowHeight;
             mainWindow.Width = config.WindowWidth;
-            
-
         }
 
         private void mainWindow_Closed(object sender, EventArgs e)

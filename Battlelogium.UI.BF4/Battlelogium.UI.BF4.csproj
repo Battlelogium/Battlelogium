@@ -15,7 +15,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -92,6 +92,19 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="loadingsprite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Battlelogium.Core\Battlelogium.Core.csproj">
+      <Project>{74847b27-2dfa-404b-9baf-bfdd69604091}</Project>
+      <Name>Battlelogium.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Battlelogium.ThirdParty\Battlelogium.ThirdParty.csproj">
+      <Project>{289c2caa-980e-45ef-a88f-20c881cbc8c7}</Project>
+      <Name>Battlelogium.ThirdParty</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
