@@ -1,10 +1,11 @@
-﻿using System;
+﻿//<copyright>
 //All contents in namespace Battlelogium.ThirdParty.Animator
 //Copyright 2013 Jawahar Suresh Babu
 //Project page http://www.codeproject.com/Tips/588253/GIF-Animation-in-WPF
 //Licensed under CodeProject Open License (http://www.codeproject.com/info/cpol10.aspx)
+//</copyright>
 
-
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

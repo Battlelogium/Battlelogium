@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Battlelogium.ThirdParty")]
+[assembly: AssemblyTitle("Battlelogium.ThirdParty.WPFCustomMessageBox")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Battlelogium.ThirdParty")]
+[assembly: AssemblyProduct("Battlelogium.ThirdParty.WPFCustomMessageBox")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("494e878c-9c92-422f-a10f-de58089abd73")]
+[assembly: Guid("622bb7f6-a3ac-4486-bbb6-f3b4f82a1d1d")]
 
 // Version information for an assembly consists of the following four values:
 //

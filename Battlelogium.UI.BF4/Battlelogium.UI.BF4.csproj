@@ -61,6 +61,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Battlefield4.cs" />
     <Compile Include="BF4Window.xaml.cs">
       <DependentUpon>BF4Window.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -101,9 +102,13 @@
       <Project>{74847b27-2dfa-404b-9baf-bfdd69604091}</Project>
       <Name>Battlelogium.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Battlelogium.ThirdParty\Battlelogium.ThirdParty.csproj">
-      <Project>{289c2caa-980e-45ef-a88f-20c881cbc8c7}</Project>
-      <Name>Battlelogium.ThirdParty</Name>
+    <ProjectReference Include="..\Battlelogium.ThirdParty.Animator\Battlelogium.ThirdParty.Animator.csproj">
+      <Project>{fb19b412-db0a-42c8-9123-4ff3bb2f17e7}</Project>
+      <Name>Battlelogium.ThirdParty.Animator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Battlelogium.ThirdParty.WPFCustomMessageBox\Battlelogium.ThirdParty.WPFCustomMessageBox.csproj">
+      <Project>{0c691505-4dab-4946-a1bb-1f6c682567eb}</Project>
+      <Name>Battlelogium.ThirdParty.WPFCustomMessageBox</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

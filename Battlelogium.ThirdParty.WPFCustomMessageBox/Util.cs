@@ -1,4 +1,10 @@
-﻿
+﻿//<copyright>
+//All contents in namespace Battlelogium.ThirdParty.WPFCustomMessageBox
+//Copyright 2013 Evan Wondrasek 
+//Project page https://github.com/evanwon/WPFCustomMessageBox
+//Licensed under The MIT License (http://opensource.org/licenses/MIT)
+//</copyright>
+
 namespace Battlelogium.ThirdParty.WPFCustomMessageBox
 {
     using System.Drawing;

@@ -1,4 +1,10 @@
-﻿<Window x:Class="Battlelogium.ThirdParty.WPFCustomMessageBox.CustomMessageBoxWindow"
+﻿ <!--<copyright>
+All contents in namespace Battlelogium.ThirdParty.WPFCustomMessageBox
+Copyright 2013 Evan Wondrasek 
+Project page https://github.com/evanwon/WPFCustomMessageBox
+Licensed under The MIT License (http://opensource.org/licenses/MIT)
+</copyright>-->
+<Window x:Class="Battlelogium.ThirdParty.WPFCustomMessageBox.CustomMessageBoxWindow"
         x:ClassModifier="internal"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"

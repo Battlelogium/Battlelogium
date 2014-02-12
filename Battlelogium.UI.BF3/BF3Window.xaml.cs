@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using Battlelogium.Core;
 using CefSharp.Wpf;
 using Battlelogium.Core.UI;
+using Battlelogium.ThirdParty.WPFCustomMessageBox;
 
 namespace Battlelogium.UI.BF3
 {
@@ -34,7 +35,7 @@ namespace Battlelogium.UI.BF3
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-           
+            CustomMessageBox.Show("test");
         }
     }
 }

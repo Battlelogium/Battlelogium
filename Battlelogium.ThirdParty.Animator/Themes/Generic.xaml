@@ -1,10 +1,14 @@
-﻿<ResourceDictionary
-    xmlns:local="clr-namespace:Battlelogium.ThirdParty.Animator"
+﻿<!--<copyright>
+All contents in namespace Battlelogium.ThirdParty.Animator
+Copyright 2013 Jawahar Suresh Babu
+Project page http://www.codeproject.com/Tips/588253/GIF-Animation-in-WPF
+Licensed under CodeProject Open License (http://www.codeproject.com/info/cpol10.aspx)
+</copyright>-->
+<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Battlelogium.ThirdParty.Animator">
     <Style TargetType="{x:Type local:Animator}">
-        
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:Animator}">
