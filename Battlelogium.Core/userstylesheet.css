@@ -1,0 +1,7 @@
+﻿/*Below is the decoded BrowserSettings.UserStyleSheetLocation data URI*/
+/*data:text/plain;charset=utf-8;base64,Ojotd2Via2l0LXNjcm9sbGJhcnt2aXNpYmlsaXR5OmhpZGRlbn0NCiNjb21tdW5pdHktYmFyIC5vdXRlcmFycm93e2Rpc3BsYXk6bm9uZX0=*/
+/*Remove comments before encoding to utf8-base64*/
+
+::-webkit-scrollbar{visibility:hidden} /*Remove scrollbar*/
+#community-bar .outerarrow{display:none} /*Remove game switching arrow*/
+

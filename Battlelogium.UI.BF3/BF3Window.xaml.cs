@@ -29,7 +29,7 @@ namespace Battlelogium.UI.BF3
             this.config = new Config();
             this.mainGrid = this.MainGrid;
             this.process = new UICore(this);
-
+            this.loadingIcon = this.LoadingIcon;
             
         }
 

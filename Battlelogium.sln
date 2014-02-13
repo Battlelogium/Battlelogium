@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Battlelogium.ThirdParty.Ani
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Battlelogium.ThirdParty.WPFCustomMessageBox", "Battlelogium.ThirdParty.WPFCustomMessageBox\Battlelogium.ThirdParty.WPFCustomMessageBox.csproj", "{0C691505-4DAB-4946-A1BB-1F6C682567EB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "thirdparty", "thirdparty", "{E6CE58A4-18BC-40CA-8A79-067595E73414}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -109,5 +111,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FB19B412-DB0A-42C8-9123-4FF3BB2F17E7} = {E6CE58A4-18BC-40CA-8A79-067595E73414}
+		{0C691505-4DAB-4946-A1BB-1F6C682567EB} = {E6CE58A4-18BC-40CA-8A79-067595E73414}
 	EndGlobalSection
 EndGlobal

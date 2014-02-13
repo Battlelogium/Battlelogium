@@ -95,7 +95,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="loadingsprite.png" />
+    <Resource Include="images\loadingsprite.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Battlelogium.Core\Battlelogium.Core.csproj">
@@ -111,7 +111,14 @@
       <Name>Battlelogium.ThirdParty.WPFCustomMessageBox</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\background.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>robocopy "$(SolutionDir)packages\CefSharp.Wpf.1.25.5\cef" "$(ProjectDir)bin\$(ConfigurationName)" *.* /E
+exit /b 0</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

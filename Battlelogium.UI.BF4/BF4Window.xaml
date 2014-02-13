@@ -3,13 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:bl="clr-namespace:Battlelogium.Core.UI;assembly=Battlelogium.Core"
         xmlns:ani="clr-namespace:Battlelogium.ThirdParty.Animator;assembly=Battlelogium.ThirdParty.Animator"
-        Title="MainWindow" Height="350" Width="525"
-              Background="LightBlue">
-    
+        Title="MainWindow"  MinHeight="400" MinWidth="400" 
+        >
+    <bl:UIWindow.Background>
+        <ImageBrush ImageSource="images\background.png" Stretch="UniformToFill" AlignmentX="Center" AlignmentY="Top"/>
+    </bl:UIWindow.Background>
+
     <Grid x:Name="MainGrid">
+        <Label Canvas.ZIndex="-1" Foreground="Gray" Content="Battlelogium Version" Height="28" HorizontalAlignment="Right" Margin="0,0,3,0" Name="VersionLabel" VerticalAlignment="Bottom" />
         <Button Content="debug" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="Button_Click" Panel.ZIndex="100"/>
-        <ani:Animator Panel.ZIndex="110" ImageSource="loadingsprite.png" Interval="0:0:0.05" 
-                        HorizontalOffset="32"
-                        VerticalOffset="32" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="38" Margin="22,280,0,0"/>
+        <ani:Animator Name="LoadingIcon" ImageSource="images\loadingsprite.png" Interval="0:0:0.045" HorizontalOffset="32" VerticalOffset="32" 
+                      Panel.ZIndex="110" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="20,0,0,20"/>
     </Grid>
 </bl:UIWindow>

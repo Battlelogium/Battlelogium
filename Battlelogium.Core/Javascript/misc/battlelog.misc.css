@@ -8,23 +8,9 @@
     display: none;
 }
 
-/*Remove BF4 preorder ad*/
-#main-preorderbf4-banner{
-    display: none !important; /*The banner won't go away without !important*/
-}
-
-#main-preorderbf4-banner a{
-    display: none !important;
-}
-
 /*Remove Battlelog advertisement block*/
 .advirticement{
     display: none;
-}
-
-/*Remove scrollbar*/
-::-webkit-scrollbar{
-    visibility: hidden;
 }
 
 /*Remove feedback tab*/
@@ -32,7 +18,3 @@
     display: none;
 }
 
-/*Remove game switching arrow*/
-#community-bar .outerarrow{
-    display: none;
-}

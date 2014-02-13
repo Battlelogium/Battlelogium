@@ -124,12 +124,17 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="loadingsprite.png">
+    <Resource Include="images\background.png" />
+    <Content Include="images\loadingsprite.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <PropertyGroup>
+    <PostBuildEvent>robocopy "$(SolutionDir)packages\CefSharp.Wpf.1.25.5\cef" "$(ProjectDir)bin\$(ConfigurationName)" *.* /E
+exit /b 0</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

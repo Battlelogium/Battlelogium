@@ -48,12 +48,20 @@ namespace Battlelogium.Core
             {
                 FileAccessFromFileUrlsAllowed = true,
                 UniversalAccessFromFileUrlsAllowed = true,
-                DeveloperToolsDisabled = !debug
+                DeveloperToolsDisabled = !debug,
+                UserStyleSheetEnabled = true,
+                UserStyleSheetLocation = "data:text/css;charset=utf-8;base64,Ojotd2Via2l0LXNjcm9sbGJhcnt2aXNpYmlsaXR5OmhpZGRlbn0NCiNjb21tdW5pdHktYmFyIC5vdXRlcmFycm93e2Rpc3BsYXk6bm9uZX0="
+                /* UserStyleSheetLocation is the following data encoded in utf8 base64 data URI
+                 * ::-webkit-scrollbar{visibility:hidden}
+                 * #community-bar .outerarrow{display:none}
+                 */
+                
             };
             Settings settings = new Settings
             {
                 PackLoadingDisabled = !debug,
                 CachePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "cache")
+                
             };
             
            //battlelogWebview.this.battlelogWebview.ContentsWidth;
@@ -104,5 +112,6 @@ namespace Battlelogium.Core
         {
             throw new NotImplementedException(); //TODO implement Dispose properly
         }
+
     }
 }

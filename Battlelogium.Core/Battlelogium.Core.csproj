@@ -89,6 +89,13 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />
+    <Content Include="userstylesheet.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Battlelogium.ThirdParty.Animator\Battlelogium.ThirdParty.Animator.csproj">
+      <Project>{fb19b412-db0a-42c8-9123-4ff3bb2f17e7}</Project>
+      <Name>Battlelogium.ThirdParty.Animator</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
