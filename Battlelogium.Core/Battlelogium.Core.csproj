@@ -69,16 +69,70 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Javascript\battlelog.bf3.inject.js" />
-    <Content Include="Javascript\button\battlelog.bf3.button.js" />
-    <Content Include="Javascript\dialog\battlelog.bf3.dialog.js" />
-    <Content Include="Javascript\misc\battlelog.helper.js" />
-    <Content Include="Javascript\misc\battlelog.misc.css" />
+    <Content Include="Javascript\battlelog.bf3.inject.js">
+      <Generator>VSMinifier</Generator>
+      <LastGenOutput>battlelog.bf3.inject.min.js</LastGenOutput>
+    </Content>
+    <Content Include="Javascript\battlelog.bf3.inject.min.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>battlelog.bf3.inject.js</DependentUpon>
+    </Content>
+    <Content Include="Javascript\button\battlelog.bf3.button.js">
+      <Generator>VSMinifier</Generator>
+      <LastGenOutput>battlelog.bf3.button.min.js</LastGenOutput>
+    </Content>
+    <Content Include="Javascript\button\battlelog.bf3.button.min.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>battlelog.bf3.button.js</DependentUpon>
+    </Content>
+    <Content Include="Javascript\dialog\battlelog.bf3.dialog.js">
+      <Generator>VSMinifier</Generator>
+      <LastGenOutput>battlelog.bf3.dialog.min.js</LastGenOutput>
+    </Content>
+    <Content Include="Javascript\dialog\battlelog.bf3.dialog.min.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>battlelog.bf3.dialog.js</DependentUpon>
+    </Content>
+    <Content Include="Javascript\misc\battlelog.helper.js">
+      <Generator>VSMinifier</Generator>
+      <LastGenOutput>battlelog.helper.min.js</LastGenOutput>
+    </Content>
+    <Content Include="Javascript\misc\battlelog.helper.min.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>battlelog.helper.js</DependentUpon>
+    </Content>
+    <Content Include="Javascript\misc\battlelog.misc.css">
+      <Generator>VSMinifier</Generator>
+      <LastGenOutput>battlelog.misc.min.css</LastGenOutput>
+    </Content>
+    <Content Include="Javascript\misc\battlelog.misc.min.css">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>battlelog.misc.css</DependentUpon>
+    </Content>
     <Content Include="Javascript\windowchrome\battlelog.windowchrome.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Generator>VSMinifier</Generator>
+      <LastGenOutput>battlelog.windowchrome.min.css</LastGenOutput>
     </Content>
     <Content Include="Javascript\windowchrome\battlelog.windowchrome.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Generator>VSMinifier</Generator>
+      <LastGenOutput>battlelog.windowchrome.min.js</LastGenOutput>
+    </Content>
+    <Content Include="Javascript\windowchrome\battlelog.windowchrome.min.css">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>battlelog.windowchrome.css</DependentUpon>
+    </Content>
+    <Content Include="Javascript\windowchrome\battlelog.windowchrome.min.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>battlelog.windowchrome.js</DependentUpon>
     </Content>
     <Content Include="Javascript\windowchrome\battlelog.windowchrome.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

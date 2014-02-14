@@ -3,19 +3,19 @@
 /// <reference path="dialog/battlelog.bf3.dialog.js" />
 function injectOnce() {
     if (document.getElementById('_windowchrome') == null) {
-        injectScript('_windowchrome', 'http://localhost/battlelogium/windowchrome/battlelog.windowchrome.js');
+        injectScript('_windowchrome', 'http://localhost/battlelogium/windowchrome/battlelog.windowchrome.min.js');
     }
     if (document.getElementById('css_windowchrome') == null) {
-        injectCSS('css_windowchrome', 'http://localhost/battlelogium/windowchrome/battlelog.windowchrome.css');
+        injectCSS('css_windowchrome', 'http://localhost/battlelogium/windowchrome/battlelog.windowchrome.min.css');
     }
     if (document.getElementById('css_misc') == null) {
-        injectCSS('css_windowchrome', 'http://localhost/battlelogium/misc/battlelog.misc.css');
+        injectCSS('css_windowchrome', 'http://localhost/battlelogium/misc/battlelog.misc.min.css');
     }
     if (document.getElementById('_battlelogbutton') == null) {
-        injectScript('_battlelogbutton', 'http://localhost/battlelogium/button/battlelog.bf3.button.js');
+        injectScript('_battlelogbutton', 'http://localhost/battlelogium/button/battlelog.bf3.button.min.js');
     }
     if (document.getElementById('_battlelogdialog') == null) {
-        injectScript('_battlelogdialog', 'http://localhost/battlelogium/dialog/battlelog.bf3.dialog.js');
+        injectScript('_battlelogdialog', 'http://localhost/battlelogium/dialog/battlelog.bf3.dialog.min.js');
     }
 }
 

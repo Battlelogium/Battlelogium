@@ -8,3 +8,4 @@ _Resharper.*/
 StyleCop.Cache
 *.psess
 *.vsp
+packages/*
