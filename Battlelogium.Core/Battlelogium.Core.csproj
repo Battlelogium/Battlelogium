@@ -87,6 +87,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>battlelog.bf4.inject.js</DependentUpon>
     </Content>
+    <Content Include="Javascript\bblog\bblog-translations-compressed.js" />
+    <Content Include="Javascript\bblog\bblog-weapons-compressed.js" />
+    <Content Include="Javascript\bblog\bblog.js" />
+    <Content Include="Javascript\bblog\inject.js" />
     <Content Include="Javascript\button\battlelog.bf3.button.min.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -123,6 +127,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>battlelog.misc.css</DependentUpon>
     </Content>
+    <Content Include="Javascript\stats\battlelog.bf3.stats.js" />
     <Content Include="Javascript\windowchrome\battlelog.windowchrome.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Generator>VSMinifier</Generator>
