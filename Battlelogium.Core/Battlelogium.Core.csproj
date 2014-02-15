@@ -78,14 +78,32 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>battlelog.bf3.inject.js</DependentUpon>
     </Content>
-    <Content Include="Javascript\button\battlelog.bf3.button.js">
+    <Content Include="Javascript\battlelog.bf4.inject.js">
       <Generator>VSMinifier</Generator>
-      <LastGenOutput>battlelog.bf3.button.min.js</LastGenOutput>
+      <LastGenOutput>battlelog.bf4.inject.min.js</LastGenOutput>
+    </Content>
+    <Content Include="Javascript\battlelog.bf4.inject.min.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>battlelog.bf4.inject.js</DependentUpon>
     </Content>
     <Content Include="Javascript\button\battlelog.bf3.button.min.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>battlelog.bf3.button.js</DependentUpon>
+    </Content>
+    <Content Include="Javascript\button\battlelog.bf4.button.js">
+      <Generator>VSMinifier</Generator>
+      <LastGenOutput>battlelog.bf4.button.min.js</LastGenOutput>
+    </Content>
+    <Content Include="Javascript\button\battlelog.bf3.button.js">
+      <Generator>VSMinifier</Generator>
+      <LastGenOutput>battlelog.bf3.button.min.js</LastGenOutput>
+    </Content>
+    <Content Include="Javascript\button\battlelog.bf4.button.min.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>battlelog.bf4.button.js</DependentUpon>
     </Content>
     <Content Include="Javascript\dialog\battlelog.bf3.dialog.js">
       <Generator>VSMinifier</Generator>
@@ -95,15 +113,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>battlelog.bf3.dialog.js</DependentUpon>
-    </Content>
-    <Content Include="Javascript\misc\battlelog.helper.js">
-      <Generator>VSMinifier</Generator>
-      <LastGenOutput>battlelog.helper.min.js</LastGenOutput>
-    </Content>
-    <Content Include="Javascript\misc\battlelog.helper.min.js">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>battlelog.helper.js</DependentUpon>
     </Content>
     <Content Include="Javascript\misc\battlelog.misc.css">
       <Generator>VSMinifier</Generator>

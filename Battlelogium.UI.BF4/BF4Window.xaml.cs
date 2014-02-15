@@ -34,7 +34,7 @@ namespace Battlelogium.UI.BF4
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
+            this.battlelog.battlelogWebview.ShowDevTools();
         }
     }
 }
