@@ -1,14 +1,21 @@
-﻿var match = window.location.href.match(/battlereport\/show\/([0-9]+)\/([0-9]+)\//);
-var e = $("#battlereport h1:first");
-var reportId = match[2];
-var format = match[1];
-var platform = BBLog.deviceInfo[format];
-if(platform == "xbox") platform = "360";
-var html = $(
-    '<span id="bf3stats-report" class="bblog-button bblog-report-buttons bf3stats">Bf3stats.com Battlereport</span>'
-);
-html.on("click", function(){
-    window.open('http://bf3stats.com/report/'+platform+'/'+reportId);
-});
-e.after(html);
+﻿var battlelogstats = {
 
+    overview: function () {
+        var e = $(".profile-venicestats-overview-boxwideclean:last");
+        var time = $(".profile-venicestats-overview-highlight-stat-value").text();
+        var timePlayed = 0;
+        var minutes = time.match(/([0-9]+)m+/i);
+        var hours = time.match(/([0-9]+)h+/i);
+        var username = window.location.href.match(/\/soldier\/(.*?)\//)[1];
+        if (hours) timePlayed += parseInt(hours[1]) * 3600;
+        if (minutes) timePlayed += parseInt(minutes[1]) * 60;
+        var url = 'http://bf3stats.com/stats_pc/' + username + '/battlelog_frame?timePlayed=' + timePlayed;
+        var c = e.clone();
+        c.removeClass("profile-venicestats-overview-boxwideclean");
+        c.find(".common-box-title").text("Extended Player Statistics by bf3stats.com");
+        c.find(".common-box-inner").html('<div style="padding-top:10px;"></div><iframe src="' + url + '" style="width:100%; height:600px; overflow-x:hidden; overflow-y:hidden; border:0px; margin:0px; padding:0px;" scrollbars="no"></iframe>');
+        e.after(c);
+        e.css("margin-bottom", "10px");
+    },
+
+}
