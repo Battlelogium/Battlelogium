@@ -1,6 +1,7 @@
 ﻿var battlelogstats = {
 
     overview: function () {
+        //!window.location.href.match(/\/soldier\/.*?\/stats\//))
         var e = $("#overview-completion");
         var time = $("#stat-time-played").text();
         var timePlayed = 0;
