@@ -127,7 +127,24 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>battlelog.misc.css</DependentUpon>
     </Content>
-    <Content Include="Javascript\stats\battlelog.bf3.stats.js" />
+    <Content Include="Javascript\stats\battlelog.bf3.stats.js">
+      <Generator>VSMinifier</Generator>
+      <LastGenOutput>battlelog.bf3.stats.min.js</LastGenOutput>
+    </Content>
+    <Content Include="Javascript\stats\battlelog.bf3.stats.min.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>battlelog.bf3.stats.js</DependentUpon>
+    </Content>
+    <Content Include="Javascript\stats\battlelog.bf4.stats.js">
+      <Generator>VSMinifier</Generator>
+      <LastGenOutput>battlelog.bf4.stats.min.js</LastGenOutput>
+    </Content>
+    <Content Include="Javascript\stats\battlelog.bf4.stats.min.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>battlelog.bf4.stats.js</DependentUpon>
+    </Content>
     <Content Include="Javascript\windowchrome\battlelog.windowchrome.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Generator>VSMinifier</Generator>

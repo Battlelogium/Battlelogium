@@ -11,12 +11,23 @@ function injectOnce() {
     if (document.getElementById('_battlelogbutton') == null) {
         injectScript('_battlelogbutton', baseurl + '/button/battlelog.bf4.button.min.js');
     }
+    if (document.getElementById('_battlelogstats') == null) {
+        injectScript('_battlelogstats', baseurl + '/stats/battlelog.bf4.stats.min.js');
+    }
 }
 
 function runCustomJS() {
     windowchrome.addChromeButtons();
     battlelogbutton.fixEAPlaybarButtons();
     battlelogbutton.createPlaybarButton('btnServers', 'SERVERS', '/bf4/servers', 'btn-primary margin-left').insertAfter($('#btnMulti'))
+
+    
+    if (statstimer == null) {
+        var statstimer = window.setInterval(function () {
+            battlelogstats.overview();
+        }, 1000);
+    }
+    
 }
 
 function injectScript(id, url) {
