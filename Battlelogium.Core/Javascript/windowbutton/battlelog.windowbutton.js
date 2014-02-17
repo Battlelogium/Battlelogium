@@ -1,4 +1,4 @@
-﻿var windowchrome = {
+﻿var windowbutton = {
     createToolsButton: function (onclick, id) {
         var toolsButton =
         $('<li/>', {

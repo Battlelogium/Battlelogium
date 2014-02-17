@@ -93,23 +93,18 @@
     <Content Include="Javascript\bblog\bblog-weapons-compressed.js" />
     <Content Include="Javascript\bblog\bblog.js" />
     <Content Include="Javascript\bblog\inject.js" />
-    <Content Include="Javascript\button\battlelog.bf3.button.min.js">
+    <Content Include="Javascript\playbar\battlelog.bf3.playbar.min.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>battlelog.bf3.button.js</DependentUpon>
+      <DependentUpon>battlelog.bf3.playbar.js</DependentUpon>
     </Content>
-    <Content Include="Javascript\button\battlelog.bf4.button.js">
+    <Content Include="Javascript\playbar\battlelog.bf4.playbar.js">
       <Generator>VSMinifier</Generator>
-      <LastGenOutput>battlelog.bf4.button.min.js</LastGenOutput>
+      <LastGenOutput>battlelog.bf4.playbar.min.js</LastGenOutput>
     </Content>
-    <Content Include="Javascript\button\battlelog.bf3.button.js">
+    <Content Include="Javascript\playbar\battlelog.bf3.playbar.js">
       <Generator>VSMinifier</Generator>
-      <LastGenOutput>battlelog.bf3.button.min.js</LastGenOutput>
-    </Content>
-    <Content Include="Javascript\button\battlelog.bf4.button.min.js">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>battlelog.bf4.button.js</DependentUpon>
+      <LastGenOutput>battlelog.bf3.playbar.min.js</LastGenOutput>
     </Content>
     <Content Include="Javascript\dialog\battlelog.bf3.dialog.js">
       <Generator>VSMinifier</Generator>
@@ -129,6 +124,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>battlelog.misc.css</DependentUpon>
     </Content>
+    <Content Include="Javascript\playbar\battlelog.bf4.playbar.min.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>battlelog.bf4.playbar.js</DependentUpon>
+    </Content>
     <Content Include="Javascript\stats\battlelog.bf3.stats.js">
       <Generator>VSMinifier</Generator>
       <LastGenOutput>battlelog.bf3.stats.min.js</LastGenOutput>
@@ -147,27 +147,27 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>battlelog.bf4.stats.js</DependentUpon>
     </Content>
-    <Content Include="Javascript\windowchrome\battlelog.windowchrome.css">
+    <Content Include="Javascript\windowbutton\battlelog.windowbutton.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Generator>VSMinifier</Generator>
-      <LastGenOutput>battlelog.windowchrome.min.css</LastGenOutput>
+      <LastGenOutput>battlelog.windowbutton.min.css</LastGenOutput>
     </Content>
-    <Content Include="Javascript\windowchrome\battlelog.windowchrome.js">
+    <Content Include="Javascript\windowbutton\battlelog.windowbutton.min.css">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>battlelog.windowbutton.css</DependentUpon>
+    </Content>
+    <Content Include="Javascript\windowbutton\battlelog.windowbutton.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Generator>VSMinifier</Generator>
-      <LastGenOutput>battlelog.windowchrome.min.js</LastGenOutput>
+      <LastGenOutput>battlelog.windowbutton.min.js</LastGenOutput>
     </Content>
-    <Content Include="Javascript\windowchrome\battlelog.windowchrome.min.css">
+    <Content Include="Javascript\windowbutton\battlelog.windowbutton.min.js">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>battlelog.windowchrome.css</DependentUpon>
+      <DependentUpon>battlelog.windowbutton.js</DependentUpon>
     </Content>
-    <Content Include="Javascript\windowchrome\battlelog.windowchrome.min.js">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>battlelog.windowchrome.js</DependentUpon>
-    </Content>
-    <Content Include="Javascript\windowchrome\battlelog.windowchrome.png">
+    <Content Include="Javascript\windowbutton\battlelog.windowbutton.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

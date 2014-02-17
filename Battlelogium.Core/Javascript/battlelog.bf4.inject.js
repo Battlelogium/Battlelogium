@@ -1,5 +1,5 @@
 ﻿/// <reference path="windowchrome/battlelog.windowchrome.js" />
-/// <reference path="button/battlelog.bf4.button.js" />
+/// <reference path="playbar/battlelog.bf4.playbar.js" />
 var baseurl = 'http://localhost/battlelogium';
 function injectOnce() {
     if (document.getElementById('_windowchrome') == null) {
@@ -8,8 +8,8 @@ function injectOnce() {
     if (document.getElementById('css_windowchrome') == null) {
         injectCSS('css_windowchrome', baseurl + '/windowchrome/battlelog.windowchrome.min.css');
     }
-    if (document.getElementById('_battlelogbutton') == null) {
-        injectScript('_battlelogbutton', baseurl + '/button/battlelog.bf4.button.min.js');
+    if (document.getElementById('_battlelogplaybar') == null) {
+        injectScript('_battlelogplaybar', baseurl + '/playbar/battlelog.bf4.playbar.min.js');
     }
     if (document.getElementById('_battlelogstats') == null) {
         injectScript('_battlelogstats', baseurl + '/stats/battlelog.bf4.stats.min.js');
@@ -21,8 +21,8 @@ function injectOnce() {
 
 function runCustomJS() {
     windowchrome.addChromeButtons();
-    battlelogbutton.fixEAPlaybarButtons();
-    battlelogbutton.createPlaybarButton('btnServers', 'SERVERS', '/bf4/servers', 'btn-primary margin-left').insertAfter($('#btnMulti'))
+    battlelogplaybar.fixEAPlaybarButtons();
+    battlelogplaybar.createPlaybarButton('btnServers', 'SERVERS', '/bf4/servers', 'btn-primary margin-left').insertAfter($('#btnMulti'))
 }
 
 function runOnURLChange() {

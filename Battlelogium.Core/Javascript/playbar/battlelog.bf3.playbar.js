@@ -1,4 +1,4 @@
-﻿var battlelogbutton = {
+﻿var battlelogplaybar = {
     
     createPlaybarButton: function (elementid, label, onclick) {
         if ($('#' + elementid).length == 0) {
