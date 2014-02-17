@@ -1,4 +1,4 @@
-﻿var windowchrome = {
+﻿var windowbutton = {
     createToolsButton: function (onclick, id) {
         var toolsButton =
         $('<li/>', {
@@ -13,7 +13,7 @@
         return toolsButton
     },
 
-    addChromeButtons: function () {
+    addWindowButtons: function () {
         var avatarLi = $('#base-header-user-tools .tools.pull-right .comcenter-toggle.tools-item').prev(); //Insert our chrome buttons before the avatar list item. 
         var closeButton = this.createToolsButton("app.quit()", 'close');
         var minimizeButton = this.createToolsButton("app.minimize()", 'minimize');

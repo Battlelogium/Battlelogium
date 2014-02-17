@@ -72,14 +72,22 @@ namespace Battlelogium.Core
             
             this.battlelogWebview.RegisterJsObject("app", javascriptObject);
             this.battlelogWebview.LoadCompleted += this.LoadCompleted;
+            this.battlelogWebview.PropertyChanged += battlelogWebview_PropertyChanged;
           //  if (debug) this.battlelogWebview.ShowDevTools();
          
         }
 
+        void battlelogWebview_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Address")
+            {
+                this.battlelogWebview.ExecuteScript("runCustomJS()");
+                if (!this.battlelogWebview.Address.Contains(battlelogURL)) this.battlelogWebview.Load(battlelogURL);
+            }
+        }
+
         public void LoadCompleted(object sender, EventArgs e)
         {
-            if (!this.battlelogWebview.Address.Contains(battlelogURL)) this.battlelogWebview.Load(battlelogURL);
-
             this.battlelogWebview.ExecuteScript(
                 @"
                     if (document.getElementById('_inject') == null) {

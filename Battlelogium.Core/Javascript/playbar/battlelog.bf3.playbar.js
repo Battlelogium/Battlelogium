@@ -1,15 +1,19 @@
-﻿var battlelogbutton = {
-    addPlaybarButton: function (elementid, label, tooltip, onclick) {
+﻿var battlelogplaybar = {
+    
+    createPlaybarButton: function (elementid, label, onclick) {
         if ($('#' + elementid).length == 0) {
-            $("<button/>", {
+             var button = $("<button/>", {
                 id: elementid,
                 onclick: onclick,
                 class: 'common-button-large main-loggedin-playbutton',
-                'data-tooltip': tooltip
             })
-            .html("<p>" + label + "</p>")
-            .appendTo($('.main-loggedin-playbar')[0]);
+            .html("<p>" + label + "</p>");
+             return button;
         }
+    },
+
+    addPlaybarButton: function (playbarbutton){
+        playbarbutton.appendTo($('.main-loggedin-playbar')[0])
     },
 
     fixQuickMatchButtons: function () {
@@ -41,7 +45,7 @@
         }
 
         if ($('.tooltip').find('.tooltip-body:contains("Loading")').length > 0) {
-            $('.tooltip').find('.tooltip-body:contains("Loading")').html("Play a Quick Match");
+            $('.tooltip').find('.tooltip-body:contains("Loading")').html("");
             $('#btnQuickMatchServerBrowser').load();
             $('#btnQuickMatchBig').load();
         }
@@ -53,7 +57,7 @@
         if ($('#btnCoOp').length == 0) {
             var btnCoOp = $("button[data-track='actionbar.coop']")
             btnCoOp.attr('id', 'btnCoOp');
-            btnCoOp.attr('data-tooltip', 'Play a Co-Op Match');
+            btnCoOp.attr('data-tooltip', '');
             btnCoOp.html("<p>CO-OP</p>");
         }
 
@@ -61,7 +65,7 @@
         if ($('#btnCampaign').length == 0) {
             var btnCampaign = $("button[data-track='actionbar.campaign']")
             btnCampaign.attr('id', 'btnCampaign')
-            btnCampaign.attr('data-tooltip', 'Play Campaign Mode');
+            btnCampaign.attr('data-tooltip', '');
             btnCampaign.html("<p>CAMPAIGN</p>");
         }
     }

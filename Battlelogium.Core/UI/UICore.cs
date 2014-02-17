@@ -31,7 +31,7 @@ namespace Battlelogium.Core.UI
             this.mainWindow.mainGrid.Children.Add(battlelog.battlelogWebview);
             this.mainWindow.Title = "Battlelogium - " + battlelog.battlefieldName;
             this.managedOrigin = new Origin();
-            this.managedOrigin.StartOrigin();
+            //this.managedOrigin.StartOrigin();
             mainWindow.Closed += mainWindow_Closed;
             this.battlelog.battlelogWebview.PropertyChanged += battlelogWebview_PropertyChanged;
             mainWindow.Height = config.WindowHeight;
@@ -53,7 +53,7 @@ namespace Battlelogium.Core.UI
 
         private void mainWindow_Closed(object sender, EventArgs e)
         {
-            this.managedOrigin.KillOrigin(30000);
+            //this.managedOrigin.KillOrigin(30000);
         }
     }
 }
