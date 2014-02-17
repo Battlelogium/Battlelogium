@@ -20,7 +20,9 @@
                     c.find("h1").text("Extended Player Statistics by bf4stats.com");
                     c.find(".box-content").html('<div></div><iframe src="' + url + '" style="width:100%; height:400px; overflow-x:hidden; overflow-y:auto; border:0px; margin:0px; padding:0px;" scrollbars="auto"></iframe>');
                     c.attr('id', 'battlelogiumStats');
-                    e.after(c);
+                    if ($('#battlelogiumStats').length == 0) {
+                        e.after(c);
+                    }
                     clearInterval(checkExist);
                 }
             }, 500);

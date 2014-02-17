@@ -129,6 +129,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>battlelog.bf4.playbar.js</DependentUpon>
     </Content>
+    <Content Include="Javascript\settings\battlelog.bf3.settings.js">
+      <Generator>VSMinifier</Generator>
+      <LastGenOutput>battlelog.bf3.settings.min.js</LastGenOutput>
+    </Content>
+    <Content Include="Javascript\settings\battlelog.bf3.settings.min.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>battlelog.bf3.settings.js</DependentUpon>
+    </Content>
+    <Content Include="Javascript\settings\battlelog.bf4.settings.min.js">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>battlelog.bf4.settings.js</DependentUpon>
+    </Content>
     <Content Include="Javascript\stats\battlelog.bf3.stats.js">
       <Generator>VSMinifier</Generator>
       <LastGenOutput>battlelog.bf3.stats.min.js</LastGenOutput>
@@ -174,6 +188,10 @@
   <ItemGroup>
     <Content Include="config.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Javascript\settings\battlelog.bf4.settings.js">
+      <Generator>VSMinifier</Generator>
+      <LastGenOutput>battlelog.bf4.settings.min.js</LastGenOutput>
     </Content>
     <None Include="packages.config" />
     <Content Include="userstylesheet.css" />

@@ -81,14 +81,13 @@ namespace Battlelogium.Core
         {
             if (e.PropertyName == "Address")
             {
-                this.battlelogWebview.ExecuteScript("runOnURLChange();");
+                this.battlelogWebview.ExecuteScript("runCustomJS()");
+                if (!this.battlelogWebview.Address.Contains(battlelogURL)) this.battlelogWebview.Load(battlelogURL);
             }
         }
 
         public void LoadCompleted(object sender, EventArgs e)
         {
-            if (!this.battlelogWebview.Address.Contains(battlelogURL)) this.battlelogWebview.Load(battlelogURL);
-
             this.battlelogWebview.ExecuteScript(
                 @"
                     if (document.getElementById('_inject') == null) {

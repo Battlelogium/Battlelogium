@@ -1,12 +1,13 @@
-﻿/// <reference path="windowchrome/battlelog.windowchrome.js" />
+﻿/// <reference path="windowbutton/battlelog.windowbutton.js" />
 /// <reference path="playbar/battlelog.bf4.playbar.js" />
+/// <reference path="settings/battlelog.bf4.settings.js" />
 var baseurl = 'http://localhost/battlelogium';
 function injectOnce() {
-    if (document.getElementById('_windowchrome') == null) {
-        injectScript('_windowchrome', baseurl + '/windowchrome/battlelog.windowchrome.min.js');
+    if (document.getElementById('_windowbutton') == null) {
+        injectScript('_windowbutton', baseurl + '/windowbutton/battlelog.windowbutton.min.js');
     }
-    if (document.getElementById('css_windowchrome') == null) {
-        injectCSS('css_windowchrome', baseurl + '/windowchrome/battlelog.windowchrome.min.css');
+    if (document.getElementById('css_windowbutton') == null) {
+        injectCSS('css_windowbutton', baseurl + '/windowbutton/battlelog.windowbutton.min.css');
     }
     if (document.getElementById('_battlelogplaybar') == null) {
         injectScript('_battlelogplaybar', baseurl + '/playbar/battlelog.bf4.playbar.min.js');
@@ -14,22 +15,26 @@ function injectOnce() {
     if (document.getElementById('_battlelogstats') == null) {
         injectScript('_battlelogstats', baseurl + '/stats/battlelog.bf4.stats.min.js');
     }
-    if (document.getElementById('_battlelogurlchange') == null) {
-        injectScript('_battlelogurlchange', baseurl + '/battlelog.bf4.urlchange.min.js');
+    if (document.getElementById('_battlelogsettings') == null) {
+        injectScript('_battlelogsettings', baseurl + '/settings/battlelog.bf4.settings.min.js');
     }
 }
 
 function runCustomJS() {
-    windowchrome.addChromeButtons();
-    battlelogplaybar.fixEAPlaybarButtons();
-    battlelogplaybar.createPlaybarButton('btnServers', 'SERVERS', '/bf4/servers', 'btn-primary margin-left').insertAfter($('#btnMulti'))
-}
-
-function runOnURLChange() {
+    try {
+        windowbutton.addWindowButtons();
+        battlelogplaybar.fixEAPlaybarButtons();
+        battlelogplaybar.createPlaybarButton('btnServers', 'SERVERS', '/bf4/servers', 'btn-primary margin-left').insertAfter($('#btnMulti'));
+    } catch (error) {
+    }
     if (window.location.href.match(/\/soldier\//) != null) {
         battlelogstats.overview();
     }
+    if (window.location.href == 'http://battlelog.battlefield.com/bf4/profile/edit/' || window.location.href == 'http://battlelog.battlefield.com/bf4/profile/edit/edit-notifications/') {
+        battlelogsettings.addSettingsSection();
+    }
 }
+
 
 function injectScript(id, url) {
     var script = document.createElement('script');

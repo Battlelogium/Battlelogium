@@ -17,7 +17,9 @@
                     c.find(".common-box-title").text("Extended Player Statistics by bf3stats.com");
                     c.find(".common-box-inner").html('<div style="padding-top:10px;"></div><iframe src="' + url + '" style="width:100%; height:600px; overflow-x:hidden; overflow-y:hidden; border:0px; margin:0px; padding:0px;" scrollbars="no"></iframe>');
                     c.attr('id', 'battlelogiumStats');
-                    e.after(c);
+                    if ($('#battlelogiumStats').length == 0) {
+                        e.after(c);
+                    }
                     e.css("margin-bottom", "10px");
                     clearInterval(checkExist);
                 }

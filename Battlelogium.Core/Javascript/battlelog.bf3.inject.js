@@ -19,22 +19,26 @@ function injectOnce() {
     if (document.getElementById('_battlelogstats') == null) {
         injectScript('_battlelogstats', baseurl + '/stats/battlelog.bf3.stats.min.js');
     }
-    if (document.getElementById('_battlelogurlchange') == null) {
-        injectScript('_battlelogurlchange', baseurl + '/battlelog.bf4.urlchange.min.js');
+    if (document.getElementById('_battlelogsettings') == null) {
+        injectScript('_battlelogsettings', baseurl + '/settings/battlelog.bf3.settings.min.js');
     }
 }
 
 function runCustomJS() {
-    windowbutton.addChromeButtons();
+    try{
+    windowbutton.addWindowButtons();
     battlelogplaybar.fixEAPlaybarButtons();
     battlelogplaybar.fixQuickMatchButtons();
     battlelogplaybar.addPlaybarButton(battlelogplaybar.createPlaybarButton('btnServers', 'SERVERS', 'location.href = "http://battlelog.battlefield.com/bf3/servers/"'));
     $("#base-header-secondary-nav>ul>li>a:contains('Buy Battlefield 4')").remove();
-}
-
-function runOnURLChange() {
+    } catch (error) {
+    }
     if (window.location.href.match(/\/soldier\//) != null) {
         battlelogstats.overview();
+    }
+    if (window.location.href == 'http://battlelog.battlefield.com/bf3/profile/edit/') {
+        
+        battlelogsettings.addSettingsSection();
     }
 }
 
