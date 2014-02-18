@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
 using Battlelogium.Core.Utilities;
 using System.Runtime.InteropServices;
+using System.Windows;
 #endregion
 
 namespace Battlelogium.Overlay
@@ -25,9 +26,6 @@ namespace Battlelogium.Overlay
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool ShowWindow(IntPtr hWnd, ShowWindowCommands nCmdShow);
-
-        [DllImport("steam_api.dll")]
-        static extern bool SteamAPI_Init();
 
         public Game1()
             : base()
@@ -47,11 +45,16 @@ namespace Battlelogium.Overlay
             // TODO: Add your initialization logic here
 
             base.Initialize();
-            SteamAPI_Init();
+
             hook.KeyPressed += hook_KeyPressed;
             hook.RegisterHotKey(ModifierKeys.Shift , System.Windows.Forms.Keys.F2);
             base.IsMouseVisible = true;
             base.Window.IsBorderless = true;
+            var screen = System.Windows.Forms.Screen.AllScreens[0];
+            base.Window.Position = new Point(screen.Bounds.X, screen.Bounds.Y);
+            graphics.PreferredBackBufferWidth = screen.Bounds.Width;
+            graphics.PreferredBackBufferHeight = screen.Bounds.Height;
+            graphics.ApplyChanges();
             
         }
 
@@ -60,7 +63,7 @@ namespace Battlelogium.Overlay
             switch (hide)
             {
                 case true:
-                    ShowWindow(base.Window.Handle, ShowWindowCommands.Restore);
+                    ShowWindow(base.Window.Handle, ShowWindowCommands.Maximize);
                     hide = false;
                     break;
                 case false:
@@ -113,7 +116,7 @@ namespace Battlelogium.Overlay
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.LightGray);
 
             // TODO: Add your drawing code here
 
