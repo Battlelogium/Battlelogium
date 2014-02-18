@@ -1,34 +1,23 @@
-﻿/*Below is the decoded BrowserSettings.UserStyleSheetLocation data URI*/
-/*data:text/plain;charset=utf-8;base64,Ojotd2Via2l0LXNjcm9sbGJhcnt2aXNpYmlsaXR5OmhpZGRlbn0NCiNjb21tdW5pdHktYmFyIC5vdXRlcmFycm93e2Rpc3BsYXk6bm9uZX0=*/
-/*Remove comments before encoding to utf8-base64*/
+﻿/*Below is the decoded UserStyleSheetLocation*/
+/*Minify CSS before encoding*/
 
-::-webkit-scrollbar{visibility:hidden} /*Remove scrollbar*/
-#community-bar .outerarrow{display:none} /*Remove game switching arrow*/
-
+#community-bar .outerarrow{
+    display:  none /*Remove game switching arrow*/
+} 
 ::-webkit-scrollbar {
-  height: 0;
-  overflow: visible;
-  width: 10px;  
-  border-left:1px solid rgb(229, 229, 229);
-  background-color: rgba(0, 0, 0, 0.1);
-}
-::-webkit-scrollbar-thumb {
-  background-color: rgba(0,0,0,.07);
-  background-clip: padding-box;    
-  min-height: 28px;
-  padding: 100px 0 0;
-  box-shadow: inset 1px 1px 0 rgba(0,0,0,.1),inset 0 -1px 0 rgba(0,0,0,.08);
-  border-width: 1px 1px 1px 6px;
-}
-::-webkit-scrollbar-button {
-  height: 0;
-  width: 0;
+  width: 6px;
+  height: 6px;
+  background:  rgba(19,22,26,0.4);
 }
 ::-webkit-scrollbar-track {
-  background-clip: padding-box;
-  border: solid transparent;
-  border-width: 0 0 0 4px;
+  background: rgba(0,0,0,0.1);
 }
-::-webkit-scrollbar-corner {
-  background: transparent;
+::-webkit-scrollbar-thumb{
+  background: rgba(0,0,0,0.3);
+}
+::-webkit-scrollbar-thumb:hover{
+	background: rgba(0,0,0,0.4);
+}
+::-webkit-scrollbar-thumb:active{
+	background: rgba(0,0,0,.6);
 }
