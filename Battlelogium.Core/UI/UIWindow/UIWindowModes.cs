@@ -11,22 +11,8 @@ using System.Windows.Media;
 
 namespace Battlelogium.Core.UI
 {
-    public class UIWindow : Window
+    public partial class UIWindow
     {
-        public MouseButtonEventHandler rightDragBtnDown;
-        public MouseEventHandler rightDragMove;
-
-
-        public Battlelog battlelog;
-        public Animator loadingIcon;
-        public UICore process;
-        public Config config;
-        public Grid mainGrid;
-
-        public UIWindow()
-        {
-
-        }
         public void SetWindowed()
         {
             SetWindowed(this.config.StartMaximized, this.config.NoBorder, this.config.WindowWidth, this.config.WindowHeight);
@@ -70,35 +56,6 @@ namespace Battlelogium.Core.UI
             this.BorderBrush = null;
             this.BorderThickness = new Thickness(0);
             this.ResizeMode = ResizeMode.NoResize;
-        }
-
-        public void RightClickDrag()
-        {
-            Point startPosition = new Point();
-            this.rightDragBtnDown = (sender, e) =>
-            {
-                startPosition = e.GetPosition(this);
-            };
-
-            this.rightDragMove += (sender, e) =>
-            {
-                if (e.RightButton == MouseButtonState.Pressed)
-                {
-                    Point endPosition = e.GetPosition(this);
-                    Vector vector = endPosition - startPosition;
-                    this.Left += vector.X;
-                    this.Top += vector.Y;
-                }
-            };
-
-            this.PreviewMouseRightButtonDown += this.rightDragBtnDown;
-            this.PreviewMouseMove += this.rightDragMove;
-        }
-
-        public void DisableRightClickDrag()
-        {
-            this.PreviewMouseRightButtonDown -= this.rightDragBtnDown;
-            this.PreviewMouseMove -= this.rightDragMove;
         }
     }
 }

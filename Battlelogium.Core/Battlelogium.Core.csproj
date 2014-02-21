@@ -59,12 +59,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Battlelog.cs" />
-    <Compile Include="UI\UIWindow.cs" />
+    <Compile Include="UI\UIWindow\UIDragHandler.cs" />
+    <Compile Include="UI\UIWindow\UIWindow.cs" />
     <Compile Include="Config.cs" />
-    <Compile Include="UI\DragHandler.cs" />
     <Compile Include="UI\UICore.cs" />
     <Compile Include="Javascript\JavascriptObject.cs" />
     <Compile Include="Origin.cs" />
+    <Compile Include="UI\UIWindow\UIWindowModes.cs" />
     <Compile Include="Utilities\Extensions.cs" />
     <Compile Include="Utilities\KeyboardHook.cs" />
     <Compile Include="Utilities\Process.cs" />
