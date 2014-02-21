@@ -19,7 +19,7 @@ namespace Battlelogium.Core
         private readonly bool checkUpdates;
         private readonly bool windowedMode;
         private readonly bool startMaximized;
-        private readonly bool handleOrigin; 
+        private readonly bool manageOrigin; 
         private readonly int windowHeight;
         private readonly int windowWidth;
         private readonly bool noBorder;
@@ -31,16 +31,18 @@ namespace Battlelogium.Core
 
             this.configFileName = configFileName;
             Dictionary<string, string> config = GetConfigurationData();
+
             if (!bool.TryParse(config.GetValueOrDefault("directToCampaign"), out directToCampaign)) directToCampaign = false;
             if (!bool.TryParse(config.GetValueOrDefault("checkUpdates"), out checkUpdates)) checkUpdates = true;
             if (!int.TryParse(config.GetValueOrDefault("waitTimeToKillOrigin"), out waitTimeToKillOrigin)) waitTimeToKillOrigin = 10;
             if (!bool.TryParse(config.GetValueOrDefault("windowedMode"), out windowedMode)) windowedMode = false;
             if (!bool.TryParse(config.GetValueOrDefault("startMaximized"), out startMaximized)) startMaximized = false;
+            if (!bool.TryParse(config.GetValueOrDefault("manageOrigin"), out manageOrigin)) manageOrigin = true;
+            
             if (!int.TryParse(config.GetValueOrDefault("windowHeight"), out windowHeight)) windowHeight = 1280;
             if (!int.TryParse(config.GetValueOrDefault("windowWidth"), out windowWidth)) windowWidth = 720;
             if (!bool.TryParse(config.GetValueOrDefault("noBorder"), out noBorder)) noBorder = false;
             if (!bool.TryParse(config.GetValueOrDefault("useSoftwareRender"), out useSoftwareRender)) useSoftwareRender = false;
-            if (!bool.TryParse(config.GetValueOrDefault("handleOrigin"), out handleOrigin)) handleOrigin = true;
         }
 
         public Config() : this("config.ini") { }
@@ -56,7 +58,7 @@ namespace Battlelogium.Core
             configBuilder.AppendLine("StatMaximized = " + StartMaximized.ToString());
             configBuilder.AppendLine("WindowHeight = " + WindowHeight.ToString());
             configBuilder.AppendLine("WindowWidth = " + WindowWidth.ToString());
-            configBuilder.AppendLine("HandleOrigin = " + HandleOrigin.ToString());
+            configBuilder.AppendLine("manageOrigin = " + manageOrigin.ToString());
 
             return configBuilder.ToString();
         }
@@ -161,11 +163,11 @@ namespace Battlelogium.Core
         }
 
         /// <summary>Whether to start or handle Origin</summary>
-        public bool HandleOrigin
+        public bool ManageOrigin
         {
             get
             {
-                return this.handleOrigin;
+                return this.manageOrigin;
             }
         }
 

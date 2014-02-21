@@ -9,6 +9,7 @@ using System.Timers;
 using System.Windows.Threading;
 using System.Windows.Input;
 using Battlelogium.ThirdParty.Animator;
+using System.Windows.Media;
 
 
 
@@ -27,16 +28,24 @@ namespace Battlelogium.Core.UI
             this.battlelog = mainWindow.battlelog;
             this.config = mainWindow.config;
             this.mainWindow = mainWindow;
-            this.mainWindow.RightClickDrag();
             this.mainWindow.mainGrid.Children.Add(battlelog.battlelogWebview);
             this.mainWindow.Title = "Battlelogium - " + battlelog.battlefieldName;
             this.managedOrigin = new Origin();
             //this.managedOrigin.StartOrigin();
+
             mainWindow.Closed += mainWindow_Closed;
             this.battlelog.battlelogWebview.PropertyChanged += battlelogWebview_PropertyChanged;
-            mainWindow.Height = config.WindowHeight;
-            mainWindow.Width = config.WindowWidth;
+            switch (this.config.WindowedMode)
+            {
+                case true:
+                    this.mainWindow.SetWindowed();
+                    break;
+                case false:
+                    this.mainWindow.SetFullScreen();
+                    break;
+            }
         }
+        
 
         private void battlelogWebview_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
@@ -53,7 +62,7 @@ namespace Battlelogium.Core.UI
 
         private void mainWindow_Closed(object sender, EventArgs e)
         {
-            //this.managedOrigin.KillOrigin(30000);
+            this.managedOrigin.KillOrigin(config.WaitTimeToKillOrigin * 1000);
         }
     }
 }
