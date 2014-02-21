@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Threading;
+using Battlelogium.Core.UI;
 
 namespace Battlelogium.Core.Javascript
 {
     public class JavascriptObject
     {
-        private Window battlelogiumWindow;
-        public JavascriptObject(Window battlelogiumWindow)
+        private UIWindow battlelogiumWindow;
+        public JavascriptObject(UIWindow battlelogiumWindow)
         {
             this.battlelogiumWindow = battlelogiumWindow;
         }
@@ -29,6 +30,11 @@ namespace Battlelogium.Core.Javascript
             
         }
 
+        public void clearcache()
+        {
+
+
+        }
         /// <summary>
         /// Invoke a method on the UI thread
         /// </summary>

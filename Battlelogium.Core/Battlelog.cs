@@ -9,6 +9,7 @@ using Battlelogium.Core.Javascript;
 using CefSharp;
 using System.Net;
 using System.IO;
+using Battlelogium.Core.UI;
 
 namespace Battlelogium.Core
 {
@@ -17,6 +18,7 @@ namespace Battlelogium.Core
 
         public WebView battlelogWebview;
         public JavascriptObject javascriptObject;
+        
 
         public string battlelogURL;
         public string battlefieldName;
@@ -40,10 +42,11 @@ namespace Battlelogium.Core
 
         }
 
-        public Battlelog(string battlelogURL, string battlefieldName, string battlefieldShortname, string executableName, string originCode, string javascriptPath, Window battlelogiumWindow) : this(battlelogURL, battlefieldName, battlefieldShortname, executableName, originCode , javascriptPath, new JavascriptObject(battlelogiumWindow)) { }
+        public Battlelog(string battlelogURL, string battlefieldName, string battlefieldShortname, string executableName, string originCode, string javascriptPath, UIWindow battlelogiumWindow) : this(battlelogURL, battlefieldName, battlefieldShortname, executableName, originCode , javascriptPath, new JavascriptObject(battlelogiumWindow)) { }
 
         protected void SetupWebview(bool debug=false)
         {
+            this.InitializeCEF(debug);
             BrowserSettings browserSettings = new BrowserSettings
             {
                 FileAccessFromFileUrlsAllowed = true,
@@ -56,21 +59,9 @@ namespace Battlelogium.Core
                  * ::-webkit-scrollbar{visibility:hidden}
                  * #community-bar .outerarrow{display:none}
                  */
-                
-            };
-            Settings settings = new Settings
-            {
-                PackLoadingDisabled = !debug,
-                CachePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "cache")
-                
-            };
-            
-           //battlelogWebview.this.battlelogWebview.ContentsWidth;
-            CEF.Initialize(settings);
-            //browserSettings.WebSecurityDisabled = true;
-           
+
+            };           
             this.battlelogWebview = new WebView(this.battlelogURL, browserSettings);
-            
             this.battlelogWebview.RegisterJsObject("app", javascriptObject);
             this.battlelogWebview.LoadCompleted += this.LoadCompleted;
             this.battlelogWebview.PropertyChanged += battlelogWebview_PropertyChanged;
@@ -78,6 +69,19 @@ namespace Battlelogium.Core
          
         }
 
+        public void InitializeCEF(bool debug = false)
+        {
+            Settings settings = new Settings
+            {
+                PackLoadingDisabled = !debug,
+                CachePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "cache")
+            };
+
+            //battlelogWebview.this.battlelogWebview.ContentsWidth;
+            CEF.Initialize(settings);
+            //browserSettings.WebSecurityDisabled = true;
+
+        }
         void battlelogWebview_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "Address")

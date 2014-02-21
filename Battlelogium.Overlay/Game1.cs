@@ -9,7 +9,6 @@ using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
 using Battlelogium.Core.Utilities;
 using System.Runtime.InteropServices;
-using System.Windows;
 #endregion
 
 namespace Battlelogium.Overlay
@@ -23,6 +22,8 @@ namespace Battlelogium.Overlay
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         bool hide = true;
+        private Texture2D background;
+        private SpriteFont font;
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool ShowWindow(IntPtr hWnd, ShowWindowCommands nCmdShow);
@@ -82,6 +83,7 @@ namespace Battlelogium.Overlay
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            background = Content.Load<Texture2D>("background");
 
             // TODO: use this.Content to load your game content here
         }
@@ -119,8 +121,12 @@ namespace Battlelogium.Overlay
             GraphicsDevice.Clear(Color.LightGray);
 
             // TODO: Add your drawing code here
+            spriteBatch.Begin();
+            spriteBatch.Draw(background, new Rectangle(0, 0, 1920, 1080), Color.White);
 
+            spriteBatch.End();
             base.Draw(gameTime);
+
         }
     }
     enum ShowWindowCommands
