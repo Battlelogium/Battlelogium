@@ -1,19 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using Battlelogium.Core;
 using Battlelogium.Core.UI;
-using Battlelogium.Core;
+using System.Windows;
 
 namespace Battlelogium.UI.BF4
 {
@@ -29,7 +16,7 @@ namespace Battlelogium.UI.BF4
             this.config = new Config();
             this.mainGrid = this.MainGrid;
             this.loadingIcon = this.LoadingIcon;
-            this.process = new UICore(this);
+            this.uiCore = new UICore(this);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CefSharp.Wpf;
-using System.Windows;
-using Battlelogium.Core.Javascript;
-using CefSharp;
-using System.Net;
-using System.IO;
+﻿using Battlelogium.Core.Javascript;
 using Battlelogium.Core.UI;
+using CefSharp;
+using CefSharp.Wpf;
+using System;
+using System.IO;
+using System.Net;
 
 namespace Battlelogium.Core
 {
@@ -52,9 +47,7 @@ namespace Battlelogium.Core
                 CachePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "cache")
             };
 
-            //battlelogWebview.this.battlelogWebview.ContentsWidth;
             CEF.Initialize(settings);
-            //browserSettings.WebSecurityDisabled = true;
 
             BrowserSettings browserSettings = new BrowserSettings
             {
@@ -74,10 +67,8 @@ namespace Battlelogium.Core
             this.battlelogWebview.RegisterJsObject("app", javascriptObject);
             this.battlelogWebview.LoadCompleted += this.LoadCompleted;
             this.battlelogWebview.PropertyChanged += battlelogWebview_PropertyChanged;
-          //  if (debug) this.battlelogWebview.ShowDevTools();
-         
         }
-
+        
         private void battlelogWebview_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "Address")

@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Battlelogium.Core.Utilities;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.IO;
 using System.Text.RegularExpressions;
-using Battlelogium.Core.Utilities;
 
 
 namespace Battlelogium.Core
@@ -24,7 +23,9 @@ namespace Battlelogium.Core
         private readonly int windowWidth;
         private readonly bool noBorder;
         private readonly bool useSoftwareRender;
+        private readonly bool rightClickDrag;
         private readonly string configFileName;
+
         #endregion
 
         public Config(string configFileName){
@@ -42,6 +43,7 @@ namespace Battlelogium.Core
             if (!int.TryParse(config.GetValueOrDefault("windowHeight"), out windowHeight)) windowHeight = 1280;
             if (!int.TryParse(config.GetValueOrDefault("windowWidth"), out windowWidth)) windowWidth = 720;
             if (!bool.TryParse(config.GetValueOrDefault("noBorder"), out noBorder)) noBorder = false;
+            if (!bool.TryParse(config.GetValueOrDefault("rightClickDrag"), out rightClickDrag)) rightClickDrag = false;
             if (!bool.TryParse(config.GetValueOrDefault("useSoftwareRender"), out useSoftwareRender)) useSoftwareRender = false;
         }
 
@@ -159,6 +161,15 @@ namespace Battlelogium.Core
             get
             {
                 return this.useSoftwareRender;
+            }
+        }
+
+        /// <summary>Whether to start or handle Origin</summary>
+        public bool RightClickDrag
+        {
+            get
+            {
+                return this.rightClickDrag;
             }
         }
 
