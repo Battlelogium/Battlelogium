@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Battlelogium.ThirdParty.Animator;
 using System.Windows.Media;
+using System.Windows.Shell;
 
 namespace Battlelogium.Core.UI
 {
@@ -32,11 +33,13 @@ namespace Battlelogium.Core.UI
             switch (noBorder)
             {
                 case true:
-                    //this.AllowsTransparency = true;
-                    this.WindowStyle = WindowStyle.None;
-                    this.ResizeMode = ResizeMode.NoResize;
-                    this.BorderBrush = new LinearGradientBrush(Color.FromRgb(128, 128, 128), Color.FromRgb(208, 208, 208), 90);
-                    this.BorderThickness = new Thickness(1D);
+                    this.Loaded += delegate
+                    {
+                        var chrome = new WindowChrome();
+                        chrome.CaptionHeight = 15D;
+                        chrome.UseAeroCaptionButtons = true;
+                        WindowChrome.SetWindowChrome(this, chrome);
+                    };
                     break;
                 case false:
                     this.WindowStyle = WindowStyle.SingleBorderWindow;
@@ -44,7 +47,7 @@ namespace Battlelogium.Core.UI
                     break;
             }
 
-            this.RightClickDrag();
+          //  this.RightClickDrag();
             this.Width = windowWidth;
             this.Height = windowHeight;
         }

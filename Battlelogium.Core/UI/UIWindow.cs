@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Battlelogium.ThirdParty.Animator;
 using System.Windows.Media;
+using System.Windows.Shell;
 
 namespace Battlelogium.Core.UI
 {
@@ -25,7 +26,7 @@ namespace Battlelogium.Core.UI
 
         public UIWindow()
         {
-
+            
         }
     }
 }
