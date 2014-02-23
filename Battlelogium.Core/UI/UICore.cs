@@ -25,6 +25,7 @@ namespace Battlelogium.Core.UI
             this.mainWindow.Icon = BitmapFrame.Create(new Uri(@"pack://application:,,/images/bg_icon.ico")); //Set runtime icon to Battlelogium badged icon
 
             this.battlelog = this.mainWindow.battlelog;
+            this.battlelog.javascriptObject.InitJavascriptObject(this);
             this.config = this.mainWindow.config;
             this.mainWindow.mainGrid.Children.Add(battlelog.battlelogWebview);
             this.mainWindow.Title = "Battlelogium - " + battlelog.battlefieldName;
@@ -97,7 +98,6 @@ namespace Battlelogium.Core.UI
                         this.mainWindow.Dispatcher.Invoke(new Action(delegate { this.mainWindow.loadingIcon.Visibility = Visibility.Visible; }));
                         break;
                     case false:
-
                         this.mainWindow.Dispatcher.Invoke(new Action(delegate { this.mainWindow.loadingIcon.Visibility = Visibility.Collapsed; }));
                         break;
                 }

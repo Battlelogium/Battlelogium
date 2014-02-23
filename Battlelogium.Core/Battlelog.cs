@@ -22,9 +22,9 @@ namespace Battlelogium.Core
         public string originCode;
         public string javascriptURL;
         
-        public Battlelog(string battlelogURL, string battlefieldName, string battlefieldShortname, string executableName, string originCode, string javascriptPath, JavascriptObject battlelogiumApp)
+        public Battlelog(string battlelogURL, string battlefieldName, string battlefieldShortname, string executableName, string originCode, string javascriptPath)
         {
-            this.javascriptObject = battlelogiumApp;
+            this.javascriptObject = new JavascriptObject();
             this.javascriptURL = javascriptPath;
 
             this.battlelogURL = battlelogURL;
@@ -37,7 +37,7 @@ namespace Battlelogium.Core
 
         }
 
-        public Battlelog(string battlelogURL, string battlefieldName, string battlefieldShortname, string executableName, string originCode, string javascriptPath, UIWindow battlelogiumWindow) : this(battlelogURL, battlefieldName, battlefieldShortname, executableName, originCode , javascriptPath, new JavascriptObject(battlelogiumWindow)) { }
+        public Battlelog(string battlelogURL, string battlefieldName, string battlefieldShortname, string executableName, string originCode, string javascriptPath, UIWindow battlelogiumWindow) : this(battlelogURL, battlefieldName, battlefieldShortname, executableName, originCode , javascriptPath) { }
 
         protected void SetupWebview()
         {
@@ -49,8 +49,8 @@ namespace Battlelogium.Core
                 PackLoadingDisabled = true,
 #endif
                 CachePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "cache")
+                
             };
-
             CEF.Initialize(settings);
 
             BrowserSettings browserSettings = new BrowserSettings

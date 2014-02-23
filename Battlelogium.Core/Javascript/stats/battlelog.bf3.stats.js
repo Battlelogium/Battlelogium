@@ -23,7 +23,7 @@
                     e.css("margin-bottom", "10px");
                     clearInterval(checkExist);
                 }
-            }, 100);
+            }, 500);
        }
     }
 }
