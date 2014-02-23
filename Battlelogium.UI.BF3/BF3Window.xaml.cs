@@ -18,6 +18,7 @@ namespace Battlelogium.UI.BF3
             this.config = new Config();
             this.mainGrid = this.MainGrid;
             this.loadingIcon = this.LoadingIcon;
+            this.versionLabel = this.VersionLabel;
             this.uiCore = new UICore(this);
 
             

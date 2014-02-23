@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
@@ -22,11 +23,11 @@ namespace Battlelogium.Core.UI
         {
 
             this.mainWindow = mainWindow;
-            this.mainWindow.Icon = BitmapFrame.Create(new Uri(@"pack://application:,,/images/bg_icon.ico")); //Set runtime icon to Battlelogium badged icon
-
             this.battlelog = this.mainWindow.battlelog;
             this.battlelog.javascriptObject.InitJavascriptObject(this);
             this.config = this.mainWindow.config;
+            this.mainWindow.Icon = BitmapFrame.Create(new Uri(@"pack://application:,,/images/bg_icon.ico")); //Set runtime icon to Battlelogium badged icon
+            this.mainWindow.versionLabel.Content = "Battlelogium " + Assembly.GetEntryAssembly().GetName().Version.ToString();
             this.mainWindow.mainGrid.Children.Add(battlelog.battlelogWebview);
             this.mainWindow.Title = "Battlelogium - " + battlelog.battlefieldName;
             this.mainWindow.Closed += mainWindow_Closed;

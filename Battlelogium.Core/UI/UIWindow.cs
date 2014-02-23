@@ -21,7 +21,7 @@ namespace Battlelogium.Core.UI
         public UICore uiCore;
      
         public Grid mainGrid;
-
+        public Label versionLabel;
         public UIWindow()
         {
           
