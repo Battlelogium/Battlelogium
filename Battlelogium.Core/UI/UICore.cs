@@ -35,13 +35,13 @@ namespace Battlelogium.Core.UI
                 this.managedOrigin.StartOrigin();
             }
 
-            switch (this.config.WindowedMode)
+            switch (this.config.FullscreenMode)
             {
                 case true:
-                    this.mainWindow.SetWindowed();
+                    this.mainWindow.SetFullScreen();
                     break;
                 case false:
-                    this.mainWindow.SetFullScreen();
+                    this.mainWindow.SetWindowed();
                     break;
             }
 

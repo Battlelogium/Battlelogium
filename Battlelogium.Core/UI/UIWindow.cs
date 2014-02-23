@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Battlelogium.Core.Utilities;
 
 namespace Battlelogium.Core.UI
 {
@@ -21,6 +22,8 @@ namespace Battlelogium.Core.UI
 
         public UIWindow()
         {
+            this.SourceInitialized += (s, e) => this.HideWindowButtons();
+
         }
 
        

@@ -16,7 +16,7 @@ namespace Battlelogium.Core
         private bool directToCampaign;
         private readonly int waitTimeToKillOrigin;
         private readonly bool checkUpdates;
-        private readonly bool windowedMode;
+        private readonly bool fullscreenMode;
         private readonly bool startMaximized;
         private readonly bool manageOrigin; 
         private readonly int windowHeight;
@@ -36,7 +36,7 @@ namespace Battlelogium.Core
             if (!bool.TryParse(config.GetValueOrDefault("directToCampaign"), out directToCampaign)) directToCampaign = false;
             if (!bool.TryParse(config.GetValueOrDefault("checkUpdates"), out checkUpdates)) checkUpdates = true;
             if (!int.TryParse(config.GetValueOrDefault("waitTimeToKillOrigin"), out waitTimeToKillOrigin)) waitTimeToKillOrigin = 10;
-            if (!bool.TryParse(config.GetValueOrDefault("windowedMode"), out windowedMode)) windowedMode = false;
+            if (!bool.TryParse(config.GetValueOrDefault("fullscreenMode"), out fullscreenMode)) fullscreenMode = false;
             if (!bool.TryParse(config.GetValueOrDefault("startMaximized"), out startMaximized)) startMaximized = false;
             if (!bool.TryParse(config.GetValueOrDefault("manageOrigin"), out manageOrigin)) manageOrigin = true;
             
@@ -56,7 +56,7 @@ namespace Battlelogium.Core
             configBuilder.AppendLine("Configuration Dump");
             configBuilder.AppendLine("DirectToCampaign = " + DirectToCampaign.ToString());
             configBuilder.AppendLine("WaitTimeToKillOrigin = " + WaitTimeToKillOrigin.ToString());
-            configBuilder.AppendLine("WindowedMode = " + WindowedMode.ToString());
+            configBuilder.AppendLine("FullscreenMode = " + fullscreenMode.ToString());
             configBuilder.AppendLine("StatMaximized = " + StartMaximized.ToString());
             configBuilder.AppendLine("WindowHeight = " + WindowHeight.ToString());
             configBuilder.AppendLine("WindowWidth = " + WindowWidth.ToString());
@@ -102,11 +102,11 @@ namespace Battlelogium.Core
         }
 
         /// <summary>Whether to start Battlelogium in SetWindowed Mode</summary>
-        public bool WindowedMode
+        public bool FullscreenMode
         {
             get
             {
-                return this.windowedMode;
+                return this.fullscreenMode;
             }
         }
 

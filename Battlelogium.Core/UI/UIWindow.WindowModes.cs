@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Shell;
+using Battlelogium.Core.Utilities;
 
 namespace Battlelogium.Core.UI
 {
@@ -15,7 +16,7 @@ namespace Battlelogium.Core.UI
         {
             this.IsFullscreen = false;
             this.WindowStyle = WindowStyle.SingleBorderWindow;
-            this.ResizeMode = ResizeMode.CanResizeWithGrip;
+            this.ResizeMode = ResizeMode.CanResize;
             switch (maximizedWindow)
             {
                 case true:
@@ -28,7 +29,7 @@ namespace Battlelogium.Core.UI
             if (noBorder)
             {
                 var chrome = new WindowChrome();
-                chrome.CaptionHeight = 15D;
+                chrome.CaptionHeight = 14D;
                 chrome.UseAeroCaptionButtons = true;
                 switch (this.IsLoaded)
                 {
@@ -39,6 +40,7 @@ namespace Battlelogium.Core.UI
                         this.Loaded += (s, e) => WindowChrome.SetWindowChrome(this, chrome);
                         break;
                 }
+               
             }
             if (rightClickDrag)
             {
