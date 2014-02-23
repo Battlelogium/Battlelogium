@@ -3,12 +3,26 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Management;
 using System.Runtime.InteropServices;
+using System.Drawing;
 
 
 namespace Battlelogium.Core.Utilities
 {
     public class ProcessTools
     {
+        [DllImport("user32.dll")]
+        private static extern int SendMessage(IntPtr hwnd, int message, int wParam, IntPtr lParam);
+
+        private const int WM_SETICON = 0x80;
+        private const int ICON_SMALL = 0;
+        private const int ICON_BIG = 1;
+
+        public static void SetWindowIcon(IntPtr handle, Icon icon)
+        {
+            ProcessTools.SendMessage(handle, WM_SETICON, ICON_BIG, icon.Handle);
+            ProcessTools.SendMessage(handle, WM_SETICON, ICON_SMALL, icon.Handle);
+        }
+
         public static void CreateOrphanedProcess(string path, string args)
         {
             string commandLine = @"""" + path + @""" " + args;
@@ -38,7 +52,10 @@ namespace Battlelogium.Core.Utilities
                 }
                 else
                 {
-                    process.Kill();
+                    if (!process.HasExited)
+                    {
+                        process.Kill();
+                    }
                 }
             }
             catch (Exception)

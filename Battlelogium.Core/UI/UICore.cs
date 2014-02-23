@@ -13,10 +13,10 @@ namespace Battlelogium.Core.UI
     public class UICore
     {
 
-        Origin managedOrigin;
-        UIWindow mainWindow;
-        Config config;
-        Battlelog battlelog;
+        public Origin managedOrigin;
+        public UIWindow mainWindow;
+        public Config config;
+        public Battlelog battlelog;
 
         public UICore(UIWindow mainWindow)
         {

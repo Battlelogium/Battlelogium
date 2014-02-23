@@ -33,17 +33,21 @@ namespace Battlelogium.Core
             this.executableName = executableName;
             this.originCode = originCode;
 
-            this.SetupWebview(true); //we're debugging.
+            this.SetupWebview(); 
 
         }
 
         public Battlelog(string battlelogURL, string battlefieldName, string battlefieldShortname, string executableName, string originCode, string javascriptPath, UIWindow battlelogiumWindow) : this(battlelogURL, battlefieldName, battlefieldShortname, executableName, originCode , javascriptPath, new JavascriptObject(battlelogiumWindow)) { }
 
-        protected void SetupWebview(bool debug=false)
+        protected void SetupWebview()
         {
             Settings settings = new Settings
             {
-                PackLoadingDisabled = !debug,
+#if DEBUG
+                PackLoadingDisabled = false,
+#else
+                PackLoadingDisabled = true,
+#endif
                 CachePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "cache")
             };
 
@@ -53,14 +57,16 @@ namespace Battlelogium.Core
             {
                 FileAccessFromFileUrlsAllowed = true,
                 UniversalAccessFromFileUrlsAllowed = true,
-                DeveloperToolsDisabled = !debug,
+#if DEBUG
+                DeveloperToolsDisabled = false,
+#else
+                DeveloperToolsDisabled = true,
+#endif
                 UserStyleSheetEnabled = true,
                 //UserStyleSheetLocation = "data:text/css;charset=utf-8;base64,Ojotd2Via2l0LXNjcm9sbGJhcnt2aXNpYmlsaXR5OmhpZGRlbn0NCiNjb21tdW5pdHktYmFyIC5vdXRlcmFycm93e2Rpc3BsYXk6bm9uZX0="
                 UserStyleSheetLocation = "data:text/css;charset=utf-8;base64,I2NvbW11bml0eS1iYXIgLm91dGVyYXJyb3d7ZGlzcGxheTpub25lfQ0KI2NvbW11bml0eS1iYXJ7cGFkZGluZzo1cHggMCFpbXBvcnRhbnR9DQo6Oi13ZWJraXQtc2Nyb2xsYmFye3dpZHRoOjZweDtoZWlnaHQ6NnB4O2JhY2tncm91bmQ6cmdiYSgxOSwyMiwyNiwwLjQpfQ0KOjotd2Via2l0LXNjcm9sbGJhci10cmFja3tiYWNrZ3JvdW5kOnJnYmEoMCwwLDAsMC4xKX0NCjo6LXdlYmtpdC1zY3JvbGxiYXItdGh1bWJ7YmFja2dyb3VuZDpyZ2JhKDAsMCwwLDAuMyl9DQo6Oi13ZWJraXQtc2Nyb2xsYmFyLXRodW1iOmhvdmVye2JhY2tncm91bmQ6cmdiYSgwLDAsMCwwLjQpfQ0KOjotd2Via2l0LXNjcm9sbGJhci10aHVtYjphY3RpdmV7YmFja2dyb3VuZDpyZ2JhKDAsMCwwLC42KX0=",
-                /* UserStyleSheetLocation is the following data encoded in utf8 base64 data URI
-                 * ::-webkit-scrollbar{visibility:hidden}
-                 * #community-bar .outerarrow{display:none}
-                 */
+                /* UserStyleSheetLocation is the data in userstylesheet.css minified and encoded in utf8 base64 data URI*/
+
 
             };           
             this.battlelogWebview = new WebView(this.battlelogURL, browserSettings);
