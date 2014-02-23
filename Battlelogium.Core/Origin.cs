@@ -4,6 +4,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
+using System.Drawing;
 namespace Battlelogium.Core
 {
     /// <summary>
@@ -14,8 +15,9 @@ namespace Battlelogium.Core
         string originPath;
         string commandLineOptions;
         bool battlelogConnection;
-        Process originProcess;
         bool restartOrigin;
+
+        public Process originProcess;
 
         public delegate void OriginCloseEvent(object sender, OriginCloseEventArgs e);
         public event OriginCloseEvent OriginClose;
@@ -44,6 +46,7 @@ namespace Battlelogium.Core
                 this.restartOrigin = true;
             }
             this.originProcess = Process.Start(originProcessInfo);
+
         }
 
         public static bool OriginRunning()

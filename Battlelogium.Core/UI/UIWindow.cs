@@ -11,13 +11,15 @@ namespace Battlelogium.Core.UI
     /// </summary>
     public partial class UIWindow : Window
     {
-        public MouseButtonEventHandler rightDragBtnDown;
-        public MouseEventHandler rightDragMove;
+        private MouseButtonEventHandler rightDragBtnDown;
+        private MouseEventHandler rightDragMove;
 
         public Battlelog battlelog;
+        public Config config;
+
         public Animator loadingIcon;
         public UICore uiCore;
-        public Config config;
+     
         public Grid mainGrid;
 
         public UIWindow()
