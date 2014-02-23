@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Battlelogium.Core.Utilities;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.IO;
 using System.Text.RegularExpressions;
-using Battlelogium.Core.Utilities;
 
 
 namespace Battlelogium.Core
@@ -17,30 +16,35 @@ namespace Battlelogium.Core
         private bool directToCampaign;
         private readonly int waitTimeToKillOrigin;
         private readonly bool checkUpdates;
-        private readonly bool windowedMode;
+        private readonly bool fullscreenMode;
         private readonly bool startMaximized;
-        private readonly bool handleOrigin; 
+        private readonly bool manageOrigin; 
         private readonly int windowHeight;
         private readonly int windowWidth;
         private readonly bool noBorder;
         private readonly bool useSoftwareRender;
+        private readonly bool rightClickDrag;
         private readonly string configFileName;
+
         #endregion
 
         public Config(string configFileName){
 
             this.configFileName = configFileName;
             Dictionary<string, string> config = GetConfigurationData();
+
             if (!bool.TryParse(config.GetValueOrDefault("directToCampaign"), out directToCampaign)) directToCampaign = false;
             if (!bool.TryParse(config.GetValueOrDefault("checkUpdates"), out checkUpdates)) checkUpdates = true;
             if (!int.TryParse(config.GetValueOrDefault("waitTimeToKillOrigin"), out waitTimeToKillOrigin)) waitTimeToKillOrigin = 10;
-            if (!bool.TryParse(config.GetValueOrDefault("windowedMode"), out windowedMode)) windowedMode = false;
+            if (!bool.TryParse(config.GetValueOrDefault("fullscreenMode"), out fullscreenMode)) fullscreenMode = false;
             if (!bool.TryParse(config.GetValueOrDefault("startMaximized"), out startMaximized)) startMaximized = false;
+            if (!bool.TryParse(config.GetValueOrDefault("manageOrigin"), out manageOrigin)) manageOrigin = true;
+            
             if (!int.TryParse(config.GetValueOrDefault("windowHeight"), out windowHeight)) windowHeight = 1280;
             if (!int.TryParse(config.GetValueOrDefault("windowWidth"), out windowWidth)) windowWidth = 720;
-            if (!bool.TryParse(config.GetValueOrDefault("noBorder"), out noBorder)) noBorder = false;
+            if (!bool.TryParse(config.GetValueOrDefault("noBorder"), out noBorder)) noBorder = true;
+            if (!bool.TryParse(config.GetValueOrDefault("rightClickDrag"), out rightClickDrag)) rightClickDrag = false;
             if (!bool.TryParse(config.GetValueOrDefault("useSoftwareRender"), out useSoftwareRender)) useSoftwareRender = false;
-            if (!bool.TryParse(config.GetValueOrDefault("handleOrigin"), out handleOrigin)) handleOrigin = true;
         }
 
         public Config() : this("config.ini") { }
@@ -52,11 +56,11 @@ namespace Battlelogium.Core
             configBuilder.AppendLine("Configuration Dump");
             configBuilder.AppendLine("DirectToCampaign = " + DirectToCampaign.ToString());
             configBuilder.AppendLine("WaitTimeToKillOrigin = " + WaitTimeToKillOrigin.ToString());
-            configBuilder.AppendLine("WindowedMode = " + WindowedMode.ToString());
+            configBuilder.AppendLine("FullscreenMode = " + fullscreenMode.ToString());
             configBuilder.AppendLine("StatMaximized = " + StartMaximized.ToString());
             configBuilder.AppendLine("WindowHeight = " + WindowHeight.ToString());
             configBuilder.AppendLine("WindowWidth = " + WindowWidth.ToString());
-            configBuilder.AppendLine("HandleOrigin = " + HandleOrigin.ToString());
+            configBuilder.AppendLine("manageOrigin = " + manageOrigin.ToString());
 
             return configBuilder.ToString();
         }
@@ -98,11 +102,11 @@ namespace Battlelogium.Core
         }
 
         /// <summary>Whether to start Battlelogium in SetWindowed Mode</summary>
-        public bool WindowedMode
+        public bool FullscreenMode
         {
             get
             {
-                return this.windowedMode;
+                return this.fullscreenMode;
             }
         }
 
@@ -161,11 +165,20 @@ namespace Battlelogium.Core
         }
 
         /// <summary>Whether to start or handle Origin</summary>
-        public bool HandleOrigin
+        public bool RightClickDrag
         {
             get
             {
-                return this.handleOrigin;
+                return this.rightClickDrag;
+            }
+        }
+
+        /// <summary>Whether to start or handle Origin</summary>
+        public bool ManageOrigin
+        {
+            get
+            {
+                return this.manageOrigin;
             }
         }
 

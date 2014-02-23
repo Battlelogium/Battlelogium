@@ -17,6 +17,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Battlelogium.UI.BF4", "Battlelogium.UI.BF4\Battlelogium.UI.BF4.csproj", "{CF783500-DBAC-4EB7-BD14-DFB70154DD2E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{176261DD-A2B8-4F9B-B188-1194CF0D931E}"
+	ProjectSection(SolutionItems) = preProject
+		SharedAssemblyInfo.cs = SharedAssemblyInfo.cs
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Battlelogium.ThirdParty.Animator", "Battlelogium.ThirdParty.Animator\Battlelogium.ThirdParty.Animator.csproj", "{FB19B412-DB0A-42C8-9123-4FF3BB2F17E7}"
 EndProject

@@ -46,6 +46,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
     <Reference Include="System.Management" />
     <Reference Include="System.Net" />
     <Reference Include="System.Windows.Forms" />
@@ -58,10 +60,18 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Battlelog.cs" />
     <Compile Include="UI\UIWindow.cs" />
+    <Compile Include="UI\UIWindow.DragHandler.cs">
+      <DependentUpon>UIWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\UIWindow.WindowModes.cs">
+      <DependentUpon>UIWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Config.cs" />
-    <Compile Include="UI\DragHandler.cs" />
     <Compile Include="UI\UICore.cs" />
     <Compile Include="Javascript\JavascriptObject.cs" />
     <Compile Include="Origin.cs" />

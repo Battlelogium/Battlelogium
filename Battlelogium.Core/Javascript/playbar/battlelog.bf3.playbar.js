@@ -45,7 +45,7 @@
         }
 
         if ($('.tooltip').find('.tooltip-body:contains("Loading")').length > 0) {
-            $('.tooltip').find('.tooltip-body:contains("Loading")').html("");
+            $('.tooltip').find('.tooltip-body:contains("Loading")').parent().remove(); //Remove the tooltips
             $('#btnQuickMatchServerBrowser').load();
             $('#btnQuickMatchBig').load();
         }
@@ -57,7 +57,6 @@
         if ($('#btnCoOp').length == 0) {
             var btnCoOp = $("button[data-track='actionbar.coop']")
             btnCoOp.attr('id', 'btnCoOp');
-            btnCoOp.attr('data-tooltip', '');
             btnCoOp.html("<p>CO-OP</p>");
         }
 
@@ -65,7 +64,6 @@
         if ($('#btnCampaign').length == 0) {
             var btnCampaign = $("button[data-track='actionbar.campaign']")
             btnCampaign.attr('id', 'btnCampaign')
-            btnCampaign.attr('data-tooltip', '');
             btnCampaign.html("<p>CAMPAIGN</p>");
         }
     }

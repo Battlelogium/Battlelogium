@@ -1,7 +1,26 @@
-﻿/*Below is the decoded BrowserSettings.UserStyleSheetLocation data URI*/
-/*data:text/plain;charset=utf-8;base64,Ojotd2Via2l0LXNjcm9sbGJhcnt2aXNpYmlsaXR5OmhpZGRlbn0NCiNjb21tdW5pdHktYmFyIC5vdXRlcmFycm93e2Rpc3BsYXk6bm9uZX0=*/
-/*Remove comments before encoding to utf8-base64*/
+﻿/*Below is the decoded UserStyleSheetLocation*/
+/*Minify CSS before encoding*/
 
-::-webkit-scrollbar{visibility:hidden} /*Remove scrollbar*/
-#community-bar .outerarrow{display:none} /*Remove game switching arrow*/
-
+#community-bar .outerarrow {
+    display:  none /*Remove game switching arrow*/
+}
+#community-bar {
+    padding: 5px 0 !important; /*Give some space for hidden caption bar*/
+}
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background:  rgba(19,22,26,0.4);
+}
+::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.1);
+}
+::-webkit-scrollbar-thumb{
+  background: rgba(0,0,0,0.3);
+}
+::-webkit-scrollbar-thumb:hover{
+	background: rgba(0,0,0,0.4);
+}
+::-webkit-scrollbar-thumb:active{
+	background: rgba(0,0,0,.6);
+}

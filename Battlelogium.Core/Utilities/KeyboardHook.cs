@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace Battlelogium.Core.Utilities
 {
    public sealed class KeyboardHook : IDisposable
-{
+    {
     // Registers a hot key with Windows.
     [DllImport("user32.dll")]
     private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);

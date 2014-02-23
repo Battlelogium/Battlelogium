@@ -1,30 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Battlelogium.ThirdParty.Animator;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Battlelogium.ThirdParty.Animator;
+using Battlelogium.Core.Utilities;
 
 namespace Battlelogium.Core.UI
 {
-    public class UIWindow : Window
+    /// <summary>
+    /// Provides methods that interact with the Window only, rather than the user interface as a whole.
+    /// </summary>
+    public partial class UIWindow : Window
     {
         public MouseButtonEventHandler rightDragBtnDown;
         public MouseEventHandler rightDragMove;
 
-
         public Battlelog battlelog;
         public Animator loadingIcon;
-        public UICore process;
+        public UICore uiCore;
         public Config config;
         public Grid mainGrid;
 
         public UIWindow()
         {
+          
 
         }
+
+       
     }
 }

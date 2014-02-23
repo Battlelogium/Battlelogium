@@ -22,12 +22,11 @@ namespace Battlelogium.Overlay
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         bool hide = true;
+        private Texture2D background;
+        private SpriteFont font;
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool ShowWindow(IntPtr hWnd, ShowWindowCommands nCmdShow);
-
-        [DllImport("steam_api.dll")]
-        static extern bool SteamAPI_Init();
 
         public Game1()
             : base()
@@ -47,11 +46,16 @@ namespace Battlelogium.Overlay
             // TODO: Add your initialization logic here
 
             base.Initialize();
-            SteamAPI_Init();
+
             hook.KeyPressed += hook_KeyPressed;
             hook.RegisterHotKey(ModifierKeys.Shift , System.Windows.Forms.Keys.F2);
             base.IsMouseVisible = true;
             base.Window.IsBorderless = true;
+            var screen = System.Windows.Forms.Screen.AllScreens[0];
+            base.Window.Position = new Point(screen.Bounds.X, screen.Bounds.Y);
+            graphics.PreferredBackBufferWidth = screen.Bounds.Width;
+            graphics.PreferredBackBufferHeight = screen.Bounds.Height;
+            graphics.ApplyChanges();
             
         }
 
@@ -60,7 +64,7 @@ namespace Battlelogium.Overlay
             switch (hide)
             {
                 case true:
-                    ShowWindow(base.Window.Handle, ShowWindowCommands.Restore);
+                    ShowWindow(base.Window.Handle, ShowWindowCommands.Maximize);
                     hide = false;
                     break;
                 case false:
@@ -79,6 +83,7 @@ namespace Battlelogium.Overlay
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            background = Content.Load<Texture2D>("background");
 
             // TODO: use this.Content to load your game content here
         }
@@ -113,11 +118,15 @@ namespace Battlelogium.Overlay
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.LightGray);
 
             // TODO: Add your drawing code here
+            spriteBatch.Begin();
+            spriteBatch.Draw(background, new Rectangle(0, 0, 1920, 1080), Color.White);
 
+            spriteBatch.End();
             base.Draw(gameTime);
+
         }
     }
     enum ShowWindowCommands

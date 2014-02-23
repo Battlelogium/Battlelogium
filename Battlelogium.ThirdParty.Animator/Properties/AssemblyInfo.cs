@@ -7,12 +7,12 @@ using System.Windows;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Animator")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Battlelogium.ThirdParty.Animator")]
+[assembly: AssemblyDescription("http://www.codeproject.com/Tips/588253/GIF-Animation-in-WPF")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Animator")]
-[assembly: AssemblyCopyright("Copyright ©  2013")]
+[assembly: AssemblyCopyright("Copyright ©  Jawahar Suresh Babu 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
