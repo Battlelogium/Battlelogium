@@ -42,7 +42,7 @@ namespace Battlelogium.Core
             
             if (!int.TryParse(config.GetValueOrDefault("windowHeight"), out windowHeight)) windowHeight = 1280;
             if (!int.TryParse(config.GetValueOrDefault("windowWidth"), out windowWidth)) windowWidth = 720;
-            if (!bool.TryParse(config.GetValueOrDefault("noBorder"), out noBorder)) noBorder = false;
+            if (!bool.TryParse(config.GetValueOrDefault("noBorder"), out noBorder)) noBorder = true;
             if (!bool.TryParse(config.GetValueOrDefault("rightClickDrag"), out rightClickDrag)) rightClickDrag = false;
             if (!bool.TryParse(config.GetValueOrDefault("useSoftwareRender"), out useSoftwareRender)) useSoftwareRender = false;
         }

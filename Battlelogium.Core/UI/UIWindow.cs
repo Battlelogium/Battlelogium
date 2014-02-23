@@ -22,7 +22,7 @@ namespace Battlelogium.Core.UI
 
         public UIWindow()
         {
-            this.SourceInitialized += (s, e) => this.HideWindowButtons();
+          
 
         }
 

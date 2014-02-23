@@ -9,6 +9,7 @@
     <bl:UIWindow.Background>
         <ImageBrush ImageSource="images\background.png" Stretch="UniformToFill" AlignmentX="Center" AlignmentY="Bottom"/>
     </bl:UIWindow.Background>
+   
     <Grid x:Name="MainGrid">
         <Label Canvas.ZIndex="-1" Foreground="Gray" Content="Battlelogium Version" Height="28" HorizontalAlignment="Left" Margin="3,0,0,0" Name="VersionLabel" VerticalAlignment="Bottom" />
         <Button Content="debug" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="Button_Click" Panel.ZIndex="100"/>

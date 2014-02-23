@@ -17,6 +17,7 @@ namespace Battlelogium.Core.UI
             this.IsFullscreen = false;
             this.WindowStyle = WindowStyle.SingleBorderWindow;
             this.ResizeMode = ResizeMode.CanResize;
+            
             switch (maximizedWindow)
             {
                 case true:
