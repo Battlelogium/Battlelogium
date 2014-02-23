@@ -22,7 +22,7 @@ namespace Battlelogium.Core.UI
         {
 
             this.mainWindow = mainWindow;
-            this.mainWindow.Icon = BitmapFrame.Create(new Uri(@"pack://application:,,/images/bg_icon.ico", UriKind.RelativeOrAbsolute)); //Set runtime icon to Battlelogium badged icon
+            this.mainWindow.Icon = BitmapFrame.Create(new Uri(@"pack://application:,,/images/bg_icon.ico")); //Set runtime icon to Battlelogium badged icon
 
             this.battlelog = this.mainWindow.battlelog;
             this.config = this.mainWindow.config;
@@ -30,7 +30,10 @@ namespace Battlelogium.Core.UI
             this.mainWindow.Title = "Battlelogium - " + battlelog.battlefieldName;
             this.mainWindow.Closed += mainWindow_Closed;
             this.mainWindow.PreviewKeyDown += mainWindow_PreviewKeyDown;
+            this.mainWindow.PreviewMouseDown += (s, e) => { if (e.ChangedButton == MouseButton.Middle) e.Handled = true; }; //Disable opening link in new window with middle click
+            
             this.battlelog.battlelogWebview.PropertyChanged += battlelogWebview_IsLoading;
+            
 
             this.managedOrigin = new Origin();
 
@@ -88,16 +91,16 @@ namespace Battlelogium.Core.UI
         {
             if (e.PropertyName.Equals("IsLoading"))
             {
-                if (this.battlelog.battlelogWebview.IsLoading)
+                switch (this.battlelog.battlelogWebview.IsLoading)
                 {
-                    this.mainWindow.Dispatcher.Invoke(new Action(delegate { this.mainWindow.loadingIcon.Visibility = Visibility.Visible; }));
+                    case true:
+                        this.mainWindow.Dispatcher.Invoke(new Action(delegate { this.mainWindow.loadingIcon.Visibility = Visibility.Visible; }));
+                        break;
+                    case false:
 
+                        this.mainWindow.Dispatcher.Invoke(new Action(delegate { this.mainWindow.loadingIcon.Visibility = Visibility.Collapsed; }));
+                        break;
                 }
-                else
-                {
-                    this.mainWindow.Dispatcher.Invoke(new Action(delegate { this.mainWindow.loadingIcon.Visibility = Visibility.Collapsed; }));
-                }
-
             }
         }
     }
