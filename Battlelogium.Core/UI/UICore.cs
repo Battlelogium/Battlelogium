@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace Battlelogium.Core.UI
 {
@@ -19,7 +20,10 @@ namespace Battlelogium.Core.UI
 
         public UICore(UIWindow mainWindow)
         {
+
             this.mainWindow = mainWindow;
+            this.mainWindow.Icon = BitmapFrame.Create(new Uri(@"pack://application:,,/images/bg_icon.ico", UriKind.RelativeOrAbsolute)); //Set runtime icon to Battlelogium badged icon
+
             this.battlelog = this.mainWindow.battlelog;
             this.config = this.mainWindow.config;
             this.mainWindow.mainGrid.Children.Add(battlelog.battlelogWebview);

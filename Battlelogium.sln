@@ -29,6 +29,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "thirdparty", "thirdparty", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Battlelogium.Overlay", "Battlelogium.Overlay\Battlelogium.Overlay.csproj", "{EFA86101-628F-4F6A-AC72-CE67FB9B5CB3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{5077B054-EC66-45A5-98F7-BC39ABAE6F17}"
+	ProjectSection(SolutionItems) = preProject
+		Images\Battlelogium.Logo.Full.ai = Images\Battlelogium.Logo.Full.ai
+		Images\Battlelogium.Logo.Legacy.Block.psd = Images\Battlelogium.Logo.Legacy.Block.psd
+		Images\Battlelogium.Logo.Legacy.Inline.psd = Images\Battlelogium.Logo.Legacy.Inline.psd
+		Images\Battlelogium.Logo.Small.ai = Images\Battlelogium.Logo.Small.ai
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

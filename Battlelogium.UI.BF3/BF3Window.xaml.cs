@@ -1,6 +1,9 @@
 ﻿using Battlelogium.Core;
 using Battlelogium.Core.UI;
+using System;
 using System.Windows;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace Battlelogium.UI.BF3
 {
@@ -21,8 +24,9 @@ namespace Battlelogium.UI.BF3
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            this.battlelog.battlelogWebview.ShowDevTools();
+            //this.battlelog.battlelogWebview.ShowDevTools();
             //DragMove();
+
         }
     }
 }

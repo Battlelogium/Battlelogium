@@ -45,7 +45,7 @@
         }
 
         if ($('.tooltip').find('.tooltip-body:contains("Loading")').length > 0) {
-            $('.tooltip').find('.tooltip-body:contains("Loading")').parent().remove();
+            $('.tooltip').find('.tooltip-body:contains("Loading")').parent().remove(); //Remove the tooltips
             $('#btnQuickMatchServerBrowser').load();
             $('#btnQuickMatchBig').load();
         }
