@@ -5,6 +5,7 @@ using CefSharp.Wpf;
 using System;
 using System.IO;
 using System.Net;
+using System.ComponentModel;
 
 namespace Battlelogium.Core
 {
@@ -100,6 +101,23 @@ namespace Battlelogium.Core
     
         public static bool CheckBattlelogConnection()
         {
+            try
+            {
+                using (var client = new WebClient())
+                using (var stream = client.OpenRead("http://battlelog.battlefield.com/"))
+                {
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public static bool CheckBattlelogConnectionAsync()
+        {
+            //todo make this async
             try
             {
                 using (var client = new WebClient())

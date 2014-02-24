@@ -25,9 +25,6 @@ namespace Battlelogium.Core.UI
         public UIWindow()
         {
           
-
         }
-
-       
     }
 }

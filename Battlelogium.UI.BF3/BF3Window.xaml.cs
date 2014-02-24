@@ -20,8 +20,6 @@ namespace Battlelogium.UI.BF3
             this.loadingIcon = this.LoadingIcon;
             this.versionLabel = this.VersionLabel;
             this.uiCore = new UICore(this);
-
-            
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
