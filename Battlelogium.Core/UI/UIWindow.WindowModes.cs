@@ -10,52 +10,26 @@ namespace Battlelogium.Core.UI
     public partial class UIWindow
     {
         public bool IsFullscreen { get; private set; }
-        public void SetWindowed()
-        {
-            SetWindowed(this.config.StartMaximized, this.config.NoBorder, this.config.WindowWidth, this.config.WindowHeight, this.config.RightClickDrag);
-        }
 
-        public void SetWindowed(bool maximizedWindow, bool noBorder, int windowWidth, int windowHeight, bool rightClickDrag=false)
+        public void SetWindowed()
         {
             this.IsFullscreen = false;
             this.WindowStyle = WindowStyle.SingleBorderWindow;
             this.ResizeMode = ResizeMode.CanResize;
             
-            switch (maximizedWindow)
-            {
-                case true:
-                    this.WindowState = WindowState.Maximized;
-                    break;
-                case false:
-                    this.WindowState = WindowState.Normal;
-                    switch((windowWidth == 0 || windowHeight == 0)){
-                        case true:
-                        this.LoadBounds();
-                        break;
-                        case false:
-                        this.Height = windowHeight;
-                        this.Width = windowWidth;
-                        break;
-                    }
-                    break;
-            }
-            if (noBorder)
-            {
-                var chrome = new WindowChrome();
-                chrome.CaptionHeight = 14D;
-                chrome.UseAeroCaptionButtons = true;
-                switch (this.IsLoaded)
+                this.WindowState = WindowState.Normal;
+                switch ((this.config.WindowWidth == 0 || this.config.WindowHeight == 0))
                 {
                     case true:
-                        WindowChrome.SetWindowChrome(this, chrome);
-                        break;
+                    this.LoadBounds();
+                    break;
                     case false:
-                        this.Loaded += (s, e) => WindowChrome.SetWindowChrome(this, chrome);
-                        break;
-                }
-               
-            }
-            if (rightClickDrag)
+                    this.Height = this.config.WindowHeight;
+                    this.Width = this.config.WindowWidth;
+                    break;
+               }
+                  
+            if (this.config.RightClickDrag)
             {
                 if (!this.RightClickDragInitialized)
                 {
@@ -70,6 +44,7 @@ namespace Battlelogium.Core.UI
 
         public void SetFullScreen()
         {
+            this.SaveBounds(); //Save window bounds before setting fullscreen
             this.IsFullscreen = true;
             this.WindowState = WindowState.Maximized;
             this.WindowStyle = WindowStyle.None;
@@ -113,12 +88,6 @@ namespace Battlelogium.Core.UI
                 config.WriteConfig("fullscreenMode", "true");
                 return;
             }
-            if (this.WindowState == WindowState.Maximized)
-            {
-                config.WriteConfig("startMaximized", "true");
-                return;
-            }
-            config.WriteConfig("startMaximized", "false"); //Reset Fullscreen and Maximized
             config.WriteConfig("fullscreenMode", "false");
             IsolatedStorageFile storage = IsolatedStorageFile.GetUserStoreForAssembly();
             using (IsolatedStorageFileStream stream = new IsolatedStorageFileStream("windowbounds", FileMode.Create, storage))

@@ -102,18 +102,12 @@ namespace Battlelogium.Core
     
         public static bool CheckBattlelogConnection()
         {
-            try
-            {
-                using (var client = new WebClient())
-                using (var stream = client.OpenRead("http://battlelog.battlefield.com/"))
-                {
-                    return true;
-                }
-            }
-            catch
-            {
-                return false;
-            }
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://battlelog.com/");
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            response.Close();
+            if (response == null || response.StatusCode != HttpStatusCode.OK) return false;
+            else return true;
+
         }
 
         public async static Task<bool> CheckBattlelogConnectionAsync()

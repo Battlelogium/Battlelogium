@@ -47,8 +47,7 @@ namespace Battlelogium.Core.Javascript
 
         public void opensettings()
         {
-            UIConfigEditor configEditor = new UIConfigEditor(uiCore.config);
-            configEditor.ShowDialog();
+
         }
         /// <summary>
         /// Invoke a method on the UI thread

@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Battlelogium.Core.Utilities;
+using System.Windows.Shell;
 
 namespace Battlelogium.Core.UI
 {
@@ -24,6 +25,15 @@ namespace Battlelogium.Core.UI
         public Label versionLabel;
         public UIWindow()
         {
+            this.SourceInitialized += (s, e) => 
+            {
+                this.HideWindowButtons();
+                WindowChrome.SetWindowChrome(this, new WindowChrome()
+                {
+                    CaptionHeight = 14D,
+                    ResizeBorderThickness = new Thickness(3D)
+                });
+            };
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.Closing += (s, e) => this.SaveBounds();
         }

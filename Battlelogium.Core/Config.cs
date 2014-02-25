@@ -17,11 +17,9 @@ namespace Battlelogium.Core
         private readonly int waitTimeToKillOrigin;
         private readonly bool checkUpdates;
         private readonly bool fullscreenMode;
-        private readonly bool startMaximized;
         private readonly bool manageOrigin; 
         private readonly int windowHeight;
         private readonly int windowWidth;
-        private readonly bool noBorder;
         private readonly bool useSoftwareRender;
         private readonly bool rightClickDrag;
         private readonly string configFileName;
@@ -37,12 +35,10 @@ namespace Battlelogium.Core
             if (!bool.TryParse(config.GetValueOrDefault("checkUpdates"), out checkUpdates)) checkUpdates = true;
             if (!int.TryParse(config.GetValueOrDefault("waitTimeToKillOrigin"), out waitTimeToKillOrigin)) waitTimeToKillOrigin = 10;
             if (!bool.TryParse(config.GetValueOrDefault("fullscreenMode"), out fullscreenMode)) fullscreenMode = false;
-            if (!bool.TryParse(config.GetValueOrDefault("startMaximized"), out startMaximized)) startMaximized = false;
             if (!bool.TryParse(config.GetValueOrDefault("manageOrigin"), out manageOrigin)) manageOrigin = true;
             
             if (!int.TryParse(config.GetValueOrDefault("windowHeight"), out windowHeight)) windowHeight = 0;
             if (!int.TryParse(config.GetValueOrDefault("windowWidth"), out windowWidth)) windowWidth = 0;
-            if (!bool.TryParse(config.GetValueOrDefault("noBorder"), out noBorder)) noBorder = true;
             if (!bool.TryParse(config.GetValueOrDefault("rightClickDrag"), out rightClickDrag)) rightClickDrag = false;
             if (!bool.TryParse(config.GetValueOrDefault("useSoftwareRender"), out useSoftwareRender)) useSoftwareRender = false;
         }
@@ -57,7 +53,6 @@ namespace Battlelogium.Core
             configBuilder.AppendLine("DirectToCampaign = " + DirectToCampaign.ToString());
             configBuilder.AppendLine("WaitTimeToKillOrigin = " + WaitTimeToKillOrigin.ToString());
             configBuilder.AppendLine("FullscreenMode = " + fullscreenMode.ToString());
-            configBuilder.AppendLine("StatMaximized = " + StartMaximized.ToString());
             configBuilder.AppendLine("WindowHeight = " + WindowHeight.ToString());
             configBuilder.AppendLine("WindowWidth = " + WindowWidth.ToString());
             configBuilder.AppendLine("manageOrigin = " + manageOrigin.ToString());
@@ -109,15 +104,6 @@ namespace Battlelogium.Core
                 return this.fullscreenMode;
             }
         }
-
-        /// <summary>If we're in windowed mode, do we want to start Maximized?</summary>
-        public bool StartMaximized
-        {
-            get
-            {
-                return this.startMaximized;
-            }
-        }
         
         /// <summary>Whether to check for Updates?</summary>
         public bool CheckUpdates
@@ -143,15 +129,6 @@ namespace Battlelogium.Core
             get
             {
                 return this.windowWidth;
-            }
-        }
-
-        /// <summary>If we're in windowed mode, whether the window has a border</summary>
-        public bool NoBorder
-        {
-            get
-            {
-                return this.noBorder;
             }
         }
 

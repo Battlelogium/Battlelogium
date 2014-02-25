@@ -24,7 +24,7 @@ namespace Battlelogium.Core.UI
 
             this.mainWindow = mainWindow;
             this.battlelog = this.mainWindow.battlelog;
-            var check = Battlelog.CheckBattlelogConnectionAsync();
+            //this.CheckBattlelogConnection();
             this.battlelog.javascriptObject.InitJavascriptObject(this);
             this.config = this.mainWindow.config;
             this.mainWindow.Icon = BitmapFrame.Create(new Uri(@"pack://application:,,/images/bg_icon.ico")); //Set runtime icon to Battlelogium badged icon
@@ -61,6 +61,19 @@ namespace Battlelogium.Core.UI
             }
         }
 
+        private async void CheckBattlelogConnection()
+        {
+            bool connection = await Battlelog.CheckBattlelogConnectionAsync();
+            switch (connection)
+            {
+                case true:
+                    //Do something
+                    break;
+                case false:
+                    //Do something
+                    break;
+            }
+        }
         private void mainWindow_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.F5)

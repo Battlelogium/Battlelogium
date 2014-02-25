@@ -83,12 +83,6 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Battlelog.cs" />
-    <Compile Include="UIConfigEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UIConfigEditor.designer.cs">
-      <DependentUpon>UIConfigEditor.cs</DependentUpon>
-    </Compile>
     <Compile Include="UI\UIWindow.cs" />
     <Compile Include="UI\UIWindow.DragHandler.cs">
       <DependentUpon>UIWindow.cs</DependentUpon>
@@ -245,11 +239,6 @@
       <Project>{0c691505-4dab-4946-a1bb-1f6c682567eb}</Project>
       <Name>Battlelogium.ThirdParty.WPFCustomMessageBox</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="UIConfigEditor.resx">
-      <DependentUpon>UIConfigEditor.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
