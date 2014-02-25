@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Battlelogium.Core.Utilities;
+using Battlelogium.Core.Configuration;
 using System.Windows.Shell;
 
 namespace Battlelogium.Core.UI

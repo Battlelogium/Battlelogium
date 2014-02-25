@@ -7,7 +7,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 
 
-namespace Battlelogium.Core
+namespace Battlelogium.Core.Configuration
 {
     public class Config
     {
