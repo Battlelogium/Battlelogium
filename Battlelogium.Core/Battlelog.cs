@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.ComponentModel;
+using System.Threading.Tasks;
 
 namespace Battlelogium.Core
 {
@@ -115,21 +116,11 @@ namespace Battlelogium.Core
             }
         }
 
-        public static bool CheckBattlelogConnectionAsync()
+        public async static Task<bool> CheckBattlelogConnectionAsync()
         {
-            //todo make this async
-            try
-            {
-                using (var client = new WebClient())
-                using (var stream = client.OpenRead("http://battlelog.battlefield.com/"))
-                {
-                    return true;
-                }
-            }
-            catch
-            {
-                return false;
-            }
+           bool task = await Task.Run(() => { return CheckBattlelogConnection(); });
+
+           return task;
         }
 
         public void Dispose()

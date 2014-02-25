@@ -24,7 +24,8 @@ namespace Battlelogium.Core.UI
         public Label versionLabel;
         public UIWindow()
         {
-          
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            this.Closing += (s, e) => this.SaveBounds();
         }
     }
 }

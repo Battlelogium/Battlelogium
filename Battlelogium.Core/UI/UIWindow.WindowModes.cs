@@ -1,5 +1,8 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Shell;
+using System.IO.IsolatedStorage;
+using System.IO;
 using Battlelogium.Core.Utilities;
 
 namespace Battlelogium.Core.UI
@@ -25,6 +28,15 @@ namespace Battlelogium.Core.UI
                     break;
                 case false:
                     this.WindowState = WindowState.Normal;
+                    switch((windowWidth == 0 || windowHeight == 0)){
+                        case true:
+                        this.LoadBounds();
+                        break;
+                        case false:
+                        this.Height = windowHeight;
+                        this.Width = windowWidth;
+                        break;
+                    }
                     break;
             }
             if (noBorder)
@@ -54,8 +66,6 @@ namespace Battlelogium.Core.UI
                     this.EnableRightClickDrag();
                 }
             }
-            this.Width = windowWidth;
-            this.Height = windowHeight;
         }
 
         public void SetFullScreen()
@@ -70,6 +80,53 @@ namespace Battlelogium.Core.UI
             this.Hide();
             this.Show();
             this.Activate();
+        }
+
+        private void LoadBounds()
+        {
+            IsolatedStorageFile storage = IsolatedStorageFile.GetUserStoreForAssembly();
+            try
+            {
+                using (IsolatedStorageFileStream stream = new IsolatedStorageFileStream("windowbounds", FileMode.OpenOrCreate, storage))
+                using (StreamReader reader = new StreamReader(stream))
+                {
+
+                    // Read restore bounds value from file
+                    Rect restoreBounds = Rect.Parse(reader.ReadLine());
+                    this.Left = restoreBounds.Left;
+                    this.Top = restoreBounds.Top;
+                    this.Width = restoreBounds.Width;
+                    this.Height = restoreBounds.Height;
+                }
+            }
+            catch (Exception)
+            {
+                this.Height = 720;
+                this.Width = 1280;
+            }
+        }
+
+        private void SaveBounds()
+        {
+            if (this.IsFullscreen)
+            {
+                config.WriteConfig("fullscreenMode", "true");
+                return;
+            }
+            if (this.WindowState == WindowState.Maximized)
+            {
+                config.WriteConfig("startMaximized", "true");
+                return;
+            }
+            config.WriteConfig("startMaximized", "false"); //Reset Fullscreen and Maximized
+            config.WriteConfig("fullscreenMode", "false");
+            IsolatedStorageFile storage = IsolatedStorageFile.GetUserStoreForAssembly();
+            using (IsolatedStorageFileStream stream = new IsolatedStorageFileStream("windowbounds", FileMode.Create, storage))
+            using (StreamWriter writer = new StreamWriter(stream))
+            {
+                // Write restore bounds value to file
+                writer.WriteLine(this.RestoreBounds.ToString());
+            }
         }
     }
 }
