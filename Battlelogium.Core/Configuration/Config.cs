@@ -13,7 +13,6 @@ namespace Battlelogium.Core.Configuration
     {
 
         #region Fields
-        private bool directToCampaign;
         private readonly int waitTimeToKillOrigin;
         private readonly bool checkUpdates;
         private readonly bool fullscreenMode;
@@ -31,7 +30,6 @@ namespace Battlelogium.Core.Configuration
             this.configFileName = configFileName;
             Dictionary<string, string> config = GetConfigurationData();
 
-            if (!bool.TryParse(config.GetValueOrDefault("directToCampaign"), out directToCampaign)) directToCampaign = false;
             if (!bool.TryParse(config.GetValueOrDefault("checkUpdates"), out checkUpdates)) checkUpdates = true;
             if (!int.TryParse(config.GetValueOrDefault("waitTimeToKillOrigin"), out waitTimeToKillOrigin)) waitTimeToKillOrigin = 10;
             if (!bool.TryParse(config.GetValueOrDefault("fullscreenMode"), out fullscreenMode)) fullscreenMode = false;
@@ -74,18 +72,6 @@ namespace Battlelogium.Core.Configuration
         }
 
         #region Accessors
-        /// <summary>Whether to go directly to Campaign mode. Hidden option</summary>
-        public bool DirectToCampaign
-        {
-            get
-            {
-                return this.directToCampaign;
-            }
-            set
-            {
-                this.directToCampaign = value;
-            }
-        }
 
         /// <summary>How long to wait before closing Origin, to give it time to sync BF3's save data</summary>
         public int WaitTimeToKillOrigin

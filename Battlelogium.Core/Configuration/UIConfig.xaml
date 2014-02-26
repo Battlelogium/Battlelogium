@@ -3,8 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             Height="300" Width="500" WindowStyle="None" WindowStartupLocation="CenterOwner" 
-             Background="White">
+             Height="300" Width="600" WindowStyle="None" Title="Battlelogium - Edit Settings"
+             ResizeMode="NoResize" Background="White" WindowStartupLocation="CenterOwner" BorderBrush="DarkGray" BorderThickness="3">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
@@ -25,25 +25,25 @@
                 </LinearGradientBrush>
             </Grid.Background>
             <GroupBox BorderThickness="0" Foreground="Gray"  Grid.Column="0" Header="General Settings">
-                <UniformGrid Rows="4">
-                    <CheckBox Foreground="Gray" Content="CheckBox" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <CheckBox Foreground="Gray" Content="CheckBox" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <CheckBox Foreground="Gray" Content="CheckBox" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <CheckBox Foreground="Gray" Content="CheckBox" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <UniformGrid Rows="3">
+                    <CheckBox Content="Automatically check for updates" Foreground="Gray" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <CheckBox Content="Let Battlelogium manage Origin" Foreground="Gray" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <CheckBox Content="Enable experimental BF4 Steam Overlay" Foreground="Gray" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 </UniformGrid>
 
             </GroupBox>
             <GroupBox BorderThickness="0" Foreground="Gray" Grid.Column="1" Header="Window Settings">
-                <UniformGrid Rows="2">
-                    <CheckBox Foreground="Gray" Content="CheckBox" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <CheckBox Foreground="Gray" Content="CheckBox" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <UniformGrid Rows="3">
+                    <CheckBox Content="Start Battlelogium in fullscreen mode" Foreground="Gray" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <CheckBox Content="Enable old 'right-click drag' window moving" Foreground="Gray" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <CheckBox Content="Disable hardware acceleration" Foreground="Gray" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 </UniformGrid>
             </GroupBox>
         </Grid>
         
         <UniformGrid Grid.Row="2" Columns="2">
-            <Button></Button>
-            <Button></Button>
+            <Button x:Name="saveButton" Content="Save Settings"></Button>
+            <Button x:Name="discardButton" Content="Discard Settings"></Button>
         </UniformGrid>
     </Grid>
 </Window>

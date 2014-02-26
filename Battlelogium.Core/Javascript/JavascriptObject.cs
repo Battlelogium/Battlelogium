@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Threading;
+using System.Windows.Controls;
 using System.IO;
 using System.Diagnostics;
 using Battlelogium.Core.UI;
@@ -20,19 +21,12 @@ namespace Battlelogium.Core.Javascript
         }
         public void quit()
         {
-            this.syncInvoke(new Action(delegate
-            {
-                this.uiCore.mainWindow.Close();
-                
-            }));
+            this.syncInvoke(() => this.uiCore.mainWindow.Close());
         }
 
         public void minimize()
         {
-            this.syncInvoke(new Action(delegate
-            {
-                this.uiCore.mainWindow.WindowState = WindowState.Minimized;
-            }));
+            this.syncInvoke(() => this.uiCore.mainWindow.WindowState = WindowState.Minimized);
             
         }
 
@@ -48,7 +42,10 @@ namespace Battlelogium.Core.Javascript
 
         public void opensettings()
         {
-            new UIConfig().ShowDialog();
+            syncInvoke(() => {
+                var configEditor = new UIConfig(){Owner = uiCore.mainWindow};
+                configEditor.ShowDialog();
+            });
         }
         /// <summary>
         /// Invoke a method on the UI thread
