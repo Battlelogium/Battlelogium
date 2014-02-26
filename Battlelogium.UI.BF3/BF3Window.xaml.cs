@@ -6,7 +6,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Battlelogium.Core.Utilities;
 using Battlelogium.Core.Configuration;
-
+using Battlelogium.Core.Battlelog;
 namespace Battlelogium.UI.BF3
 {
 

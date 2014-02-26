@@ -1,7 +1,7 @@
 ﻿using Battlelogium.Core;
 using Battlelogium.Core.UI;
-
-namespace Battlelogium.UI
+using Battlelogium.Core.Battlelog;
+namespace Battlelogium.Core.Battlelog
 {
     public class Battlefield3 : Battlelog
     {

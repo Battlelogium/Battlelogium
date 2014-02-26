@@ -1,6 +1,7 @@
 ﻿using Battlelogium.Core;
 using Battlelogium.Core.UI;
 using Battlelogium.Core.Configuration;
+using Battlelogium.Core.Battlelog;
 using System.Windows;
 
 namespace Battlelogium.UI.BF4

@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using Battlelogium.Core;
 using Battlelogium.Core.UI;
-namespace Battlelogium.UI.BF4
+using Battlelogium.Core.Battlelog;
+namespace Battlelogium.Core.Battlelog
 {
     public class Battlefield4 : Battlelog
     {

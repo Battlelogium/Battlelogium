@@ -8,7 +8,7 @@ using System.Net;
 using System.ComponentModel;
 using System.Threading.Tasks;
 
-namespace Battlelogium.Core
+namespace Battlelogium.Core.Battlelog
 {
     public class Battlelog : IDisposable
     {
