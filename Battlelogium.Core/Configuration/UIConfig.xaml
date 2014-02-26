@@ -3,8 +3,47 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             Height="225" Width="400" WindowStyle="None" WindowStartupLocation="CenterOwner">
+             Height="300" Width="500" WindowStyle="None" WindowStartupLocation="CenterOwner" 
+             Background="White">
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="../logo.png"/>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="White" Offset="0"/>
+                    <GradientStop Color="LightGray" Offset="1"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+            <GroupBox BorderThickness="0" Foreground="Gray"  Grid.Column="0" Header="General Settings">
+                <UniformGrid Rows="4">
+                    <CheckBox Foreground="Gray" Content="CheckBox" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <CheckBox Foreground="Gray" Content="CheckBox" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <CheckBox Foreground="Gray" Content="CheckBox" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <CheckBox Foreground="Gray" Content="CheckBox" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                </UniformGrid>
+
+            </GroupBox>
+            <GroupBox BorderThickness="0" Foreground="Gray" Grid.Column="1" Header="Window Settings">
+                <UniformGrid Rows="2">
+                    <CheckBox Foreground="Gray" Content="CheckBox" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <CheckBox Foreground="Gray" Content="CheckBox" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                </UniformGrid>
+            </GroupBox>
+        </Grid>
+        
+        <UniformGrid Grid.Row="2" Columns="2">
+            <Button></Button>
+            <Button></Button>
+        </UniformGrid>
     </Grid>
 </Window>

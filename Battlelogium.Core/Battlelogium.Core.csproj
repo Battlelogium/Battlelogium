@@ -104,6 +104,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="logo.png" />
     <Content Include="Javascript\battlelog.bf3.inject.js">
       <Generator>VSMinifier</Generator>
       <LastGenOutput>battlelog.bf3.inject.min.js</LastGenOutput>
