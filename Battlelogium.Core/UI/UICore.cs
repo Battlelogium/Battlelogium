@@ -58,7 +58,7 @@ namespace Battlelogium.Core.UI
                     break;
             }
 
-            if (config.UseSoftwareRender)
+            if (config.DisableHardwareAccel)
             {
                 RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly;
             }

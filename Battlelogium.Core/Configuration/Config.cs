@@ -19,7 +19,7 @@ namespace Battlelogium.Core.Configuration
         private readonly bool manageOrigin; 
         private readonly int windowHeight;
         private readonly int windowWidth;
-        private readonly bool useSoftwareRender;
+        private readonly bool disableHardwareAccel;
         private readonly bool rightClickDrag;
         private readonly string configFileName;
 
@@ -38,7 +38,7 @@ namespace Battlelogium.Core.Configuration
             if (!int.TryParse(config.GetValueOrDefault("windowHeight"), out windowHeight)) windowHeight = 0;
             if (!int.TryParse(config.GetValueOrDefault("windowWidth"), out windowWidth)) windowWidth = 0;
             if (!bool.TryParse(config.GetValueOrDefault("rightClickDrag"), out rightClickDrag)) rightClickDrag = false;
-            if (!bool.TryParse(config.GetValueOrDefault("useSoftwareRender"), out useSoftwareRender)) useSoftwareRender = false;
+            if (!bool.TryParse(config.GetValueOrDefault("disableHardwareAccel"), out disableHardwareAccel)) disableHardwareAccel = false;
         }
 
         public Config() : this("config.ini") { }
@@ -48,13 +48,12 @@ namespace Battlelogium.Core.Configuration
             StringBuilder configBuilder = new StringBuilder();
             configBuilder.AppendLine(String.Empty);
             configBuilder.AppendLine("Configuration Dump");
-            configBuilder.AppendLine("DirectToCampaign = " + DirectToCampaign.ToString());
             configBuilder.AppendLine("WaitTimeToKillOrigin = " + WaitTimeToKillOrigin.ToString());
-            configBuilder.AppendLine("FullscreenMode = " + fullscreenMode.ToString());
+            configBuilder.AppendLine("FullscreenMode = " + FullscreenMode.ToString());
             configBuilder.AppendLine("WindowHeight = " + WindowHeight.ToString());
             configBuilder.AppendLine("WindowWidth = " + WindowWidth.ToString());
-            configBuilder.AppendLine("manageOrigin = " + manageOrigin.ToString());
-
+            configBuilder.AppendLine("ManageOrigin = " + ManageOrigin.ToString());
+            configBuilder.AppendLine("DisableHardwareAccel = " + DisableHardwareAccel.ToString());
             return configBuilder.ToString();
         }
 
@@ -119,11 +118,11 @@ namespace Battlelogium.Core.Configuration
         }
 
         /// <summary>Whether to use the software renderer</summary>
-        public bool UseSoftwareRender
+        public bool DisableHardwareAccel
         {
             get
             {
-                return this.useSoftwareRender;
+                return this.disableHardwareAccel;
             }
         }
 

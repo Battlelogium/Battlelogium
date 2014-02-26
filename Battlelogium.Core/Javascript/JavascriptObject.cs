@@ -43,8 +43,27 @@ namespace Battlelogium.Core.Javascript
         public void opensettings()
         {
             syncInvoke(() => {
-                var configEditor = new UIConfig(){Owner = uiCore.mainWindow};
-                configEditor.ShowDialog();
+                var configEditor = new UIConfig(uiCore.config){Owner = uiCore.mainWindow};
+                var overlay = new System.Windows.Shapes.Rectangle(){
+                    Fill = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 255, 255)),
+                    Stretch = System.Windows.Media.Stretch.Fill,
+                    Opacity = 0.5D
+                };
+                uiCore.mainWindow.mainGrid.Children.Add(overlay);
+                bool? result = configEditor.ShowDialog();
+                uiCore.mainWindow.mainGrid.Children.Remove(overlay);
+
+                switch (result)
+                {
+                    case true:
+                        uiCore.battlelog.battlelogWebview.ExecuteScript("base.showReceipt('Settings will be applied on next start')");
+                        break;
+                    case false:
+                        uiCore.battlelog.battlelogWebview.ExecuteScript("base.showReceipt('Settings were not changed', receiptTypes.ERROR)");
+                        break;
+                }
+                
+
             });
         }
         /// <summary>

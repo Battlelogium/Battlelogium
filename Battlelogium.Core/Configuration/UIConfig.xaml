@@ -26,24 +26,24 @@
             </Grid.Background>
             <GroupBox BorderThickness="0" Foreground="Gray"  Grid.Column="0" Header="General Settings">
                 <UniformGrid Rows="3">
-                    <CheckBox Content="Automatically check for updates" Foreground="Gray" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <CheckBox Content="Let Battlelogium manage Origin" Foreground="Gray" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <CheckBox Content="Enable experimental BF4 Steam Overlay" Foreground="Gray" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <CheckBox x:Name="checkUpdates_input" Content="Automatically check for updates" Foreground="Gray" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <CheckBox x:Name="manageOrigin_input" Content="Let Battlelogium manage Origin" Foreground="Gray" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <CheckBox x:Name="enableSteamOverlayBF4_input" Content="Enable experimental BF4 Steam Overlay" Foreground="Gray" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 </UniformGrid>
 
             </GroupBox>
             <GroupBox BorderThickness="0" Foreground="Gray" Grid.Column="1" Header="Window Settings">
                 <UniformGrid Rows="3">
-                    <CheckBox Content="Start Battlelogium in fullscreen mode" Foreground="Gray" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <CheckBox Content="Enable old 'right-click drag' window moving" Foreground="Gray" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <CheckBox Content="Disable hardware acceleration" Foreground="Gray" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <CheckBox x:Name="fullscreenMode_input" Content="Start Battlelogium in fullscreen mode" Foreground="Gray" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <CheckBox x:Name="rightClickDrag_input" Content="Enable old 'right-click drag' window moving" Foreground="Gray" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <CheckBox x:Name="disableHardwareAccel_input" Content="Disable hardware acceleration" Foreground="Gray" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 </UniformGrid>
             </GroupBox>
         </Grid>
         
         <UniformGrid Grid.Row="2" Columns="2">
-            <Button x:Name="saveButton" Content="Save Settings"></Button>
-            <Button x:Name="discardButton" Content="Discard Settings"></Button>
+            <Button x:Name="saveButton" Content="Save Settings" Click="saveButton_Click"></Button>
+            <Button x:Name="discardButton" Content="Discard Settings" Click="discardButton_Click"></Button>
         </UniformGrid>
     </Grid>
 </Window>
