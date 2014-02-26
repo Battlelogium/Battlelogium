@@ -4,6 +4,7 @@ using System.Windows.Threading;
 using System.IO;
 using System.Diagnostics;
 using Battlelogium.Core.UI;
+using Battlelogium.Core.Configuration;
 
 namespace Battlelogium.Core.Javascript
 {
@@ -47,7 +48,7 @@ namespace Battlelogium.Core.Javascript
 
         public void opensettings()
         {
-
+            new UIConfig().ShowDialog();
         }
         /// <summary>
         /// Invoke a method on the UI thread

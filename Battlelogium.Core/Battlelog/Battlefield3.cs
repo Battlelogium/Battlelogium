@@ -1,9 +1,8 @@
 ﻿using Battlelogium.Core;
 using Battlelogium.Core.UI;
-using Battlelogium.Core.Battlelog;
 namespace Battlelogium.Core.Battlelog
 {
-    public class Battlefield3 : Battlelog
+    public class Battlefield3 : BattlelogBase
     {
 #if DEBUG
         //static string jsUrl = "http://ron975.github.io/Battlelogium/Battlelogium.Core/Javascript/battlelog.bf3.inject.js";

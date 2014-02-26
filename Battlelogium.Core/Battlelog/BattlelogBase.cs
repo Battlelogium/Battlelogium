@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Battlelogium.Core.Battlelog
 {
-    public class Battlelog : IDisposable
+    public class BattlelogBase : IDisposable
     {
 
         public WebView battlelogWebview;
@@ -24,7 +24,7 @@ namespace Battlelogium.Core.Battlelog
         public string originCode;
         public string javascriptURL;
         
-        public Battlelog(string battlelogURL, string battlefieldName, string battlefieldShortname, string executableName, string originCode, string javascriptPath)
+        public BattlelogBase(string battlelogURL, string battlefieldName, string battlefieldShortname, string executableName, string originCode, string javascriptPath)
         {
             this.javascriptObject = new JavascriptObject();
             this.javascriptURL = javascriptPath;
@@ -39,7 +39,7 @@ namespace Battlelogium.Core.Battlelog
 
         }
 
-        public Battlelog(string battlelogURL, string battlefieldName, string battlefieldShortname, string executableName, string originCode, string javascriptPath, UIWindow battlelogiumWindow) : this(battlelogURL, battlefieldName, battlefieldShortname, executableName, originCode , javascriptPath) { }
+        public BattlelogBase(string battlelogURL, string battlefieldName, string battlefieldShortname, string executableName, string originCode, string javascriptPath, UIWindow battlelogiumWindow) : this(battlelogURL, battlefieldName, battlefieldShortname, executableName, originCode , javascriptPath) { }
 
         protected void SetupWebview()
         {

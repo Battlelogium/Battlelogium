@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using Battlelogium.Core;
 using Battlelogium.Core.UI;
-using Battlelogium.Core.Battlelog;
 namespace Battlelogium.Core.Battlelog
 {
-    public class Battlefield4 : Battlelog
+    public class Battlefield4 : BattlelogBase
     {
 #if DEBUG
         static string jsUrl = "http://localhost/battlelogium/battlelog.bf4.inject.js";

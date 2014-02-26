@@ -82,10 +82,13 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Battlelog.cs" />
+    <Compile Include="Battlelog\Battlefield3.cs" />
+    <Compile Include="Battlelog\Battlefield4.cs" />
+    <Compile Include="Battlelog\BattlelogBase.cs" />
     <Compile Include="Configuration\UIConfig.xaml.cs">
       <DependentUpon>UIConfig.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ManagedOrigin\OfflineOrigin.cs" />
     <Compile Include="UI\UIWindow.cs" />
     <Compile Include="UI\UIWindow.DragHandler.cs">
       <DependentUpon>UIWindow.cs</DependentUpon>
@@ -96,7 +99,7 @@
     <Compile Include="Configuration\Config.cs" />
     <Compile Include="UI\UICore.cs" />
     <Compile Include="Javascript\JavascriptObject.cs" />
-    <Compile Include="Origin.cs" />
+    <Compile Include="ManagedOrigin\Origin.cs" />
     <Compile Include="Utilities\Extensions.cs" />
     <Compile Include="Utilities\KeyboardHook.cs" />
     <Compile Include="Utilities\MessageBoxUtils.cs" />

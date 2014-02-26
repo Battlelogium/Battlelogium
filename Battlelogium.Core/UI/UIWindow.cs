@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Battlelogium.Core.Utilities;
 using Battlelogium.Core.Configuration;
+using Battlelogium.Core.Battlelog;
 using System.Windows.Shell;
 
 namespace Battlelogium.Core.UI
@@ -16,7 +17,7 @@ namespace Battlelogium.Core.UI
         private MouseButtonEventHandler rightDragBtnDown;
         private MouseEventHandler rightDragMove;
 
-        public Battlelog battlelog;
+        public BattlelogBase battlelog;
         public Config config;
 
         public Animator loadingIcon;

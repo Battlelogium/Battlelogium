@@ -5,7 +5,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Drawing;
-namespace Battlelogium.Core
+using Battlelogium.Core.Battlelog;
+namespace Battlelogium.Core.ManagedOrigin
 {
     /// <summary>
     /// Represents an instance of the Origin process
@@ -14,7 +15,6 @@ namespace Battlelogium.Core
     {
         string originPath;
         string commandLineOptions;
-        bool battlelogConnection;
         bool restartOrigin;
 
         public Process originProcess;
@@ -24,7 +24,6 @@ namespace Battlelogium.Core
         public Origin(string commandLineOptions)
         {
             this.commandLineOptions = commandLineOptions;
-            this.battlelogConnection = Battlelog.CheckBattlelogConnection();
             this.OriginClose += Origin_OriginClose;
         }
         public Origin() : this("/StartClientMinimized") { } //Minimized Origin by default

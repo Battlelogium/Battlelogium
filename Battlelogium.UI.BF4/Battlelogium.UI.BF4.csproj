@@ -78,7 +78,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Battlefield4.cs" />
     <Compile Include="BF4Window.xaml.cs">
       <DependentUpon>BF4Window.xaml</DependentUpon>
       <SubType>Code</SubType>

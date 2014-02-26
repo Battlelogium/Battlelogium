@@ -21,10 +21,9 @@ namespace Battlelogium.Core.Configuration
     /// </summary>
     public partial class UIConfig : Window
     {
-        public UIConfig(UIWindow parentWindow)
+        public UIConfig()
         {
             InitializeComponent();
-            this.Owner = parentWindow;
         }
     }
 }

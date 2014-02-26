@@ -6,6 +6,8 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Battlelogium.Core.Configuration;
+using Battlelogium.Core.Battlelog;
+using Battlelogium.Core.ManagedOrigin;
 
 namespace Battlelogium.Core.UI
 {
@@ -18,7 +20,7 @@ namespace Battlelogium.Core.UI
         public Origin managedOrigin;
         public UIWindow mainWindow;
         public Config config;
-        public Battlelog battlelog;
+        public BattlelogBase battlelog;
 
         public UICore(UIWindow mainWindow)
         {
@@ -64,7 +66,7 @@ namespace Battlelogium.Core.UI
 
         private async void CheckBattlelogConnection()
         {
-            bool connection = await Battlelog.CheckBattlelogConnectionAsync();
+            bool connection = await BattlelogBase.CheckBattlelogConnectionAsync();
             switch (connection)
             {
                 case true:
