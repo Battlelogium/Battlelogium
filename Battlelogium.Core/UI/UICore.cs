@@ -28,7 +28,9 @@ namespace Battlelogium.Core.UI
             this.mainWindow = mainWindow;
             this.battlelog = this.mainWindow.battlelog;
             //this.CheckBattlelogConnection();
+            this.battlelog.InitializeWebview();
             this.battlelog.javascriptObject.InitJavascriptObject(this);
+
             this.config = this.mainWindow.config;
             this.mainWindow.Icon = BitmapFrame.Create(new Uri(@"pack://application:,,/images/bg_icon.ico")); //Set runtime icon to Battlelogium badged icon
             this.mainWindow.versionLabel.Content = "Battlelogium " + Assembly.GetEntryAssembly().GetName().Version.ToString();

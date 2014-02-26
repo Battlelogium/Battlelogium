@@ -1,5 +1,6 @@
 ﻿using Battlelogium.Core.Javascript;
 using Battlelogium.Core.UI;
+using Battlelogium.Core.Utilities;
 using CefSharp;
 using CefSharp.Wpf;
 using System;
@@ -23,6 +24,8 @@ namespace Battlelogium.Core.Battlelog
         public string executableName;
         public string originCode;
         public string javascriptURL;
+
+        public bool IsWebviewInitialized { get; private set; }
         
         public BattlelogBase(string battlelogURL, string battlefieldName, string battlefieldShortname, string executableName, string originCode, string javascriptPath)
         {
@@ -35,13 +38,11 @@ namespace Battlelogium.Core.Battlelog
             this.executableName = executableName;
             this.originCode = originCode;
 
-            this.SetupWebview(); 
-
         }
 
         public BattlelogBase(string battlelogURL, string battlefieldName, string battlefieldShortname, string executableName, string originCode, string javascriptPath, UIWindow battlelogiumWindow) : this(battlelogURL, battlefieldName, battlefieldShortname, executableName, originCode , javascriptPath) { }
 
-        protected void SetupWebview()
+        public void InitializeWebview()
         {
             Settings settings = new Settings
             {
@@ -75,6 +76,7 @@ namespace Battlelogium.Core.Battlelog
             this.battlelogWebview.RegisterJsObject("app", javascriptObject);
             this.battlelogWebview.LoadCompleted += this.LoadCompleted;
             this.battlelogWebview.PropertyChanged += battlelogWebview_PropertyChanged;
+            this.IsWebviewInitialized = true;
         }
         
         private void battlelogWebview_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -120,6 +122,12 @@ namespace Battlelogium.Core.Battlelog
         public void Dispose()
         {
             throw new NotImplementedException(); //TODO implement Dispose properly
+        }
+
+        public ProcessStartWaiter ListenGame()
+        {
+            var waiter = new ProcessStartWaiter(this.executableName);
+            return waiter;
         }
 
     }
