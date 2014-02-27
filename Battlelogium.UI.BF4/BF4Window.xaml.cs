@@ -16,15 +16,10 @@ namespace Battlelogium.UI.BF4
             InitializeComponent();
             this.battlelog = new Battlefield4(); 
             this.config = new Config();
-            this.mainGrid = this.MainGrid;
-            this.loadingIcon = this.LoadingIcon;
-            this.versionLabel = this.VersionLabel;
+            this.mainGrid = this.Control.MainGrid;
+            this.loadingIcon = this.Control.LoadingIcon;
+            this.versionLabel = this.Control.VersionLabel;
             this.uiCore = new UICore(this);
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            this.battlelog.battlelogWebview.ShowDevTools();
         }
     }
 }

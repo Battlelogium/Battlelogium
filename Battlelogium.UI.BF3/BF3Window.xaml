@@ -10,11 +10,7 @@
     <bl:UIWindow.Background>
         <ImageBrush ImageSource="images\background.png" Stretch="UniformToFill" AlignmentX="Center" AlignmentY="Bottom"/>
     </bl:UIWindow.Background>
-   
-    <Grid x:Name="MainGrid">
-        <Label Canvas.ZIndex="-1" Foreground="Gray" Content="Battlelogium Version" Height="28" HorizontalAlignment="Left" Margin="3,0,0,0" Name="VersionLabel" VerticalAlignment="Bottom" />
-        <Button Content="debug" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="75" Click="Button_Click" Panel.ZIndex="100"/>
-        <ani:Animator Name="LoadingIcon" ImageSource="images\loadingsprite.png" Interval="0:0:0.045" HorizontalOffset="24" VerticalOffset="28" 
-                      Panel.ZIndex="110" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,20,20" Grid.Row="1" BorderThickness="0" />
-    </Grid>
+
+    <bl:UIWindowControl x:Name="Control" BackgroundImage="images\background.png" LoadingSprite="images\loadingsprite.png"></bl:UIWindowControl>
+
 </bl:UIWindow>
