@@ -101,8 +101,8 @@
     <Compile Include="UI\UICore.cs" />
     <Compile Include="Javascript\JavascriptObject.cs" />
     <Compile Include="ManagedOrigin\Origin.cs" />
-    <Compile Include="UI\UIWindowControl.xaml.cs">
-      <DependentUpon>UIWindowControl.xaml</DependentUpon>
+    <Compile Include="UI\UIControl.xaml.cs">
+      <DependentUpon>UIControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utilities\Extensions.cs" />
     <Compile Include="Utilities\KeyboardHook.cs" />
@@ -259,7 +259,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\UIWindowControl.xaml">
+    <Page Include="UI\UIControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -19,8 +19,8 @@ namespace Battlelogium.Core.UI
 
         public BattlelogBase battlelog;
         public Config config;
-        public UIWindowControl MainControl { get; protected set; }
 
+        public UIControl MainControl { get; protected set; }
         public UICore uiCore;
 
         public UIWindow()

@@ -11,6 +11,6 @@
         <ImageBrush ImageSource="images\background.png" Stretch="UniformToFill" AlignmentX="Center" AlignmentY="Bottom"/>
     </bl:UIWindow.Background>
 
-    <bl:UIWindowControl x:Name="mainControl" BackgroundImage="images\background.png" LoadingSprite="images\loadingsprite.png"></bl:UIWindowControl>
+    <bl:UIControl x:Name="mainControl" BackgroundImage="images\background.png" LoadingSprite="images\loadingsprite.png"></bl:UIControl>
 
 </bl:UIWindow>

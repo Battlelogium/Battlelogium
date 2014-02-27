@@ -19,7 +19,7 @@ namespace Battlelogium.Core.UI
     /// <summary>
     /// Interaction logic for UIWindowControl.xaml
     /// </summary>
-    public partial class UIWindowControl : UserControl
+    public partial class UIControl : UserControl
     {
         public ImageSource BackgroundImage { private get; set; }
         public ImageSource LoadingSprite { private get; set; }
@@ -27,7 +27,7 @@ namespace Battlelogium.Core.UI
         public Animator LoadingIcon { get { return this.loadingIcon; } }
         public Label VersionLabel { get { return this.versionLabel; } }
 
-        public UIWindowControl()
+        public UIControl()
         {
             InitializeComponent();
         }
