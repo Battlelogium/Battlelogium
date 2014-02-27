@@ -23,11 +23,11 @@ namespace Battlelogium.Core.Battlelog
         {
             ProcessStartWaiter waiter = new ProcessStartWaiter(this.executableName.Replace(".exe", ""));
             waiter.ProcessStart += (s, e) => this.GameStart(this, new BFGameEventArgs(this, e.Process));
-            waiter.ProcessStart += (s, e) => this.WaitForGameQuit(e.Process);
+            waiter.ProcessStart += (s, e) => this.WaitForGameQuitAsync(e.Process);
             waiter.ListenAsync();
         }
 
-        private async void WaitForGameQuit(Process gameProcess)
+        private async Task WaitForGameQuitAsync(Process gameProcess)
         {
             await Task.Run(() => gameProcess.WaitForExit());
             this.GameQuit(this, new BFGameEventArgs(this, gameProcess));

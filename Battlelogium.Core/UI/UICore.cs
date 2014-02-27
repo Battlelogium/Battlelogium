@@ -5,6 +5,7 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Threading.Tasks;
 using Battlelogium.Core.Configuration;
 using Battlelogium.Core.Battlelog;
 using Battlelogium.Core.ManagedOrigin;
@@ -66,7 +67,7 @@ namespace Battlelogium.Core.UI
             }
         }
 
-        private async void CheckBattlelogConnection()
+        private async Task CheckBattlelogConnection()
         {
             bool connection = await BattlelogBase.CheckBattlelogConnectionAsync();
             switch (connection)

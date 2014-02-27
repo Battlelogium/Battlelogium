@@ -126,9 +126,9 @@ namespace Battlelogium.Core.Utilities
             this.loop = false;
         }
 
-        public async void ListenAsync()
+        public void ListenAsync()
         {
-            await Task.Run(() => this.Listen());
+            Task.Run(() => this.Listen());
         }
 
         private void OnProcessStart(ProcessStartEventArgs e)
@@ -147,7 +147,6 @@ namespace Battlelogium.Core.Utilities
         {
             Process = process;
             ProcessName = processName;
-            
         }
     }
 

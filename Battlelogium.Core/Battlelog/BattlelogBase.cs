@@ -116,7 +116,6 @@ namespace Battlelogium.Core.Battlelog
         public async static Task<bool> CheckBattlelogConnectionAsync()
         {
            bool task = await Task.Run(() => { return CheckBattlelogConnection(); });
-
            return task;
         }
 
