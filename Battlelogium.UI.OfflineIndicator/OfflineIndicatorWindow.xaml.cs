@@ -12,18 +12,21 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Windows.Shell;
+using Battlelogium.Core.Battlelog;
 
-namespace Battlelogium.ExecUtils
+namespace Battlelogium.UI.OfflineIndicator
 {
     /// <summary>
-    /// Interaction logic for OfflineIndicator.xaml
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class OfflineIndicator : Window
+    public partial class OfflineIndicatorWindow : Window
     {
-        public OfflineIndicator()
+        BattlelogBase battlelog;
+        public OfflineIndicatorWindow()
         {
             InitializeComponent();
+            this.battlelog = new Battlefield3(); //Just temp
+
         }
     }
 }

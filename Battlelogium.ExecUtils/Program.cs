@@ -14,7 +14,6 @@ namespace Battlelogium.ExecUtils
         [STAThread]
         static void Main(string[] args)
         {
-            new Application().Run(new OfflineIndicator());
             if (args == null)
             {
                 return;
@@ -34,10 +33,6 @@ namespace Battlelogium.ExecUtils
                         Directory.Delete(cachepath, true);
                     }
                     catch (Exception) { }
-                    break;
-                case "offline":
-                    new Application().Run(new OfflineIndicator());
-
                     break;
             }
             return;

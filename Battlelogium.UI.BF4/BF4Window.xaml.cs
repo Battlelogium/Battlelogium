@@ -14,7 +14,7 @@ namespace Battlelogium.UI.BF4
         public BF4Window()
         {
             InitializeComponent();
-            this.battlelog = new Battlefield4(this); //TODO Battlefield 4
+            this.battlelog = new Battlefield4(); 
             this.config = new Config();
             this.mainGrid = this.MainGrid;
             this.loadingIcon = this.LoadingIcon;

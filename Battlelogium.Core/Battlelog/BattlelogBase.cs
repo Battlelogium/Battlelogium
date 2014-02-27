@@ -41,8 +41,6 @@ namespace Battlelogium.Core.Battlelog
 
         }
 
-        public BattlelogBase(string battlelogURL, string battlefieldName, string battlefieldShortname, string executableName, string originCode, string javascriptPath, UIWindow battlelogiumWindow) : this(battlelogURL, battlefieldName, battlefieldShortname, executableName, originCode , javascriptPath) { }
-
         public void InitializeWebview()
         {
             Settings settings = new Settings

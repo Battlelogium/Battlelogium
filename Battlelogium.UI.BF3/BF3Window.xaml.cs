@@ -15,7 +15,7 @@ namespace Battlelogium.UI.BF3
         public BF3Window()
         {
             InitializeComponent();
-            this.battlelog = new Battlefield3(this);
+            this.battlelog = new Battlefield3();
             this.config = new Config();
             this.mainGrid = this.MainGrid;
             this.loadingIcon = this.LoadingIcon;
