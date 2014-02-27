@@ -14,10 +14,8 @@ namespace Battlelogium.UI.BF4
         public BF4Window()
         {
             InitializeComponent();
-            this.battlelog = new Battlefield4(); 
-            this.config = new Config();
             this.MainControl = this.mainControl;
-            this.uiCore = new UICore(this);
+            this.InitializeCore(new Battlefield4());
         }
     }
 }

@@ -18,18 +18,18 @@ namespace Battlelogium.Core.UI
             this.ResizeMode = ResizeMode.CanResize;
             
                 this.WindowState = WindowState.Normal;
-                switch ((this.config.WindowWidth == 0 || this.config.WindowHeight == 0))
+                switch ((this.UICore.config.WindowWidth == 0 || this.UICore.config.WindowHeight == 0))
                 {
                     case true:
                     this.LoadBounds();
                     break;
                     case false:
-                    this.Height = this.config.WindowHeight;
-                    this.Width = this.config.WindowWidth;
+                    this.Height = this.UICore.config.WindowHeight;
+                    this.Width = this.UICore.config.WindowWidth;
                     break;
                }
-                  
-            if (this.config.RightClickDrag)
+
+                if (this.UICore.config.RightClickDrag)
             {
                 if (!this.RightClickDragInitialized)
                 {
@@ -85,10 +85,10 @@ namespace Battlelogium.Core.UI
         {
             if (this.IsFullscreen)
             {
-                config.WriteConfig("fullscreenMode", "true");
+                this.UICore.config.WriteConfig("fullscreenMode", "true");
                 return;
             }
-            config.WriteConfig("fullscreenMode", "false");
+            this.UICore.config.WriteConfig("fullscreenMode", "false");
             IsolatedStorageFile storage = IsolatedStorageFile.GetUserStoreForAssembly();
             using (IsolatedStorageFileStream stream = new IsolatedStorageFileStream("windowbounds", FileMode.Create, storage))
             using (StreamWriter writer = new StreamWriter(stream))

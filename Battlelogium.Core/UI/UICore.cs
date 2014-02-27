@@ -23,16 +23,23 @@ namespace Battlelogium.Core.UI
         public Config config;
         public BattlelogBase battlelog;
 
-        public UICore(UIWindow mainWindow)
-        {
+        public bool IsInitialized { get; private set; }
 
+        public UICore(UIWindow mainWindow, BattlelogBase battlelog, Config config)
+        {
             this.mainWindow = mainWindow;
-            this.battlelog = this.mainWindow.battlelog;
+            this.battlelog = battlelog;
             //this.CheckBattlelogConnection();
+            this.config = config;
+            this.managedOrigin = new Origin();
+
+        }
+
+        public void Initialize()
+        {
             this.battlelog.InitializeWebview();
             this.battlelog.javascriptObject.InitJavascriptObject(this);
 
-            this.config = this.mainWindow.config;
             this.mainWindow.Icon = BitmapFrame.Create(new Uri(@"pack://application:,,/images/bg_icon.ico")); //Set runtime icon to Battlelogium badged icon
             this.mainWindow.MainControl.VersionLabel.Content = "Battlelogium " + Assembly.GetEntryAssembly().GetName().Version.ToString();
             this.mainWindow.MainControl.MainGrid.Children.Add(battlelog.battlelogWebview);
@@ -40,11 +47,8 @@ namespace Battlelogium.Core.UI
             this.mainWindow.Closed += mainWindow_Closed;
             this.mainWindow.PreviewKeyDown += mainWindow_PreviewKeyDown;
             this.mainWindow.PreviewMouseDown += (s, e) => { if (e.ChangedButton == MouseButton.Middle) e.Handled = true; }; //Disable opening link in new window with middle click
-            
-            this.battlelog.battlelogWebview.PropertyChanged += battlelogWebview_IsLoading;
-            
 
-            this.managedOrigin = new Origin();
+            this.battlelog.battlelogWebview.PropertyChanged += battlelogWebview_IsLoading;
 
             if (config.ManageOrigin)
             {
@@ -65,6 +69,7 @@ namespace Battlelogium.Core.UI
             {
                 RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly;
             }
+            this.IsInitialized = true;
         }
 
         private async Task CheckBattlelogConnection()
