@@ -11,12 +11,11 @@ using System.Threading.Tasks;
 
 namespace Battlelogium.Core.Battlelog
 {
-    public class BattlelogBase : IDisposable
+    public partial class BattlelogBase : IDisposable
     {
 
         public WebView battlelogWebview;
         public JavascriptObject javascriptObject;
-        
 
         public string battlelogURL;
         public string battlefieldName;
@@ -37,6 +36,8 @@ namespace Battlelogium.Core.Battlelog
             this.battlefieldShortname = battlefieldShortname;
             this.executableName = executableName;
             this.originCode = originCode;
+
+            this.InitListenGame();
 
         }
 

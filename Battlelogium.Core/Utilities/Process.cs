@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Management;
 using System.Runtime.InteropServices;
 using System.Drawing;
+using System.Threading.Tasks;
 
 
 namespace Battlelogium.Core.Utilities
@@ -46,16 +47,14 @@ namespace Battlelogium.Core.Utilities
         {
             try
             {
-                if (closeMainWindow)
+                switch (closeMainWindow)
                 {
-                    process.CloseMainWindow();
-                }
-                else
-                {
-                    if (!process.HasExited)
-                    {
-                        process.Kill();
-                    }
+                    case true:
+                        process.CloseMainWindow();
+                        break;
+                    case false:
+                        if (!process.HasExited) process.Kill();
+                        break;
                 }
             }
             catch (Exception)
@@ -76,7 +75,12 @@ namespace Battlelogium.Core.Utilities
             }
         }
 
-
+        public static bool IsProcessRunning(string processName)
+        {
+            Process[] proc = Process.GetProcessesByName(processName);
+            if (proc.Length.Equals(0)) return false;
+            else return true;
+        }
     }
 
     public class ProcessStartWaiter
@@ -122,13 +126,9 @@ namespace Battlelogium.Core.Utilities
             this.loop = false;
         }
 
-        public void ListenAsync()
+        public async void ListenAsync()
         {
-            using (var worker = new BackgroundWorker())
-            {
-                worker.DoWork += delegate { this.Listen(); };
-                worker.RunWorkerAsync();
-            }
+            await Task.Run(() => this.Listen());
         }
 
         private void OnProcessStart(ProcessStartEventArgs e)
