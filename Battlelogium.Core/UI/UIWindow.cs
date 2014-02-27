@@ -17,14 +17,11 @@ namespace Battlelogium.Core.UI
         private MouseButtonEventHandler rightDragBtnDown;
         private MouseEventHandler rightDragMove;
 
-        public BattlelogBase battlelog;
-        public Config config;
+        public UIControl MainControl { get; protected set; }
+        public UICore UICore { get; private set; }
 
-        public Animator loadingIcon;
-        public UICore uiCore;
-     
-        public Grid mainGrid;
-        public Label versionLabel;
+        public bool IsCoreInitialized { get; private set; }
+
         public UIWindow()
         {
             this.SourceInitialized += (s, e) => 
@@ -38,6 +35,13 @@ namespace Battlelogium.Core.UI
             };
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.Closing += (s, e) => this.SaveBounds();
+        }
+
+        public void InitializeCore(BattlelogBase battlelog)
+        {
+            this.UICore = new UICore(this, battlelog, new Config());
+            this.IsCoreInitialized = true;
+            this.UICore.Initialize();
         }
     }
 }

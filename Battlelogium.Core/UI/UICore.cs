@@ -23,28 +23,31 @@ namespace Battlelogium.Core.UI
         public Config config;
         public BattlelogBase battlelog;
 
-        public UICore(UIWindow mainWindow)
-        {
+        public bool IsInitialized { get; private set; }
 
+        public UICore(UIWindow mainWindow, BattlelogBase battlelog, Config config)
+        {
             this.mainWindow = mainWindow;
-            this.battlelog = this.mainWindow.battlelog;
+            this.battlelog = battlelog;
             //this.CheckBattlelogConnection();
+            this.config = config;
+            this.managedOrigin = new Origin();
+        }
+
+        public void Initialize()
+        {
             this.battlelog.InitializeWebview();
             this.battlelog.javascriptObject.InitJavascriptObject(this);
 
-            this.config = this.mainWindow.config;
             this.mainWindow.Icon = BitmapFrame.Create(new Uri(@"pack://application:,,/images/bg_icon.ico")); //Set runtime icon to Battlelogium badged icon
-            this.mainWindow.versionLabel.Content = "Battlelogium " + Assembly.GetEntryAssembly().GetName().Version.ToString();
-            this.mainWindow.mainGrid.Children.Add(battlelog.battlelogWebview);
+            this.mainWindow.MainControl.VersionLabel.Content = "Battlelogium " + Assembly.GetEntryAssembly().GetName().Version.ToString();
+            this.mainWindow.MainControl.MainGrid.Children.Add(battlelog.battlelogWebview);
             this.mainWindow.Title = "Battlelogium - " + battlelog.battlefieldName;
             this.mainWindow.Closed += mainWindow_Closed;
             this.mainWindow.PreviewKeyDown += mainWindow_PreviewKeyDown;
             this.mainWindow.PreviewMouseDown += (s, e) => { if (e.ChangedButton == MouseButton.Middle) e.Handled = true; }; //Disable opening link in new window with middle click
-            
-            this.battlelog.battlelogWebview.PropertyChanged += battlelogWebview_IsLoading;
-            
 
-            this.managedOrigin = new Origin();
+            this.battlelog.battlelogWebview.PropertyChanged += battlelogWebview_IsLoading;
 
             if (config.ManageOrigin)
             {
@@ -65,6 +68,7 @@ namespace Battlelogium.Core.UI
             {
                 RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly;
             }
+            this.IsInitialized = true;
         }
 
         private async Task CheckBattlelogConnection()
@@ -116,10 +120,10 @@ namespace Battlelogium.Core.UI
                 switch (this.battlelog.battlelogWebview.IsLoading)
                 {
                     case true:
-                        this.mainWindow.Dispatcher.Invoke(new Action(delegate { this.mainWindow.loadingIcon.Visibility = Visibility.Visible; }));
+                        this.mainWindow.Dispatcher.Invoke(new Action(delegate { this.mainWindow.MainControl.LoadingIcon.Visibility = Visibility.Visible; }));
                         break;
                     case false:
-                        this.mainWindow.Dispatcher.Invoke(new Action(delegate { this.mainWindow.loadingIcon.Visibility = Visibility.Collapsed; }));
+                        this.mainWindow.Dispatcher.Invoke(new Action(delegate { this.mainWindow.MainControl.LoadingIcon.Visibility = Visibility.Collapsed; }));
                         break;
                 }
             }
