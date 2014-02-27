@@ -49,9 +49,9 @@ namespace Battlelogium.Core.Javascript
                     Stretch = System.Windows.Media.Stretch.Fill,
                     Opacity = 0.5D
                 };
-                uiCore.mainWindow.mainGrid.Children.Add(overlay);
+                uiCore.mainWindow.MainControl.MainGrid.Children.Add(overlay);
                 bool? result = configEditor.ShowDialog();
-                uiCore.mainWindow.mainGrid.Children.Remove(overlay);
+                uiCore.mainWindow.MainControl.MainGrid.Children.Remove(overlay);
 
                 switch (result)
                 {

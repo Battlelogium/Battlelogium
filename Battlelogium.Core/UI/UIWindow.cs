@@ -19,12 +19,10 @@ namespace Battlelogium.Core.UI
 
         public BattlelogBase battlelog;
         public Config config;
+        public UIWindowControl MainControl { get; protected set; }
 
-        public Animator loadingIcon;
         public UICore uiCore;
-     
-        public Grid mainGrid;
-        public Label versionLabel;
+
         public UIWindow()
         {
             this.SourceInitialized += (s, e) => 

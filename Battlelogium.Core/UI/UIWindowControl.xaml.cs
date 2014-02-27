@@ -23,12 +23,10 @@ namespace Battlelogium.Core.UI
     {
         public ImageSource BackgroundImage { private get; set; }
         public ImageSource LoadingSprite { private get; set; }
-
         public Grid MainGrid { get { return this.mainGrid; } }
-
         public Animator LoadingIcon { get { return this.loadingIcon; } }
-
         public Label VersionLabel { get { return this.versionLabel; } }
+
         public UIWindowControl()
         {
             InitializeComponent();

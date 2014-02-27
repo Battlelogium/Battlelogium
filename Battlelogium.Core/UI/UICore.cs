@@ -34,8 +34,8 @@ namespace Battlelogium.Core.UI
 
             this.config = this.mainWindow.config;
             this.mainWindow.Icon = BitmapFrame.Create(new Uri(@"pack://application:,,/images/bg_icon.ico")); //Set runtime icon to Battlelogium badged icon
-            this.mainWindow.versionLabel.Content = "Battlelogium " + Assembly.GetEntryAssembly().GetName().Version.ToString();
-            this.mainWindow.mainGrid.Children.Add(battlelog.battlelogWebview);
+            this.mainWindow.MainControl.VersionLabel.Content = "Battlelogium " + Assembly.GetEntryAssembly().GetName().Version.ToString();
+            this.mainWindow.MainControl.MainGrid.Children.Add(battlelog.battlelogWebview);
             this.mainWindow.Title = "Battlelogium - " + battlelog.battlefieldName;
             this.mainWindow.Closed += mainWindow_Closed;
             this.mainWindow.PreviewKeyDown += mainWindow_PreviewKeyDown;
@@ -116,10 +116,10 @@ namespace Battlelogium.Core.UI
                 switch (this.battlelog.battlelogWebview.IsLoading)
                 {
                     case true:
-                        this.mainWindow.Dispatcher.Invoke(new Action(delegate { this.mainWindow.loadingIcon.Visibility = Visibility.Visible; }));
+                        this.mainWindow.Dispatcher.Invoke(new Action(delegate { this.mainWindow.MainControl.LoadingIcon.Visibility = Visibility.Visible; }));
                         break;
                     case false:
-                        this.mainWindow.Dispatcher.Invoke(new Action(delegate { this.mainWindow.loadingIcon.Visibility = Visibility.Collapsed; }));
+                        this.mainWindow.Dispatcher.Invoke(new Action(delegate { this.mainWindow.MainControl.LoadingIcon.Visibility = Visibility.Collapsed; }));
                         break;
                 }
             }
