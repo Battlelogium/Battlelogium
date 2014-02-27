@@ -231,7 +231,9 @@
       <Generator>VSMinifier</Generator>
       <LastGenOutput>battlelog.bf4.settings.min.js</LastGenOutput>
     </Content>
-    <Compile Include="Battlelog\BattlelogBase.Events.cs" />
+    <Compile Include="Battlelog\BattlelogBase.Events.cs">
+	<DependentUpon>BattlelogBase.cs</DependentUpon>
+	</Compile>
     <None Include="packages.config" />
     <Content Include="userstylesheet.css" />
   </ItemGroup>
