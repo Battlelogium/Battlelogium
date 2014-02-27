@@ -32,7 +32,6 @@ namespace Battlelogium.Core.UI
             //this.CheckBattlelogConnection();
             this.config = config;
             this.managedOrigin = new Origin();
-
         }
 
         public void Initialize()
