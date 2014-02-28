@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.ComponentModel;
 using Battlelogium.ThirdParty.Animator;
 
 namespace Battlelogium.Core.UI
@@ -19,17 +20,26 @@ namespace Battlelogium.Core.UI
     /// <summary>
     /// Interaction logic for UIWindowControl.xaml
     /// </summary>
-    public partial class UIControl : UserControl
+    public partial class UIControl : UserControl, INotifyPropertyChanged
     {
+
+        public string VersionNumber { private get; set; }
         public ImageSource BackgroundImage { private get; set; }
         public ImageSource LoadingSprite { private get; set; }
         public Grid MainGrid { get { return this.mainGrid; } }
         public Animator LoadingIcon { get { return this.loadingIcon; } }
-        public Label VersionLabel { get { return this.versionLabel; } }
 
         public UIControl()
         {
             InitializeComponent();
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+
     }
 }

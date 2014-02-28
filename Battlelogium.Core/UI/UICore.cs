@@ -40,8 +40,8 @@ namespace Battlelogium.Core.UI
             this.battlelog.javascriptObject.InitJavascriptObject(this);
 
             this.mainWindow.Icon = BitmapFrame.Create(new Uri(@"pack://application:,,/images/bg_icon.ico")); //Set runtime icon to Battlelogium badged icon
-            this.mainWindow.MainControl.VersionLabel.Content = "Battlelogium " + Assembly.GetEntryAssembly().GetName().Version.ToString();
-            this.mainWindow.MainControl.MainGrid.Children.Add(battlelog.battlelogWebview);
+            this.mainWindow.MainControl.VersionNumber = "Battlelogium " + Assembly.GetEntryAssembly().GetName().Version.ToString();
+            //this.mainWindow.MainControl.MainGrid.Children.Add(battlelog.battlelogWebview);
             this.mainWindow.Title = "Battlelogium - " + battlelog.battlefieldName;
             this.mainWindow.Closed += mainWindow_Closed;
             this.mainWindow.PreviewKeyDown += mainWindow_PreviewKeyDown;

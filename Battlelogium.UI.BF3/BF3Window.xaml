@@ -7,10 +7,6 @@
         MinHeight="400" MinWidth="400" 
         
         >
-    <bl:UIWindow.Background>
-        <ImageBrush ImageSource="images\background.png" Stretch="UniformToFill" AlignmentX="Center" AlignmentY="Bottom"/>
-    </bl:UIWindow.Background>
-
-    <bl:UIControl x:Name="mainControl" BackgroundImage="images\background.png" LoadingSprite="images\loadingsprite.png"></bl:UIControl>
+    <bl:UIControl x:Name="mainControl" BackgroundImage="images\background.png" LoadingSprite="images\loadingsprite.png" VersionNumber="10"></bl:UIControl>
 
 </bl:UIWindow>

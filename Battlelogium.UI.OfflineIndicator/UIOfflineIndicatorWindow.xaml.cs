@@ -19,10 +19,10 @@ namespace Battlelogium.UI.OfflineIndicator
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class OfflineIndicatorWindow : Window
+    public partial class UIOfflineIndicator : Window
     {
         BattlelogBase battlelog;
-        public OfflineIndicatorWindow()
+        public UIOfflineIndicator()
         {
             InitializeComponent();
             this.battlelog = new Battlefield3(); //Just temp

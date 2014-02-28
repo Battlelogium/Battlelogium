@@ -54,7 +54,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="OfflineIndicatorWindow.xaml">
+    <Page Include="UIOfflineIndicator.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -62,8 +62,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="OfflineIndicatorWindow.xaml.cs">
-      <DependentUpon>OfflineIndicatorWindow.xaml</DependentUpon>
+    <Compile Include="UIOfflineIndicatorWindow.xaml.cs">
+      <DependentUpon>UIOfflineIndicator.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -99,6 +99,10 @@
       <Project>{74847b27-2dfa-404b-9baf-bfdd69604091}</Project>
       <Name>Battlelogium.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\bf3.png" />
+    <Resource Include="images\bf4.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
