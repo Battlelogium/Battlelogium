@@ -10,6 +10,6 @@
             <RowDefinition Height="35"></RowDefinition>
         </Grid.RowDefinitions>
         <Image Grid.Row="0" Source="/Battlelogium.Core;component/logo.png"></Image>
-        <Label Grid.Row="2" Content="{Binding GameName}"></Label>
+        <Label x:Name="gameLabel" Grid.Row="2" HorizontalAlignment="Right"></Label>
     </Grid>
 </Window>

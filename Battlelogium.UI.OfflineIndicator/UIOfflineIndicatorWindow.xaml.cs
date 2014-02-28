@@ -23,13 +23,19 @@ namespace Battlelogium.UI.OfflineIndicator
     {
         BattlelogBase battlelog;
 
-       
-        public string GameName;
         public UIOfflineIndicator()
         {
             InitializeComponent();
             this.battlelog = new Battlefield3(); //Just temp
-           
+            switch (this.battlelog.battlefieldShortname)
+            {
+                case "BF3":
+                    this.gameLabel.Content = "You are playing Battlefield 3 Campaign";
+                    break;
+                case "BF4":
+                    this.gameLabel.Content = "You are playing Battlefield 4 Campaign";
+                    break;
+            }
         }
     }
 }
