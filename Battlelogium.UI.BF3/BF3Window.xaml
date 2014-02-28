@@ -7,6 +7,6 @@
         MinHeight="400" MinWidth="400" 
         
         >
-    <bl:UIControl x:Name="mainControl" BackgroundImage="images\background.png" LoadingSprite="images\loadingsprite.png" SpriteHortizontalOffset="24" SpriteVerticalOffset="28"></bl:UIControl>
+    <bl:UIControl x:Name="mainControl" BackgroundImage="images\background.png" LoadingSprite="images\loadingsprite.png" SpriteHorizontalOffset="24" SpriteVerticalOffset="28"></bl:UIControl>
 
 </bl:UIWindow>

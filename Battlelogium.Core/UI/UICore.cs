@@ -1,4 +1,5 @@
-﻿using System;
+﻿#define NO_ORIGIN //I don't want Origin to start if I'm debugging and I have no need to.
+using System;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
@@ -12,6 +13,7 @@ using Battlelogium.Core.ManagedOrigin;
 
 namespace Battlelogium.Core.UI
 {
+
     /// <summary>
     /// Provides methods to interact with the User Interface
     /// </summary>
@@ -41,18 +43,19 @@ namespace Battlelogium.Core.UI
 
             this.mainWindow.Icon = BitmapFrame.Create(new Uri(@"pack://application:,,/images/bg_icon.ico")); //Set runtime icon to Battlelogium badged icon
             this.mainWindow.MainControl.VersionNumber = "Battlelogium " + Assembly.GetEntryAssembly().GetName().Version.ToString();
-            //this.mainWindow.MainControl.MainGrid.Children.Add(battlelog.battlelogWebview);
+            this.mainWindow.MainControl.MainGrid.Children.Add(battlelog.battlelogWebview);
             this.mainWindow.Title = "Battlelogium - " + battlelog.battlefieldName;
             this.mainWindow.Closed += mainWindow_Closed;
-            this.mainWindow.MainControl.LoadingIcon.Visibility = Visibility.Visible;
             this.mainWindow.PreviewKeyDown += mainWindow_PreviewKeyDown;
             this.mainWindow.PreviewMouseDown += (s, e) => { if (e.ChangedButton == MouseButton.Middle) e.Handled = true; }; //Disable opening link in new window with middle click
 
-            //this.battlelog.battlelogWebview.PropertyChanged += battlelogWebview_IsLoading;
+            this.battlelog.battlelogWebview.PropertyChanged += battlelogWebview_IsLoading;
 
             if (config.ManageOrigin)
             {
+#if !NO_ORIGIN //ugly ifdefs are ugly. 
                 this.managedOrigin.StartOrigin();
+#endif 
             }
 
             switch (this.config.FullscreenMode)

@@ -22,11 +22,14 @@ namespace Battlelogium.UI.OfflineIndicator
     public partial class UIOfflineIndicator : Window
     {
         BattlelogBase battlelog;
+
+       
+        public string GameName;
         public UIOfflineIndicator()
         {
             InitializeComponent();
             this.battlelog = new Battlefield3(); //Just temp
-
+           
         }
     }
 }

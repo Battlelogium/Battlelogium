@@ -24,29 +24,48 @@ namespace Battlelogium.Core.UI
     {
 
         public string VersionNumber { private get; set; }
-        public double SpriteVerticalOffset { get; set; }
-        public double SpriteHortizontalOffset { get; set; }
+        private double _spriteVerticalOffset;
+
+        public double SpriteVerticalOffset
+        {
+            get { return _spriteVerticalOffset; }
+            set { _spriteVerticalOffset = value; OnPropertyChanged("SpriteVerticalOffset"); }
+        }
+
+        private double _spriteHorizontalOffset;
+
+        public double SpriteHorizontalOffset
+        {
+            get { return _spriteHorizontalOffset; }
+            set {_spriteHorizontalOffset = value; OnPropertyChanged("SpriteHorizontalOffset"); }
+        }
         public ImageSource BackgroundImage { private get; set; }
-        private ImageSource loadingSprite;
+
+        private ImageSource _loadingSprite;
         public ImageSource LoadingSprite
         {
-            get;
-            set;
+            get { return _loadingSprite; }
+            set { _loadingSprite = value; OnPropertyChanged("LoadingSprite"); }
         }
         public Grid MainGrid { get { return this.mainGrid; } }
         public Animator LoadingIcon { get { return this.loadingIcon; } }
 
         public UIControl()
         {
-            InitializeComponent();
+            InitializeComponent();  
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged(string propertyName)
+        protected virtual void OnPropertyChanged(string property)
         {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(property));
         }
+
+        #region INotifyPropertyChanged Members
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
 
     }
 }

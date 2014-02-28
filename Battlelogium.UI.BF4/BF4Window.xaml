@@ -5,5 +5,5 @@
         xmlns:ani="clr-namespace:Battlelogium.ThirdParty.Animator;assembly=Battlelogium.ThirdParty.Animator"
         Title="MainWindow"  MinHeight="400" MinWidth="400" 
         >
-    <bl:UIControl x:Name="mainControl" BackgroundImage="images\background.png" LoadingSprite="images\loadingsprite.png" ></bl:UIControl>
+    <bl:UIControl x:Name="mainControl" BackgroundImage="images\background.png" LoadingSprite="images\loadingsprite.png" SpriteHorizontalOffset="32" SpriteVerticalOffset="32"></bl:UIControl>
 </bl:UIWindow>

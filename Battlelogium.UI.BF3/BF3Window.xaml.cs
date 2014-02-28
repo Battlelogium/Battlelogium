@@ -17,6 +17,8 @@ namespace Battlelogium.UI.BF3
             InitializeComponent();
             this.MainControl = this.mainControl;
             this.InitializeCore(new Battlefield3());
+            
+            Console.WriteLine("something");
         }
     }
 }
