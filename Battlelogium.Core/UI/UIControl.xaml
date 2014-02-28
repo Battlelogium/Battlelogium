@@ -14,7 +14,7 @@
     <Grid Name="mainGrid">
         <Label Canvas.ZIndex="-1" Foreground="Gray" Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type bl:UIControl}}, Path=VersionNumber}"
  Height="28" HorizontalAlignment="Left" Margin="3,0,0,0" Name="versionLabel" VerticalAlignment="Bottom" />
-        <ani:Animator Name="loadingIcon" ImageSource="{Binding LoadingSprite}" Interval="0:0:0.045" HorizontalOffset="{Binding SpriteHorizontalOffset}" VerticalOffset="{Binding SpriteVerticalOffset}" 
+        <ani:Animator Name="loadingIcon" ImageSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorLevel=2, AncestorType={x:Type bl:UIControl}}, UpdateSourceTrigger=PropertyChanged, Path=LoadingSprite}" Interval="0:0:0.045" HorizontalOffset="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type bl:UIControl}}, Path=SpriteHorizontalOffset}" VerticalOffset="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type bl:UIControl}}, Path=SpriteVerticalOffset}" 
                       Panel.ZIndex="110" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,20,20" Grid.Row="1" BorderThickness="0" />
     </Grid>
 </UserControl>

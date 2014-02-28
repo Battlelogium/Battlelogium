@@ -44,10 +44,11 @@ namespace Battlelogium.Core.UI
             //this.mainWindow.MainControl.MainGrid.Children.Add(battlelog.battlelogWebview);
             this.mainWindow.Title = "Battlelogium - " + battlelog.battlefieldName;
             this.mainWindow.Closed += mainWindow_Closed;
+            this.mainWindow.MainControl.LoadingIcon.Visibility = Visibility.Visible;
             this.mainWindow.PreviewKeyDown += mainWindow_PreviewKeyDown;
             this.mainWindow.PreviewMouseDown += (s, e) => { if (e.ChangedButton == MouseButton.Middle) e.Handled = true; }; //Disable opening link in new window with middle click
 
-            this.battlelog.battlelogWebview.PropertyChanged += battlelogWebview_IsLoading;
+            //this.battlelog.battlelogWebview.PropertyChanged += battlelogWebview_IsLoading;
 
             if (config.ManageOrigin)
             {

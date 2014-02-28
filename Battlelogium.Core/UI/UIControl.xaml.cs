@@ -24,8 +24,15 @@ namespace Battlelogium.Core.UI
     {
 
         public string VersionNumber { private get; set; }
+        public double SpriteVerticalOffset { get; set; }
+        public double SpriteHortizontalOffset { get; set; }
         public ImageSource BackgroundImage { private get; set; }
-        public ImageSource LoadingSprite { private get; set; }
+        private ImageSource loadingSprite;
+        public ImageSource LoadingSprite
+        {
+            get;
+            set;
+        }
         public Grid MainGrid { get { return this.mainGrid; } }
         public Animator LoadingIcon { get { return this.loadingIcon; } }
 
