@@ -39,7 +39,7 @@ namespace Battlelogium.Core.Configuration
             this.rightClickDrag_input.IsChecked = config.RightClickDrag;
             this.disableHardwareAccel_input.IsChecked = config.DisableHardwareAccel;
 
-            this.enableSteamOverlayBF4_input.Checked += (s, e) => CustomMessageBox.Show("The Steam Overlay for BF4 is extremely experimental and far from perfect. Please enable borderless windowed mode in Battlefield 4, and use Shift+F2 to open the overlay once ingame." + Environment.NewLine + "You will need to press Shift+Tab to open the Steam Overlay once you have switched to the overlay enabler window with Shift+F2.");
+            this.enableSteamOverlayBF4_input.Checked += (s, e) => CustomMessageBox.Show("The Steam Overlay for BF4 is extremely experimental and far from perfect. Please enable borderless windowed mode in Battlefield 4, and use Shift+F2 to open the overlay once ingame." + Environment.NewLine + Environment.NewLine + "You will need to press Shift+Tab to open the Steam Overlay once you have switched to the overlay enabler window with Shift+F2.");
         }
 
         private void UIConfig_Closing(object sender, System.ComponentModel.CancelEventArgs e)

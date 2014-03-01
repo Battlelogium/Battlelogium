@@ -52,7 +52,6 @@ namespace Battlelogium.Overlay
             base.IsMouseVisible = true;
             base.Window.IsBorderless = true;
             var screen = System.Windows.Forms.Screen.AllScreens[0];
-            base.Window.Position = new Point(screen.Bounds.X, screen.Bounds.Y);
             graphics.PreferredBackBufferWidth = screen.Bounds.Width;
             graphics.PreferredBackBufferHeight = screen.Bounds.Height;
             graphics.ApplyChanges();
