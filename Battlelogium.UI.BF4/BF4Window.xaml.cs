@@ -2,6 +2,7 @@
 using Battlelogium.Core.UI;
 using Battlelogium.Core.Configuration;
 using Battlelogium.Core.Battlelog;
+using System.Diagnostics;
 using System.Windows;
 
 namespace Battlelogium.UI.BF4
@@ -16,6 +17,11 @@ namespace Battlelogium.UI.BF4
             InitializeComponent();
             this.MainControl = this.mainControl;
             this.InitializeCore(new Battlefield4());
+            if (this.UICore.config.EnableSteamOverlayBF4)
+            {
+                this.UICore.battlelog.GameStart += (s, e) => Process.Start("Battlelogium.Overlay.exe");
+            }
+            
         }
     }
 }

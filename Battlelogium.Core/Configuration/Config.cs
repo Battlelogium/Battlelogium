@@ -16,7 +16,8 @@ namespace Battlelogium.Core.Configuration
         private readonly int waitTimeToKillOrigin;
         private readonly bool checkUpdates;
         private readonly bool fullscreenMode;
-        private readonly bool manageOrigin; 
+        private readonly bool manageOrigin;
+        private readonly bool enableSteamOverlayBF4; 
         private readonly int windowHeight;
         private readonly int windowWidth;
         private readonly bool disableHardwareAccel;
@@ -34,6 +35,8 @@ namespace Battlelogium.Core.Configuration
             if (!int.TryParse(config.GetValueOrDefault("waitTimeToKillOrigin"), out waitTimeToKillOrigin)) waitTimeToKillOrigin = 10;
             if (!bool.TryParse(config.GetValueOrDefault("fullscreenMode"), out fullscreenMode)) fullscreenMode = false;
             if (!bool.TryParse(config.GetValueOrDefault("manageOrigin"), out manageOrigin)) manageOrigin = true;
+            if (!bool.TryParse(config.GetValueOrDefault("enableSteamOverlayBF4"), out enableSteamOverlayBF4)) enableSteamOverlayBF4 = false;
+
             
             if (!int.TryParse(config.GetValueOrDefault("windowHeight"), out windowHeight)) windowHeight = 0;
             if (!int.TryParse(config.GetValueOrDefault("windowWidth"), out windowWidth)) windowWidth = 0;
@@ -54,6 +57,8 @@ namespace Battlelogium.Core.Configuration
             configBuilder.AppendLine("WindowWidth = " + WindowWidth.ToString());
             configBuilder.AppendLine("ManageOrigin = " + ManageOrigin.ToString());
             configBuilder.AppendLine("DisableHardwareAccel = " + DisableHardwareAccel.ToString());
+            configBuilder.AppendLine("EnableSteamOverlayBF4 = " + EnableSteamOverlayBF4.ToString());
+
             return configBuilder.ToString();
         }
 
@@ -71,6 +76,16 @@ namespace Battlelogium.Core.Configuration
         }
 
         #region Accessors
+
+        /// <summary>How long to wait before closing Origin, to give it time to sync BF3's save data</summary>
+        public bool EnableSteamOverlayBF4
+        {
+            get
+            {
+                return this.enableSteamOverlayBF4;
+            }
+        }
+
 
         /// <summary>How long to wait before closing Origin, to give it time to sync BF3's save data</summary>
         public int WaitTimeToKillOrigin
