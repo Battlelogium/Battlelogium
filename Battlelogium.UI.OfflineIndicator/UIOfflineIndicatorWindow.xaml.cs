@@ -30,10 +30,10 @@ namespace Battlelogium.UI.OfflineIndicator
         public UIOfflineIndicator()
         {
             InitializeComponent();
-            this.battlelog = new Battlefield3(); //Just temp
+            this.battlelog = new Battlefield4(); //Just temp
             
             //{pack://application:,,,/Battlelogium.Core;component/logo.png}
-            this.gameLabel.Content = "You are playing "+battlelog.battlefieldName+" Campaign. Press Enter to minimize Battlelogium";
+            this.gameLabel.Content = "You are playing "+battlelog.battlefieldName+" Campaign. Please log in to Origin when prompted.";
             this.gameIcon.Source = new BitmapImage(new Uri("pack://application:,,/images/"+battlelog.battlefieldShortname+"/icon.png"));
             this.Icon = BitmapFrame.Create(new Uri(@"pack://application:,,/images/"+battlelog.battlefieldShortname+"/icon.ico"));
             this.KeyDown += (s, e) =>
@@ -53,13 +53,11 @@ namespace Battlelogium.UI.OfflineIndicator
             var origin = new OfflineOrigin(this.battlelog.gameId);
             this.battlelog.GameQuit += (s, e) =>
             {
-                MessageBox.Show("bf3 quit");
+                origin.KillOrigin();
+                this.Dispatcher.Invoke(() => this.Close());
             };
-            this.battlelog.GameStart += (s, e) =>
-            {
-                MessageBox.Show("bf3 start");
-            };
-          //  origin.StartOrigin();
+
+           origin.StartOrigin();
         }
     }
 }

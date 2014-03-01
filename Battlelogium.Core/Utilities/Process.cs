@@ -109,8 +109,7 @@ namespace Battlelogium.Core.Utilities
             {
                 ManagementBaseObject targetInstance = (ManagementBaseObject) e.NewEvent["targetInstance"];
                 int pid = Convert.ToInt32(targetInstance["processID"]);
-                Process process = Process.GetProcessById(pid);
-                OnProcessStart(new ProcessStartEventArgs(process, this.processName));
+                OnProcessStart(new ProcessStartEventArgs(pid, this.processName));
             };
             watcher.Start();
         }
@@ -129,12 +128,12 @@ namespace Battlelogium.Core.Utilities
 
     public class ProcessStartEventArgs : EventArgs
     {
-        public Process Process { get; private set; }
+        public int ProcessID { get; private set; }
         public string ProcessName { get; private set; }
 
-        public ProcessStartEventArgs(Process process, string processName)
+        public ProcessStartEventArgs(int processID, string processName)
         {
-            Process = process;
+            ProcessID = processID;
             ProcessName = processName;
         }
     }

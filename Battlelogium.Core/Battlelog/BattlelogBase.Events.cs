@@ -21,18 +21,21 @@ namespace Battlelogium.Core.Battlelog
         }
         public void InitListenGame()
         {
-            //ProcessStartWaiter waiter = new ProcessStartWaiter(this.executableName.Replace(".exe", ""));
-            ProcessStartWaiter waiter = new ProcessStartWaiter("notepad.exe");
-
-            waiter.ProcessStart += (s, e) => this.GameStart(this, new BFGameEventArgs(this, e.Process));
-            waiter.ProcessStart += (s, e) => this.WaitForGameQuitAsync(e.Process);
+            ProcessStartWaiter waiter = new ProcessStartWaiter(this.executableName);
+           waiter.ProcessStart += (s, e) =>
+           {
+               if (this.GameStart != null)  
+                this.GameStart(this, new BFGameEventArgs(e.ProcessID));
+           };
+            waiter.ProcessStart += (s, e) => this.WaitForGameQuitAsync(Process.GetProcessById(e.ProcessID));
             waiter.ListenAsync();
         }
 
         private async Task WaitForGameQuitAsync(Process gameProcess)
         {
             await Task.Run(() => gameProcess.WaitForExit());
-            this.GameQuit(this, new BFGameEventArgs(this, gameProcess));
+            if (this.GameQuit != null)  
+            this.GameQuit(this, new BFGameEventArgs(gameProcess.Id));
         }
     }
 }

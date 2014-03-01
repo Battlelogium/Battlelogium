@@ -9,13 +9,10 @@ namespace Battlelogium.Core.Battlelog
 {
     public class BFGameEventArgs
     {
-        BattlelogBase battlelog;
-        Process process;
-        public BFGameEventArgs(BattlelogBase battlelog, Process process)
+        int processID;
+        public BFGameEventArgs(int processID)
         {
-            this.battlelog = battlelog;
-            this.process = process;
-
+            this.processID = processID;
         }
     }
 }
