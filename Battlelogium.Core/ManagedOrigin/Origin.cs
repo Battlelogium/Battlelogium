@@ -6,6 +6,7 @@ using System.IO;
 using System.Threading;
 using System.Drawing;
 using Battlelogium.Core.Battlelog;
+using System.Threading.Tasks;
 namespace Battlelogium.Core.ManagedOrigin
 {
     /// <summary>
@@ -16,11 +17,16 @@ namespace Battlelogium.Core.ManagedOrigin
         string originPath;
         string commandLineOptions;
         bool restartOrigin;
+        bool closedSafely;
 
         public Process originProcess;
 
         public delegate void OriginCloseEvent(object sender, OriginCloseEventArgs e);
         public event OriginCloseEvent OriginClose;
+
+        public delegate void OriginUnexpectedCloseEvent(object sender);
+        public event OriginUnexpectedCloseEvent OriginUnexpectedClose;
+
         public Origin(string commandLineOptions)
         {
             this.commandLineOptions = commandLineOptions;
@@ -45,6 +51,7 @@ namespace Battlelogium.Core.ManagedOrigin
                 this.restartOrigin = true;
             }
             this.originProcess = Process.Start(originProcessInfo);
+            this.ListenForUnexpectedClose();
 
         }
 
@@ -94,6 +101,7 @@ namespace Battlelogium.Core.ManagedOrigin
             OriginClose(this, new OriginCloseEventArgs(this.restartOrigin));
             ProcessTools.KillProcess(this.originProcess, true, false);
             ProcessTools.KillProcess("sonarhost", false, false);
+            this.closedSafely = true;
         }
 
         public void KillOrigin(int timeout)
@@ -102,7 +110,12 @@ namespace Battlelogium.Core.ManagedOrigin
             this.KillOrigin(); 
             
         }
-     
+
+        private async Task ListenForUnexpectedClose()
+        {
+            await Task.Run(() => this.originProcess.WaitForExit());
+            if (!this.closedSafely && this.OriginUnexpectedClose != null) OriginUnexpectedClose(this);
+        }
         public static void CreateUnmanagedInstance()
         {
             ProcessTools.CreateOrphanedProcess(GetOriginPath(), "/StartClientMinimized");

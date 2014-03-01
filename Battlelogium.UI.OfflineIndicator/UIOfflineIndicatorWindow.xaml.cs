@@ -29,10 +29,25 @@ namespace Battlelogium.UI.OfflineIndicator
         
         public UIOfflineIndicator()
         {
-            InitializeComponent();
-            this.battlelog = new Battlefield4(); //Just temp
-            
-            //{pack://application:,,,/Battlelogium.Core;component/logo.png}
+            string[] args = Environment.GetCommandLineArgs();
+            if (args.Length <= 1)
+            {
+                MessageBox.Show("Invalid Commandline Parameters - bf3 for Battlefield 3, bf4 for Battlefield 4");
+                Environment.Exit(1);
+            }
+            switch(args[1]){
+                case "bf3":
+                    this.battlelog = new Battlefield3();
+                    break;
+                case "bf4":
+                    this.battlelog = new Battlefield4();
+                    break;
+                default:
+                   MessageBox.Show("Invalid Commandline Parameters - bf3 for Battlefield 3, bf4 for Battlefield 4");
+                   Environment.Exit(1);
+                   break;
+            }
+            InitializeComponent();            
             this.gameLabel.Content = "You are playing "+battlelog.battlefieldName+" Campaign. Please log in to Origin when prompted.";
             this.gameIcon.Source = new BitmapImage(new Uri("pack://application:,,/images/"+battlelog.battlefieldShortname+"/icon.png"));
             this.Icon = BitmapFrame.Create(new Uri(@"pack://application:,,/images/"+battlelog.battlefieldShortname+"/icon.ico"));
@@ -51,12 +66,13 @@ namespace Battlelogium.UI.OfflineIndicator
             };
             
             var origin = new OfflineOrigin(this.battlelog.gameId);
+            origin.OriginUnexpectedClose += (s) => this.Dispatcher.Invoke(() => this.Close());
             this.battlelog.GameQuit += (s, e) =>
             {
                 origin.KillOrigin();
                 this.Dispatcher.Invoke(() => this.Close());
             };
-
+           
            origin.StartOrigin();
         }
     }
