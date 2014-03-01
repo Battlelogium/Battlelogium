@@ -87,11 +87,9 @@ namespace Battlelogium.Core.Utilities
     {
         public string processName;
 
-        private bool loop = true;
         public delegate void ProcessStartEventHandler(object sender, ProcessStartEventArgs e);
         public event ProcessStartEventHandler ProcessStart;
        
-        // Adapted from http://stackoverflow.com/questions/6575117/
         public ProcessStartWaiter(string processName)
         {
             this.processName = processName;
@@ -99,31 +97,22 @@ namespace Battlelogium.Core.Utilities
 
         public void Listen()
         {
-            var query = new WqlEventQuery(
-                "__InstanceCreationEvent",
-                new TimeSpan(0, 0, 1),
-                "TargetInstance isa \"Win32_Process\" and TargetInstance.Name = '" + processName + "'"
-              );
+            string queryString =
+            "SELECT TargetInstance" +
+            "  FROM __InstanceCreationEvent " +
+            "WITHIN  10 " +
+            " WHERE TargetInstance ISA 'Win32_Process' " +
+            "   AND TargetInstance.Name = '" + processName + "'";
 
-            using (var watcher = new ManagementEventWatcher(query)){
-                while (this.loop)
-                {
-                    ManagementBaseObject wmiEvent = watcher.WaitForNextEvent();
-                    ManagementBaseObject targetInstance = (ManagementBaseObject)wmiEvent["targetInstance"];
-                    int pid = Convert.ToInt32(targetInstance["processID"]);
-                    Process process = Process.GetProcessById(pid);
-                    if(this.loop) this.OnProcessStart(new ProcessStartEventArgs(process, this.processName)); //Don't trigger event if we want to stop sending them.
-                    wmiEvent.Dispose();
-                    targetInstance.Dispose();
-                    process.Dispose();
-                }
-                watcher.Stop();
-            }
-        }
-
-        public void StopListen()
-        {
-            this.loop = false;
+            ManagementEventWatcher watcher = new ManagementEventWatcher(queryString);
+            watcher.EventArrived += (s, e) =>
+            {
+                ManagementBaseObject targetInstance = (ManagementBaseObject) e.NewEvent["targetInstance"];
+                int pid = Convert.ToInt32(targetInstance["processID"]);
+                Process process = Process.GetProcessById(pid);
+                OnProcessStart(new ProcessStartEventArgs(process, this.processName));
+            };
+            watcher.Start();
         }
 
         public void ListenAsync()

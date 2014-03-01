@@ -21,7 +21,9 @@ namespace Battlelogium.Core.Battlelog
         }
         public void InitListenGame()
         {
-            ProcessStartWaiter waiter = new ProcessStartWaiter(this.executableName.Replace(".exe", ""));
+            //ProcessStartWaiter waiter = new ProcessStartWaiter(this.executableName.Replace(".exe", ""));
+            ProcessStartWaiter waiter = new ProcessStartWaiter("notepad.exe");
+
             waiter.ProcessStart += (s, e) => this.GameStart(this, new BFGameEventArgs(this, e.Process));
             waiter.ProcessStart += (s, e) => this.WaitForGameQuitAsync(e.Process);
             waiter.ListenAsync();

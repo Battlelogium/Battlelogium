@@ -21,12 +21,12 @@ namespace Battlelogium.Core.Battlelog
         public string battlefieldName;
         public string battlefieldShortname;
         public string executableName;
-        public string originCode;
+        public int gameId;
         public string javascriptURL;
 
         public bool IsWebviewInitialized { get; private set; }
         
-        public BattlelogBase(string battlelogURL, string battlefieldName, string battlefieldShortname, string executableName, string originCode, string javascriptPath)
+        public BattlelogBase(string battlelogURL, string battlefieldName, string battlefieldShortname, string executableName, int originCode, string javascriptPath)
         {
             this.javascriptObject = new JavascriptObject();
             this.javascriptURL = javascriptPath;
@@ -35,7 +35,7 @@ namespace Battlelogium.Core.Battlelog
             this.battlefieldName = battlefieldName;
             this.battlefieldShortname = battlefieldShortname;
             this.executableName = executableName;
-            this.originCode = originCode;
+            this.gameId = originCode;
 
             this.InitListenGame();
 
@@ -121,12 +121,5 @@ namespace Battlelogium.Core.Battlelog
         {
             throw new NotImplementedException(); //TODO implement Dispose properly
         }
-
-        public ProcessStartWaiter ListenGame()
-        {
-            var waiter = new ProcessStartWaiter(this.executableName);
-            return waiter;
-        }
-
     }
 }

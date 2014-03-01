@@ -3,13 +3,23 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Battlelogium - Offline" Height="500" Width="500" ResizeMode="NoResize" 
         WindowStartupLocation="CenterScreen" DataContext="{RelativeSource Self}">
+    <Window.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#0a0f14" Offset="0"/>
+            <GradientStop Color="#020203" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Background>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="80"></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition Height="35"></RowDefinition>
         </Grid.RowDefinitions>
-        <Image Grid.Row="0" Source="/Battlelogium.Core;component/logo.png"></Image>
-        <Label x:Name="gameLabel" Grid.Row="2" HorizontalAlignment="Right"></Label>
+        <Image x:Name="logoImage" Grid.Row="0" Source="/Battlelogium.Core;component/logo.png" Margin="0,10,0,0"></Image>
+        <Label x:Name="gameLabel" Foreground="Gray" Grid.Row="2" HorizontalAlignment="Right" Margin="0,0,3,0"></Label>
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Height="400" Width="500">
+            <Image x:Name="gameIcon" Width="256" Height="256" Margin="122,72"/>
+        </Grid>
+
     </Grid>
 </Window>

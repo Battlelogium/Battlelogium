@@ -8,6 +8,6 @@ namespace Battlelogium.Core.ManagedOrigin
 {
     public class OfflineOrigin : Origin
     {
-        //Todo fill this in
+        public OfflineOrigin(int gameId) : base(String.Format(@"""/StartOffline"" ""origin://LaunchGame/{0}""", gameId)) { }
     }
 }

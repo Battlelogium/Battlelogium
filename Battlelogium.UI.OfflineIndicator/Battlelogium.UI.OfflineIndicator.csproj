@@ -99,10 +99,24 @@
       <Project>{74847b27-2dfa-404b-9baf-bfdd69604091}</Project>
       <Name>Battlelogium.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Battlelogium.UI.BF3\Battlelogium.UI.BF3.csproj">
+      <Project>{a6538caf-c5bf-4bef-8c01-5e42c94720d9}</Project>
+      <Name>Battlelogium.UI.BF3</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Battlelogium.UI.BF4\Battlelogium.UI.BF4.csproj">
+      <Project>{cf783500-dbac-4eb7-bd14-dfb70154dd2e}</Project>
+      <Name>Battlelogium.UI.BF4</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\bf3.png" />
-    <Resource Include="images\bf4.png" />
+    <Resource Include="images\BF3\icon.png" />
+    <Resource Include="images\BF4\icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\BF3\icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\BF4\icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

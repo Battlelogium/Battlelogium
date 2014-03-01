@@ -1,4 +1,4 @@
-﻿#define NO_ORIGIN //I don't want Origin to start if I'm debugging and I have no need to.
+﻿//#define NO_ORIGIN //I don't want Origin to start if I'm debugging and I have no need to.
 using System;
 using System.Reflection;
 using System.Windows;
@@ -40,7 +40,6 @@ namespace Battlelogium.Core.UI
         {
             this.battlelog.InitializeWebview();
             this.battlelog.javascriptObject.InitJavascriptObject(this);
-
             this.mainWindow.Icon = BitmapFrame.Create(new Uri(@"pack://application:,,/images/bg_icon.ico")); //Set runtime icon to Battlelogium badged icon
             this.mainWindow.MainControl.VersionNumber = "Battlelogium " + Assembly.GetEntryAssembly().GetName().Version.ToString();
             this.mainWindow.MainControl.MainGrid.Children.Add(battlelog.battlelogWebview);
