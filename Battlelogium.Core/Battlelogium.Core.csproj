@@ -105,7 +105,6 @@
       <DependentUpon>UIControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utilities\Extensions.cs" />
-    <Compile Include="Utilities\KeyboardHook.cs" />
     <Compile Include="Utilities\MessageBoxUtils.cs" />
     <Compile Include="Utilities\Process.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

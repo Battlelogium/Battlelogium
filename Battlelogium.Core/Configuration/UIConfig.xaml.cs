@@ -31,15 +31,12 @@ namespace Battlelogium.Core.Configuration
             this.Closing += UIConfig_Closing;
             //Load General Settings
             this.checkUpdates_input.IsChecked = this.config.CheckUpdates;
-            this.enableSteamOverlayBF4_input.IsChecked = this.config.EnableSteamOverlayBF4;
             this.manageOrigin_input.IsChecked = config.ManageOrigin;
 
             //Load Window Settings
             this.fullscreenMode_input.IsChecked = config.FullscreenMode;
             this.rightClickDrag_input.IsChecked = config.RightClickDrag;
             this.disableHardwareAccel_input.IsChecked = config.DisableHardwareAccel;
-
-            this.enableSteamOverlayBF4_input.Checked += (s, e) => CustomMessageBox.Show("The Steam Overlay for BF4 is extremely experimental and far from perfect. Please enable borderless windowed mode in Battlefield 4, and use Shift+F2 to open the overlay once ingame." + Environment.NewLine + Environment.NewLine + "You will need to press Shift+Tab to open the Steam Overlay once you have switched to the overlay enabler window with Shift+F2.");
         }
 
         private void UIConfig_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -61,7 +58,6 @@ namespace Battlelogium.Core.Configuration
         {
             //Need to add a confirm here
             this.config.WriteConfig("manageOrigin", this.manageOrigin_input.IsChecked.ToString());
-            this.config.WriteConfig("enableSteamOverlayBF4", this.enableSteamOverlayBF4_input.IsChecked.ToString());
             this.config.WriteConfig("checkUpdates", this.checkUpdates_input.IsChecked.ToString());
 
             this.config.WriteConfig("disableHardwareAccel", this.disableHardwareAccel_input.IsChecked.ToString());

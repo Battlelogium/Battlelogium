@@ -25,10 +25,9 @@
                 </LinearGradientBrush>
             </Grid.Background>
             <GroupBox BorderThickness="0" Foreground="Gray"  Grid.Column="0" Header="General Settings">
-                <UniformGrid Rows="3">
+                <UniformGrid Rows="2">
                     <CheckBox x:Name="checkUpdates_input" Content="Automatically check for updates" Foreground="Gray" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     <CheckBox x:Name="manageOrigin_input" Content="Let Battlelogium manage Origin" Foreground="Gray" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <CheckBox x:Name="enableSteamOverlayBF4_input" Content="Enable experimental BF4 Steam Overlay" Foreground="Gray" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 </UniformGrid>
 
             </GroupBox>

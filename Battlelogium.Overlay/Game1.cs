@@ -7,18 +7,21 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
-using Battlelogium.Core.Utilities;
 using System.Runtime.InteropServices;
+using System.Diagnostics;
 #endregion
 
 namespace Battlelogium.Overlay
 {
+
     /// <summary>
     /// This is the main type for your game
     /// </summary>
+    
+    [Obsolete("Never works properly",true)]
     public class Game1 : Game
     {
-        KeyboardHook hook = new KeyboardHook();
+        GlobalHotkeyWrapper hotkey;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         bool hide = true;
@@ -31,8 +34,25 @@ namespace Battlelogium.Overlay
         public Game1()
             : base()
         {
+          
+           if (Process.GetProcessesByName("Battlelogium.Overlay").Length > 1) Environment.Exit(0);
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+        }
+
+        void hotkey_GlobalKeyPress(object sender)
+        {
+            switch (hide)
+            {
+                case true:
+                    ShowWindow(base.Window.Handle, ShowWindowCommands.Maximize);
+                    hide = false;
+                    break;
+                case false:
+                    ShowWindow(base.Window.Handle, ShowWindowCommands.Hide);
+                    hide = true;
+                    break;
+            }
         }
 
         /// <summary>
@@ -46,32 +66,17 @@ namespace Battlelogium.Overlay
             // TODO: Add your initialization logic here
 
             base.Initialize();
-
-            hook.KeyPressed += hook_KeyPressed;
-            hook.RegisterHotKey(KeyboardHookModifierKeys.Shift , System.Windows.Forms.Keys.F2);
             base.IsMouseVisible = true;
             base.Window.IsBorderless = true;
+           
             var screen = System.Windows.Forms.Screen.AllScreens[0];
             graphics.PreferredBackBufferWidth = screen.Bounds.Width;
             graphics.PreferredBackBufferHeight = screen.Bounds.Height;
             graphics.ApplyChanges();
-            
-        }
-
-        void hook_KeyPressed(object sender, KeyPressedEventArgs e)
-        {
-            switch (hide)
-            {
-                case true:
-                    ShowWindow(base.Window.Handle, ShowWindowCommands.Maximize);
-                    hide = false;
-                    break;
-                case false:
-                    ShowWindow(base.Window.Handle, ShowWindowCommands.Hide);
-                    hide = true;
-                    break;
-            }
-            
+            hotkey = new GlobalHotkeyWrapper();
+            hotkey.GlobalKeyPress+=hotkey_GlobalKeyPress;
+            hotkey.Show();
+           
         }
 
         /// <summary>

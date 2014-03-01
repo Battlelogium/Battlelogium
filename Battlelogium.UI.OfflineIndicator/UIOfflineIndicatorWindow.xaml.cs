@@ -17,6 +17,7 @@ using Battlelogium.Core.Utilities;
 using Battlelogium.Core.ManagedOrigin;
 using Battlelogium.Core.Configuration;
 using System.Windows.Shell;
+using System.Diagnostics;
 
 namespace Battlelogium.UI.OfflineIndicator
 {
@@ -35,7 +36,9 @@ namespace Battlelogium.UI.OfflineIndicator
                 MessageBox.Show("Invalid Commandline Parameters - BF3 for Battlefield 3, BF4 for Battlefield 4");
                 Environment.Exit(1);
             }
+            Config config = new Config();
             switch(args[1]){
+                
                 case "BF3":
                     this.battlelog = new Battlefield3();
                     break;

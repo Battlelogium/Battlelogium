@@ -59,7 +59,13 @@ namespace Battlelogium.Core.UI
             this.mainWindow.MainControl.VersionNumber = "Battlelogium " + Assembly.GetEntryAssembly().GetName().Version.ToString();
             this.mainWindow.MainControl.MainGrid.Children.Add(battlelog.battlelogWebview);
             this.mainWindow.Title = "Battlelogium - " + battlelog.battlefieldName;
-            this.mainWindow.Closed += mainWindow_Closed;
+            this.mainWindow.Closed += (s, e) =>
+            {
+                if (config.ManageOrigin)
+                {
+                    this.managedOrigin.KillOrigin(config.WaitTimeToKillOrigin * 1000);
+                }
+            };
             this.mainWindow.PreviewKeyDown += mainWindow_PreviewKeyDown;
             this.mainWindow.PreviewMouseDown += (s, e) => { if (e.ChangedButton == MouseButton.Middle) e.Handled = true; }; //Disable opening link in new window with middle click
 
@@ -118,13 +124,6 @@ namespace Battlelogium.Core.UI
             }
         }
         
-        private void mainWindow_Closed(object sender, EventArgs e)
-        {
-            if (config.ManageOrigin)
-            {
-                this.managedOrigin.KillOrigin(config.WaitTimeToKillOrigin * 1000);
-            }
-        }
         private void battlelogWebview_IsLoading(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName.Equals("IsLoading"))

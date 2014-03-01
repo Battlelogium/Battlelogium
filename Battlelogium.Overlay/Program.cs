@@ -10,6 +10,7 @@ namespace Battlelogium.Overlay
     /// <summary>
     /// The main class.
     /// </summary>
+    [Obsolete("Never works properly", true)]
     public static class Program
     {
         /// <summary>
