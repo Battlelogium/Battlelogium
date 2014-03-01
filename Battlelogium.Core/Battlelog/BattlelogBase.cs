@@ -104,10 +104,15 @@ namespace Battlelogium.Core.Battlelog
         public static bool CheckBattlelogConnection()
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://battlelog.com/");
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            response.Close();
-            if (response == null || response.StatusCode != HttpStatusCode.OK) return false;
-            else return true;
+            try
+            {
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                response.Close();
+                if (response == null || response.StatusCode != HttpStatusCode.OK) return false;
+                else return true;
+            }catch (WebException){
+                return false;
+            }
 
         }
 

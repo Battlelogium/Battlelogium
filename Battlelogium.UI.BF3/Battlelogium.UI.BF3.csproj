@@ -132,6 +132,10 @@
       <Project>{0c691505-4dab-4946-a1bb-1f6c682567eb}</Project>
       <Name>Battlelogium.ThirdParty.WPFCustomMessageBox</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Battlelogium.UI.OfflineIndicator\Battlelogium.UI.OfflineIndicator.csproj">
+      <Project>{d63a80c4-9a50-47b9-a236-6279eb5cd4a4}</Project>
+      <Name>Battlelogium.UI.OfflineIndicator</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="images\background.png" />

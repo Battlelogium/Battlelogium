@@ -38,7 +38,7 @@ namespace Battlelogium.Core.Utilities
             {
                 // get the keys.
                 Keys key = (Keys)(((int)m.LParam >> 16) & 0xFFFF);
-                ModifierKeys modifier = (ModifierKeys)((int)m.LParam & 0xFFFF);
+                KeyboardHookModifierKeys modifier = (KeyboardHookModifierKeys)((int)m.LParam & 0xFFFF);
 
                 // invoke the event to notify the parent.
                 if (KeyPressed != null)
@@ -76,7 +76,7 @@ namespace Battlelogium.Core.Utilities
     /// </summary>
     /// <param name="modifier">The modifiers that are associated with the hot key.</param>
     /// <param name="key">The key itself that is associated with the hot key.</param>
-    public void RegisterHotKey(ModifierKeys modifier, Keys key)
+    public void RegisterHotKey(KeyboardHookModifierKeys modifier, Keys key)
     {
         // increment the counter.
         _currentId = _currentId + 1;
@@ -113,16 +113,16 @@ namespace Battlelogium.Core.Utilities
 /// </summary>
 public class KeyPressedEventArgs : EventArgs
 {
-    private ModifierKeys _modifier;
+    private KeyboardHookModifierKeys _modifier;
     private Keys _key;
 
-    internal KeyPressedEventArgs(ModifierKeys modifier, Keys key)
+    internal KeyPressedEventArgs(KeyboardHookModifierKeys modifier, Keys key)
     {
         _modifier = modifier;
         _key = key;
     }
 
-    public ModifierKeys Modifier
+    public KeyboardHookModifierKeys Modifier
     {
         get { return _modifier; }
     }
@@ -137,7 +137,7 @@ public class KeyPressedEventArgs : EventArgs
 /// The enumeration of possible modifiers.
 /// </summary>
 [Flags]
-public enum ModifierKeys : uint
+public enum KeyboardHookModifierKeys : uint
 {
     Alt = 1,
     Control = 2,

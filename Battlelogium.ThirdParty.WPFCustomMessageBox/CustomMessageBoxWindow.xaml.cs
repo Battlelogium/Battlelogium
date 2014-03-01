@@ -1,6 +1,8 @@
 ﻿using System.Drawing;
 using System.Windows;
 using System.Windows.Interop;
+using System.Windows.Media.Imaging;
+using System;
 
 namespace Battlelogium.ThirdParty.WPFCustomMessageBox
 {
@@ -232,6 +234,9 @@ namespace Battlelogium.ThirdParty.WPFCustomMessageBox
         /// <summary>Force rendering the messagebox window in software mode so Steam can't overlay ontop of it</summary>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            //Battlelogium Modifications Start
+            this.Icon = BitmapFrame.Create(new Uri(@"pack://application:,,/images/bg_icon.ico"));
+            //Battlelogium Modifications End
             HwndSource hwndSource = PresentationSource.FromVisual(this) as HwndSource;
             HwndTarget hwndTarget = hwndSource.CompositionTarget;
             hwndTarget.RenderMode = RenderMode.SoftwareOnly;

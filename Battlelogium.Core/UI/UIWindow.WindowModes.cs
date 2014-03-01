@@ -21,12 +21,12 @@ namespace Battlelogium.Core.UI
                 switch ((this.UICore.config.WindowWidth == 0 || this.UICore.config.WindowHeight == 0))
                 {
                     case true:
-                    this.LoadBounds();
-                    break;
+                        this.LoadBounds();
+                        break;
                     case false:
-                    this.Height = this.UICore.config.WindowHeight;
-                    this.Width = this.UICore.config.WindowWidth;
-                    break;
+                        this.Height = this.UICore.config.WindowHeight;
+                        this.Width = this.UICore.config.WindowWidth;
+                        break;
                }
 
                 if (this.UICore.config.RightClickDrag)

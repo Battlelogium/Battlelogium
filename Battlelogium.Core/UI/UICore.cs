@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using Battlelogium.Core.Configuration;
 using Battlelogium.Core.Battlelog;
 using Battlelogium.Core.ManagedOrigin;
+using Battlelogium.Core.Utilities;
+using System.Diagnostics;
 
 namespace Battlelogium.Core.UI
 {
@@ -31,16 +33,29 @@ namespace Battlelogium.Core.UI
         {
             this.mainWindow = mainWindow;
             this.battlelog = battlelog;
-            //this.CheckBattlelogConnection();
             this.config = config;
             this.managedOrigin = new Origin();
         }
 
-        public void Initialize()
+        public async Task Initialize()
         {
+            this.mainWindow.Icon = BitmapFrame.Create(new Uri(@"pack://application:,,/images/bg_icon.ico")); //Set runtime icon to Battlelogium badged ico
+            bool isBattlelogAvailable = await BattlelogBase.CheckBattlelogConnectionAsync();
+            if (!isBattlelogAvailable)
+            {
+                bool offlineMode = MessageBoxUtils.ShowChoiceDialog("Battlelog is unavailable. Would you like to start Offline Campaign?", "Battlelog unavailable", "Start Campaign", "Exit Battlelogium");
+                switch (offlineMode)
+                {
+                    case true:
+                        this.StartOfflineMode();
+                        return;
+                    case false:
+                        this.mainWindow.Close();
+                        return;
+                }
+            }
             this.battlelog.InitializeWebview();
             this.battlelog.javascriptObject.InitJavascriptObject(this);
-            this.mainWindow.Icon = BitmapFrame.Create(new Uri(@"pack://application:,,/images/bg_icon.ico")); //Set runtime icon to Battlelogium badged icon
             this.mainWindow.MainControl.VersionNumber = "Battlelogium " + Assembly.GetEntryAssembly().GetName().Version.ToString();
             this.mainWindow.MainControl.MainGrid.Children.Add(battlelog.battlelogWebview);
             this.mainWindow.Title = "Battlelogium - " + battlelog.battlefieldName;
@@ -74,19 +89,13 @@ namespace Battlelogium.Core.UI
             this.IsInitialized = true;
         }
 
-        private async Task CheckBattlelogConnection()
+        private void StartOfflineMode()
         {
-            bool connection = await BattlelogBase.CheckBattlelogConnectionAsync();
-            switch (connection)
-            {
-                case true:
-                    //Do something
-                    break;
-                case false:
-                    //Do something
-                    break;
-            }
+            Process.Start("Battlelogium.UI.OfflineIndicator.exe", this.battlelog.battlefieldShortname);
+            this.mainWindow.Close();
         }
+
+        #region Event Handlers
         private void mainWindow_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.F5)
@@ -131,5 +140,6 @@ namespace Battlelogium.Core.UI
                 }
             }
         }
+        #endregion
     }
 }

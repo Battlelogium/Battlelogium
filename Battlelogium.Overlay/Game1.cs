@@ -48,7 +48,7 @@ namespace Battlelogium.Overlay
             base.Initialize();
 
             hook.KeyPressed += hook_KeyPressed;
-            hook.RegisterHotKey(ModifierKeys.Shift , System.Windows.Forms.Keys.F2);
+            hook.RegisterHotKey(KeyboardHookModifierKeys.Shift , System.Windows.Forms.Keys.F2);
             base.IsMouseVisible = true;
             base.Window.IsBorderless = true;
             var screen = System.Windows.Forms.Screen.AllScreens[0];

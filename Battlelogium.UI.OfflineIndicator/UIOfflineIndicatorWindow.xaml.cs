@@ -32,14 +32,14 @@ namespace Battlelogium.UI.OfflineIndicator
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length <= 1)
             {
-                MessageBox.Show("Invalid Commandline Parameters - bf3 for Battlefield 3, bf4 for Battlefield 4");
+                MessageBox.Show("Invalid Commandline Parameters - BF3 for Battlefield 3, BF4 for Battlefield 4");
                 Environment.Exit(1);
             }
             switch(args[1]){
-                case "bf3":
+                case "BF3":
                     this.battlelog = new Battlefield3();
                     break;
-                case "bf4":
+                case "BF4":
                     this.battlelog = new Battlefield4();
                     break;
                 default:
