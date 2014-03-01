@@ -1,87 +1,58 @@
 ![Battlelogium for Steam](https://raw.github.com/ron975/Battlelogium/master/BF3WrapperWPF/images/BattlelogiumLogoInline.png "Battlelogium for Steam")
 =========================
-
-Battlelogium is a [Battlefield 3 Battlelog](http://battlelog.battlefield.com/) wrapper to allow better integration with Steam, inspired by [Battlelog on Steam](http://forums.steampowered.com/forums/showthread.php?t=2289393)
-
-
-Installation
-------------
-
-1. Battlelogium requires [.NET Framework 4](http://www.microsoft.com/en-ca/download/details.aspx?id=17851). This should have already been installed if you are on Windows Vista or later and have Windows Update enabled.
-2. Install Origin. You can disable starting at launch, but this is not required, as Battlelogium will close all Origin processes before starting Origin again.
-3. Install the [latest Battlefield 3 Web Plugins](http://battlelog-cdn.battlefield.com/public/download/battlelog-web-plugins_2.1.7_115.exe)
-4. If you have downloaded the package from [my website](http://punyman.com/projects/Battlelogium.zip), simply unzip to any folder along with the supplied Awesomium runtime libraries
-5. Add Battlelogium.exe to Steam as a Non-Steam Game. You may change the configuration options listed below
+ 
+Battlelogium is a [Battlefield Battlelog](http://battlelog.battlefield.com/) client that wraps Battlelog, Origin, and Battlefield 3 and 4 into one neat package. It allows for and enables Steam integration where possible, such at play time counting and the Steam overlay if possible.
+ 
 
 Features
 --------
-
-* Powered by [Awesomium](http://awesomium.com/) and [Chromium](http://www.chromium.org/)
-* Built with aesthetics in mind, many details have been fine-tuned to provide the best experience possible. Attention has been paid to the smallest details, such as removing the advertisements and integrating the quit button with the Battlelog webpage through Javascript.
-* Written in C# with .NET 4 and WPF technologies
-* Works seamlessly with Steam, closes Origin and Battlelog's ESNHost on quit so that one doesn't stay in-game even while Battlefield 3 is closed. The Steam Overlay also shows in-game in Battlefield 3.
-* Easy installation, just unzip the contents to any directory and add to Steam.
-* Page modifications such as removing advertisements can be changed or added through custom CSS styling of the Battlelog web page
+ 
+* Powered by [CEFSharp](http://github.com/cefsharp/CEFSharp/) 
+* Built with aesthetics in mind
+* Wraps Battlefield and Battlelog in one neat package
+* Full Steam Overlay support for Battlefield 3
+* Start campaign with Steam Overlay support if Battlelog is not available
+* Does not modify or affect any Battlefield or Origin files  
 * Open source and licensed under [GNU GPL v3](http://www.gnu.org/licenses/gpl.html)
-
-
+ 
+ 
 Configuration Options
 ---------------------
+ 
+Most configuration options are accessible through the settings editor where the Battlelog profile settings are. Settings are saved and read from `config.ini`.
 
-* `style.css` is the CSS that is applied to the Battlelog web page when loaded. By default, it removes footers and advertisements as well as the scrollbar. Any modifications you make to this file will be applied to Battlelog's CSS.
+### General Options
+* `manageOrigin` toggles whether Battlelogium will create a new, managed instance of Origin so that Steam is aware of any child processes that Origin starts and therefore will attempt to hook the Steam overlay. Unless you are using a **.par file patch** or **Outcome**, this should be set to true. **Battlelogium does not come with included installs for either Outcome or .par file patches since version 2.0**
 
-* `config.ini` is a simple configuration file with a few configurable options
-    
-	-   General Options
-	    -  `waitTimeToKillOrigin` is the amount of time in seconds to wait to kill Origin after the wrapper has closed. Increase if BF3 saves aren't syncing.
-	
-        -  `customJsEnabled` should be true if you wish to use custom Javascript in the customjs.js file. It will run at the `LoadingFrameComplete` event.
+* `waitTimeToKillOrigin` specifies in seconds how long to wait before a managed instance of Origin is closed, for the purposes of allowing cloud sync. By default this value is 10 seconds to allow Origin to sync to the cloud before closing. **This setting is not available from the settings editor and must be changed manually in the configuration file**
 
-	    -  `directToCampaign` should be true if you want to skip Battlelog and go directly to campaign mode. If no internet connection is detected, this will also be the default behaviour
-	 
-	    -  `checkUpdates` should be true if you want Battlelogium to check for updates, and notify you of them.
-		
-		-  `useSoftwareRender` should be true if you want WPF to render without hardware acceleration. This is useful if the Steam Overlay is causing problems in Battlelogium, as it will disable it in. **The Steam Overlay in Battlefield 3 will still work with this on**
-	
-		-  `handleOrigin` should only be false if you have the "par fix" installed and so Origin does need to be running while playing Battlefield 3. See [BattlelogiumParManager](#BattlelogiumParManager)
-	-   Window Options
-	
-	    -  `windowedMode` should be true if you want to run Battlelogium in a window instead of fullscreen.
-	
-	    -  `startMaximized` The window by maximized by default if this is true. This only applies when `windowedMode` is true
-		
-		-  `noBorder` There won't be a border or title bar on the window. This means you will not be able to resize the window. You can drag the window around with rightclick, however
-		
-		-  `windowHeight` is the height of the window in pixels at the start. 
-		
-		-  `windowWidth` is the width of the window in pixels at the start.
+* `checkUpdates` toggles whether to check for updates to Battlelogium. Updates are retrieved from this GitHub repository and can be downloaded and installed. It is recommended that you check for any updates in case of bugfixes.
 
-The default windowHeight and windowWidth are 720p (1280x720). You are able to drag and move the window with a rightclick anywhere on the window.
+### Window Settings
+* `fullscreenMode` toggles whether Battlelogium will start in a borderless fullscreen window, covering the whole screen, including the taskbar. Window modes are toggle-able with **Alt-Enter**.
 
-BattlelogiumParManager
-----------------------
-`BattlelogiumParManager.exe` is a helper application to modify the Origin Parameter file for Battlefield 3 (`bf3.par`). A file sourced from http://par.nofate.me has been hard-coded into the application. This file removes the requirement for Origin to be running while playing Battlefield 3. If installed, it is recommended that `handleOrigin` be set to false. 
+* `disableHardwareAccel` disables hardware acceleration on the main Battlelogium window, forcing the window to render in software (CPU) mode. While this disables the Steam overlay being able to render on the Battlelogium window (**Steam overlay will still work in-game Battlefield 3 and Battlefield 4 if `enableSteamOverlayBF4` is set to true**) and thus fixing issues that pop up relating to the Steam overlay's incompatibility with WPF, rendering with the CPU causes a significant drop in smoothness and performance and may effect in-game performance, it is recommended that hardware accelerate be kept on.
 
-To access this feature, there is an option in the Battlelogium settings menu that can be accessed by going to Settings -> Battlelogium Settings -> Remove Origin Requirement, or manually by starting `BattlelogiumParManager.exe remove` and then changing `handleOrigin` to false.
+* `windowHeight` and `windowWidth` specify the forced height and width of the window respectively. If either is set to 0, Battlelogium will resume your previous window size and position, else, if both a width and height are set, it will always start the window with those dimensions.
+
+* `rightClickDrag` enables the legacy behavior of dragging around the borderless window* by holding down the right mouse button. This is no longer needed, simply drag the top of the window as you would normally using the left mouse button to move the window. However, if some users have gotten used to that behavior they may wish to enable it again.
+
+_*Since Battlelogium 2.0, the option to have a window with a border chrome on it has been removed, therefore, the `noBorder` setting is no longer available. A borderless window is the default, and only windowed mode behavior_
+
 Bug reports
 -----------
-
-Bug reports and support will only given if 3 things are provided.
-* A copy of your config.ini
-* A copy of your style.css  
+ 
+Bug reports and support will only given if 3 things are provided. 
 * A copy of a fresh battlelogium.log. **Delete any existing log file and run Battlelogium fresh to generate a new log file before submitting**
-
+ 
 Building
 --------
+Build using Visual Studio 2013 or [Visual Studio Express 2013](http://www.visualstudio.com/downloads/download-visual-studio-vs#d-express-windows-desktop). Dependencies are handled by NuGet and do not have to manually installed.
 
-1. It is recommended that you download the [Awesomium SDK](http://awesomium.com/download/). Be sure to install the .NET wrappers, be sure to reference Awesomium.Core and Awesomium.Windows.Controls.
-
-2. Build using Visual Studio 2010 or [Visual C# Express](http://www.microsoft.com/visualstudio/eng/downloads#d-csharp-2010-express)
-
-
-Changelogs
+ 
+Changelogs 
 ----------
-
+ 
 ###Release 1.21
 >* User Experience
 >	- Steam Overlay now works again in Battlefield 3
@@ -96,7 +67,7 @@ Changelogs
 > 	- Updated README.md to reflect config changes
 >	- Removed SendKeys() method, is no longer needed.
 >	- Wrapper will sleep for 5 seconds more than waitTimeToKillOrigin on closing to allow origin kill thread to, well, kill Origin
-
+ 
 ###Release 1.3
 >* User Experience
 >	- Now supports going directly to campaign with Steam Overlay support. 
@@ -130,7 +101,7 @@ Changelogs
 >	- Created a rudimentary hacky API to create dialogs in Battlelog DOM. It's not the best code, but it's what I can make do with Battlelog's ugly mess of a web page.
 >	- Changed some method names to be more clear.
 >	- Sorted out code #regions
-
+ 
 ###Release 1.4.0.1
 >* User Experience
 >	- Added an option in the settings menu in which the requirement for Origin to be running while playing Battlefield 3 can be removed
@@ -172,27 +143,27 @@ Changelogs
 >  - Disable settings dialog on Battlefield 4 and MOHW
 >  - Fix Quick Match tooltips not showing in some cases
 >  - Suppress flashes of the Quick Match tooltips when setting them
-
+ 
 ###Release 1.4.0.4
 >* Code
 >  - Update to Awesomium 1.7.3
-
+ 
 Special thanks
 --------------
-
+ 
 Thanks to..
 * [JJBoonie](http://steamcommunity.com/id/JJBoonie/) for suggestions and testing
 * [ProfDoctorMrSaibot](http://steamcommunity.com/id/ProfDoctorMrSaibot) for many sugguestions and testing
 * [Frohman :D](http://forums.steampowered.com/forums/member.php?u=974602) for the original _Battlelog on STEAM_
-
+ 
 _Find me on [Steam](http://steamcommunity.com/id/ron975/home/) or on GitHub and offer feature or bug requests!_
 ___
-
+ 
 Licensing
 ---------
-
+ 
 _Battlelogium is licensed under [GNU GPL v3](http://www.gnu.org/licenses/gpl.html), and the source code is available at [GitHub](https://github.com/ron975/Battlelogium-for-Steam)_
-
+ 
 > This program is free software: you can redistribute it and/or modify
 > it under the terms of the GNU General Public License as published by
 > the Free Software Foundation, either version 3 of the License, or
@@ -205,27 +176,26 @@ _Battlelogium is licensed under [GNU GPL v3](http://www.gnu.org/licenses/gpl.htm
 > 
 > You should have received a copy of the GNU General Public License
 > along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
+ 
 Legal
 -----
-
+ 
 ### EA
-
+ 
 > ©2011 Electronic Arts Inc. Battlefield 3, Frostbite and the DICE logo are trademarks of EA Digital Illusions CE AB. 
 > EA, the EA logo, EA SPORTS, the EA SPORTS logo, Pogo, Origin and the Origin logo are trademarks of Electronic Arts Inc.
-> Battlelog (http://battlelog.battlefield.com) © 2013 EA DIGITAL ILLUSIONS CE AB
 
 ### Valve
 > © 2013 Valve Corporation. Valve, the Valve logo, Half-Life, the Half-Life logo, the Lambda logo, Steam, the Steam logo, Team Fortress, the Team Fortress logo, Opposing Force, Day of Defeat, the Day of Defeat logo, Counter-Strike, the Counter-Strike logo, Source, the Source logo, Counter-Strike: Condition Zero, Portal, the Portal logo, Dota, the Dota 2 logo, and Defense of the Ancients are trademarks and/or registered trademarks of Valve Corporation. 
-
+ 
 ### Awesomium
 > © 2013 Awesomium Technologies LLC. Awesomium, the Awesomium logo, the Awesomium libraries, the Awesomium.NET libraries, the Awesomium runtime are trademarks and/or registered trademarks of Awesomium Technologies LLC
-
+ 
 ### Chromium 
 > © 2012 Google Inc. All rights reserved. Chromium™ open source project is a trademark of Google Inc.
-
+ 
 _All other trademarks are property of their respective owners._
-
-
-
-
+ 
+ 
+ 
+ 

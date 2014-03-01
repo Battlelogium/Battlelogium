@@ -252,6 +252,10 @@
       <Project>{0c691505-4dab-4946-a1bb-1f6c682567eb}</Project>
       <Name>Battlelogium.ThirdParty.WPFCustomMessageBox</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VCRedistContainer\VCRedistContainer.csproj">
+      <Project>{37d88743-8ba4-439d-90af-ceb3f7cf788a}</Project>
+      <Name>VCRedistContainer</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Configuration\UIConfig.xaml">
