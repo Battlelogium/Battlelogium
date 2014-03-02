@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Net;
 
 namespace Battlelogium.Installer
 {
@@ -24,7 +25,35 @@ namespace Battlelogium.Installer
         public UIInstaller()
         {
             InitializeComponent();
+        }
+
+        private void installButton_Click(object sender, RoutedEventArgs e)
+        {
+            Install();
+        }
+
+        public void Install()
+        {
             this.dependencies = new DependencyCheck();
+            WebClient downloader = new WebClient();
+            downloader.DownloadProgressChanged += downloader_DownloadProgressChanged;
+
+        }
+
+        private void downloader_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        {
+           
+        double bytesIn = double.Parse(e.BytesReceived.ToString());
+        double totalBytes = double.Parse(e.TotalBytesToReceive.ToString());
+        double percentage = bytesIn / totalBytes * 100;
+
+        this.progressBar.Value = int.Parse(Math.Truncate(percentage).ToString());
+
+        }
+
+        private void browseButton_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }
