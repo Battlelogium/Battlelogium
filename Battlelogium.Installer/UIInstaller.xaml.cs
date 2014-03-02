@@ -26,10 +26,12 @@ namespace Battlelogium.Installer
         DependencyCheck dependencies;
         WebClient downloader;
         string tempPath = Path.Combine(Path.GetTempPath(), "battlelogium_install");
+        string installPath;
         public UIInstaller()
         {
             InitializeComponent();
             if (!Directory.Exists(tempPath)) Directory.CreateDirectory(tempPath);
+            setInstallPath(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),"Battlelogium"));
         }
 
         private void installButton_Click(object sender, RoutedEventArgs e)
@@ -37,6 +39,12 @@ namespace Battlelogium.Installer
             Install();
         }
 
+        private void setInstallPath(string path){
+            this.installPath = path;
+            this.Dispatcher.Invoke( () => {
+                this.installLabel.Content = "Battlelogium will install to " + this.installPath;
+            });
+        }
         public async Task Install()
         {
             this.installButton.IsEnabled = false;
@@ -45,9 +53,9 @@ namespace Battlelogium.Installer
             progressBar.IsIndeterminate = true;
             await InstallOrigin();
             await InstallWebPlugins();
-            setStatusLabelSync("Done");
-            progressBar.IsIndeterminate = false;
-            progressBar.Value = 100;
+            new UIUpdater().Show();
+            this.Close();
+            
         }
 
         public async Task InstallOrigin()
@@ -66,12 +74,26 @@ namespace Battlelogium.Installer
             this.setStatusLabelSync("Downloading "+labelName+". Please wait...");
             await downloader.DownloadFileTaskAsync(originDownloadUrl, Path.Combine(this.tempPath, downloadKey+"_inst.exe"));
             this.setStatusLabelSync("Installing " + labelName + ". Please wait...");
-            await Task.Run(() => Process.Start(Path.Combine(this.tempPath, downloadKey+"_inst.exe"), "/s").WaitForExit());
+            await Task.Run(() => {
+                try
+                {
+                    Process.Start(Path.Combine(this.tempPath, downloadKey + "_inst.exe"), "/s").WaitForExit();
+                }
+                catch
+                {
+                    return;
+                }
+            });
         }
        
         private void browseButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            var dialog = new Ookii.Dialogs.Wpf.VistaFolderBrowserDialog()
+            {
+                SelectedPath = this.installPath
+            };
+            dialog.ShowDialog();
+            setInstallPath(dialog.SelectedPath);
         }
 
         public void setStatusLabelSync(string content)

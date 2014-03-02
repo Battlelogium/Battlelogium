@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Net;
 using System.IO;
 using System.IO.Compression;
+using System.Diagnostics;
 
 namespace Battlelogium.Installer
 {
@@ -24,22 +25,52 @@ namespace Battlelogium.Installer
         public string CurrentVersion { private get; set; }
         public string NewVersion { private get; set; }
         private string tempPath = Path.Combine(Path.GetTempPath(), "battlelogium_install");
+        private string installPath;
 
         private WebClient downloader;
-        public UIUpdater()
+
+        public UIUpdater(string installPath)
         {
             InitializeComponent();
+            this.installPath = installPath;
             if (this.CurrentVersion == null) this.currentVersionLabel.Visibility = Visibility.Collapsed;
             if (!Directory.Exists(tempPath)) Directory.CreateDirectory(tempPath);
             this.NewVersion = new WebClient().DownloadString("http://ron975.github.io/Battlelogium/releaseinfo/releaseversion");
+            
+            KillBattlelogium();
             DownloadBattlelogium();
         }
 
-        public UIUpdater(string currentVersion) : this()
+        public UIUpdater(string currentVersion, string installPath) : this(installPath)
         {
             this.CurrentVersion = currentVersion;
         }
+        public UIUpdater(string currentVersion, string installPath, int handle)
+            : this(installPath)
+        {
+            this.CurrentVersion = currentVersion;
+            Process.GetProcessById(handle).WaitForExit();
+        }
 
+        public UIUpdater() : this(AppDomain.CurrentDomain.BaseDirectory) { }
+
+        private void KillBattlelogium()
+        {
+            Process.Start(new ProcessStartInfo()
+            {
+                FileName = "taskkill",
+                Arguments = "/im Battlelogium.UI.BF3.exe /f",
+                CreateNoWindow = true,
+                WindowStyle = ProcessWindowStyle.Hidden
+            }).WaitForExit();
+            Process.Start(new ProcessStartInfo()
+            {
+                FileName = "taskkill",
+                Arguments = "/im Battlelogium.UI.BF4.exe /f",
+                CreateNoWindow = true,
+                WindowStyle = ProcessWindowStyle.Hidden
+            }).WaitForExit();
+        }
         private async Task DownloadBattlelogium()
         {
             this.downloader = new WebClient();
@@ -54,7 +85,7 @@ namespace Battlelogium.Installer
         {
             setStatusLabelSync("Installing Battlelogium");
             this.progressBar.IsIndeterminate = true;
-            await ExtractBattlelogium(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "bat"));
+            await ExtractBattlelogium(installPath);
             setStatusLabelSync("Done");
             this.progressBar.IsIndeterminate = false;
             this.progressBar.Value = 100;

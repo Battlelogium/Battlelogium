@@ -12,6 +12,8 @@ using Battlelogium.Core.Battlelog;
 using Battlelogium.Core.ManagedOrigin;
 using Battlelogium.Core.Utilities;
 using System.Diagnostics;
+using System.Net;
+using Battlelogium.Installer;
 
 namespace Battlelogium.Core.UI
 {
@@ -40,6 +42,7 @@ namespace Battlelogium.Core.UI
         public async Task Initialize()
         {
             this.mainWindow.Icon = BitmapFrame.Create(new Uri(@"pack://application:,,/images/bg_icon.ico")); //Set runtime icon to Battlelogium badged ico
+            if (config.CheckUpdates) await this.CheckUpdate();
             bool isBattlelogAvailable = await BattlelogBase.CheckBattlelogConnectionAsync();
             if (!isBattlelogAvailable)
             {
@@ -95,6 +98,31 @@ namespace Battlelogium.Core.UI
             this.IsInitialized = true;
         }
 
+        private async Task CheckUpdate()
+        {
+            //Version currentVersion = Assembly.GetEntryAssembly().GetName().Version;
+            Version currentVersion = Version.Parse("1.0.0.0");
+            Version newVersion = Version.Parse(await new WebClient().DownloadStringTaskAsync("http://ron975.github.io/Battlelogium/releaseinfo/releaseversion"));
+            if (newVersion > currentVersion)
+            {
+                bool? updateStart = new UIUpdateNotifier().ShowDialog();
+                switch (updateStart)
+                {
+                    case null:
+                        return;
+                    case false:
+                        return;
+                    case true:
+                        Process.Start("Battlelogium.Installer.exe", String.Format("{0} {1} {2}",
+                            currentVersion.ToString(),
+                            @"""" + AppDomain.CurrentDomain.BaseDirectory + @"""",
+                            Process.GetCurrentProcess().Id));
+
+                        this.mainWindow.Dispatcher.Invoke(() => this.mainWindow.Close());
+                        break;
+                }
+            }
+        }
         private void StartOfflineMode()
         {
             Process.Start("Battlelogium.UI.OfflineIndicator.exe", this.battlelog.battlefieldShortname);
