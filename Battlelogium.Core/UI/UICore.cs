@@ -100,8 +100,8 @@ namespace Battlelogium.Core.UI
 
         private async Task CheckUpdate()
         {
-            //Version currentVersion = Assembly.GetEntryAssembly().GetName().Version;
-            Version currentVersion = Version.Parse("1.0.0.0");
+            Version currentVersion = Assembly.GetEntryAssembly().GetName().Version;
+            
             Version newVersion = Version.Parse(await new WebClient().DownloadStringTaskAsync("http://ron975.github.io/Battlelogium/releaseinfo/releaseversion"));
             if (newVersion > currentVersion)
             {
@@ -113,11 +113,8 @@ namespace Battlelogium.Core.UI
                     case false:
                         return;
                     case true:
-                        Process.Start("Battlelogium.Installer.exe", String.Format("{0} {1} {2}",
-                            currentVersion.ToString(),
-                            @"""" + AppDomain.CurrentDomain.BaseDirectory + @"""",
-                            Process.GetCurrentProcess().Id));
 
+                        Process.Start("Battlelogium.Installer.exe",Process.GetCurrentProcess().Id.ToString());
                         this.mainWindow.Dispatcher.Invoke(() => this.mainWindow.Close());
                         break;
                 }

@@ -53,7 +53,7 @@ namespace Battlelogium.Installer
             progressBar.IsIndeterminate = true;
             await InstallOrigin();
             await InstallWebPlugins();
-            new UIUpdater().Show();
+            new UIUpdater(installPath).Show();
             this.Close();
             
         }

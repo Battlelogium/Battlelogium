@@ -21,10 +21,8 @@ namespace Battlelogium.Installer
                 new UIInstaller().Show();
                 return;
             }
-            string currentversion = args[1];
-            string installPath = args[2];
-            int battlelogiumPID = int.Parse(args[3]);
-            new UIUpdater(currentversion, installPath, battlelogiumPID).Show();
+            int battlelogiumPID = int.Parse(args[1]);
+            new UIUpdater(battlelogiumPID).Show();
         }
     }
 }

@@ -22,7 +22,6 @@ namespace Battlelogium.Installer
     /// </summary>
     public partial class UIUpdater : Window
     {
-        public string CurrentVersion { private get; set; }
         public string NewVersion { private get; set; }
         private string tempPath = Path.Combine(Path.GetTempPath(), "battlelogium_install");
         private string installPath;
@@ -33,7 +32,6 @@ namespace Battlelogium.Installer
         {
             InitializeComponent();
             this.installPath = installPath;
-            if (this.CurrentVersion == null) this.currentVersionLabel.Visibility = Visibility.Collapsed;
             if (!Directory.Exists(tempPath)) Directory.CreateDirectory(tempPath);
             this.NewVersion = new WebClient().DownloadString("http://ron975.github.io/Battlelogium/releaseinfo/releaseversion");
             
@@ -41,15 +39,17 @@ namespace Battlelogium.Installer
             DownloadBattlelogium();
         }
 
-        public UIUpdater(string currentVersion, string installPath) : this(installPath)
+        public UIUpdater(int handle) : this()
         {
-            this.CurrentVersion = currentVersion;
-        }
-        public UIUpdater(string currentVersion, string installPath, int handle)
-            : this(installPath)
-        {
-            this.CurrentVersion = currentVersion;
-            Process.GetProcessById(handle).WaitForExit();
+            try
+            {
+                var battlelogiumProc = Process.GetProcessById(handle);
+                if (!battlelogiumProc.HasExited) battlelogiumProc.WaitForExit();
+            }
+            catch
+            {
+                
+            }
         }
 
         public UIUpdater() : this(AppDomain.CurrentDomain.BaseDirectory) { }

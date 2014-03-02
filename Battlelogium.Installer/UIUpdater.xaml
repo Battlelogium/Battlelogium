@@ -15,12 +15,7 @@
             </LinearGradientBrush>
         </Grid.Background>
         <Image Grid.Row="0" Source="logo.png"></Image>
-        <Label x:Name="currentVersionLabel" HorizontalAlignment="Right" Margin="0,5,20,10" Grid.Row="1" VerticalAlignment="Top">
-            <TextBlock>
-                <Run FontWeight="Light">Current Version - </Run>
-                <Run Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type bl:UIUpdater}}, Path=CurrentVersion}"/>
-            </TextBlock>
-        </Label>
+        <Label x:Name="currentVersionLabel" HorizontalAlignment="Right" Margin="0,5,20,10" Grid.Row="1" VerticalAlignment="Top"/>
         <Label HorizontalAlignment="Left" Margin="20,5,0,0" Grid.Row="1" VerticalAlignment="Top" RenderTransformOrigin="0.556,0.585">
             <TextBlock>
                 <Run FontWeight="Light">Installing Battlelogium - </Run>
