@@ -5,7 +5,8 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Battlelogium.Core.Utilities;
-
+using Battlelogium.Core.Configuration;
+using Battlelogium.Core.Battlelog;
 namespace Battlelogium.UI.BF3
 {
 
@@ -14,20 +15,10 @@ namespace Battlelogium.UI.BF3
         public BF3Window()
         {
             InitializeComponent();
-            this.battlelog = new Battlefield3(this);
-            this.config = new Config();
-            this.mainGrid = this.MainGrid;
-            this.loadingIcon = this.LoadingIcon;
-            this.uiCore = new UICore(this);
-
+            this.MainControl = this.mainControl;
+            this.InitializeCore(new Battlefield3());
             
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            this.battlelog.battlelogWebview.ShowDevTools();
-
-
+            Console.WriteLine("something");
         }
     }
 }

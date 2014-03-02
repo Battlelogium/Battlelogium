@@ -82,7 +82,14 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Battlelog.cs" />
+    <Compile Include="Battlelog\Battlefield3.cs" />
+    <Compile Include="Battlelog\Battlefield4.cs" />
+    <Compile Include="Battlelog\BattlelogBase.cs" />
+    <Compile Include="Battlelog\BFGameEventArgs.cs" />
+    <Compile Include="Configuration\UIConfig.xaml.cs">
+      <DependentUpon>UIConfig.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ManagedOrigin\OfflineOrigin.cs" />
     <Compile Include="UI\UIWindow.cs" />
     <Compile Include="UI\UIWindow.DragHandler.cs">
       <DependentUpon>UIWindow.cs</DependentUpon>
@@ -90,16 +97,20 @@
     <Compile Include="UI\UIWindow.WindowModes.cs">
       <DependentUpon>UIWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Config.cs" />
+    <Compile Include="Configuration\Config.cs" />
     <Compile Include="UI\UICore.cs" />
     <Compile Include="Javascript\JavascriptObject.cs" />
-    <Compile Include="Origin.cs" />
+    <Compile Include="ManagedOrigin\Origin.cs" />
+    <Compile Include="UI\UIControl.xaml.cs">
+      <DependentUpon>UIControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utilities\Extensions.cs" />
-    <Compile Include="Utilities\KeyboardHook.cs" />
+    <Compile Include="Utilities\MessageBoxUtils.cs" />
     <Compile Include="Utilities\Process.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="logo.png" />
     <Content Include="Javascript\battlelog.bf3.inject.js">
       <Generator>VSMinifier</Generator>
       <LastGenOutput>battlelog.bf3.inject.min.js</LastGenOutput>
@@ -222,14 +233,39 @@
       <Generator>VSMinifier</Generator>
       <LastGenOutput>battlelog.bf4.settings.min.js</LastGenOutput>
     </Content>
+    <Compile Include="Battlelog\BattlelogBase.Events.cs">
+      <DependentUpon>BattlelogBase.cs</DependentUpon>
+    </Compile>
     <None Include="packages.config" />
     <Content Include="userstylesheet.css" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Battlelogium.ExecUtils\Battlelogium.ExecUtils.csproj">
+      <Project>{7408d719-41c5-435a-b1c3-58f3437bfef5}</Project>
+      <Name>Battlelogium.ExecUtils</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Battlelogium.ThirdParty.Animator\Battlelogium.ThirdParty.Animator.csproj">
       <Project>{fb19b412-db0a-42c8-9123-4ff3bb2f17e7}</Project>
       <Name>Battlelogium.ThirdParty.Animator</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Battlelogium.ThirdParty.WPFCustomMessageBox\Battlelogium.ThirdParty.WPFCustomMessageBox.csproj">
+      <Project>{0c691505-4dab-4946-a1bb-1f6c682567eb}</Project>
+      <Name>Battlelogium.ThirdParty.WPFCustomMessageBox</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VCRedistContainer\VCRedistContainer.csproj">
+      <Project>{37d88743-8ba4-439d-90af-ceb3f7cf788a}</Project>
+      <Name>VCRedistContainer</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Configuration\UIConfig.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\UIControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

@@ -78,7 +78,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Battlefield4.cs" />
     <Compile Include="BF4Window.xaml.cs">
       <DependentUpon>BF4Window.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -120,6 +119,10 @@
       <Project>{74847b27-2dfa-404b-9baf-bfdd69604091}</Project>
       <Name>Battlelogium.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Battlelogium.ExecUtils\Battlelogium.ExecUtils.csproj">
+      <Project>{7408d719-41c5-435a-b1c3-58f3437bfef5}</Project>
+      <Name>Battlelogium.ExecUtils</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Battlelogium.ThirdParty.Animator\Battlelogium.ThirdParty.Animator.csproj">
       <Project>{fb19b412-db0a-42c8-9123-4ff3bb2f17e7}</Project>
       <Name>Battlelogium.ThirdParty.Animator</Name>
@@ -127,6 +130,10 @@
     <ProjectReference Include="..\Battlelogium.ThirdParty.WPFCustomMessageBox\Battlelogium.ThirdParty.WPFCustomMessageBox.csproj">
       <Project>{0c691505-4dab-4946-a1bb-1f6c682567eb}</Project>
       <Name>Battlelogium.ThirdParty.WPFCustomMessageBox</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Battlelogium.UI.OfflineIndicator\Battlelogium.UI.OfflineIndicator.csproj">
+      <Project>{d63a80c4-9a50-47b9-a236-6279eb5cd4a4}</Project>
+      <Name>Battlelogium.UI.OfflineIndicator</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="Battlelogium.Core.UI.UIControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ani="clr-namespace:Battlelogium.ThirdParty.Animator;assembly=Battlelogium.ThirdParty.Animator"
+             xmlns:bl="clr-namespace:Battlelogium.Core.UI"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Background>
+        <ImageBrush ImageSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type bl:UIControl}}, Path=BackgroundImage}" Stretch="UniformToFill" AlignmentX="Center" AlignmentY="Bottom"/>
+    </UserControl.Background>
+
+    <Grid Name="mainGrid">
+        <Label Canvas.ZIndex="-1" Foreground="Gray" Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type bl:UIControl}}, Path=VersionNumber}"
+ Height="28" HorizontalAlignment="Left" Margin="3,0,0,0" Name="versionLabel" VerticalAlignment="Bottom" />
+        <ani:Animator Name="loadingIcon" Interval="0:0:0.045"
+                      ImageSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type bl:UIControl}}, Path=LoadingSprite}"
+                      HorizontalOffset="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type bl:UIControl}}, Path=SpriteHorizontalOffset}"
+                      VerticalOffset="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type bl:UIControl}}, Path=SpriteVerticalOffset}"
+                      Panel.ZIndex="110" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,20,20" Grid.Row="1" BorderThickness="0" />
+    </Grid>
+</UserControl>

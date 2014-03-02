@@ -3,6 +3,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Battlelogium.Core.Utilities;
+using Battlelogium.Core.Configuration;
+using Battlelogium.Core.Battlelog;
+using System.Windows.Shell;
 
 namespace Battlelogium.Core.UI
 {
@@ -14,20 +17,31 @@ namespace Battlelogium.Core.UI
         private MouseButtonEventHandler rightDragBtnDown;
         private MouseEventHandler rightDragMove;
 
-        public Battlelog battlelog;
-        public Config config;
+        public UIControl MainControl { get; protected set; }
+        public UICore UICore { get; private set; }
 
-        public Animator loadingIcon;
-        public UICore uiCore;
-     
-        public Grid mainGrid;
+        public bool IsCoreInitialized { get; private set; }
 
         public UIWindow()
         {
-          
-
+            this.SourceInitialized += (s, e) => 
+            {
+                this.HideWindowButtons();
+                WindowChrome.SetWindowChrome(this, new WindowChrome()
+                {
+                    CaptionHeight = 14D,
+                    ResizeBorderThickness = new Thickness(3D)
+                });
+            };
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            this.Closing += (s, e) => this.SaveBounds();
         }
 
-       
+        public void InitializeCore(BattlelogBase battlelog)
+        {
+            this.UICore = new UICore(this, battlelog, new Config());
+            this.IsCoreInitialized = true;
+            this.UICore.Initialize();
+        }
     }
 }

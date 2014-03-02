@@ -1,5 +1,8 @@
 ﻿using Battlelogium.Core;
 using Battlelogium.Core.UI;
+using Battlelogium.Core.Configuration;
+using Battlelogium.Core.Battlelog;
+using System.Diagnostics;
 using System.Windows;
 
 namespace Battlelogium.UI.BF4
@@ -12,16 +15,9 @@ namespace Battlelogium.UI.BF4
         public BF4Window()
         {
             InitializeComponent();
-            this.battlelog = new Battlefield4(this); //TODO Battlefield 4
-            this.config = new Config();
-            this.mainGrid = this.MainGrid;
-            this.loadingIcon = this.LoadingIcon;
-            this.uiCore = new UICore(this);
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            this.battlelog.battlelogWebview.ShowDevTools();
+            this.MainControl = this.mainControl;
+            this.InitializeCore(new Battlefield4());
+                       
         }
     }
 }
