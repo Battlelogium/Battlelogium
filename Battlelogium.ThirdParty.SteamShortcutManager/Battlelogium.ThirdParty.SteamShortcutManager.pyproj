@@ -5,7 +5,8 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>f599213b-cce4-45a9-9711-da6a07dc46a0</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Battlelogium.ThirdParty.SteamShortcutManager.py</StartupFile>
+    <StartupFile>
+    </StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -25,9 +26,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Battlelogium.ThirdParty.SteamShortcutManager.py" />
     <Compile Include="build.py" />
     <Compile Include="steam_shortcut_manager.py" />
+	<Compile Include="steam_shortcut_manager_cli.py" />
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="{2af0f10d-7135-4994-9156-5d01c9c11b7e}\2.7" />
