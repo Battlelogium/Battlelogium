@@ -7,12 +7,12 @@ using System.Windows;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Battlelogium.Installer")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Battlelogium Setup")]
+[assembly: AssemblyDescription("Battlelogium Thin Setup")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Battlelogium.Installer")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2014")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("Battlelogium")]
+[assembly: AssemblyCopyright("Copyright © Ronny Chan 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

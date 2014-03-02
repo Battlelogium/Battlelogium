@@ -11,8 +11,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Net;
+using System.IO;
+using System.IO.Compression;
+using System.Diagnostics;
 
 namespace Battlelogium.Installer
 {
@@ -22,9 +24,12 @@ namespace Battlelogium.Installer
     public partial class UIInstaller : Window
     {
         DependencyCheck dependencies;
+        WebClient downloader;
+        string tempPath = Path.Combine(Path.GetTempPath(), "battlelogium_install");
         public UIInstaller()
         {
             InitializeComponent();
+            if (!Directory.Exists(tempPath)) Directory.CreateDirectory(tempPath);
         }
 
         private void installButton_Click(object sender, RoutedEventArgs e)
@@ -32,28 +37,46 @@ namespace Battlelogium.Installer
             Install();
         }
 
-        public void Install()
+        public async Task Install()
         {
+            this.installButton.IsEnabled = false;
             this.dependencies = new DependencyCheck();
-            WebClient downloader = new WebClient();
-            downloader.DownloadProgressChanged += downloader_DownloadProgressChanged;
-
+            this.downloader = new WebClient();
+            progressBar.IsIndeterminate = true;
+            await InstallOrigin();
+            await InstallWebPlugins();
+            setStatusLabelSync("Done");
+            progressBar.IsIndeterminate = false;
+            progressBar.Value = 100;
         }
 
-        private void downloader_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        public async Task InstallOrigin()
         {
-           
-        double bytesIn = double.Parse(e.BytesReceived.ToString());
-        double totalBytes = double.Parse(e.TotalBytesToReceive.ToString());
-        double percentage = bytesIn / totalBytes * 100;
-
-        this.progressBar.Value = int.Parse(Math.Truncate(percentage).ToString());
-
+            await InstallDependency("origin", "Origin");
         }
 
+        public async Task InstallWebPlugins()
+        {
+            await InstallDependency("webplugin", "Battlelog Web Plugins");
+        }
+
+        public async Task InstallDependency(string downloadKey, string labelName)
+        {
+            string originDownloadUrl = await InstallerCommon.GetDownload(downloadKey);
+            this.setStatusLabelSync("Downloading "+labelName+". Please wait...");
+            await downloader.DownloadFileTaskAsync(originDownloadUrl, Path.Combine(this.tempPath, downloadKey+"_inst.exe"));
+            this.setStatusLabelSync("Installing " + labelName + ". Please wait...");
+            await Task.Run(() => Process.Start(Path.Combine(this.tempPath, downloadKey+"_inst.exe"), "/s").WaitForExit());
+        }
+       
         private void browseButton_Click(object sender, RoutedEventArgs e)
         {
             
+        }
+
+        public void setStatusLabelSync(string content)
+        {
+            this.Dispatcher.Invoke(() => this.statusLabel.Content = content);
         }
     }
 }

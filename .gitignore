@@ -9,3 +9,8 @@ StyleCop.Cache
 *.psess
 *.vsp
 packages/*
+.idea/
+build/
+dist/
+*.pyc
+*.spec

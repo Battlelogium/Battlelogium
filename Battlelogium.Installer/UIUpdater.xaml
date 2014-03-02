@@ -1,0 +1,34 @@
+﻿<Window x:Class="Battlelogium.Installer.UIUpdater"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:bl="clr-namespace:Battlelogium.Installer"
+        Title="UIUpdater" Height="200" Width="550" ResizeMode="NoResize">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="White" Offset="0"/>
+                <GradientStop Color="LightGray" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Image Grid.Row="0" Source="logo.png"></Image>
+        <Label x:Name="currentVersionLabel" HorizontalAlignment="Right" Margin="0,5,20,10" Grid.Row="1" VerticalAlignment="Top">
+            <TextBlock>
+                <Run FontWeight="Light">Current Version - </Run>
+                <Run Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type bl:UIUpdater}}, Path=CurrentVersion}"/>
+            </TextBlock>
+        </Label>
+        <Label HorizontalAlignment="Left" Margin="20,5,0,0" Grid.Row="1" VerticalAlignment="Top" RenderTransformOrigin="0.556,0.585">
+            <TextBlock>
+                <Run FontWeight="Light">Installing Battlelogium - </Run>
+                <Run Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type bl:UIUpdater}}, Path=NewVersion}"/>
+            </TextBlock>
+        </Label>
+        <ProgressBar x:Name="progressBar" HorizontalAlignment="Center" Height="34" Margin="20,55,20,0" Grid.Row="1" VerticalAlignment="Center" Width="490"/>
+        <Label x:Name="statusLabel" Content="" HorizontalAlignment="Left" Margin="20,30,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>

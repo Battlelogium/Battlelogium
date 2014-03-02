@@ -1,7 +1,8 @@
 ﻿<Window x:Class="Battlelogium.Installer.UIInstaller"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Install Battlelogium" Height="250" Width="525" ResizeMode="NoResize">
+        xmlns:bl="clr-namespace:Battlelogium.Installer"
+        Title="Install Battlelogium" Height="240" Width="550" ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"></RowDefinition>
@@ -10,14 +11,21 @@
         <Image Grid.Row="0" Source="logo.png"></Image>
         <Grid Grid.Row="1" Grid.RowSpan="1">
             <Grid.RowDefinitions>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
-            <TextBox HorizontalAlignment="Left" Height="24" Margin="105,10,0,0" TextWrapping="Wrap" IsReadOnlyCaretVisible="False" IsReadOnly="False" Text="" VerticalAlignment="Top" Width="402"/>
-            <Button x:Name="browseButton" Content="Browse" HorizontalAlignment="Left" Margin="10,11,0,0" VerticalAlignment="Top" Width="75" Click="browseButton_Click"/>
-            <Button x:Name="installButton" Content="Install" HorizontalAlignment="Left" Margin="10,48,0,0" VerticalAlignment="Top" Width="75" Click="installButton_Click"/>
-            <ProgressBar x:Name="progressBar" HorizontalAlignment="Left" Height="25" Margin="10,41,0,0" Grid.Row="1" VerticalAlignment="Top" Width="497"/>
-            <Label x:Name="statusLabel" Content="Waiting for Install" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="1" VerticalAlignment="Top" RenderTransformOrigin="0.527,-3.008"/>
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="White" Offset="0"/>
+                    <GradientStop Color="LightGray" Offset="1"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+            <Button x:Name="browseButton" Content="Browse" HorizontalAlignment="Left" Margin="10,11,0,0" VerticalAlignment="Top" Width="75" Click="browseButton_Click" Height="22"/>
+            <Button x:Name="installButton" Content="Install" HorizontalAlignment="Left" Margin="10,46,0,0" VerticalAlignment="Top" Width="75" Click="installButton_Click" Height="22"/>
+            <ProgressBar x:Name="progressBar" Canvas.ZIndex="100" HorizontalAlignment="Center" Height="25" Margin="20,30,19,0" Grid.Row="1" VerticalAlignment="Top" Width="480" Maximum="10"/>
+            <Label x:Name="installLabel" Content="Battlelogium will install to" HorizontalAlignment="Left" Margin="100,9,0,0" VerticalAlignment="Top" Width="409" Height="26"/>
+            <Label Content="Start Install" HorizontalAlignment="Left" Margin="100,44,0,0" VerticalAlignment="Top" Height="25" Width="69"/>
+            <Label x:Name="statusLabel" Content="Waiting for Install" HorizontalAlignment="Left" Margin="20,4,0,0" Grid.Row="1" VerticalAlignment="Top"/>
         </Grid>
     </Grid>
 </Window>

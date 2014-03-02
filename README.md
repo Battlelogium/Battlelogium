@@ -49,6 +49,8 @@ Building
 --------
 Build using Visual Studio 2013 or [Visual Studio Express 2013](http://www.visualstudio.com/downloads/download-visual-studio-vs#d-express-windows-desktop). Dependencies are handled by NuGet and do not have to manually installed.
 
+Building `Battlelogium.ThirdParty.SteamShortcutManager` (forked from [scottrice/SteamShortcutManager](https://github.com/scottrice/SteamShortcutManager) required Python 2.7 and PyInstaller to be installed. Run `build.py` to build a windows executable. Visual Studio will not build SteamShortcutManager as part of the solution build process, it must be built manually.
+
  
 Changelogs 
 ----------
