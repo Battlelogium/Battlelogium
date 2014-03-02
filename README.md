@@ -1,7 +1,7 @@
 ![Battlelogium for Steam](https://raw.github.com/ron975/Battlelogium/master/BF3WrapperWPF/images/BattlelogiumLogoInline.png "Battlelogium for Steam")
 =========================
  
-Battlelogium is a [Battlefield Battlelog](http://battlelog.battlefield.com/) client that wraps Battlelog, Origin, and Battlefield 3 and 4 into one neat package. It allows for and enables Steam integration where possible, such at play time counting and the Steam overlay if possible.
+Battlelogium is a [Battlefield Battlelog](http://battlelog.battlefield.com/) client that wraps Battlelog, Origin, and Battlefield 3 and 4 into one neat package. It allows for and enables Steam integration where possible, such as the Steam overlay if possible.
  
 
 Features
