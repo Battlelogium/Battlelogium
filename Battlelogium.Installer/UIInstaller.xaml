@@ -1,6 +1,7 @@
 ﻿<Window x:Class="Battlelogium.Installer.UIInstaller"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:bl="clr-namespace:Battlelogium.Installer"
         Title="Install Battlelogium" Height="240" Width="550" ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>

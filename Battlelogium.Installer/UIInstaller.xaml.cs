@@ -60,15 +60,9 @@ namespace Battlelogium.Installer
             await InstallDependency("webplugin", "Battlelog Web Plugins");
         }
 
-        public async Task<string> GetDownload(string dependency)
-        {
-            string url = await downloader.DownloadStringTaskAsync("http://ron975.github.io/Battlelogium/releaseinfo/download/" + dependency);
-            return url;
-        }
-
         public async Task InstallDependency(string downloadKey, string labelName)
         {
-            string originDownloadUrl = await GetDownload(downloadKey);
+            string originDownloadUrl = await InstallerCommon.GetDownload(downloadKey);
             this.setStatusLabelSync("Downloading "+labelName+". Please wait...");
             await downloader.DownloadFileTaskAsync(originDownloadUrl, Path.Combine(this.tempPath, downloadKey+"_inst.exe"));
             this.setStatusLabelSync("Installing " + labelName + ". Please wait...");
