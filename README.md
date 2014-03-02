@@ -22,7 +22,7 @@ Configuration Options
 Most configuration options are accessible through the settings editor where the Battlelog profile settings are. Settings are saved and read from `config.ini`.
 
 ### General Options
-* `manageOrigin` toggles whether Battlelogium will create a new, managed instance of Origin so that Steam is aware of any child processes that Origin starts and therefore will attempt to hook the Steam overlay. Unless you are using a **.par file patch** or **Outcome**, this should be set to true. **Battlelogium does not come with included installs for either Outcome or .par file patches since version 2.0**
+* `manageOrigin` toggles whether Battlelogium will create a new, managed instance of Origin so that Steam is aware of any child processes that Origin starts and therefore will attempt to hook the Steam overlay. Unless you are using a [.par file patch](http://par.nofate.me/) or [Outcome](http://outcome.nofate.me/), this should be set to true. **Battlelogium does not come with included installs for either Outcome or .par file patches since version 2.0**
 
 * `waitTimeToKillOrigin` specifies in seconds how long to wait before a managed instance of Origin is closed, for the purposes of allowing cloud sync. By default this value is 10 seconds to allow Origin to sync to the cloud before closing. **This setting is not available from the settings editor and must be changed manually in the configuration file**
 
