@@ -17,18 +17,25 @@ namespace Battlelogium.Core.Battlelog
 
         public bool IsGameRunning()
         {
-            return ProcessTools.IsProcessRunning(this.executableName);
+            foreach (string executableName in this.executableNames)
+            {
+                if (ProcessTools.IsProcessRunning(executableName)) return true;
+            }
+            return false;
         }
         public void InitListenGame()
         {
-            ProcessStartWaiter waiter = new ProcessStartWaiter(this.executableName);
-           waiter.ProcessStart += (s, e) =>
-           {
-               if (this.GameStart != null)  
-                this.GameStart(this, new BFGameEventArgs(e.ProcessID));
-           };
-            waiter.ProcessStart += (s, e) => this.WaitForGameQuitAsync(Process.GetProcessById(e.ProcessID));
-            waiter.ListenAsync();
+            foreach (string executableName in executableNames)
+            {
+                ProcessStartWaiter waiter = new ProcessStartWaiter(executableName);
+                waiter.ProcessStart += (s, e) =>
+                {
+                    if (this.GameStart != null)
+                        this.GameStart(this, new BFGameEventArgs(e.ProcessID));
+                };
+                waiter.ProcessStart += (s, e) => this.WaitForGameQuitAsync(Process.GetProcessById(e.ProcessID));
+                waiter.ListenAsync();
+            }
         }
 
         private async Task WaitForGameQuitAsync(Process gameProcess)

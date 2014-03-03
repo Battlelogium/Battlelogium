@@ -12,7 +12,7 @@ namespace Battlelogium.Core.Battlelog
         static string jsUrl = "http://ron975.github.io/Battlelogium/Battlelogium.Core/Javascript/battlelog.bf3.inject.js";
 #endif
         public Battlefield3()
-            : base("http://battlelog.battlefield.com/bf3/", "Battlefield 3", "BF3", "bf3.exe", 70619, jsUrl)
+            : base("http://battlelog.battlefield.com/bf3/", "Battlefield 3", "BF3", new string[1]{"bf3.exe"}, 70619, jsUrl)
         {
         }
     }

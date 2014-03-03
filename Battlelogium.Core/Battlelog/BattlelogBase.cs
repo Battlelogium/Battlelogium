@@ -20,13 +20,13 @@ namespace Battlelogium.Core.Battlelog
         public string battlelogURL;
         public string battlefieldName;
         public string battlefieldShortname;
-        public string executableName;
+        public string[] executableNames;
         public int gameId;
         public string javascriptURL;
 
         public bool IsWebviewInitialized { get; private set; }
         
-        public BattlelogBase(string battlelogURL, string battlefieldName, string battlefieldShortname, string executableName, int originCode, string javascriptPath)
+        public BattlelogBase(string battlelogURL, string battlefieldName, string battlefieldShortname, string[] executableNames, int originCode, string javascriptPath)
         {
             this.javascriptObject = new JavascriptObject();
             this.javascriptURL = javascriptPath;
@@ -34,7 +34,7 @@ namespace Battlelogium.Core.Battlelog
             this.battlelogURL = battlelogURL;
             this.battlefieldName = battlefieldName;
             this.battlefieldShortname = battlefieldShortname;
-            this.executableName = executableName;
+            this.executableNames = executableNames;
             this.gameId = originCode;
 
             this.InitListenGame();
