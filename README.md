@@ -42,8 +42,7 @@ _*Since Battlelogium 2.0, the option to have a window with a border chrome on it
 Bug reports
 -----------
  
-Bug reports and support will only given if 3 things are provided. 
-* A copy of a fresh battlelogium.log. **Delete any existing log file and run Battlelogium fresh to generate a new log file before submitting**
+You may submit a bug report through this GitHub repo, or through our [Steam Group](http://steamcommunity.com/groups/Battlelogium)
  
 Building
 --------

@@ -23,7 +23,6 @@ namespace Battlelogium.Core.UI
     /// </summary>
     public class UICore
     {
-
         public Origin managedOrigin;
         public UIWindow mainWindow;
         public Config config;
