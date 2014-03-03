@@ -19,12 +19,15 @@ def run():
 
     if userid == "all":
         for uid in steam_location_manager.user_ids_on_this_machine():
-            vdf = steam_location_manager.shortcuts_file_for_user_id(
-                steam_location_manager.userdata_directory_for_user_id(uid)
-            )
-            manager = steam_shortcut_manager.SteamShortcutManager(vdf)
-            insert_shortcut(manager, gamename, gameexe)
-            print "Inserted Shortcut {0}:{1} to id {2}".format(gamename, gameexe, uid)
+            try:
+                vdf = steam_location_manager.shortcuts_file_for_user_id(
+                    steam_location_manager.userdata_directory_for_user_id(uid)
+                )
+                manager = steam_shortcut_manager.SteamShortcutManager(vdf)
+                insert_shortcut(manager, gamename, gameexe)
+                print "Inserted Shortcut {0}:{1} to id {2}".format(gamename, gameexe, uid)
+            except:
+                continue
     else:
         vdf = steam_location_manager.userdata_directory_for_user_id(userid)
         manager = steam_shortcut_manager.SteamShortcutManager(vdf)

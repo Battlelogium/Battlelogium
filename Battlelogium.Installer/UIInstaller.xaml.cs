@@ -15,6 +15,7 @@ using System.Net;
 using System.IO;
 using System.IO.Compression;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace Battlelogium.Installer
 {
@@ -31,7 +32,7 @@ namespace Battlelogium.Installer
         {
             InitializeComponent();
             if (!Directory.Exists(tempPath)) Directory.CreateDirectory(tempPath);
-            setInstallPath(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),"Battlelogium"));
+            SetInstallPath(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),"Battlelogium"));
         }
 
         private void installButton_Click(object sender, RoutedEventArgs e)
@@ -39,7 +40,7 @@ namespace Battlelogium.Installer
             Install();
         }
 
-        private void setInstallPath(string path){
+        private void SetInstallPath(string path){
             this.installPath = path;
             this.Dispatcher.Invoke( () => {
                 this.installLabel.Content = "Battlelogium will install to " + this.installPath;
@@ -48,14 +49,24 @@ namespace Battlelogium.Installer
         public async Task Install()
         {
             this.installButton.IsEnabled = false;
+            this.browseButton.IsEnabled = false;
             this.dependencies = new DependencyCheck();
             this.downloader = new WebClient();
             progressBar.IsIndeterminate = true;
-            await InstallOrigin();
-            await InstallWebPlugins();
-            new UIUpdater(installPath).Show();
+            if(!this.dependencies.IsOriginInstalled) await InstallOrigin();
+            if (!this.dependencies.IsWebPluginInstalled) await InstallWebPlugins();
+            if (!Directory.Exists(installPath)) Directory.CreateDirectory(installPath);
+            File.Copy(Assembly.GetEntryAssembly().Location, Path.Combine(installPath, "Battlelogium.Installer.exe"), true);
+            this.Hide();
+            new UIUpdater(installPath).ShowDialog();
+            MessageBoxResult steamShortcuts = MessageBox.Show("Add Battlelogium to Steam as a non-Steam game?", "Add Steam shortcuts", MessageBoxButton.OKCancel);
+            if (steamShortcuts.Equals(MessageBoxResult.OK))
+            {
+                Process.Start("taskkill", "/im steam.exe /f").WaitForExit();
+                Process.Start(Path.Combine(installPath, "Battlelogium.ExecUtils.exe"), "addsteam");
+            }
+            Process.Start(Path.Combine(installPath, "Battlelogium.ExecUtils.exe"), "removepar");
             this.Close();
-            
         }
 
         public async Task InstallOrigin()
@@ -71,9 +82,9 @@ namespace Battlelogium.Installer
         public async Task InstallDependency(string downloadKey, string labelName)
         {
             string originDownloadUrl = await InstallerCommon.GetDownload(downloadKey);
-            this.setStatusLabelSync("Downloading "+labelName+". Please wait...");
+            this.SetStatusLabelSync("Downloading "+labelName+". Please wait...");
             await downloader.DownloadFileTaskAsync(originDownloadUrl, Path.Combine(this.tempPath, downloadKey+"_inst.exe"));
-            this.setStatusLabelSync("Installing " + labelName + ". Please wait...");
+            this.SetStatusLabelSync("Installing " + labelName + ". Please wait...");
             await Task.Run(() => {
                 try
                 {
@@ -93,10 +104,10 @@ namespace Battlelogium.Installer
                 SelectedPath = this.installPath
             };
             dialog.ShowDialog();
-            setInstallPath(dialog.SelectedPath);
+            SetInstallPath(dialog.SelectedPath);
         }
 
-        public void setStatusLabelSync(string content)
+        public void SetStatusLabelSync(string content)
         {
             this.Dispatcher.Invoke(() => this.statusLabel.Content = content);
         }

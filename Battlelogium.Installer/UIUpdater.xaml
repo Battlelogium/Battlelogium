@@ -18,12 +18,13 @@
         <Label x:Name="currentVersionLabel" HorizontalAlignment="Right" Margin="0,5,20,10" Grid.Row="1" VerticalAlignment="Top"/>
         <Label HorizontalAlignment="Left" Margin="20,5,0,0" Grid.Row="1" VerticalAlignment="Top" RenderTransformOrigin="0.556,0.585">
             <TextBlock>
-                <Run FontWeight="Light">Installing Battlelogium - </Run>
+                <Run FontWeight="Normal">Installing Battlelogium </Run>
                 <Run Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type bl:UIUpdater}}, Path=NewVersion}"/>
             </TextBlock>
         </Label>
-        <ProgressBar x:Name="progressBar" HorizontalAlignment="Center" Height="34" Margin="20,55,20,0" Grid.Row="1" VerticalAlignment="Center" Width="490"/>
+        <ProgressBar x:Name="progressBar" HorizontalAlignment="Center" Height="34" Margin="20,55,20,10" Grid.Row="1" VerticalAlignment="Center" Width="490"/>
         <Label x:Name="statusLabel" Content="" HorizontalAlignment="Left" Margin="20,30,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <Button x:Name="exitButton" Visibility="Collapsed" Click="exitButton_Click" Content="Exit" HorizontalAlignment="Left" Margin="442,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75"/>
 
     </Grid>
 </Window>

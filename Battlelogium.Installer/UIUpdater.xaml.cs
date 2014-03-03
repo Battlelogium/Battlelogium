@@ -77,16 +77,17 @@ namespace Battlelogium.Installer
             downloader.DownloadProgressChanged += downloader_DownloadProgressChanged;
             downloader.DownloadFileCompleted += downloader_DownloadFileCompleted;
             string battlelogiumDownload = await InstallerCommon.GetDownload("battlelogium");
-            setStatusLabelSync("Downloading Battlelogium");
+            SetStatusLabelSync("Downloading Battlelogium");
             downloader.DownloadFileAsync(new Uri(battlelogiumDownload), Path.Combine(tempPath, "package.zip"));
         }
 
         public async Task InstallBattlelogium()
         {
-            setStatusLabelSync("Installing Battlelogium");
+            SetStatusLabelSync("Installing Battlelogium");
             this.progressBar.IsIndeterminate = true;
             await ExtractBattlelogium(installPath);
-            setStatusLabelSync("Done");
+            SetStatusLabelSync("Done. To uninstall simply delete the folder where Battlelogium is installed.");
+            this.exitButton.Visibility = Visibility.Visible;
             this.progressBar.IsIndeterminate = false;
             this.progressBar.Value = 100;
         }
@@ -116,9 +117,14 @@ namespace Battlelogium.Installer
             double percentage = bytesIn / totalBytes * 100;
             this.Dispatcher.Invoke(()=>progressBar.Value = int.Parse(Math.Truncate(percentage).ToString()));
         }
-        public void setStatusLabelSync(string content)
+        public void SetStatusLabelSync(string content)
         {
             this.Dispatcher.Invoke(() => this.statusLabel.Content = content);
+        }
+
+        private void exitButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }
