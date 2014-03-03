@@ -42,6 +42,15 @@ namespace Battlelogium.Core.UI
         public async Task Initialize()
         {
             this.mainWindow.Icon = BitmapFrame.Create(new Uri(@"pack://application:,,/images/bg_icon.ico")); //Set runtime icon to Battlelogium badged ico
+            switch (this.config.FullscreenMode)
+            {
+                case true:
+                    this.mainWindow.SetFullScreen();
+                    break;
+                case false:
+                    this.mainWindow.SetWindowed();
+                    break;
+            }
             if (config.CheckUpdates) await this.CheckUpdate();
             bool isBattlelogAvailable = await BattlelogBase.CheckBattlelogConnectionAsync();
             if (!isBattlelogAvailable)
@@ -80,17 +89,6 @@ namespace Battlelogium.Core.UI
                 this.managedOrigin.StartOrigin();
 #endif 
             }
-
-            switch (this.config.FullscreenMode)
-            {
-                case true:
-                    this.mainWindow.SetFullScreen();
-                    break;
-                case false:
-                    this.mainWindow.SetWindowed();
-                    break;
-            }
-
             if (config.DisableHardwareAccel)
             {
                 RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly;
