@@ -76,6 +76,7 @@ namespace Battlelogium.Installer
             }
             finally
             {
+                Process.Start("taskkill", "/im origin.exe /f").WaitForExit(); //Kill any elevated instances of origin.
                 this.Close();
             }
         }
