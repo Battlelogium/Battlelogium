@@ -91,7 +91,7 @@ namespace Battlelogium.ExecUtils
 
         private static string GetBF3Path()
         {
-            var regkey = Registry.LocalMachine.OpenSubKey("Software\EA Games\Battlefield 3");
+            var regkey = Registry.LocalMachine.OpenSubKey(@"Software\EA Games\Battlefield 3");
             return regkey.GetValue("Install Dir").ToString();
         }
     }

@@ -60,13 +60,24 @@ namespace Battlelogium.Installer
             this.Hide();
             new UIUpdater(installPath).ShowDialog();
             MessageBoxResult steamShortcuts = MessageBox.Show("Add Battlelogium to Steam as a non-Steam game?", "Add Steam shortcuts", MessageBoxButton.OKCancel);
-            if (steamShortcuts.Equals(MessageBoxResult.OK))
+            try
             {
-                Process.Start("taskkill", "/im steam.exe /f").WaitForExit();
-                Process.Start(Path.Combine(installPath, "Battlelogium.ExecUtils.exe"), "addsteam");
+                if (steamShortcuts.Equals(MessageBoxResult.OK))
+                {
+                    Process.Start("taskkill", "/im steam.exe /f").WaitForExit();
+                    Process.Start(Path.Combine(installPath, "Battlelogium.ExecUtils.exe"), "addsteam");
+                }
+
+                Process.Start(Path.Combine(installPath, "Battlelogium.ExecUtils.exe"), "removepar");
             }
-            Process.Start(Path.Combine(installPath, "Battlelogium.ExecUtils.exe"), "removepar");
-            this.Close();
+            catch
+            {
+
+            }
+            finally
+            {
+                this.Close();
+            }
         }
 
         public async Task InstallOrigin()

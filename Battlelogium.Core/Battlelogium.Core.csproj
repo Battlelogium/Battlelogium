@@ -50,6 +50,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningLevel>1</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug Test|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -164,15 +165,6 @@
       <Generator>VSMinifier</Generator>
       <LastGenOutput>battlelog.bf3.playbar.min.js</LastGenOutput>
     </Content>
-    <Content Include="Javascript\dialog\battlelog.bf3.dialog.js">
-      <Generator>VSMinifier</Generator>
-      <LastGenOutput>battlelog.bf3.dialog.min.js</LastGenOutput>
-    </Content>
-    <Content Include="Javascript\dialog\battlelog.bf3.dialog.min.js">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>battlelog.bf3.dialog.js</DependentUpon>
-    </Content>
     <Content Include="Javascript\misc\battlelog.misc.css">
       <Generator>VSMinifier</Generator>
       <LastGenOutput>battlelog.misc.min.css</LastGenOutput>
@@ -220,7 +212,6 @@
       <DependentUpon>battlelog.bf4.stats.js</DependentUpon>
     </Content>
     <Content Include="Javascript\windowbutton\battlelog.windowbutton.css">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Generator>VSMinifier</Generator>
       <LastGenOutput>battlelog.windowbutton.min.css</LastGenOutput>
     </Content>
@@ -230,7 +221,6 @@
       <DependentUpon>battlelog.windowbutton.css</DependentUpon>
     </Content>
     <Content Include="Javascript\windowbutton\battlelog.windowbutton.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Generator>VSMinifier</Generator>
       <LastGenOutput>battlelog.windowbutton.min.js</LastGenOutput>
     </Content>
@@ -239,9 +229,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>battlelog.windowbutton.js</DependentUpon>
     </Content>
-    <Content Include="Javascript\windowbutton\battlelog.windowbutton.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Javascript\windowbutton\battlelog.windowbutton.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="config.ini">
