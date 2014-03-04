@@ -12,6 +12,8 @@ using Battlelogium.Core.Battlelog;
 using Battlelogium.Core.ManagedOrigin;
 using Battlelogium.Core.Utilities;
 using System.Diagnostics;
+using System.Net;
+using Battlelogium.Installer;
 
 namespace Battlelogium.Core.UI
 {
@@ -21,7 +23,6 @@ namespace Battlelogium.Core.UI
     /// </summary>
     public class UICore
     {
-
         public Origin managedOrigin;
         public UIWindow mainWindow;
         public Config config;
@@ -40,6 +41,16 @@ namespace Battlelogium.Core.UI
         public async Task Initialize()
         {
             this.mainWindow.Icon = BitmapFrame.Create(new Uri(@"pack://application:,,/images/bg_icon.ico")); //Set runtime icon to Battlelogium badged ico
+            switch (this.config.FullscreenMode)
+            {
+                case true:
+                    this.mainWindow.SetFullScreen();
+                    break;
+                case false:
+                    this.mainWindow.SetWindowed();
+                    break;
+            }
+            if (config.CheckUpdates) await this.CheckUpdate();
             bool isBattlelogAvailable = await BattlelogBase.CheckBattlelogConnectionAsync();
             if (!isBattlelogAvailable)
             {
@@ -77,17 +88,6 @@ namespace Battlelogium.Core.UI
                 this.managedOrigin.StartOrigin();
 #endif 
             }
-
-            switch (this.config.FullscreenMode)
-            {
-                case true:
-                    this.mainWindow.SetFullScreen();
-                    break;
-                case false:
-                    this.mainWindow.SetWindowed();
-                    break;
-            }
-
             if (config.DisableHardwareAccel)
             {
                 RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly;
@@ -95,6 +95,28 @@ namespace Battlelogium.Core.UI
             this.IsInitialized = true;
         }
 
+        private async Task CheckUpdate()
+        {
+            Version currentVersion = Assembly.GetEntryAssembly().GetName().Version;
+            
+            Version newVersion = Version.Parse(await new WebClient().DownloadStringTaskAsync("http://ron975.github.io/Battlelogium/releaseinfo/releaseversion"));
+            if (newVersion > currentVersion)
+            {
+                bool? updateStart = new UIUpdateNotifier().ShowDialog();
+                switch (updateStart)
+                {
+                    case null:
+                        return;
+                    case false:
+                        return;
+                    case true:
+
+                        Process.Start("Battlelogium.Installer.exe",Process.GetCurrentProcess().Id.ToString());
+                        this.mainWindow.Dispatcher.Invoke(() => this.mainWindow.Close());
+                        break;
+                }
+            }
+        }
         private void StartOfflineMode()
         {
             Process.Start("Battlelogium.UI.OfflineIndicator.exe", this.battlelog.battlefieldShortname);

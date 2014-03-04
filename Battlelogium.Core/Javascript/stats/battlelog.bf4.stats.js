@@ -1,7 +1,5 @@
 ﻿var battlelogstats = {
-
     overview: function () {
-
         if ($('#battlelogiumStats').length == 0) {
             var checkExist = setInterval(function () {
                 if ($('#overview-completion').length) {

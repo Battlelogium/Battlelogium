@@ -1,0 +1,1 @@
+﻿This csproj functions as the build script for packaging and release. It does not build steam_shortcut_manager_cli, that must be built manually with build.py

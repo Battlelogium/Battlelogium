@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Net;
 using System.IO;
 using System.IO.Compression;
+using System.Diagnostics;
 
 namespace Battlelogium.Installer
 {
@@ -21,41 +22,72 @@ namespace Battlelogium.Installer
     /// </summary>
     public partial class UIUpdater : Window
     {
-        public string CurrentVersion { private get; set; }
         public string NewVersion { private get; set; }
         private string tempPath = Path.Combine(Path.GetTempPath(), "battlelogium_install");
+        private string installPath;
 
         private WebClient downloader;
-        public UIUpdater()
+
+        public UIUpdater(string installPath)
         {
             InitializeComponent();
-            if (this.CurrentVersion == null) this.currentVersionLabel.Visibility = Visibility.Collapsed;
+            this.installPath = installPath;
             if (!Directory.Exists(tempPath)) Directory.CreateDirectory(tempPath);
             this.NewVersion = new WebClient().DownloadString("http://ron975.github.io/Battlelogium/releaseinfo/releaseversion");
+            
+            KillBattlelogium();
             DownloadBattlelogium();
         }
 
-        public UIUpdater(string currentVersion) : this()
+        public UIUpdater(int handle) : this()
         {
-            this.CurrentVersion = currentVersion;
+            try
+            {
+                var battlelogiumProc = Process.GetProcessById(handle);
+                if (!battlelogiumProc.HasExited) battlelogiumProc.WaitForExit();
+            }
+            catch
+            {
+                
+            }
         }
 
+        public UIUpdater() : this(AppDomain.CurrentDomain.BaseDirectory) { }
+
+        private void KillBattlelogium()
+        {
+            Process.Start(new ProcessStartInfo()
+            {
+                FileName = "taskkill",
+                Arguments = "/im Battlelogium.UI.BF3.exe /f",
+                CreateNoWindow = true,
+                WindowStyle = ProcessWindowStyle.Hidden
+            }).WaitForExit();
+            Process.Start(new ProcessStartInfo()
+            {
+                FileName = "taskkill",
+                Arguments = "/im Battlelogium.UI.BF4.exe /f",
+                CreateNoWindow = true,
+                WindowStyle = ProcessWindowStyle.Hidden
+            }).WaitForExit();
+        }
         private async Task DownloadBattlelogium()
         {
             this.downloader = new WebClient();
             downloader.DownloadProgressChanged += downloader_DownloadProgressChanged;
             downloader.DownloadFileCompleted += downloader_DownloadFileCompleted;
             string battlelogiumDownload = await InstallerCommon.GetDownload("battlelogium");
-            setStatusLabelSync("Downloading Battlelogium");
+            SetStatusLabelSync("Downloading Battlelogium");
             downloader.DownloadFileAsync(new Uri(battlelogiumDownload), Path.Combine(tempPath, "package.zip"));
         }
 
         public async Task InstallBattlelogium()
         {
-            setStatusLabelSync("Installing Battlelogium");
+            SetStatusLabelSync("Installing Battlelogium");
             this.progressBar.IsIndeterminate = true;
-            await ExtractBattlelogium(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "bat"));
-            setStatusLabelSync("Done");
+            await ExtractBattlelogium(installPath);
+            SetStatusLabelSync("Done. To uninstall simply delete the folder where Battlelogium is installed.");
+            this.exitButton.Visibility = Visibility.Visible;
             this.progressBar.IsIndeterminate = false;
             this.progressBar.Value = 100;
         }
@@ -85,9 +117,14 @@ namespace Battlelogium.Installer
             double percentage = bytesIn / totalBytes * 100;
             this.Dispatcher.Invoke(()=>progressBar.Value = int.Parse(Math.Truncate(percentage).ToString()));
         }
-        public void setStatusLabelSync(string content)
+        public void SetStatusLabelSync(string content)
         {
             this.Dispatcher.Invoke(() => this.statusLabel.Content = content);
+        }
+
+        private void exitButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

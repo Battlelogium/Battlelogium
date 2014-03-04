@@ -24,6 +24,7 @@ namespace Battlelogium.Installer
         public UIUpdateNotifier()
         {
             InitializeComponent();
+            LoadChangelog();
         }
         public async Task LoadChangelog()
         {
@@ -33,8 +34,20 @@ namespace Battlelogium.Installer
             this.Dispatcher.Invoke(() =>
             {
                 new TextRange(changeLogBox.Document.ContentStart, changeLogBox.Document.ContentEnd).Load(changenotes, DataFormats.Rtf);
-                this.versionLabel.Content = version;
+                this.versionLabel.Content = "Version " + version;
             });
+        }
+
+        private void updateButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = true;
+            this.Close();
+        }
+
+        private void ignoreButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = false;
+            this.Close();
         }
     }
 }

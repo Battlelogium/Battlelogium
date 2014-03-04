@@ -50,6 +50,25 @@
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningLevel>1</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug Test|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug Test\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug Test|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug Test\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CefSharp, Version=1.25.5.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=x86">
@@ -146,15 +165,6 @@
       <Generator>VSMinifier</Generator>
       <LastGenOutput>battlelog.bf3.playbar.min.js</LastGenOutput>
     </Content>
-    <Content Include="Javascript\dialog\battlelog.bf3.dialog.js">
-      <Generator>VSMinifier</Generator>
-      <LastGenOutput>battlelog.bf3.dialog.min.js</LastGenOutput>
-    </Content>
-    <Content Include="Javascript\dialog\battlelog.bf3.dialog.min.js">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>battlelog.bf3.dialog.js</DependentUpon>
-    </Content>
     <Content Include="Javascript\misc\battlelog.misc.css">
       <Generator>VSMinifier</Generator>
       <LastGenOutput>battlelog.misc.min.css</LastGenOutput>
@@ -202,7 +212,6 @@
       <DependentUpon>battlelog.bf4.stats.js</DependentUpon>
     </Content>
     <Content Include="Javascript\windowbutton\battlelog.windowbutton.css">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Generator>VSMinifier</Generator>
       <LastGenOutput>battlelog.windowbutton.min.css</LastGenOutput>
     </Content>
@@ -212,7 +221,6 @@
       <DependentUpon>battlelog.windowbutton.css</DependentUpon>
     </Content>
     <Content Include="Javascript\windowbutton\battlelog.windowbutton.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Generator>VSMinifier</Generator>
       <LastGenOutput>battlelog.windowbutton.min.js</LastGenOutput>
     </Content>
@@ -221,9 +229,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>battlelog.windowbutton.js</DependentUpon>
     </Content>
-    <Content Include="Javascript\windowbutton\battlelog.windowbutton.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Javascript\windowbutton\battlelog.windowbutton.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="config.ini">
@@ -243,6 +249,10 @@
     <ProjectReference Include="..\Battlelogium.ExecUtils\Battlelogium.ExecUtils.csproj">
       <Project>{7408d719-41c5-435a-b1c3-58f3437bfef5}</Project>
       <Name>Battlelogium.ExecUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Battlelogium.Installer\Battlelogium.Installer.csproj">
+      <Project>{170d7208-617a-43c5-995f-7ed7dc016514}</Project>
+      <Name>Battlelogium.Installer</Name>
     </ProjectReference>
     <ProjectReference Include="..\Battlelogium.ThirdParty.Animator\Battlelogium.ThirdParty.Animator.csproj">
       <Project>{fb19b412-db0a-42c8-9123-4ff3bb2f17e7}</Project>

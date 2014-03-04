@@ -15,6 +15,7 @@ using System.Net;
 using System.IO;
 using System.IO.Compression;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace Battlelogium.Installer
 {
@@ -26,10 +27,12 @@ namespace Battlelogium.Installer
         DependencyCheck dependencies;
         WebClient downloader;
         string tempPath = Path.Combine(Path.GetTempPath(), "battlelogium_install");
+        string installPath;
         public UIInstaller()
         {
             InitializeComponent();
             if (!Directory.Exists(tempPath)) Directory.CreateDirectory(tempPath);
+            SetInstallPath(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),"Battlelogium"));
         }
 
         private void installButton_Click(object sender, RoutedEventArgs e)
@@ -37,17 +40,45 @@ namespace Battlelogium.Installer
             Install();
         }
 
+        private void SetInstallPath(string path){
+            this.installPath = path;
+            this.Dispatcher.Invoke( () => {
+                this.installLabel.Content = "Battlelogium will install to " + this.installPath;
+            });
+        }
         public async Task Install()
         {
             this.installButton.IsEnabled = false;
+            this.browseButton.IsEnabled = false;
             this.dependencies = new DependencyCheck();
             this.downloader = new WebClient();
             progressBar.IsIndeterminate = true;
-            await InstallOrigin();
-            await InstallWebPlugins();
-            setStatusLabelSync("Done");
-            progressBar.IsIndeterminate = false;
-            progressBar.Value = 100;
+            if(!this.dependencies.IsOriginInstalled) await InstallOrigin();
+            if (!this.dependencies.IsWebPluginInstalled) await InstallWebPlugins();
+            if (!Directory.Exists(installPath)) Directory.CreateDirectory(installPath);
+            File.Copy(Assembly.GetEntryAssembly().Location, Path.Combine(installPath, "Battlelogium.Installer.exe"), true);
+            this.Hide();
+            new UIUpdater(installPath).ShowDialog();
+            MessageBoxResult steamShortcuts = MessageBox.Show("Add Battlelogium to Steam as a non-Steam game?", "Add Steam shortcuts", MessageBoxButton.OKCancel);
+            try
+            {
+                if (steamShortcuts.Equals(MessageBoxResult.OK))
+                {
+                    Process.Start("taskkill", "/im steam.exe /f").WaitForExit();
+                    Process.Start(Path.Combine(installPath, "Battlelogium.ExecUtils.exe"), "addsteam");
+                }
+
+                Process.Start(Path.Combine(installPath, "Battlelogium.ExecUtils.exe"), "removepar");
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+                Process.Start("taskkill", "/im origin.exe /f").WaitForExit(); //Kill any elevated instances of origin.
+                this.Close();
+            }
         }
 
         public async Task InstallOrigin()
@@ -63,18 +94,32 @@ namespace Battlelogium.Installer
         public async Task InstallDependency(string downloadKey, string labelName)
         {
             string originDownloadUrl = await InstallerCommon.GetDownload(downloadKey);
-            this.setStatusLabelSync("Downloading "+labelName+". Please wait...");
+            this.SetStatusLabelSync("Downloading "+labelName+". Please wait...");
             await downloader.DownloadFileTaskAsync(originDownloadUrl, Path.Combine(this.tempPath, downloadKey+"_inst.exe"));
-            this.setStatusLabelSync("Installing " + labelName + ". Please wait...");
-            await Task.Run(() => Process.Start(Path.Combine(this.tempPath, downloadKey+"_inst.exe"), "/s").WaitForExit());
+            this.SetStatusLabelSync("Installing " + labelName + ". Please wait...");
+            await Task.Run(() => {
+                try
+                {
+                    Process.Start(Path.Combine(this.tempPath, downloadKey + "_inst.exe"), "/s").WaitForExit();
+                }
+                catch
+                {
+                    return;
+                }
+            });
         }
        
         private void browseButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            var dialog = new Ookii.Dialogs.Wpf.VistaFolderBrowserDialog()
+            {
+                SelectedPath = this.installPath
+            };
+            dialog.ShowDialog();
+            SetInstallPath(dialog.SelectedPath);
         }
 
-        public void setStatusLabelSync(string content)
+        public void SetStatusLabelSync(string content)
         {
             this.Dispatcher.Invoke(() => this.statusLabel.Content = content);
         }

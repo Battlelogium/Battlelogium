@@ -1,4 +1,4 @@
-![Battlelogium for Steam](https://raw.github.com/ron975/Battlelogium/master/BF3WrapperWPF/images/BattlelogiumLogoInline.png "Battlelogium for Steam")
+![Battlelogium for Steam](http://ron975.github.io/Battlelogium/images/Battlelogium.Logo.Full.png "Battlelogium")
 =========================
  
 Battlelogium is a [Battlefield Battlelog](http://battlelog.battlefield.com/) client that wraps Battlelog, Origin, and Battlefield 3 and 4 into one neat package. It allows for and enables Steam integration where possible, such as the Steam overlay if possible.
@@ -42,8 +42,7 @@ _*Since Battlelogium 2.0, the option to have a window with a border chrome on it
 Bug reports
 -----------
  
-Bug reports and support will only given if 3 things are provided. 
-* A copy of a fresh battlelogium.log. **Delete any existing log file and run Battlelogium fresh to generate a new log file before submitting**
+You may submit a bug report through this GitHub repo, or through our [Steam Group](http://steamcommunity.com/groups/Battlelogium)
  
 Building
 --------
