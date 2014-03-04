@@ -104,7 +104,9 @@ namespace Battlelogium.Installer
                 {
                     foreach (var entry in package.Entries)
                     {
-                        entry.ExtractToFile(Path.Combine(extractPath, entry.FullName), true);
+                        string fullPath = Path.Combine(extractPath, entry.FullName);
+                        if (String.IsNullOrEmpty(entry.Name))Directory.CreateDirectory(fullPath);
+                        else entry.ExtractToFile(fullPath, true);
                     }
                 }
             });
