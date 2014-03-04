@@ -77,15 +77,17 @@ namespace Battlelogium.Installer
             downloader.DownloadProgressChanged += downloader_DownloadProgressChanged;
             downloader.DownloadFileCompleted += downloader_DownloadFileCompleted;
             string battlelogiumDownload = await InstallerCommon.GetDownload("battlelogium");
-            SetStatusLabelSync("Downloading Battlelogium");
+            SetStatusLabelSync("Downloading Battlelogium...");
+            this.Dispatcher.Invoke(() => this.urlLabel.Content = "From " + battlelogiumDownload);
             downloader.DownloadFileAsync(new Uri(battlelogiumDownload), Path.Combine(tempPath, "package.zip"));
         }
 
         public async Task InstallBattlelogium()
         {
-            SetStatusLabelSync("Installing Battlelogium");
+            SetStatusLabelSync("Installing Battlelogium...");
             this.progressBar.IsIndeterminate = true;
             await ExtractBattlelogium(installPath);
+            this.DialogResult = true;
             SetStatusLabelSync("Done. To uninstall simply delete the folder where Battlelogium is installed.");
             this.exitButton.Visibility = Visibility.Visible;
             this.progressBar.IsIndeterminate = false;
