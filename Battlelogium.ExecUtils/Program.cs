@@ -55,7 +55,21 @@ namespace Battlelogium.ExecUtils
             string quote = "\"";
             string space = " ";
            // Process.Start("taskkill", "/im steam.exe /f").WaitForExit();
-            ProcessTools.KillProcess("steam", true, false);
+            
+            if(ProcessTools.IsProcessRunning("steam")) MessageBox.Show("Please close Steam before continuing");
+            if (ProcessTools.IsProcessRunning("steam"))
+            {
+                bool result = MessageBoxUtils.ShowChoiceDialog("Force close Steam? (Not recommended, close Steam manually if possible)", "Close Steam before adding shortcuts to Steam", "Force Close Steam", "I will close Steam manually");
+                switch (result)
+                {
+                    case true:
+                        ProcessTools.KillProcess("steam", true, false);
+                        break;
+                    case false:
+                        ProcessTools.KillProcess("steam", true, true); //CloseMainWindow shouldn't close steam, use as a lazy shortcut to process.Wait()
+                        break;
+                }
+            }
             Process.Start("steam_shortcut_manager_cli.exe", "all" + space + quote + "Battlefield 3" + quote + space + quote + Path.GetFullPath("Battlelogium.UI.BF3.exe") + quote).WaitForExit();
             Process.Start("steam_shortcut_manager_cli.exe", "all" + space + quote + "Battlefield 4" + quote + space + quote + Path.GetFullPath("Battlelogium.UI.BF4.exe") + quote).WaitForExit();
         }
