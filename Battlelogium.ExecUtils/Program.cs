@@ -7,7 +7,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Windows;
 using Microsoft.Win32;
-
+using Battlelogium.Utilities;
 namespace Battlelogium.ExecUtils
 {
     class Program
@@ -53,7 +53,8 @@ namespace Battlelogium.ExecUtils
         {
             string quote = "\"";
             string space = " ";
-            Process.Start("taskkill", "/im steam.exe /f").WaitForExit();
+           // Process.Start("taskkill", "/im steam.exe /f").WaitForExit();
+            ProcessTools.KillProcess("steam.exe", true, true);
             Process.Start("steam_shortcut_manager_cli.exe", "all" + space + quote + "Battlefield 3" + quote + space + quote + Path.GetFullPath("Battlelogium.UI.BF3.exe") + quote).WaitForExit();
             Process.Start("steam_shortcut_manager_cli.exe", "all" + space + quote + "Battlefield 4" + quote + space + quote + Path.GetFullPath("Battlelogium.UI.BF4.exe") + quote).WaitForExit();
         }

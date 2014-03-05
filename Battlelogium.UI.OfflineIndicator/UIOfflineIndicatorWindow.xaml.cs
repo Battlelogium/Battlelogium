@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Battlelogium.Core.Battlelog;
-using Battlelogium.Core.Utilities;
+using Battlelogium.Utilities;
 using Battlelogium.Core.ManagedOrigin;
 using Battlelogium.Core.Configuration;
 using System.Windows.Shell;

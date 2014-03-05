@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Battlelogium.ThirdParty.WPFCustomMessageBox;
 using System.Windows;
 
-namespace Battlelogium.Core.Utilities
+namespace Battlelogium.Utilities
 {
     public static class MessageBoxUtils
     {

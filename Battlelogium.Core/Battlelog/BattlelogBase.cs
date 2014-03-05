@@ -1,6 +1,6 @@
 ﻿using Battlelogium.Core.Javascript;
 using Battlelogium.Core.UI;
-using Battlelogium.Core.Utilities;
+using Battlelogium.Utilities;
 using CefSharp;
 using CefSharp.Wpf;
 using System;

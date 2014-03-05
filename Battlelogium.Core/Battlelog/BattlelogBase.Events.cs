@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Battlelogium.Core.Utilities;
+using Battlelogium.Utilities;
 using System.Diagnostics;
 
 namespace Battlelogium.Core.Battlelog

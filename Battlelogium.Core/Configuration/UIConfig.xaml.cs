@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Battlelogium.Core.UI;
-using Battlelogium.Core.Utilities;
+using Battlelogium.Utilities;
 using Battlelogium.ThirdParty.WPFCustomMessageBox;
 
 namespace Battlelogium.Core.Configuration

@@ -1,4 +1,4 @@
-﻿using Battlelogium.Core.Utilities;
+﻿using Battlelogium.Utilities;
 using Microsoft.Win32;
 using System;
 using System.Diagnostics;

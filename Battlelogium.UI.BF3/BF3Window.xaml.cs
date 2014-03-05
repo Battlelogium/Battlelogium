@@ -4,7 +4,6 @@ using System;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using Battlelogium.Core.Utilities;
 using Battlelogium.Core.Configuration;
 using Battlelogium.Core.Battlelog;
 namespace Battlelogium.UI.BF3
@@ -17,8 +16,6 @@ namespace Battlelogium.UI.BF3
             InitializeComponent();
             this.MainControl = this.mainControl;
             this.InitializeCore(new Battlefield3());
-            
-            Console.WriteLine("something");
         }
     }
 }

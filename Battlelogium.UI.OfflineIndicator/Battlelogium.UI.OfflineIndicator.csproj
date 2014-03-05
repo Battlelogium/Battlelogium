@@ -102,6 +102,10 @@
       <Project>{74847b27-2dfa-404b-9baf-bfdd69604091}</Project>
       <Name>Battlelogium.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Battlelogium.Utilities\Battlelogium.Utilities.csproj">
+      <Project>{df1ebfb7-05c5-42a2-a411-d2c49266c22c}</Project>
+      <Name>Battlelogium.Utilities</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="images\BF3\icon.png" />

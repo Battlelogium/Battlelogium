@@ -1,4 +1,4 @@
-﻿using Battlelogium.Core.Utilities;
+﻿using Battlelogium.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;

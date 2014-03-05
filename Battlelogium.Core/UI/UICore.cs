@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Battlelogium.Core.Configuration;
 using Battlelogium.Core.Battlelog;
 using Battlelogium.Core.ManagedOrigin;
-using Battlelogium.Core.Utilities;
+using Battlelogium.Utilities;
 using System.Diagnostics;
 using System.Net;
 using Battlelogium.Installer;
