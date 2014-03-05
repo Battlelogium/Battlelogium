@@ -15,8 +15,9 @@ namespace Battlelogium.ExecUtils
         [STAThread]
         static void Main(string[] args)
         {
-            if (args == null)
+            if (args.Length <= 0 )
             {
+                AddSteam();
                 return;
             }
             switch (args[0])
@@ -54,7 +55,7 @@ namespace Battlelogium.ExecUtils
             string quote = "\"";
             string space = " ";
            // Process.Start("taskkill", "/im steam.exe /f").WaitForExit();
-            ProcessTools.KillProcess("steam.exe", true, true);
+            ProcessTools.KillProcess("steam", true, false);
             Process.Start("steam_shortcut_manager_cli.exe", "all" + space + quote + "Battlefield 3" + quote + space + quote + Path.GetFullPath("Battlelogium.UI.BF3.exe") + quote).WaitForExit();
             Process.Start("steam_shortcut_manager_cli.exe", "all" + space + quote + "Battlefield 4" + quote + space + quote + Path.GetFullPath("Battlelogium.UI.BF4.exe") + quote).WaitForExit();
         }
