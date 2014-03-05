@@ -26,7 +26,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -101,6 +101,10 @@
     <ProjectReference Include="..\Battlelogium.Core\Battlelogium.Core.csproj">
       <Project>{74847b27-2dfa-404b-9baf-bfdd69604091}</Project>
       <Name>Battlelogium.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Battlelogium.Utilities\Battlelogium.Utilities.csproj">
+      <Project>{df1ebfb7-05c5-42a2-a411-d2c49266c22c}</Project>
+      <Name>Battlelogium.Utilities</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -7,7 +7,7 @@ using System.Drawing;
 using System.Threading.Tasks;
 
 
-namespace Battlelogium.Core.Utilities
+namespace Battlelogium.Utilities
 {
     public class ProcessTools
     {

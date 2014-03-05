@@ -123,9 +123,6 @@
     <Compile Include="UI\UIControl.xaml.cs">
       <DependentUpon>UIControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Utilities\Extensions.cs" />
-    <Compile Include="Utilities\MessageBoxUtils.cs" />
-    <Compile Include="Utilities\Process.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -246,10 +243,6 @@
     <Content Include="userstylesheet.css" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Battlelogium.ExecUtils\Battlelogium.ExecUtils.csproj">
-      <Project>{7408d719-41c5-435a-b1c3-58f3437bfef5}</Project>
-      <Name>Battlelogium.ExecUtils</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Battlelogium.Installer\Battlelogium.Installer.csproj">
       <Project>{170d7208-617a-43c5-995f-7ed7dc016514}</Project>
       <Name>Battlelogium.Installer</Name>
@@ -261,6 +254,10 @@
     <ProjectReference Include="..\Battlelogium.ThirdParty.WPFCustomMessageBox\Battlelogium.ThirdParty.WPFCustomMessageBox.csproj">
       <Project>{0c691505-4dab-4946-a1bb-1f6c682567eb}</Project>
       <Name>Battlelogium.ThirdParty.WPFCustomMessageBox</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Battlelogium.Utilities\Battlelogium.Utilities.csproj">
+      <Project>{df1ebfb7-05c5-42a2-a411-d2c49266c22c}</Project>
+      <Name>Battlelogium.Utilities</Name>
     </ProjectReference>
     <ProjectReference Include="..\VCRedistContainer\VCRedistContainer.csproj">
       <Project>{37d88743-8ba4-439d-90af-ceb3f7cf788a}</Project>

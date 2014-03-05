@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Shell;
 using System.IO.IsolatedStorage;
 using System.IO;
-using Battlelogium.Core.Utilities;
+using Battlelogium.Utilities;
 
 namespace Battlelogium.Core.UI
 {

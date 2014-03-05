@@ -16,6 +16,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Diagnostics;
 using System.Reflection;
+using IWshRuntimeLibrary;
 
 namespace Battlelogium.Installer
 {
@@ -33,6 +34,7 @@ namespace Battlelogium.Installer
             InitializeComponent();
             if (!Directory.Exists(tempPath)) Directory.CreateDirectory(tempPath);
             SetInstallPath(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),"Battlelogium"));
+
         }
 
         private void installButton_Click(object sender, RoutedEventArgs e)
@@ -55,17 +57,37 @@ namespace Battlelogium.Installer
             progressBar.IsIndeterminate = true;
             if(!this.dependencies.IsOriginInstalled) await InstallOrigin();
             if (!this.dependencies.IsWebPluginInstalled) await InstallWebPlugins();
-            if (!Directory.Exists(installPath)) Directory.CreateDirectory(installPath);
-            File.Copy(Assembly.GetEntryAssembly().Location, Path.Combine(installPath, "Battlelogium.Installer.exe"), true);
+            try
+            {
+                if (!Directory.Exists(installPath)) Directory.CreateDirectory(installPath);
+                System.IO.File.Copy(Assembly.GetEntryAssembly().Location, Path.Combine(installPath, "Battlelogium.Installer.exe"), true);
+            }
+            catch
+            {
+                MessageBox.Show("Failure occured regarding install directory, please try again");
+                Environment.Exit(1);
+            }
             this.Hide();
-            new UIUpdater(installPath).ShowDialog();
+            bool? success = new UIUpdater(installPath).ShowDialog();
+            if (success == null || success == false) Environment.Exit(1);
+            MessageBoxResult desktopShortcuts = MessageBox.Show("Create shortcuts on the desktop?", "Add shortcuts", MessageBoxButton.OKCancel);
+            if (desktopShortcuts.Equals(MessageBoxResult.OK))
+            {
+                CreateShortcut("Battlelogium - Battlefield 3.lnk", "Play Battlefield 3", Path.Combine(installPath, "Battlelogium.UI.BF3.exe"));
+                CreateShortcut("Battlelogium - Battlefield 4.lnk", "Play Battlefield 4", Path.Combine(installPath, "Battlelogium.UI.BF4.exe"));
+
+            }
             MessageBoxResult steamShortcuts = MessageBox.Show("Add Battlelogium to Steam as a non-Steam game?", "Add Steam shortcuts", MessageBoxButton.OKCancel);
             try
             {
                 if (steamShortcuts.Equals(MessageBoxResult.OK))
                 {
                     Process.Start("taskkill", "/im steam.exe /f").WaitForExit();
-                    Process.Start(Path.Combine(installPath, "Battlelogium.ExecUtils.exe"), "addsteam");
+                    Process.Start(new ProcessStartInfo(){
+                        FileName = Path.Combine(installPath, "Battlelogium.ExecUtils.exe"), 
+                        Arguments="addsteam",
+                        WorkingDirectory = installPath,
+                    });
                 }
 
                 Process.Start(Path.Combine(installPath, "Battlelogium.ExecUtils.exe"), "removepar");
@@ -74,11 +96,19 @@ namespace Battlelogium.Installer
             {
 
             }
-            finally
-            {
-                Process.Start("taskkill", "/im origin.exe /f").WaitForExit(); //Kill any elevated instances of origin.
-                this.Close();
-            }
+           Process.Start("taskkill", "/im origin.exe /f").WaitForExit(); //Kill any elevated instances of origin.
+           this.Close();
+        }
+
+        public void CreateShortcut(string shortcutName, string description, string exePath)
+        {
+            object shDesktop = (object)"Desktop";
+            WshShell shell = new WshShell();
+            string shortcutAddr = (string)shell.SpecialFolders.Item(ref shDesktop) + @"\" + shortcutName;
+            IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(shortcutAddr);
+            shortcut.Description = description;
+            shortcut.TargetPath = exePath;
+            shortcut.Save();
         }
 
         public async Task InstallOrigin()

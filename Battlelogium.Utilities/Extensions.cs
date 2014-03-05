@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using System;
 using Battlelogium.ThirdParty.WPFCustomMessageBox;
-namespace Battlelogium.Core.Utilities
+namespace Battlelogium.Utilities
 {
     public static class Extensions
     {

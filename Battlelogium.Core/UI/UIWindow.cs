@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Battlelogium.Core.Utilities;
+using Battlelogium.Utilities;
 using Battlelogium.Core.Configuration;
 using Battlelogium.Core.Battlelog;
 using System.Windows.Shell;
