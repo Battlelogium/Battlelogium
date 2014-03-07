@@ -51,57 +51,58 @@ Build using Visual Studio 2013 or [Visual Studio Express 2013](http://www.visual
 Building `Battlelogium.ThirdParty.SteamShortcutManager` (forked from [scottrice/SteamShortcutManager](https://github.com/scottrice/SteamShortcutManager) required Python 2.7 and PyInstaller to be installed. Run `build.py` to build a windows executable. Visual Studio will not build SteamShortcutManager as part of the solution build process, it must be built manually.
 
  
-Changelogs 
+Changelog
 ----------
  
-###Release 1.21
->* User Experience
->	- Steam Overlay now works again in Battlefield 3
->	- Changed waitTimeToCloseOrigin config name to waitTimeToHideOrigin
->	- Added config waitTimeToKillOrigin
->	- Now waits a configurable amount of time before killing Origin and ESNSonar, to allow Origin to sync saves with cloud
->
+###Release 2.0.0.0
+>* User Experience 
+>  - **Reduced CPU usage compared to version 1.4.0.4**
+>  -  Added Battlefield 4 support (overlay support only in x86 mode)
+>  -  Added a redesigned settings editor to make it easier to understand.
+>  -  Added settings options links in the Battlelog profile settings page.
+>  -  Added scroll bars styled to fit with the website.
+>  -  Added proper loading sprite to each respective Battlelog, rather than mimicking effect.
+>  -  Added the ability to restore window size and location from last start.
+>  -  Added the ability to force window size in config.
+>  -  Added extended player statistics from BF3Stats and BF4Stats ported from BetterBattlelog.
+>  -  Added a drop shadow and a window drag area on Borderless window mode.
+>  -  Added the option to restore right click window drag behaviour in configuration.
+>  -  Added an installer to easily install the latest version of Battlelogium.
+>  -  Added a redesigned updater to provide an easy way of updating Battlelogium.
+>  -  Added a window to indicate running in Offline campaign only mode
+> 
+>  - Removed campaign auto-starting, except if Battlelog is unavailable or offline.
+>  - Removed custom Javascript and CSS support.
+>  - Removed bordered-window mode (only borderless window and fullscreen mode available).
+>  - Removed support for installing .par files due to updates to Origin that render the fix useless without Outcome.
+>  - Removed hotkeys for starting campaign, quick match, etc.
+>  - Removed background fade effects when loading Battlelog.
+>  - Removed tooltips on playbar buttons in the Battlefield 3 Battlelog.
+>  - Removed old settings dialog for settings access,
+>  - Removed right click window drag by default.
+
 >* Code
->	- All timers now use delegates for cleaner code.
->	- Changed some comments to be more descriptive
->	- Changed AssemblyFileVersion to 1.2.1
-> 	- Updated README.md to reflect config changes
->	- Removed SendKeys() method, is no longer needed.
->	- Wrapper will sleep for 5 seconds more than waitTimeToKillOrigin on closing to allow origin kill thread to, well, kill Origin
- 
-###Release 1.3
->* User Experience
->	- Now supports going directly to campaign with Steam Overlay support. 
->	- Will ask if you want to go to campaign if a connection to Battlelog is unable to be estalblished.
->	- Uses Origin's `/StartClientMinimized` commandline parameter instead of timers to keep Origin in the background
->	- Added a windowed mode
->	- Added a borderless window mode
->	- Added the ability to force rendering using software (CPU) renderer to disable Steam Overlay in Battlelogium
->	- Added the ability to clear the cache
->	- Changed cache location to Battlelogium's start directory
->	- Added a user friendly settings editor 
->	- Changed configuration format to an easier to use INI-type format
->	- Added update notifications
->	- Shortened the default playbar buttons, i.e "Play Campaign" to simply "Campaign"
->	- Added minimize and close buttons to Battlelog
->	- Removed "for Steam" in the splash screen.
->	- Automatically restart Origin if it's already running before Battlelogium starts
->	- Remove quitting by escape key
->	- Will now prompt before quitting using the quit button.
->
+>  - Completely rewritten using .NET 4.5.
+>  - Replaced Awesomium with CefSharp
+>  - Removed costly logging functions. Logging turned out to be rarely useful 
+>  - Removed buggy dialog API, notifications are handled by Battlelog showReceipt() method
+>  - External dependencies are all managed by NuGet.
+>  - Shared UI code is located in the Battlelogium.Core namespace.
+>  - Individual Battlelogium UIs are located in the Battlelogium.UI namespace.
+>  - Third party code is located in the Battlelogium.ThirdParty namespace.
+>  - JavaScript is now hosted on GitHub Pages rather than locally, and is not included with the installation. 
+>  - Javascript is minimized before being served.
+>  - Javascript is separated into different files instead of serving one huge file.
+
+###Release 1.4.0.4
 >* Code
->	- Refactored much of the original code
->	- Delegates are used more frequently, replacing one or 2 lined event handlers.
->	- Utilities has been moved into their own classes
->	- Created a Configuration API to separate settings from UI code.
->	- Removed useless wrapper functions in BattlelogiumMain() constructor
->	- Removed most docstrings. They clutter the code that was pretty self-explanatory anyways.
->	- MessageBoxes use a custom class using WPF to enable verbs instead of "OK" and "Cancel"
->	- Logging reflects the method calls the code makes more accurately
->	- Refactored adding playbar buttons into a resuable method
->	- Created a rudimentary hacky API to create dialogs in Battlelog DOM. It's not the best code, but it's what I can make do with Battlelog's ugly mess of a web page.
->	- Changed some method names to be more clear.
->	- Sorted out code #regions
+>  - Update to Awesomium 1.7.3
+
+###Release 1.4.0.3
+>* User Experience
+>  - Disable settings dialog on Battlefield 4 and MOHW
+>  - Fix Quick Match tooltips not showing in some cases
+>  - Suppress flashes of the Quick Match tooltips when setting them
  
 ###Release 1.4.0.1
 >* User Experience
@@ -138,17 +139,56 @@ Changelogs
 >	- Utilities.Log() now writes to a file for logging.
 >	- Reverted all event handlers to standard conventions 
 >	- Various bug fixes
-	
-###Release 1.4.0.3
+ 
+###Release 1.3
 >* User Experience
->  - Disable settings dialog on Battlefield 4 and MOHW
->  - Fix Quick Match tooltips not showing in some cases
->  - Suppress flashes of the Quick Match tooltips when setting them
- 
-###Release 1.4.0.4
+>	- Now supports going directly to campaign with Steam Overlay support. 
+>	- Will ask if you want to go to campaign if a connection to Battlelog is unable to be estalblished.
+>	- Uses Origin's `/StartClientMinimized` commandline parameter instead of timers to keep Origin in the background
+>	- Added a windowed mode
+>	- Added a borderless window mode
+>	- Added the ability to force rendering using software (CPU) renderer to disable Steam Overlay in Battlelogium
+>	- Added the ability to clear the cache
+>	- Changed cache location to Battlelogium's start directory
+>	- Added a user friendly settings editor 
+>	- Changed configuration format to an easier to use INI-type format
+>	- Added update notifications
+>	- Shortened the default playbar buttons, i.e "Play Campaign" to simply "Campaign"
+>	- Added minimize and close buttons to Battlelog
+>	- Removed "for Steam" in the splash screen.
+>	- Automatically restart Origin if it's already running before Battlelogium starts
+>	- Remove quitting by escape key
+>	- Will now prompt before quitting using the quit button.
+>
 >* Code
->  - Update to Awesomium 1.7.3
- 
+>	- Refactored much of the original code
+>	- Delegates are used more frequently, replacing one or 2 lined event handlers.
+>	- Utilities has been moved into their own classes
+>	- Created a Configuration API to separate settings from UI code.
+>	- Removed useless wrapper functions in BattlelogiumMain() constructor
+>	- Removed most docstrings. They clutter the code that was pretty self-explanatory anyways.
+>	- MessageBoxes use a custom class using WPF to enable verbs instead of "OK" and "Cancel"
+>	- Logging reflects the method calls the code makes more accurately
+>	- Refactored adding playbar buttons into a resuable method
+>	- Created a rudimentary hacky API to create dialogs in Battlelog DOM. It's not the best code, but it's what I can make do with Battlelog's ugly mess of a web page.
+>	- Changed some method names to be more clear.
+>	- Sorted out code #regions
+
+###Release 1.21
+>* User Experience
+>	- Steam Overlay now works again in Battlefield 3
+>	- Changed waitTimeToCloseOrigin config name to waitTimeToHideOrigin
+>	- Added config waitTimeToKillOrigin
+>	- Now waits a configurable amount of time before killing Origin and ESNSonar, to allow Origin to sync saves with cloud
+>
+>* Code
+>	- All timers now use delegates for cleaner code.
+>	- Changed some comments to be more descriptive
+>	- Changed AssemblyFileVersion to 1.2.1
+> 	- Updated README.md to reflect config changes
+>	- Removed SendKeys() method, is no longer needed.
+>	- Wrapper will sleep for 5 seconds more than waitTimeToKillOrigin on closing to allow origin kill thread to, well, kill Origin
+
 Special thanks
 --------------
  
