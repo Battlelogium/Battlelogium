@@ -57,30 +57,29 @@ Changelog
 ###Release 2.0.0.0
 >* User Experience 
 >  - **Reduced CPU usage compared to version 1.4.0.4**
->  -  Added Battlefield 4 support (overlay support only in x86 mode)
->  -  Added a redesigned settings editor to make it easier to understand.
->  -  Added settings options links in the Battlelog profile settings page.
->  -  Added scroll bars styled to fit with the website.
->  -  Added proper loading sprite to each respective Battlelog, rather than mimicking effect.
->  -  Added the ability to restore window size and location from last start.
->  -  Added the ability to force window size in config.
->  -  Added extended player statistics from BF3Stats and BF4Stats ported from BetterBattlelog.
->  -  Added a drop shadow and a window drag area on Borderless window mode.
->  -  Added the option to restore right click window drag behaviour in configuration.
->  -  Added an installer to easily install the latest version of Battlelogium.
->  -  Added a redesigned updater to provide an easy way of updating Battlelogium.
->  -  Added a window to indicate running in Offline campaign only mode
-> 
+>  - Added Battlefield 4 support (overlay support only in x86 mode)
+>  - Added a redesigned settings editor to make it easier to understand.
+>  - Added settings options links in the Battlelog profile settings page.
+>  - Added scroll bars styled to fit with the website.
+>  - Added proper loading sprite to each respective Battlelog, rather than mimicking effect.
+>  - Added the ability to restore window size and location from last start.
+>  - Added the ability to force window size in config.
+>  - Added extended player statistics from BF3Stats and BF4Stats ported from BetterBattlelog.
+>  - Added a drop shadow and a window drag area on Borderless window mode.
+>  - Added the option to restore right click window drag behaviour in configuration.
+>  - Added an installer to easily install the latest version of Battlelogium.
+>  - Added a redesigned updater to provide an easy way of updating Battlelogium.
+>  - Added a window to indicate running in Offline campaign only mode
 >  - Removed campaign auto-starting, except if Battlelog is unavailable or offline.
 >  - Removed custom Javascript and CSS support.
 >  - Removed bordered-window mode (only borderless window and fullscreen mode available).
->  - Removed support for installing .par files due to updates to Origin that render the fix useless without Outcome.
+>  - Removed support for installing .par files due to updates to Origin that render the fix useless without [Outcome](http://outcome.nofate.me/).
 >  - Removed hotkeys for starting campaign, quick match, etc.
 >  - Removed background fade effects when loading Battlelog.
 >  - Removed tooltips on playbar buttons in the Battlefield 3 Battlelog.
 >  - Removed old settings dialog for settings access,
 >  - Removed right click window drag by default.
-
+>
 >* Code
 >  - Completely rewritten using .NET 4.5.
 >  - Replaced Awesomium with CefSharp
