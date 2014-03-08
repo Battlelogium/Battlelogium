@@ -10,12 +10,14 @@ Features
 * Powered by [CEFSharp](http://github.com/cefsharp/CEFSharp/) 
 * Built with aesthetics in mind
 * Wraps Battlefield and Battlelog in one neat package
-* Full Steam Overlay support for Battlefield 3
-* Start campaign with Steam Overlay support if Battlelog is not available
+* Steam Overlay support for Battlefield 3 and **Battlefield 4**_*_
+* Steam In-Home Streaming for Battlefield 3 and 4
+* Start campaign with Steam support if Battlelog is not available
 * Does not modify or affect any Battlefield or Origin files  
 * Open source and licensed under [GNU GPL v3](http://www.gnu.org/licenses/gpl.html)
  
- 
+
+_*Steam overlay for x64 executables is available through the Steam Beta channel_
 Configuration Options
 ---------------------
  
@@ -31,7 +33,7 @@ Most configuration options are accessible through the settings editor where the 
 ### Window Settings
 * `fullscreenMode` toggles whether Battlelogium will start in a borderless fullscreen window, covering the whole screen, including the taskbar. Window modes are toggle-able with **Alt-Enter**.
 
-* `disableHardwareAccel` disables hardware acceleration on the main Battlelogium window, forcing the window to render in software (CPU) mode. While this disables the Steam overlay being able to render on the Battlelogium window (**Steam overlay will still work in-game Battlefield 3 and Battlefield 4 if `enableSteamOverlayBF4` is set to true**) and thus fixing issues that pop up relating to the Steam overlay's incompatibility with WPF, rendering with the CPU causes a significant drop in smoothness and performance and may effect in-game performance, it is recommended that hardware accelerate be kept on.
+* `disableHardwareAccel` disables hardware acceleration on the main Battlelogium window, forcing the window to render in software (CPU) mode. While this disables the Steam overlay being able to render on the Battlelogium window (**Steam overlay will still work in-game**) and thus fixing issues that pop up relating to the Steam overlay's incompatibility with WPF, rendering with the CPU causes a significant drop in smoothness and performance and may effect in-game performance, it is recommended that hardware accelerate be kept on.
 
 * `windowHeight` and `windowWidth` specify the forced height and width of the window respectively. If either is set to 0, Battlelogium will resume your previous window size and position, else, if both a width and height are set, it will always start the window with those dimensions.
 
