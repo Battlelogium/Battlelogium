@@ -11,13 +11,13 @@ Features
 * Built with aesthetics in mind
 * Wraps Battlefield and Battlelog in one neat package
 * Steam Overlay support for Battlefield 3 and **Battlefield 4**_*_
-* Steam In-Home Streaming for Battlefield 3 and 4
+* Steam **In-Home Streaming** for Battlefield 3 and 4
 * Start campaign with Steam support if Battlelog is not available
 * Does not modify or affect any Battlefield or Origin files  
 * Open source and licensed under [GNU GPL v3](http://www.gnu.org/licenses/gpl.html)
  
 
-_*Steam overlay for x64 executables is available through the Steam Beta channel_
+_*Steam features for x64 executables are available through the Steam Beta channel_
 Configuration Options
 ---------------------
  
