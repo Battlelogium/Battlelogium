@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{902A04AC-76B2-4858-80E6-2FA2A9FB4645}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Battlelogium.Dist</RootNamespace>
+    <AssemblyName>Battlelogium.Dist</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>
+    </ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Battlelogium.Core\Battlelogium.Core.csproj">
+      <Project>{74847b27-2dfa-404b-9baf-bfdd69604091}</Project>
+      <Name>Battlelogium.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Battlelogium.ExecUtils\Battlelogium.ExecUtils.csproj">
+      <Project>{7408d719-41c5-435a-b1c3-58f3437bfef5}</Project>
+      <Name>Battlelogium.ExecUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Battlelogium.Installer\Battlelogium.Installer.csproj">
+      <Project>{170d7208-617a-43c5-995f-7ed7dc016514}</Project>
+      <Name>Battlelogium.Installer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Battlelogium.ThirdParty.Animator\Battlelogium.ThirdParty.Animator.csproj">
+      <Project>{fb19b412-db0a-42c8-9123-4ff3bb2f17e7}</Project>
+      <Name>Battlelogium.ThirdParty.Animator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Battlelogium.ThirdParty.WPFCustomMessageBox\Battlelogium.ThirdParty.WPFCustomMessageBox.csproj">
+      <Project>{0c691505-4dab-4946-a1bb-1f6c682567eb}</Project>
+      <Name>Battlelogium.ThirdParty.WPFCustomMessageBox</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Battlelogium.UI.BF3\Battlelogium.UI.BF3.csproj">
+      <Project>{a6538caf-c5bf-4bef-8c01-5e42c94720d9}</Project>
+      <Name>Battlelogium.UI.BF3</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Battlelogium.UI.BF4\Battlelogium.UI.BF4.csproj">
+      <Project>{cf783500-dbac-4eb7-bd14-dfb70154dd2e}</Project>
+      <Name>Battlelogium.UI.BF4</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Battlelogium.UI.OfflineIndicator\Battlelogium.UI.OfflineIndicator.csproj">
+      <Project>{d63a80c4-9a50-47b9-a236-6279eb5cd4a4}</Project>
+      <Name>Battlelogium.UI.OfflineIndicator</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="readme.md" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>del *.pdb
+del $(TargetFileName)
+robocopy "$(SolutionDir)packages\CefSharp.Wpf.1.25.5\cef" "$(ProjectDir)bin\$(ConfigurationName)" *.* /E
+exit /b 0
+</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

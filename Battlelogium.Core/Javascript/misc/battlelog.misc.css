@@ -1,0 +1,20 @@
+﻿/*Remove footer at login gate*/
+.gate-footer {
+    display: none;
+}
+
+/*Remove Battlelog footer*/
+#footer{
+    display: none;
+}
+
+/*Remove Battlelog advertisement block*/
+.advirticement{
+    display: none;
+}
+
+/*Remove feedback tab*/
+#feedback-popup-opener-tab{
+    display: none;
+}
+

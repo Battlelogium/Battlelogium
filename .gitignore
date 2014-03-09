@@ -1,4 +1,4 @@
-﻿obj/
+obj/
 bin/
 Debug/
 Release/
@@ -6,3 +6,11 @@ Release/
 *.user
 _Resharper.*/
 StyleCop.Cache
+*.psess
+*.vsp
+packages/*
+.idea/
+build/
+dist/
+*.pyc
+*.spec
