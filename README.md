@@ -1,8 +1,7 @@
-![Battlelogium for Steam](http://ron975.github.io/Battlelogium/images/Battlelogium.Logo.Full.png "Battlelogium")
+![Battlelogium](http://ron975.github.io/Battlelogium/images/Battlelogium.Logo.Full.png "Battlelogium")
 =========================
  
-Battlelogium is a [Battlefield Battlelog](http://battlelog.battlefield.com/) client that wraps Battlelog, Origin, and Battlefield 3 and 4 into one neat package. It allows for and enables Steam integration where possible, such as the Steam overlay if possible.
- 
+Battlelogium is a [Battlelog](http://battlelog.battlefield.com/) client that wraps Battlelog, Origin, and Battlefield 3 and 4 into one neat package. It enables Steam features such as the overlay and In-Home Streaming for both Battlefield 3 and 4.
 
 Features
 --------
@@ -10,12 +9,15 @@ Features
 * Powered by [CEFSharp](http://github.com/cefsharp/CEFSharp/) 
 * Built with aesthetics in mind
 * Wraps Battlefield and Battlelog in one neat package
-* Full Steam Overlay support for Battlefield 3
-* Start campaign with Steam Overlay support if Battlelog is not available
+* Steam Overlay support for Battlefield 3 and **Battlefield 4**_*_
+* Steam **In-Home Streaming**** for Battlefield 3 and 4
+* Start campaign with Steam support if Battlelog is not available
 * Does not modify or affect any Battlefield or Origin files  
 * Open source and licensed under [GNU GPL v3](http://www.gnu.org/licenses/gpl.html)
  
- 
+
+_*Steam features for x64 executables are available through the Steam Beta channel, as well as the Origin Beta channel_
+_**In-Home streaming requires hardware acceleration in Battlelogium to be enabled_
 Configuration Options
 ---------------------
  
@@ -31,7 +33,7 @@ Most configuration options are accessible through the settings editor where the 
 ### Window Settings
 * `fullscreenMode` toggles whether Battlelogium will start in a borderless fullscreen window, covering the whole screen, including the taskbar. Window modes are toggle-able with **Alt-Enter**.
 
-* `disableHardwareAccel` disables hardware acceleration on the main Battlelogium window, forcing the window to render in software (CPU) mode. While this disables the Steam overlay being able to render on the Battlelogium window (**Steam overlay will still work in-game Battlefield 3 and Battlefield 4 if `enableSteamOverlayBF4` is set to true**) and thus fixing issues that pop up relating to the Steam overlay's incompatibility with WPF, rendering with the CPU causes a significant drop in smoothness and performance and may effect in-game performance, it is recommended that hardware accelerate be kept on.
+* `disableHardwareAccel` disables hardware acceleration on the main Battlelogium window, forcing the window to render in software (CPU) mode. While this disables the Steam overlay being able to render on the Battlelogium window (**Steam overlay will still work in-game**) and thus fixing issues that pop up relating to the Steam overlay's incompatibility with WPF, rendering with the CPU causes a significant drop in smoothness and performance and may effect in-game performance, it is recommended that hardware accelerate be kept on.
 
 * `windowHeight` and `windowWidth` specify the forced height and width of the window respectively. If either is set to 0, Battlelogium will resume your previous window size and position, else, if both a width and height are set, it will always start the window with those dimensions.
 
@@ -57,30 +59,29 @@ Changelog
 ###Release 2.0.0.0
 >* User Experience 
 >  - **Reduced CPU usage compared to version 1.4.0.4**
->  -  Added Battlefield 4 support (overlay support only in x86 mode)
->  -  Added a redesigned settings editor to make it easier to understand.
->  -  Added settings options links in the Battlelog profile settings page.
->  -  Added scroll bars styled to fit with the website.
->  -  Added proper loading sprite to each respective Battlelog, rather than mimicking effect.
->  -  Added the ability to restore window size and location from last start.
->  -  Added the ability to force window size in config.
->  -  Added extended player statistics from BF3Stats and BF4Stats ported from BetterBattlelog.
->  -  Added a drop shadow and a window drag area on Borderless window mode.
->  -  Added the option to restore right click window drag behaviour in configuration.
->  -  Added an installer to easily install the latest version of Battlelogium.
->  -  Added a redesigned updater to provide an easy way of updating Battlelogium.
->  -  Added a window to indicate running in Offline campaign only mode
-> 
+>  - Added Battlefield 4 support (overlay support only in x86 mode)
+>  - Added a redesigned settings editor to make it easier to understand.
+>  - Added settings options links in the Battlelog profile settings page.
+>  - Added scroll bars styled to fit with the website.
+>  - Added proper loading sprite to each respective Battlelog, rather than mimicking effect.
+>  - Added the ability to restore window size and location from last start.
+>  - Added the ability to force window size in config.
+>  - Added extended player statistics from BF3Stats and BF4Stats ported from BetterBattlelog.
+>  - Added a drop shadow and a window drag area on Borderless window mode.
+>  - Added the option to restore right click window drag behaviour in configuration.
+>  - Added an installer to easily install the latest version of Battlelogium.
+>  - Added a redesigned updater to provide an easy way of updating Battlelogium.
+>  - Added a window to indicate running in Offline campaign only mode
 >  - Removed campaign auto-starting, except if Battlelog is unavailable or offline.
 >  - Removed custom Javascript and CSS support.
 >  - Removed bordered-window mode (only borderless window and fullscreen mode available).
->  - Removed support for installing .par files due to updates to Origin that render the fix useless without Outcome.
+>  - Removed support for installing .par files due to updates to Origin that render the fix useless without [Outcome](http://outcome.nofate.me/).
 >  - Removed hotkeys for starting campaign, quick match, etc.
 >  - Removed background fade effects when loading Battlelog.
 >  - Removed tooltips on playbar buttons in the Battlefield 3 Battlelog.
 >  - Removed old settings dialog for settings access,
 >  - Removed right click window drag by default.
-
+>
 >* Code
 >  - Completely rewritten using .NET 4.5.
 >  - Replaced Awesomium with CefSharp
