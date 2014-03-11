@@ -29,14 +29,13 @@ namespace Battlelogium.Core.Configuration
         public Config(string configFileName){
 
             this.configFileName = configFileName;
+            this.CreateConfigFile();
             Dictionary<string, string> config = GetConfigurationData();
 
             if (!bool.TryParse(config.GetValueOrDefault("checkUpdates"), out checkUpdates)) checkUpdates = true;
             if (!int.TryParse(config.GetValueOrDefault("waitTimeToKillOrigin"), out waitTimeToKillOrigin)) waitTimeToKillOrigin = 10;
             if (!bool.TryParse(config.GetValueOrDefault("fullscreenMode"), out fullscreenMode)) fullscreenMode = false;
             if (!bool.TryParse(config.GetValueOrDefault("manageOrigin"), out manageOrigin)) manageOrigin = true;
-            if (!bool.TryParse(config.GetValueOrDefault("enableSteamOverlayBF4"), out enableSteamOverlayBF4)) enableSteamOverlayBF4 = false;
-
             
             if (!int.TryParse(config.GetValueOrDefault("windowHeight"), out windowHeight)) windowHeight = 0;
             if (!int.TryParse(config.GetValueOrDefault("windowWidth"), out windowWidth)) windowWidth = 0;
@@ -57,35 +56,28 @@ namespace Battlelogium.Core.Configuration
             configBuilder.AppendLine("WindowWidth = " + WindowWidth.ToString());
             configBuilder.AppendLine("ManageOrigin = " + ManageOrigin.ToString());
             configBuilder.AppendLine("DisableHardwareAccel = " + DisableHardwareAccel.ToString());
-            configBuilder.AppendLine("EnableSteamOverlayBF4 = " + EnableSteamOverlayBF4.ToString());
-
             return configBuilder.ToString();
         }
 
-        public void WriteConfig(string key, string value)
+        public void WriteConfig(string key, object value)
         {
-            value = value.ToLowerInvariant();
-            string configFile = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, this.configFileName));
+            string outvalue = value.ToString().ToLowerInvariant();
+            string configFile = File.ReadAllText(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Battlelogium", this.configFileName));
             Regex regex = new Regex(String.Format(@"(?<=(?<!//){0}=)(\w+)",key));
             try{ 
-                configFile = regex.Replace(configFile, value);
-                File.WriteAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, this.configFileName), configFile);
+                configFile = regex.Replace(configFile, outvalue);
+                File.WriteAllText(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),"Battlelogium", this.configFileName), configFile);
             }catch{
                 throw;
             }
         }
 
-        #region Accessors
-
-        /// <summary>How long to wait before closing Origin, to give it time to sync BF3's save data</summary>
-        public bool EnableSteamOverlayBF4
+        public void CreateConfigFile()
         {
-            get
-            {
-                return this.enableSteamOverlayBF4;
-            }
+            if (!File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Battlelogium", this.configFileName)))
+                File.Copy(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "defaultconfig"), Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Battlelogium", this.configFileName), true);
         }
-
+        #region Accessors
 
         /// <summary>How long to wait before closing Origin, to give it time to sync BF3's save data</summary>
         public int WaitTimeToKillOrigin
@@ -164,13 +156,13 @@ namespace Battlelogium.Core.Configuration
         #region Getters
         private Dictionary<string, string> GetConfigurationData()
         {
-            if (File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, this.configFileName)))
+            if (File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Battlelogium", this.configFileName)))
             {
                 var config = new Dictionary<string, string>();
 
                 // Properties loading code from http://stackoverflow.com/questions/485659/
                 foreach (string row in
-                    File.ReadAllLines(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, this.configFileName)))
+                    File.ReadAllLines(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Battlelogium", this.configFileName)))
                 {
                     //Ignore comments and blank lines.
                     if (row.StartsWith(";")) continue;
@@ -182,8 +174,7 @@ namespace Battlelogium.Core.Configuration
                 }
                 return config;
             }
-
-            return null;
+            throw new FileNotFoundException();
         }
         #endregion
     }

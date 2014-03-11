@@ -55,7 +55,11 @@ Building `Battlelogium.ThirdParty.SteamShortcutManager` (forked from [scottrice/
  
 Changelog
 ----------
- 
+###Release 2.0.1.0
+>* User Experience
+>  - Fixed crashes due to insufficient permissions when writing to config
+>  - Fixed cache not saving due to insufficient permissions
+
 ###Release 2.0.0.0
 >* User Experience 
 >  - **Reduced CPU usage compared to version 1.4.0.4**

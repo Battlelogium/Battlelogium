@@ -1,4 +1,5 @@
 ﻿;Battlelogium Configuration File
+;Configuration only loads if located in AppData
 ;Use semicolons for comments
 ;Config option names are case sensitive.
 ;Options that must be manually set can not be set in the config editor
