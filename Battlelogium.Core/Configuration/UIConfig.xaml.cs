@@ -57,12 +57,12 @@ namespace Battlelogium.Core.Configuration
         private void saveButton_Click(object sender, RoutedEventArgs e)
         {
             //Need to add a confirm here
-            this.config.WriteConfig("manageOrigin", this.manageOrigin_input.IsChecked.ToString());
-            this.config.WriteConfig("checkUpdates", this.checkUpdates_input.IsChecked.ToString());
+            this.config.WriteConfig("manageOrigin", this.manageOrigin_input.IsChecked);
+            this.config.WriteConfig("checkUpdates", this.checkUpdates_input.IsChecked);
 
-            this.config.WriteConfig("disableHardwareAccel", this.disableHardwareAccel_input.IsChecked.ToString());
-            this.config.WriteConfig("rightClickDrag", this.rightClickDrag_input.IsChecked.ToString());
-            this.config.WriteConfig("fullscreenMode", this.fullscreenMode_input.IsChecked.ToString());
+            this.config.WriteConfig("disableHardwareAccel", this.disableHardwareAccel_input.IsChecked);
+            this.config.WriteConfig("rightClickDrag", this.rightClickDrag_input.IsChecked);
+            this.config.WriteConfig("fullscreenMode", this.fullscreenMode_input.IsChecked);
             this.DialogResult = true;
             this.Close();
         }

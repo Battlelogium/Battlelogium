@@ -229,9 +229,9 @@
     <Content Include="Javascript\windowbutton\battlelog.windowbutton.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="config.ini">
+    <None Include="defaultconfig">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </None>
     <Content Include="Javascript\settings\battlelog.bf4.settings.js">
       <Generator>VSMinifier</Generator>
       <LastGenOutput>battlelog.bf4.settings.min.js</LastGenOutput>
