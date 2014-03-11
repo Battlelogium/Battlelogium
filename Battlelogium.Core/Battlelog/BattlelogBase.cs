@@ -50,7 +50,7 @@ namespace Battlelogium.Core.Battlelog
 #else
                 PackLoadingDisabled = true,
 #endif
-                CachePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "cache")
+                CachePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),"Battlelogium", "cache")
                 
             };
             CEF.Initialize(settings);
