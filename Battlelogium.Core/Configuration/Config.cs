@@ -74,6 +74,8 @@ namespace Battlelogium.Core.Configuration
 
         public void CreateConfigFile()
         {
+            if(!Directory.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Battlelogium")))
+                Directory.CreateDirectory(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Battlelogium"));
             if (!File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Battlelogium", this.configFileName)))
                 File.Copy(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "defaultconfig"), Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Battlelogium", this.configFileName), true);
         }
