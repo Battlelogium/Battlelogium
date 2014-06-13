@@ -63,7 +63,7 @@ Changelog
 ###Release 2.0.0.0
 >* User Experience 
 >  - **Reduced CPU usage compared to version 1.4.0.4**
->  - Added Battlefield 4 support (overlay support only in x86 mode)
+>  - **Added Battlefield 4 support** 
 >  - Added a redesigned settings editor to make it easier to understand.
 >  - Added settings options links in the Battlelog profile settings page.
 >  - Added scroll bars styled to fit with the website.
