@@ -71,13 +71,13 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CefSharp, Version=1.25.5.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=x86">
+    <Reference Include="CefSharp, Version=1.25.7.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\CefSharp.Wpf.1.25.5\lib\net40\CefSharp.dll</HintPath>
+      <HintPath>..\packages\CefSharp.Wpf.1.25.7\lib\net40\CefSharp.dll</HintPath>
     </Reference>
-    <Reference Include="CefSharp.Wpf, Version=1.25.5.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=x86">
+    <Reference Include="CefSharp.Wpf, Version=1.25.7.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\CefSharp.Wpf.1.25.5\lib\net40\CefSharp.Wpf.dll</HintPath>
+      <HintPath>..\packages\CefSharp.Wpf.1.25.7\lib\net40\CefSharp.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -103,6 +103,7 @@
     </Compile>
     <Compile Include="Battlelog\Battlefield3.cs" />
     <Compile Include="Battlelog\Battlefield4.cs" />
+    <Compile Include="Battlelog\BattlefieldHardline.cs" />
     <Compile Include="Battlelog\BattlelogBase.cs" />
     <Compile Include="Battlelog\BFGameEventArgs.cs" />
     <Compile Include="Configuration\UIConfig.xaml.cs">
@@ -128,39 +129,29 @@
   <ItemGroup>
     <Resource Include="logo.png" />
     <Content Include="Javascript\battlelog.bf3.inject.js">
-      <Generator>VSMinifier</Generator>
       <LastGenOutput>battlelog.bf3.inject.min.js</LastGenOutput>
     </Content>
     <Content Include="Javascript\battlelog.bf3.inject.min.js">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>battlelog.bf3.inject.js</DependentUpon>
     </Content>
+    <Content Include="Javascript\battlelog.bfh.inject.js">
+      <LastGenOutput>battlelog.bf4.inject.min.js</LastGenOutput>
+    </Content>
     <Content Include="Javascript\battlelog.bf4.inject.js">
-      <Generator>VSMinifier</Generator>
       <LastGenOutput>battlelog.bf4.inject.min.js</LastGenOutput>
     </Content>
     <Content Include="Javascript\battlelog.bf4.inject.min.js">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>battlelog.bf4.inject.js</DependentUpon>
     </Content>
-    <Content Include="Javascript\bblog\bblog-translations-compressed.js" />
-    <Content Include="Javascript\bblog\bblog-weapons-compressed.js" />
-    <Content Include="Javascript\bblog\bblog.js" />
-    <Content Include="Javascript\bblog\inject.js" />
+    <Content Include="Javascript\battlelog.bfh.inject.min.js">
+      <DependentUpon>battlelog.bfh.inject.js</DependentUpon>
+    </Content>
     <Content Include="Javascript\playbar\battlelog.bf3.playbar.min.js">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>battlelog.bf3.playbar.js</DependentUpon>
     </Content>
-    <Content Include="Javascript\playbar\battlelog.bf4.playbar.js">
-      <Generator>VSMinifier</Generator>
-      <LastGenOutput>battlelog.bf4.playbar.min.js</LastGenOutput>
-    </Content>
+    <Content Include="Javascript\playbar\battlelog.bf4.playbar.js" />
     <Content Include="Javascript\playbar\battlelog.bf3.playbar.js">
       <Generator>VSMinifier</Generator>
-      <LastGenOutput>battlelog.bf3.playbar.min.js</LastGenOutput>
     </Content>
     <Content Include="Javascript\misc\battlelog.misc.css">
       <Generator>VSMinifier</Generator>
@@ -172,40 +163,25 @@
       <DependentUpon>battlelog.misc.css</DependentUpon>
     </Content>
     <Content Include="Javascript\playbar\battlelog.bf4.playbar.min.js">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>battlelog.bf4.playbar.js</DependentUpon>
     </Content>
-    <Content Include="Javascript\settings\battlelog.bf3.settings.js">
-      <Generator>VSMinifier</Generator>
-      <LastGenOutput>battlelog.bf3.settings.min.js</LastGenOutput>
-    </Content>
+    <Content Include="Javascript\settings\battlelog.bf3.settings.js" />
     <Content Include="Javascript\settings\battlelog.bf3.settings.min.js">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>battlelog.bf3.settings.js</DependentUpon>
     </Content>
+    <Content Include="Javascript\settings\battlelog.bfh.settings.js" />
     <Content Include="Javascript\settings\battlelog.bf4.settings.min.js">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>battlelog.bf4.settings.js</DependentUpon>
     </Content>
-    <Content Include="Javascript\stats\battlelog.bf3.stats.js">
-      <Generator>VSMinifier</Generator>
-      <LastGenOutput>battlelog.bf3.stats.min.js</LastGenOutput>
+    <Content Include="Javascript\settings\battlelog.bfh.settings.min.js">
+      <DependentUpon>battlelog.bfh.settings.js</DependentUpon>
     </Content>
+    <Content Include="Javascript\stats\battlelog.bf3.stats.js" />
     <Content Include="Javascript\stats\battlelog.bf3.stats.min.js">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>battlelog.bf3.stats.js</DependentUpon>
     </Content>
-    <Content Include="Javascript\stats\battlelog.bf4.stats.js">
-      <Generator>VSMinifier</Generator>
-      <LastGenOutput>battlelog.bf4.stats.min.js</LastGenOutput>
-    </Content>
+    <Content Include="Javascript\stats\battlelog.bf4.stats.js" />
     <Content Include="Javascript\stats\battlelog.bf4.stats.min.js">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>battlelog.bf4.stats.js</DependentUpon>
     </Content>
     <Content Include="Javascript\windowbutton\battlelog.windowbutton.css">
@@ -218,12 +194,9 @@
       <DependentUpon>battlelog.windowbutton.css</DependentUpon>
     </Content>
     <Content Include="Javascript\windowbutton\battlelog.windowbutton.js">
-      <Generator>VSMinifier</Generator>
       <LastGenOutput>battlelog.windowbutton.min.js</LastGenOutput>
     </Content>
     <Content Include="Javascript\windowbutton\battlelog.windowbutton.min.js">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>battlelog.windowbutton.js</DependentUpon>
     </Content>
     <Content Include="Javascript\windowbutton\battlelog.windowbutton.png" />
@@ -232,15 +205,45 @@
     <None Include="defaultconfig">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Content Include="Javascript\settings\battlelog.bf4.settings.js">
-      <Generator>VSMinifier</Generator>
-      <LastGenOutput>battlelog.bf4.settings.min.js</LastGenOutput>
-    </Content>
+    <Content Include="Javascript\settings\battlelog.bf4.settings.js" />
     <Compile Include="Battlelog\BattlelogBase.Events.cs">
       <DependentUpon>BattlelogBase.cs</DependentUpon>
     </Compile>
-    <None Include="packages.config" />
     <Content Include="userstylesheet.css" />
+    <None Include="Javascript\battlelog.bf3.inject.min.js.map">
+      <DependentUpon>battlelog.bf3.inject.min.js</DependentUpon>
+    </None>
+    <None Include="Javascript\battlelog.bf4.inject.min.js.map">
+      <DependentUpon>battlelog.bf4.inject.min.js</DependentUpon>
+    </None>
+    <None Include="Javascript\battlelog.bfh.inject.min.js.map">
+      <DependentUpon>battlelog.bfh.inject.min.js</DependentUpon>
+    </None>
+    <None Include="Javascript\playbar\battlelog.bf3.playbar.min.js.map">
+      <DependentUpon>battlelog.bf3.playbar.min.js</DependentUpon>
+    </None>
+    <None Include="Javascript\playbar\battlelog.bf4.playbar.min.js.map">
+      <DependentUpon>battlelog.bf4.playbar.min.js</DependentUpon>
+    </None>
+    <None Include="Javascript\settings\battlelog.bf3.settings.min.js.map">
+      <DependentUpon>battlelog.bf3.settings.min.js</DependentUpon>
+    </None>
+    <None Include="Javascript\settings\battlelog.bf4.settings.min.js.map">
+      <DependentUpon>battlelog.bf4.settings.min.js</DependentUpon>
+    </None>
+    <None Include="Javascript\settings\battlelog.bfh.settings.min.js.map">
+      <DependentUpon>battlelog.bfh.settings.min.js</DependentUpon>
+    </None>
+    <None Include="Javascript\stats\battlelog.bf3.stats.min.js.map">
+      <DependentUpon>battlelog.bf3.stats.min.js</DependentUpon>
+    </None>
+    <None Include="Javascript\stats\battlelog.bf4.stats.min.js.map">
+      <DependentUpon>battlelog.bf4.stats.min.js</DependentUpon>
+    </None>
+    <None Include="Javascript\windowbutton\battlelog.windowbutton.min.js.map">
+      <DependentUpon>battlelog.windowbutton.min.js</DependentUpon>
+    </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Battlelogium.Installer\Battlelogium.Installer.csproj">

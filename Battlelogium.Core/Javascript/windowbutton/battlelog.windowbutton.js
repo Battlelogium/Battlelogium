@@ -10,7 +10,7 @@
             class: "tools-item log " + id
         }).appendTo(toolsButton);
 
-        return toolsButton
+        return toolsButton;
     },
 
     addWindowButtons: function () {

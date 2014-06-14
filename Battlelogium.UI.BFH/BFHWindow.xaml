@@ -1,0 +1,9 @@
+﻿<bl:UIWindow x:Class="Battlelogium.UI.BFH.BFHWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:bl="clr-namespace:Battlelogium.Core.UI;assembly=Battlelogium.Core"
+        xmlns:ani="clr-namespace:Battlelogium.ThirdParty.Animator;assembly=Battlelogium.ThirdParty.Animator"
+        Title="MainWindow"  MinHeight="400" MinWidth="400" 
+        >
+    <bl:UIControl x:Name="mainControl" BackgroundImage="images\background.png" LoadingSprite="images\loadingsprite.png" SpriteHorizontalOffset="32" SpriteVerticalOffset="32"></bl:UIControl>
+</bl:UIWindow>
