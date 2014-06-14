@@ -15,7 +15,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Diagnostics;
 
-namespace Battlelogium.Core.UI
+namespace Battlelogium.Utilities.Update
 {
     /// <summary>
     /// Interaction logic for UIUpdater.xaml

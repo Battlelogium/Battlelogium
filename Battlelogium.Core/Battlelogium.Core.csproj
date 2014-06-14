@@ -113,12 +113,6 @@
       <DependentUpon>UIConfig.xaml</DependentUpon>
     </Compile>
     <Compile Include="ManagedOrigin\OfflineOrigin.cs" />
-    <Compile Include="UI\UIDownload\UIUpdateNotifier.xaml.cs">
-      <DependentUpon>UIUpdateNotifier.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\UIDownload\UIDownloader.xaml.cs">
-      <DependentUpon>UIDownloader.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UI\UIWindow.cs" />
     <Compile Include="UI\UIWindow.DragHandler.cs">
       <DependentUpon>UIWindow.cs</DependentUpon>
@@ -136,8 +130,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="UI\UIDownload\images\logo.png" />
-    <Resource Include="UI\UIDownload\images\bg_generic.ico" />
     <Content Include="Javascript\battlelog.bf3.inject.js">
       <LastGenOutput>battlelog.bf3.inject.min.js</LastGenOutput>
     </Content>
@@ -286,14 +278,6 @@
     <Page Include="UI\UIControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\UIDownload\UIUpdateNotifier.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UI\UIDownload\UIDownloader.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
