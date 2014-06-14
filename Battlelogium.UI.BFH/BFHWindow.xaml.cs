@@ -17,7 +17,6 @@ namespace Battlelogium.UI.BFH
             InitializeComponent();
             this.MainControl = this.mainControl;
             this.InitializeCore(new BattlefieldHardline());
-
         }
     }
 }

@@ -99,6 +99,9 @@ namespace Battlelogium.Core.Battlelog
                     }"
             );
             this.battlelogWebview.ExecuteScript("runCustomJS();");
+#if DEBUG
+            this.battlelogWebview.ShowDevTools();
+#endif
         }
     
         public static bool CheckBattlelogConnection()
