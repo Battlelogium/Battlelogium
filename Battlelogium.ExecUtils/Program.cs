@@ -8,6 +8,9 @@ using System.Diagnostics;
 using System.Windows;
 using Microsoft.Win32;
 using Battlelogium.Utilities;
+using System.Security.Principal;
+using System.Reflection;
+using System.ComponentModel;
 namespace Battlelogium.ExecUtils
 {
     class Program
@@ -15,6 +18,7 @@ namespace Battlelogium.ExecUtils
         [STAThread]
         static void Main(string[] args)
         {
+
             if (args.Length <= 0 )
             {
                 AddSteam();
@@ -30,6 +34,30 @@ namespace Battlelogium.ExecUtils
                     break;
                 case "removepar":
                     RemovePar();
+                    break;
+                case "createunist":
+                    
+            WindowsPrincipal pricipal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
+            bool hasAdministrativeRight = pricipal.IsInRole(WindowsBuiltInRole.Administrator);
+            if (!hasAdministrativeRight)
+            {
+                // relaunch the application with admin rights
+                string fileName = Assembly.GetExecutingAssembly().Location;
+                ProcessStartInfo processInfo = new ProcessStartInfo();
+                processInfo.Arguments = "createuninst";
+                processInfo.Verb = "runas";
+                processInfo.FileName = fileName;
+                try
+                {
+                    Process.Start(processInfo);
+                }
+                catch (Win32Exception)
+                {
+                    // This will be thrown if the user cancels the prompt
+                }
+
+                return;
+            }
                     break;
             }
             return;
@@ -52,6 +80,28 @@ namespace Battlelogium.ExecUtils
 
         private static void AddSteam()
         {
+            WindowsPrincipal pricipal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
+            bool hasAdministrativeRight = pricipal.IsInRole(WindowsBuiltInRole.Administrator);
+            if (!hasAdministrativeRight)
+            {
+                // relaunch the application with admin rights
+                string fileName = Assembly.GetExecutingAssembly().Location;
+                ProcessStartInfo processInfo = new ProcessStartInfo();
+                processInfo.Arguments = "addsteam";
+                processInfo.Verb = "runas";
+                processInfo.FileName = fileName;
+
+                try
+                {
+                    Process.Start(processInfo);
+                }
+                catch (Win32Exception)
+                {
+                    // This will be thrown if the user cancels the prompt
+                }
+
+                return;
+            }
             string quote = "\"";
             string space = " ";
            // Process.Start("taskkill", "/im steam.exe /f").WaitForExit();

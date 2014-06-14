@@ -130,6 +130,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bg_generic.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Javascript\battlelog.bf3.inject.js">
       <LastGenOutput>battlelog.bf3.inject.min.js</LastGenOutput>
     </Content>

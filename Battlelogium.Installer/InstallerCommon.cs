@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net;
+using Microsoft.Win32;
+using System.Reflection;
 
 namespace Battlelogium.Installer
 {
@@ -16,3 +18,4 @@ namespace Battlelogium.Installer
         }
     }
 }
+
