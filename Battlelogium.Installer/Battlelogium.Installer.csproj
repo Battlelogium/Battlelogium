@@ -91,9 +91,17 @@
     <Compile Include="FolderBrowserDialog\SafeHandles.cs" />
     <Compile Include="FolderBrowserDialog\VistaFolderBrowserDialog.cs" />
     <Compile Include="InstallerCommon.cs" />
-    <Compile Include="UIUpdater.xaml.cs">
-      <DependentUpon>UIUpdater.xaml</DependentUpon>
+    <Compile Include="UIComplete.xaml.cs">
+      <DependentUpon>UIComplete.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UIDownloader.xaml.cs">
+      <DependentUpon>UIDownloader.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Uninstall.cs" />
+    <Page Include="UIComplete.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UIInstaller.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -107,7 +115,7 @@
       <DependentUpon>UIInstaller.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="UIUpdater.xaml">
+    <Page Include="UIDownloader.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

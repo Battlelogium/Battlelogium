@@ -1,4 +1,4 @@
-﻿<Window x:Class="Battlelogium.Installer.UIUpdater"
+﻿<Window x:Class="Battlelogium.Installer.UIDownloader"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:bl="clr-namespace:Battlelogium.Installer"
@@ -16,12 +16,6 @@
         </Grid.Background>
         <Image Grid.Row="0" Source="logo.png"></Image>
         <Label x:Name="currentVersionLabel" HorizontalAlignment="Right" Margin="0,5,20,10" Grid.Row="1" VerticalAlignment="Top"/>
-        <Label HorizontalAlignment="Left" Margin="20,5,0,0" Grid.Row="1" VerticalAlignment="Top">
-            <TextBlock>
-                <Run FontWeight="Normal">Updating to version </Run>
-                <Run Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type bl:UIUpdater}}, Path=NewVersion}"/>
-            </TextBlock>
-        </Label>
         <ProgressBar x:Name="progressBar" HorizontalAlignment="Center" Height="34" Margin="20,70,20,10" Grid.Row="1" VerticalAlignment="Center" Width="490"/>
         <Label x:Name="statusLabel" Content="Downloading Battlelogium..." HorizontalAlignment="Left" Margin="20,30,0,0" Grid.Row="1" VerticalAlignment="Top"/>
         <Label x:Name="urlLabel" FontSize="9" Content="From" HorizontalAlignment="Left" Margin="20,50,0,0" Grid.Row="1" VerticalAlignment="Top"/>

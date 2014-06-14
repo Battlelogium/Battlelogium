@@ -67,8 +67,20 @@ namespace Battlelogium.Installer
                 Environment.Exit(1);
             }
             this.Hide();
-            bool? success = new UIUpdater(installPath).ShowDialog();
-            if (success == null || success == false) Environment.Exit(1);
+            string url = await InstallerCommon.GetDownload("battlelogium");
+            var dl = new UIDownloader(url, "package.zip", "Downloading Battlelogium ...");
+            dl.DownloadComplete += async (s, e) =>
+            {
+                await InstallerCommon.ExtractZipFile(e.completedFilePath, installPath);
+                dl.SyncCloseWindow();
+            };
+            dl.Show();
+            dl.Start();
+        } 
+
+        
+        public void FinalizeInstall()
+        {
             MessageBoxResult desktopShortcuts = MessageBox.Show("Create shortcuts on the desktop?", "Add shortcuts", MessageBoxButton.OKCancel);
             if (desktopShortcuts.Equals(MessageBoxResult.OK))
             {
@@ -83,9 +95,10 @@ namespace Battlelogium.Installer
                 if (steamShortcuts.Equals(MessageBoxResult.OK))
                 {
                     Process.Start("taskkill", "/im steam.exe /f").WaitForExit();
-                    Process.Start(new ProcessStartInfo(){
-                        FileName = Path.Combine(installPath, "Battlelogium.ExecUtils.exe"), 
-                        Arguments="addsteam",
+                    Process.Start(new ProcessStartInfo()
+                    {
+                        FileName = Path.Combine(installPath, "Battlelogium.ExecUtils.exe"),
+                        Arguments = "addsteam",
                         WorkingDirectory = installPath,
                     });
                 }
@@ -96,10 +109,9 @@ namespace Battlelogium.Installer
             {
 
             }
-           Process.Start("taskkill", "/im origin.exe /f").WaitForExit(); //Kill any elevated instances of origin.
-           this.Close();
+            Process.Start("taskkill", "/im origin.exe /f").WaitForExit(); //Kill any elevated instances of origin.
+            this.Close();
         }
-
         public void CreateShortcut(string shortcutName, string description, string exePath)
         {
             object shDesktop = (object)"Desktop";
@@ -114,11 +126,6 @@ namespace Battlelogium.Installer
         public async Task InstallOrigin()
         {
             await InstallDependency("origin", "Origin");
-        }
-
-        public async Task InstallWebPlugins()
-        {
-            await InstallDependency("webplugin", "Battlelog Web Plugins");
         }
 
         public async Task InstallDependency(string downloadKey, string labelName)
