@@ -9,6 +9,8 @@ using System.Net;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Battlelogium.Utilities.Update;
+using System.Diagnostics;
 
 namespace Battlelogium.Core.Battlelog
 {
@@ -101,9 +103,6 @@ namespace Battlelogium.Core.Battlelog
                     }"
             );
             this.battlelogWebview.ExecuteScript("runCustomJS();");
-#if DEBUG
-            this.battlelogWebview.ShowDevTools();
-#endif
         }
     
         public static bool CheckBattlelogConnection()
@@ -130,6 +129,22 @@ namespace Battlelogium.Core.Battlelog
         public void Dispose()
         {
             throw new NotImplementedException(); //TODO implement Dispose properly
+        }
+
+        private void InitUpdateWebPlugin(string url)
+        {
+            if (!url.Contains("battlelog-web-plugins")) throw new ArgumentException();
+            string filename = Path.GetFileName(new Uri(url).LocalPath);
+            var dl = new UIDownloader(url, filename, "Downloading Battlelog Web Plugins...");
+            dl.DownloadComplete += (s, e) =>
+            {
+                dl.SyncCloseWindow();
+                Process.Start(e.completedFilePath).WaitForExit();
+                this.battlelogWebview.Reload(true);
+            };
+            dl.Show();
+            dl.Start();
+                
         }
     }
 }

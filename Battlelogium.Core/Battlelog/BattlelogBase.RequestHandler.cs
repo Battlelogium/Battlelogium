@@ -8,6 +8,7 @@ using CefSharp.Wpf;
 using System.Net;
 using System.Windows.Forms;
 using System.IO;
+using System.Diagnostics;
 namespace Battlelogium.Core.Battlelog
 {
     public partial class BattlelogBase
@@ -26,8 +27,7 @@ namespace Battlelogium.Core.Battlelog
         {
             if (url.Contains("battlelog-web-plugins"))
             {
-                string filename = Path.GetFileName(new Uri(url).LocalPath);
-                MessageBox.Show(url);
+                this.InitUpdateWebPlugin(url);
             }
         }
 

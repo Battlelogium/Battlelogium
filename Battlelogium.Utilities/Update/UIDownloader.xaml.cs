@@ -22,34 +22,48 @@ namespace Battlelogium.Utilities.Update
     /// </summary>
     public partial class UIDownloader : Window
     {
+        public delegate void DownloadCompleteEventHandler(object sender, DownloadArgs args);
+        public event DownloadCompleteEventHandler DownloadComplete;
+
         private string tempPath = Path.Combine(Path.GetTempPath(), "battlelogium_install");
 
         private WebClient downloader;
 
-        public UIDownloader(string url, string fileName, string downloadName)
+        private string url;
+        private string fileName;
+        private string statusDescription;
+        public UIDownloader(string url, string fileName, string statusDescription)
         {
             InitializeComponent();
             if (!Directory.Exists(tempPath)) Directory.CreateDirectory(tempPath);
-            
-            DownloadBattlelogium(url, fileName, downloadName);
+            this.Topmost = true;
+            this.url = url;
+            this.fileName = fileName;
+            this.statusDescription = statusDescription;
         }
 
-        private async Task DownloadBattlelogium(string url, string fileName, string downloadName)
+        public async Task Start()
         {
             this.downloader = new WebClient();
             downloader.DownloadProgressChanged += downloader_DownloadProgressChanged;
             downloader.DownloadFileCompleted += downloader_DownloadFileCompleted;
             
-            SetStatusLabelSync("Downloading " + downloadName + "...");
-            this.Dispatcher.Invoke(() => this.urlLabel.Content = "From " + url);
-            downloader.DownloadFileAsync(new Uri(url), Path.Combine(tempPath, fileName));
+            SetStatusLabelSync(this.statusDescription);
+            this.Dispatcher.Invoke(() => this.urlLabel.Content = "From " + this.url);
+            downloader.DownloadFileAsync(new Uri(this.url), Path.Combine(tempPath, this.fileName));
         }
 
         private async void downloader_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
-            this.Close();
+            if (this.DownloadComplete != null)
+                this.DownloadComplete(this, new DownloadArgs(Path.Combine(tempPath, this.fileName)));
+            
         }
 
+        public void SyncCloseWindow()
+        {
+            this.Dispatcher.Invoke(() => this.Close());
+        }
        
         void downloader_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
@@ -66,6 +80,15 @@ namespace Battlelogium.Utilities.Update
         private void exitButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+    }
+
+    public class DownloadArgs
+    {
+        public string completedFilePath;
+        public DownloadArgs(string completedFilePath)
+        {
+            this.completedFilePath = completedFilePath;
         }
     }
 }
