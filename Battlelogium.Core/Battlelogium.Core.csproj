@@ -71,14 +71,6 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CefSharp, Version=1.25.5.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\CefSharp.Wpf.1.25.5\lib\net40\CefSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="CefSharp.Wpf, Version=1.25.5.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\CefSharp.Wpf.1.25.5\lib\net40\CefSharp.Wpf.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -103,6 +95,7 @@
     </Compile>
     <Compile Include="Battlelog\Battlefield3.cs" />
     <Compile Include="Battlelog\Battlefield4.cs" />
+    <Compile Include="Battlelog\BattlefieldHardline.cs" />
     <Compile Include="Battlelog\BattlelogBase.cs" />
     <Compile Include="Battlelog\BFGameEventArgs.cs" />
     <Compile Include="Configuration\UIConfig.xaml.cs">
@@ -131,19 +124,9 @@
       <Generator>VSMinifier</Generator>
       <LastGenOutput>battlelog.bf3.inject.min.js</LastGenOutput>
     </Content>
-    <Content Include="Javascript\battlelog.bf3.inject.min.js">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>battlelog.bf3.inject.js</DependentUpon>
-    </Content>
     <Content Include="Javascript\battlelog.bf4.inject.js">
-      <Generator>VSMinifier</Generator>
+      <Generator>WebEssentials</Generator>
       <LastGenOutput>battlelog.bf4.inject.min.js</LastGenOutput>
-    </Content>
-    <Content Include="Javascript\battlelog.bf4.inject.min.js">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>battlelog.bf4.inject.js</DependentUpon>
     </Content>
     <Content Include="Javascript\bblog\bblog-translations-compressed.js" />
     <Content Include="Javascript\bblog\bblog-weapons-compressed.js" />
@@ -221,11 +204,6 @@
       <Generator>VSMinifier</Generator>
       <LastGenOutput>battlelog.windowbutton.min.js</LastGenOutput>
     </Content>
-    <Content Include="Javascript\windowbutton\battlelog.windowbutton.min.js">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>battlelog.windowbutton.js</DependentUpon>
-    </Content>
     <Content Include="Javascript\windowbutton\battlelog.windowbutton.png" />
   </ItemGroup>
   <ItemGroup>
@@ -239,7 +217,6 @@
     <Compile Include="Battlelog\BattlelogBase.Events.cs">
       <DependentUpon>BattlelogBase.cs</DependentUpon>
     </Compile>
-    <None Include="packages.config" />
     <Content Include="userstylesheet.css" />
   </ItemGroup>
   <ItemGroup>
