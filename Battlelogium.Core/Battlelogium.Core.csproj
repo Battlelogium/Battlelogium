@@ -137,14 +137,14 @@
     <Content Include="Javascript\battlelog.bfh.inject.js">
       <LastGenOutput>battlelog.bf4.inject.min.js</LastGenOutput>
     </Content>
-    <Content Include="Javascript\battlelog.bf4.inject - Copy.min.js">
-      <DependentUpon>battlelog.bfh.inject.js</DependentUpon>
-    </Content>
     <Content Include="Javascript\battlelog.bf4.inject.js">
       <LastGenOutput>battlelog.bf4.inject.min.js</LastGenOutput>
     </Content>
     <Content Include="Javascript\battlelog.bf4.inject.min.js">
       <DependentUpon>battlelog.bf4.inject.js</DependentUpon>
+    </Content>
+    <Content Include="Javascript\battlelog.bfh.inject.min.js">
+      <DependentUpon>battlelog.bfh.inject.js</DependentUpon>
     </Content>
     <Content Include="Javascript\playbar\battlelog.bf3.playbar.min.js">
       <DependentUpon>battlelog.bf3.playbar.js</DependentUpon>
@@ -213,11 +213,11 @@
     <None Include="Javascript\battlelog.bf3.inject.min.js.map">
       <DependentUpon>battlelog.bf3.inject.min.js</DependentUpon>
     </None>
-    <None Include="Javascript\battlelog.bf4.inject - Copy.min.js.map">
-      <DependentUpon>battlelog.bf4.inject - Copy.min.js</DependentUpon>
-    </None>
     <None Include="Javascript\battlelog.bf4.inject.min.js.map">
       <DependentUpon>battlelog.bf4.inject.min.js</DependentUpon>
+    </None>
+    <None Include="Javascript\battlelog.bfh.inject.min.js.map">
+      <DependentUpon>battlelog.bfh.inject.min.js</DependentUpon>
     </None>
     <None Include="Javascript\playbar\battlelog.bf3.playbar.min.js.map">
       <DependentUpon>battlelog.bf3.playbar.min.js</DependentUpon>
