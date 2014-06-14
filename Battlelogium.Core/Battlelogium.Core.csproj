@@ -105,6 +105,9 @@
     <Compile Include="Battlelog\Battlefield4.cs" />
     <Compile Include="Battlelog\BattlefieldHardline.cs" />
     <Compile Include="Battlelog\BattlelogBase.cs" />
+    <Compile Include="Battlelog\BattlelogBase.RequestHandler.cs" >
+	      <DependentUpon>BattlelogBase.cs</DependentUpon>
+	</Compile>
     <Compile Include="Battlelog\BFGameEventArgs.cs" />
     <Compile Include="Configuration\UIConfig.xaml.cs">
       <DependentUpon>UIConfig.xaml</DependentUpon>

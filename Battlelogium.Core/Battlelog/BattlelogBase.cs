@@ -8,10 +8,11 @@ using System.IO;
 using System.Net;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Battlelogium.Core.Battlelog
 {
-    public partial class BattlelogBase : IDisposable
+    public partial class BattlelogBase : IDisposable, IRequestHandler
     {
 
         public WebView battlelogWebview;
@@ -54,7 +55,7 @@ namespace Battlelogium.Core.Battlelog
                 
             };
             CEF.Initialize(settings);
-
+            
             BrowserSettings browserSettings = new BrowserSettings
             {
                 FileAccessFromFileUrlsAllowed = true,
@@ -75,6 +76,7 @@ namespace Battlelogium.Core.Battlelog
             this.battlelogWebview.RegisterJsObject("app", javascriptObject);
             this.battlelogWebview.LoadCompleted += this.LoadCompleted;
             this.battlelogWebview.PropertyChanged += battlelogWebview_PropertyChanged;
+            this.battlelogWebview.RequestHandler = this;
             this.IsWebviewInitialized = true;
         }
         
