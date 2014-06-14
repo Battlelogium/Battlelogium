@@ -87,7 +87,6 @@ namespace Battlelogium.Installer
             SetStatusLabelSync("Installing Battlelogium...");
             this.progressBar.IsIndeterminate = true;
             await ExtractBattlelogium(installPath);
-            this.DialogResult = true;
             SetStatusLabelSync("Done. To uninstall simply delete the folder where Battlelogium is installed.");
             this.exitButton.Visibility = Visibility.Visible;
             this.progressBar.IsIndeterminate = false;

@@ -56,7 +56,6 @@ namespace Battlelogium.Installer
             this.downloader = new WebClient();
             progressBar.IsIndeterminate = true;
             if(!this.dependencies.IsOriginInstalled) await InstallOrigin();
-            if (!this.dependencies.IsWebPluginInstalled) await InstallWebPlugins();
             try
             {
                 if (!Directory.Exists(installPath)) Directory.CreateDirectory(installPath);
@@ -75,6 +74,7 @@ namespace Battlelogium.Installer
             {
                 CreateShortcut("Battlelogium - Battlefield 3.lnk", "Play Battlefield 3", Path.Combine(installPath, "Battlelogium.UI.BF3.exe"));
                 CreateShortcut("Battlelogium - Battlefield 4.lnk", "Play Battlefield 4", Path.Combine(installPath, "Battlelogium.UI.BF4.exe"));
+                CreateShortcut("Battlelogium - Battlefield Hardline.lnk", "Play Battlefield Hardline", Path.Combine(installPath, "Battlelogium.UI.BFH.exe"));
 
             }
             MessageBoxResult steamShortcuts = MessageBox.Show("Add Battlelogium to Steam as a non-Steam game?", "Add Steam shortcuts", MessageBoxButton.OKCancel);
