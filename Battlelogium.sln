@@ -41,8 +41,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Battlelogium.Dist", "Battle
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Battlelogium.Utilities", "Battlelogium.Utilities\Battlelogium.Utilities.csproj", "{DF1EBFB7-05C5-42A2-A411-D2C49266C22C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Battlelogium.UI.BFH", "Battlelogium.UI.BFH\Battlelogium.UI.BFH.csproj", "{9CD39296-34DE-4F5A-8EBB-15EF05821696}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug Withspace|Any CPU = Debug Withspace|Any CPU
@@ -326,27 +324,6 @@ Global
 		{DF1EBFB7-05C5-42A2-A411-D2C49266C22C}.Release|Win32.ActiveCfg = Release|Any CPU
 		{DF1EBFB7-05C5-42A2-A411-D2C49266C22C}.Release|x64.ActiveCfg = Release|Any CPU
 		{DF1EBFB7-05C5-42A2-A411-D2C49266C22C}.Release|x86.ActiveCfg = Release|Any CPU
-		{9CD39296-34DE-4F5A-8EBB-15EF05821696}.Debug Withspace|Any CPU.ActiveCfg = Debug|Any CPU
-		{9CD39296-34DE-4F5A-8EBB-15EF05821696}.Debug Withspace|Any CPU.Build.0 = Debug|Any CPU
-		{9CD39296-34DE-4F5A-8EBB-15EF05821696}.Debug Withspace|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{9CD39296-34DE-4F5A-8EBB-15EF05821696}.Debug Withspace|Mixed Platforms.Build.0 = Debug|Any CPU
-		{9CD39296-34DE-4F5A-8EBB-15EF05821696}.Debug Withspace|Win32.ActiveCfg = Debug|Any CPU
-		{9CD39296-34DE-4F5A-8EBB-15EF05821696}.Debug Withspace|x64.ActiveCfg = Debug|Any CPU
-		{9CD39296-34DE-4F5A-8EBB-15EF05821696}.Debug Withspace|x86.ActiveCfg = Debug|Any CPU
-		{9CD39296-34DE-4F5A-8EBB-15EF05821696}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9CD39296-34DE-4F5A-8EBB-15EF05821696}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9CD39296-34DE-4F5A-8EBB-15EF05821696}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{9CD39296-34DE-4F5A-8EBB-15EF05821696}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{9CD39296-34DE-4F5A-8EBB-15EF05821696}.Debug|Win32.ActiveCfg = Debug|Any CPU
-		{9CD39296-34DE-4F5A-8EBB-15EF05821696}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{9CD39296-34DE-4F5A-8EBB-15EF05821696}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{9CD39296-34DE-4F5A-8EBB-15EF05821696}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9CD39296-34DE-4F5A-8EBB-15EF05821696}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9CD39296-34DE-4F5A-8EBB-15EF05821696}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{9CD39296-34DE-4F5A-8EBB-15EF05821696}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{9CD39296-34DE-4F5A-8EBB-15EF05821696}.Release|Win32.ActiveCfg = Release|Any CPU
-		{9CD39296-34DE-4F5A-8EBB-15EF05821696}.Release|x64.ActiveCfg = Release|Any CPU
-		{9CD39296-34DE-4F5A-8EBB-15EF05821696}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
