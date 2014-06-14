@@ -91,9 +91,6 @@
     <Compile Include="FolderBrowserDialog\SafeHandles.cs" />
     <Compile Include="FolderBrowserDialog\VistaFolderBrowserDialog.cs" />
     <Compile Include="InstallerCommon.cs" />
-    <Compile Include="UIUpdateNotifier.xaml.cs">
-      <DependentUpon>UIUpdateNotifier.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UIUpdater.xaml.cs">
       <DependentUpon>UIUpdater.xaml</DependentUpon>
     </Compile>
@@ -110,10 +107,6 @@
       <DependentUpon>UIInstaller.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="UIUpdateNotifier.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="UIUpdater.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

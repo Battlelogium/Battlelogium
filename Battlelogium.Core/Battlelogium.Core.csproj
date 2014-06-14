@@ -105,14 +105,20 @@
     <Compile Include="Battlelog\Battlefield4.cs" />
     <Compile Include="Battlelog\BattlefieldHardline.cs" />
     <Compile Include="Battlelog\BattlelogBase.cs" />
-    <Compile Include="Battlelog\BattlelogBase.RequestHandler.cs" >
-	      <DependentUpon>BattlelogBase.cs</DependentUpon>
-	</Compile>
+    <Compile Include="Battlelog\BattlelogBase.RequestHandler.cs">
+      <DependentUpon>BattlelogBase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Battlelog\BFGameEventArgs.cs" />
     <Compile Include="Configuration\UIConfig.xaml.cs">
       <DependentUpon>UIConfig.xaml</DependentUpon>
     </Compile>
     <Compile Include="ManagedOrigin\OfflineOrigin.cs" />
+    <Compile Include="UI\UIDownload\UIUpdateNotifier.xaml.cs">
+      <DependentUpon>UIUpdateNotifier.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\UIDownload\UIDownloader.xaml.cs">
+      <DependentUpon>UIDownloader.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\UIWindow.cs" />
     <Compile Include="UI\UIWindow.DragHandler.cs">
       <DependentUpon>UIWindow.cs</DependentUpon>
@@ -130,7 +136,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="logo.png" />
+    <Resource Include="UI\UIDownload\images\logo.png" />
+    <Resource Include="UI\UIDownload\images\bg_generic.ico" />
     <Content Include="Javascript\battlelog.bf3.inject.js">
       <LastGenOutput>battlelog.bf3.inject.min.js</LastGenOutput>
     </Content>
@@ -212,6 +219,7 @@
     <Compile Include="Battlelog\BattlelogBase.Events.cs">
       <DependentUpon>BattlelogBase.cs</DependentUpon>
     </Compile>
+    <Resource Include="logo.png" />
     <Content Include="userstylesheet.css" />
     <None Include="Javascript\battlelog.bf3.inject.min.js.map">
       <DependentUpon>battlelog.bf3.inject.min.js</DependentUpon>
@@ -278,6 +286,14 @@
     <Page Include="UI\UIControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\UIDownload\UIUpdateNotifier.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\UIDownload\UIDownloader.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

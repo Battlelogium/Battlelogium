@@ -7,6 +7,7 @@ using CefSharp;
 using CefSharp.Wpf;
 using System.Net;
 using System.Windows.Forms;
+using System.IO;
 namespace Battlelogium.Core.Battlelog
 {
     public partial class BattlelogBase
@@ -23,7 +24,11 @@ namespace Battlelogium.Core.Battlelog
 
         void IRequestHandler.OnResourceResponse(IWebBrowser browser, string url, int status, string statusText, string mimeType, WebHeaderCollection headers)
         {
-           if (url.Contains("battlelog-web-plugins")) MessageBox.Show(url);
+            if (url.Contains("battlelog-web-plugins"))
+            {
+                string filename = Path.GetFileName(new Uri(url).LocalPath);
+                MessageBox.Show(url);
+            }
         }
 
         bool IRequestHandler.GetDownloadHandler(IWebBrowser browser, string mimeType, string fileName, long contentLength, ref IDownloadHandler handler)
