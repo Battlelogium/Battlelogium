@@ -87,9 +87,21 @@
       <Project>{cf783500-dbac-4eb7-bd14-dfb70154dd2e}</Project>
       <Name>Battlelogium.UI.BF4</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Battlelogium.UI.BFH\Battlelogium.UI.BFH.csproj">
+      <Project>{cb10907f-b4cd-4b38-b45d-16ead38f7f6e}</Project>
+      <Name>Battlelogium.UI.BFH</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Battlelogium.UI.OfflineIndicator\Battlelogium.UI.OfflineIndicator.csproj">
       <Project>{d63a80c4-9a50-47b9-a236-6279eb5cd4a4}</Project>
       <Name>Battlelogium.UI.OfflineIndicator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Battlelogium.Utilities\Battlelogium.Utilities.csproj">
+      <Project>{df1ebfb7-05c5-42a2-a411-d2c49266c22c}</Project>
+      <Name>Battlelogium.Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VCRedistContainer\VCRedistContainer.csproj">
+      <Project>{37d88743-8ba4-439d-90af-ceb3f7cf788a}</Project>
+      <Name>VCRedistContainer</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
