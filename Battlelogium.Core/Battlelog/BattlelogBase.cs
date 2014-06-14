@@ -8,10 +8,13 @@ using System.IO;
 using System.Net;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using Battlelogium.Utilities.Update;
+using System.Diagnostics;
 
 namespace Battlelogium.Core.Battlelog
 {
-    public partial class BattlelogBase : IDisposable
+    public partial class BattlelogBase : IDisposable, IRequestHandler
     {
 
         public WebView battlelogWebview;
@@ -54,7 +57,7 @@ namespace Battlelogium.Core.Battlelog
                 
             };
             CEF.Initialize(settings);
-
+            
             BrowserSettings browserSettings = new BrowserSettings
             {
                 FileAccessFromFileUrlsAllowed = true,
@@ -75,6 +78,7 @@ namespace Battlelogium.Core.Battlelog
             this.battlelogWebview.RegisterJsObject("app", javascriptObject);
             this.battlelogWebview.LoadCompleted += this.LoadCompleted;
             this.battlelogWebview.PropertyChanged += battlelogWebview_PropertyChanged;
+            this.battlelogWebview.RequestHandler = this;
             this.IsWebviewInitialized = true;
         }
         
@@ -99,9 +103,6 @@ namespace Battlelogium.Core.Battlelog
                     }"
             );
             this.battlelogWebview.ExecuteScript("runCustomJS();");
-#if DEBUG
-            this.battlelogWebview.ShowDevTools();
-#endif
         }
     
         public static bool CheckBattlelogConnection()
@@ -128,6 +129,22 @@ namespace Battlelogium.Core.Battlelog
         public void Dispose()
         {
             throw new NotImplementedException(); //TODO implement Dispose properly
+        }
+
+        private void InitUpdateWebPlugin(string url)
+        {
+            if (!url.Contains("battlelog-web-plugins")) throw new ArgumentException();
+            string filename = Path.GetFileName(new Uri(url).LocalPath);
+            var dl = new UIDownloader(url, filename, "Downloading Battlelog Web Plugins...");
+            dl.DownloadComplete += (s, e) =>
+            {
+                dl.SyncCloseWindow();
+                Process.Start(e.completedFilePath).WaitForExit();
+                this.battlelogWebview.Reload(true);
+            };
+            dl.Show();
+            dl.Start();
+                
         }
     }
 }

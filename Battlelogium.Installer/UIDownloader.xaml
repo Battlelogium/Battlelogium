@@ -1,0 +1,25 @@
+﻿<Window x:Class="Battlelogium.Installer.UIDownloader"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:bl="clr-namespace:Battlelogium.Installer"
+        Title="Updating Battlelogium" Height="225" Width="550" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="bg_generic.ico">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="White" Offset="0"/>
+                <GradientStop Color="LightGray" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Image Grid.Row="0" Source="logo.png"></Image>
+        <Label x:Name="currentVersionLabel" HorizontalAlignment="Right" Margin="0,5,20,10" Grid.Row="1" VerticalAlignment="Top"/>
+        <ProgressBar x:Name="progressBar" HorizontalAlignment="Center" Height="34" Margin="20,70,20,10" Grid.Row="1" VerticalAlignment="Center" Width="490"/>
+        <Label x:Name="statusLabel" Content="Downloading Battlelogium..." HorizontalAlignment="Left" Margin="20,30,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <Label x:Name="urlLabel" FontSize="9" Content="From" HorizontalAlignment="Left" Margin="20,50,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <Button x:Name="exitButton" Visibility="Collapsed" Click="exitButton_Click" Content="Exit" HorizontalAlignment="Left" Margin="442,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75"/>
+
+    </Grid>
+</Window>

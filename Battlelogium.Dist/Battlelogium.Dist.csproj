@@ -11,6 +11,8 @@
     <AssemblyName>Battlelogium.Dist</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -36,7 +38,16 @@
     </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CefSharp, Version=1.25.7.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\CefSharp.Wpf.1.25.7\lib\net40\CefSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="CefSharp.Wpf, Version=1.25.7.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\CefSharp.Wpf.1.25.7\lib\net40\CefSharp.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -76,12 +87,25 @@
       <Project>{cf783500-dbac-4eb7-bd14-dfb70154dd2e}</Project>
       <Name>Battlelogium.UI.BF4</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Battlelogium.UI.BFH\Battlelogium.UI.BFH.csproj">
+      <Project>{cb10907f-b4cd-4b38-b45d-16ead38f7f6e}</Project>
+      <Name>Battlelogium.UI.BFH</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Battlelogium.UI.OfflineIndicator\Battlelogium.UI.OfflineIndicator.csproj">
       <Project>{d63a80c4-9a50-47b9-a236-6279eb5cd4a4}</Project>
       <Name>Battlelogium.UI.OfflineIndicator</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Battlelogium.Utilities\Battlelogium.Utilities.csproj">
+      <Project>{df1ebfb7-05c5-42a2-a411-d2c49266c22c}</Project>
+      <Name>Battlelogium.Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VCRedistContainer\VCRedistContainer.csproj">
+      <Project>{37d88743-8ba4-439d-90af-ceb3f7cf788a}</Project>
+      <Name>VCRedistContainer</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="readme.md" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -92,6 +116,13 @@ robocopy "$(SolutionDir)packages\CefSharp.Wpf.1.25.5\cef" "$(ProjectDir)bin\$(Co
 exit /b 0
 </PostBuildEvent>
   </PropertyGroup>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
