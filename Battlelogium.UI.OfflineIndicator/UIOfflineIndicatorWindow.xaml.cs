@@ -45,8 +45,14 @@ namespace Battlelogium.UI.OfflineIndicator
                 case "BF4":
                     this.battlelog = new Battlefield4();
                     break;
+                case "MOHW":
+                    this.battlelog = new MedalOfHonorWarfighter();
+                    break;
+                case "BFH":
+                    this.battlelog = new BattlefieldHardline();
+                    break;
                 default:
-                   MessageBox.Show("Invalid Commandline Parameters - bf3 for Battlefield 3, bf4 for Battlefield 4");
+                   MessageBox.Show("Invalid Commandline Parameters - bf3 for Battlefield 3, bf4 for Battlefield 4,,bfh for Hardline, mohw for Medal of Honor Warfighter");
                    Environment.Exit(1);
                    break;
             }
