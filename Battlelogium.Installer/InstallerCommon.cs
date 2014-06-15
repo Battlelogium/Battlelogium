@@ -9,6 +9,8 @@ using System.Reflection;
 using System.Diagnostics;
 using System.IO.Compression;
 using System.IO;
+using IWshRuntimeLibrary;
+
 
 namespace Battlelogium.Installer
 {
@@ -61,7 +63,34 @@ namespace Battlelogium.Installer
             });
 
         }
-          
+
+
+        public static void CreateShortcut(string shortcutName, string description, string exePath, string shortcutPath)
+        {
+            WshShell shell = new WshShell();
+            string shortcutAddr =  shortcutPath + @"\" + shortcutName;
+            IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(shortcutAddr);
+            shortcut.Description = description;
+            shortcut.TargetPath = exePath;
+            shortcut.Save();
+        }
+        public static void CreateDesktopShortcut(string shortcutName, string description, string exePath)
+        {
+            WshShell shell = new WshShell();
+            object shDesktop = (object)"Desktop";
+            string shortcutPath = (string)shell.SpecialFolders.Item(ref shDesktop);
+            CreateShortcut(shortcutName, description, exePath, shortcutPath);
+        }
+
+        public static void CreateStartMenuShortcut(string shortcutName, string description, string exePath)
+        {
+            if(!Directory.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonPrograms),"Battlelogium")))
+                Directory.CreateDirectory(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonPrograms), "Battlelogium"));
+            WshShell shell = new WshShell();
+            object shStartMenu = (object)"AllUsersPrograms";
+            string shortcutPath = (string)shell.SpecialFolders.Item(ref shStartMenu);
+            CreateShortcut(shortcutName, description, exePath, shortcutPath + @"\Battlelogium");
+        }
     }
 }
 

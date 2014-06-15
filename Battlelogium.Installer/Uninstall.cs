@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Win32;
 using System.IO;
 using System.Reflection;
-namespace Battlelogium.Utilities
+namespace Battlelogium.Installer
 {
     public class Uninstall
     {

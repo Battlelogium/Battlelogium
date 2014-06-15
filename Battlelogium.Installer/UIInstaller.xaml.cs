@@ -34,7 +34,6 @@ namespace Battlelogium.Installer
             InitializeComponent();
             if (!Directory.Exists(tempPath)) Directory.CreateDirectory(tempPath);
             SetInstallPath(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),"Battlelogium"));
-
         }
 
         private void installButton_Click(object sender, RoutedEventArgs e)
