@@ -109,6 +109,7 @@
       <DependentUpon>BattlelogBase.cs</DependentUpon>
     </Compile>
     <Compile Include="Battlelog\BFGameEventArgs.cs" />
+    <Compile Include="Battlelog\MedalOfHonorWarfighter.cs" />
     <Compile Include="Configuration\UIConfig.xaml.cs">
       <DependentUpon>UIConfig.xaml</DependentUpon>
     </Compile>
@@ -139,6 +140,9 @@
     <Content Include="bg_generic.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Javascript\battlelog.mohw.inject.js">
+      <LastGenOutput>battlelog.bf3.inject.min.js</LastGenOutput>
+    </Content>
     <Content Include="Javascript\battlelog.bf3.inject.js">
       <LastGenOutput>battlelog.bf3.inject.min.js</LastGenOutput>
     </Content>
@@ -156,6 +160,12 @@
     </Content>
     <Content Include="Javascript\battlelog.bfh.inject.min.js">
       <DependentUpon>battlelog.bfh.inject.js</DependentUpon>
+    </Content>
+    <Content Include="Javascript\battlelog.mohw.inject.min.js">
+      <DependentUpon>battlelog.mohw.inject.js</DependentUpon>
+    </Content>
+    <Content Include="Javascript\playbar\battlelog.mohw.playbar.js">
+      <Generator>VSMinifier</Generator>
     </Content>
     <Content Include="Javascript\playbar\battlelog.bf3.playbar.min.js">
       <DependentUpon>battlelog.bf3.playbar.js</DependentUpon>
@@ -176,6 +186,10 @@
     <Content Include="Javascript\playbar\battlelog.bf4.playbar.min.js">
       <DependentUpon>battlelog.bf4.playbar.js</DependentUpon>
     </Content>
+    <Content Include="Javascript\playbar\battlelog.mohw.playbar.min.js">
+      <DependentUpon>battlelog.mohw.playbar.js</DependentUpon>
+    </Content>
+    <Content Include="Javascript\settings\battlelog.mohw.settings.js" />
     <Content Include="Javascript\settings\battlelog.bf3.settings.js" />
     <Content Include="Javascript\settings\battlelog.bf3.settings.min.js">
       <DependentUpon>battlelog.bf3.settings.js</DependentUpon>
@@ -186,6 +200,13 @@
     </Content>
     <Content Include="Javascript\settings\battlelog.bfh.settings.min.js">
       <DependentUpon>battlelog.bfh.settings.js</DependentUpon>
+    </Content>
+    <Content Include="Javascript\settings\battlelog.mohw.settings.min.js">
+      <DependentUpon>battlelog.mohw.settings.js</DependentUpon>
+    </Content>
+    <Content Include="Javascript\stats\battlelog.mohw.stats.js" />
+    <Content Include="Javascript\stats\battlelog.bf3.stats - Copy.min.js">
+      <DependentUpon>battlelog.mohw.stats.js</DependentUpon>
     </Content>
     <Content Include="Javascript\stats\battlelog.bf3.stats.js" />
     <Content Include="Javascript\stats\battlelog.bf3.stats.min.js">
@@ -233,11 +254,17 @@
     <None Include="Javascript\battlelog.bfh.inject.min.js.map">
       <DependentUpon>battlelog.bfh.inject.min.js</DependentUpon>
     </None>
+    <None Include="Javascript\battlelog.mohw.inject.min.js.map">
+      <DependentUpon>battlelog.mohw.inject.min.js</DependentUpon>
+    </None>
     <None Include="Javascript\playbar\battlelog.bf3.playbar.min.js.map">
       <DependentUpon>battlelog.bf3.playbar.min.js</DependentUpon>
     </None>
     <None Include="Javascript\playbar\battlelog.bf4.playbar.min.js.map">
       <DependentUpon>battlelog.bf4.playbar.min.js</DependentUpon>
+    </None>
+    <None Include="Javascript\playbar\battlelog.mohw.playbar.min.js.map">
+      <DependentUpon>battlelog.mohw.playbar.min.js</DependentUpon>
     </None>
     <None Include="Javascript\settings\battlelog.bf3.settings.min.js.map">
       <DependentUpon>battlelog.bf3.settings.min.js</DependentUpon>
@@ -247,6 +274,12 @@
     </None>
     <None Include="Javascript\settings\battlelog.bfh.settings.min.js.map">
       <DependentUpon>battlelog.bfh.settings.min.js</DependentUpon>
+    </None>
+    <None Include="Javascript\settings\battlelog.mohw.settings.min.js.map">
+      <DependentUpon>battlelog.mohw.settings.min.js</DependentUpon>
+    </None>
+    <None Include="Javascript\stats\battlelog.bf3.stats - Copy.min.js.map">
+      <DependentUpon>battlelog.bf3.stats - Copy.min.js</DependentUpon>
     </None>
     <None Include="Javascript\stats\battlelog.bf3.stats.min.js.map">
       <DependentUpon>battlelog.bf3.stats.min.js</DependentUpon>
