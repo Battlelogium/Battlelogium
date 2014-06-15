@@ -1,4 +1,4 @@
-﻿//#define NO_ORIGIN //I don't want Origin to start if I'm debugging and I have no need to.
+﻿#define NO_ORIGIN //I don't want Origin to start if I'm debugging and I have no need to.
 using System;
 using System.Reflection;
 using System.Windows;
