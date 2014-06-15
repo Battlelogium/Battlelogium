@@ -1,23 +1,21 @@
 ![Battlelogium](http://ron975.github.io/Battlelogium/images/Battlelogium.Logo.Full.png "Battlelogium")
 =========================
  
-Battlelogium is a [Battlelog](http://battlelog.battlefield.com/) client that wraps Battlelog, Origin, and Battlefield 3 and 4 into one neat package. It enables Steam features such as the overlay and In-Home Streaming for both Battlefield 3 and 4.
+Battlelogium is a [Battlelog](http://battlelog.battlefield.com/) client that wraps Battlelog, Origin, and Battlelog-powered games into one neat package. It enables Steam features such as the overlay and In-Home Streaming for all Battlelog-powered games.
 
 Features
 --------
  
+* Supports Battlefield 3, Medal of Honor: Warfighter, **Battlefield 4 and Battlefield Hardline**
 * Powered by [CEFSharp](http://github.com/cefsharp/CEFSharp/) 
 * Built with aesthetics in mind
 * Wraps Battlefield and Battlelog in one neat package
-* Steam Overlay support for Battlefield 3 and **Battlefield 4**_*_
-* Steam **In-Home Streaming**** for Battlefield 3 and 4
+* **Steam Overlay support** for all supported games
+* Steam **In-Home Streaming** for all supported games
 * Start campaign with Steam support if Battlelog is not available
 * Does not modify or affect any Battlefield or Origin files  
 * Open source and licensed under [GNU GPL v3](http://www.gnu.org/licenses/gpl.html)
  
-
-_*Steam features for x64 executables are available through the Steam Beta channel, as well as the Origin Beta channel_
-_**In-Home streaming requires hardware acceleration in Battlelogium to be enabled_
 Configuration Options
 ---------------------
  
@@ -55,6 +53,17 @@ Building `Battlelogium.ThirdParty.SteamShortcutManager` (forked from [scottrice/
  
 Changelog
 ----------
+###WIP Pre-Release 2.1.0.0
+>* User Experience
+>  - **Added Battlefield Hardline Beta support**
+>  - **Added Medal of Honor: Warfighter support**
+>  - Battlelog Web Plugins are now updatable in-interface
+>  - Updated installer to be simpler to use 
+>  - Added an option to uninstall Battlelogium
+>  - Added entries for Battlelogium in Control Panel program list (reinstall to enable)
+>* Code
+>  - Updated to CEFSHarp 1.25.7
+
 ###Release 2.0.1.0
 >* User Experience
 >  - Fixed crashes due to insufficient permissions when writing to config
