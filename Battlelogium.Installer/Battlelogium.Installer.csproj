@@ -92,6 +92,7 @@
       <DependentUpon>UIDownloader.xaml</DependentUpon>
     </Compile>
     <Compile Include="Uninstall.cs" />
+    <Compile Include="Updater.cs" />
     <Page Include="UIComplete.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
