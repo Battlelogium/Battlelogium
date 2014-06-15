@@ -13,9 +13,6 @@ function injectOnce() {
     if (document.getElementById('_battlelogplaybar') == null) {
         injectScript('_battlelogplaybar', baseurl + '/playbar/battlelog.bf3.playbar.min.js');
     }
-    if (document.getElementById('_battlelogdialog') == null) {
-        injectScript('_battlelogdialog', baseurl + '/dialog/battlelog.bf3.dialog.min.js');
-    }
     if (document.getElementById('_battlelogstats') == null) {
         injectScript('_battlelogstats', baseurl + '/stats/battlelog.bf3.stats.min.js');
     }

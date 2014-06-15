@@ -9,7 +9,7 @@ using System.Net;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Battlelogium.Utilities.Update;
+using Battlelogium.Core.Update;
 using System.Diagnostics;
 
 namespace Battlelogium.Core.Battlelog

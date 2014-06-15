@@ -14,7 +14,7 @@ using System.Windows.Shapes;
 using System.Net;
 using System.IO;
 
-namespace Battlelogium.Utilities.Update
+namespace Battlelogium.Core.Update
 {
     /// <summary>
     /// Interaction logic for UIUpdateNotifier.xaml

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Win32;
 using System.IO;
 using System.Reflection;
-namespace Battlelogium.Utilities
+namespace Battlelogium.Installer
 {
     public class Uninstall
     {
@@ -35,9 +35,6 @@ namespace Battlelogium.Utilities
                 appKey.SetValue("DisplayVersion", (object)displayVersion, RegistryValueKind.String);
 
                 appKey.SetValue("URLInfoAbout", (object)helpUrl, RegistryValueKind.String);
-
-            
-
             }
             catch (Exception e)
             {

@@ -109,6 +109,7 @@
       <DependentUpon>BattlelogBase.cs</DependentUpon>
     </Compile>
     <Compile Include="Battlelog\BFGameEventArgs.cs" />
+    <Compile Include="Battlelog\MedalOfHonorWarfighter.cs" />
     <Compile Include="Configuration\UIConfig.xaml.cs">
       <DependentUpon>UIConfig.xaml</DependentUpon>
     </Compile>
@@ -128,10 +129,19 @@
       <DependentUpon>UIControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Update\UIDownloader.xaml.cs">
+      <DependentUpon>UIDownloader.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Update\UIUpdateNotifier.xaml.cs">
+      <DependentUpon>UIUpdateNotifier.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="bg_generic.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Javascript\battlelog.mohw.inject.js">
+      <LastGenOutput>battlelog.bf3.inject.min.js</LastGenOutput>
     </Content>
     <Content Include="Javascript\battlelog.bf3.inject.js">
       <LastGenOutput>battlelog.bf3.inject.min.js</LastGenOutput>
@@ -151,13 +161,18 @@
     <Content Include="Javascript\battlelog.bfh.inject.min.js">
       <DependentUpon>battlelog.bfh.inject.js</DependentUpon>
     </Content>
+    <Content Include="Javascript\battlelog.mohw.inject.min.js">
+      <DependentUpon>battlelog.mohw.inject.js</DependentUpon>
+    </Content>
     <Content Include="Javascript\playbar\battlelog.bf3.playbar.min.js">
       <DependentUpon>battlelog.bf3.playbar.js</DependentUpon>
     </Content>
-    <Content Include="Javascript\playbar\battlelog.bf4.playbar.js" />
-    <Content Include="Javascript\playbar\battlelog.bf3.playbar.js">
-      <Generator>VSMinifier</Generator>
+    <Content Include="Javascript\playbar\battlelog.bf4.playbar.min.js">
+      <DependentUpon>battlelog.bf4.playbar.js</DependentUpon>
     </Content>
+    <Content Include="Javascript\playbar\battlelog.mohw.playbar.js" />
+    <Content Include="Javascript\playbar\battlelog.bf4.playbar.js" />
+    <Content Include="Javascript\playbar\battlelog.bf3.playbar.js" />
     <Content Include="Javascript\misc\battlelog.misc.css">
       <Generator>VSMinifier</Generator>
       <LastGenOutput>battlelog.misc.min.css</LastGenOutput>
@@ -167,9 +182,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>battlelog.misc.css</DependentUpon>
     </Content>
-    <Content Include="Javascript\playbar\battlelog.bf4.playbar.min.js">
-      <DependentUpon>battlelog.bf4.playbar.js</DependentUpon>
+    <Content Include="Javascript\playbar\battlelog.mohw.playbar.min.js">
+      <DependentUpon>battlelog.mohw.playbar.js</DependentUpon>
     </Content>
+    <Content Include="Javascript\settings\battlelog.mohw.settings.js" />
     <Content Include="Javascript\settings\battlelog.bf3.settings.js" />
     <Content Include="Javascript\settings\battlelog.bf3.settings.min.js">
       <DependentUpon>battlelog.bf3.settings.js</DependentUpon>
@@ -180,6 +196,13 @@
     </Content>
     <Content Include="Javascript\settings\battlelog.bfh.settings.min.js">
       <DependentUpon>battlelog.bfh.settings.js</DependentUpon>
+    </Content>
+    <Content Include="Javascript\settings\battlelog.mohw.settings.min.js">
+      <DependentUpon>battlelog.mohw.settings.js</DependentUpon>
+    </Content>
+    <Content Include="Javascript\stats\battlelog.mohw.stats.js" />
+    <Content Include="Javascript\stats\battlelog.bf3.stats - Copy.min.js">
+      <DependentUpon>battlelog.mohw.stats.js</DependentUpon>
     </Content>
     <Content Include="Javascript\stats\battlelog.bf3.stats.js" />
     <Content Include="Javascript\stats\battlelog.bf3.stats.min.js">
@@ -215,6 +238,8 @@
       <DependentUpon>BattlelogBase.cs</DependentUpon>
     </Compile>
     <Resource Include="logo.png" />
+    <Resource Include="Update\images\bg_generic.ico" />
+    <Resource Include="Update\images\logo.png" />
     <Content Include="userstylesheet.css" />
     <None Include="Javascript\battlelog.bf3.inject.min.js.map">
       <DependentUpon>battlelog.bf3.inject.min.js</DependentUpon>
@@ -225,11 +250,17 @@
     <None Include="Javascript\battlelog.bfh.inject.min.js.map">
       <DependentUpon>battlelog.bfh.inject.min.js</DependentUpon>
     </None>
+    <None Include="Javascript\battlelog.mohw.inject.min.js.map">
+      <DependentUpon>battlelog.mohw.inject.min.js</DependentUpon>
+    </None>
     <None Include="Javascript\playbar\battlelog.bf3.playbar.min.js.map">
       <DependentUpon>battlelog.bf3.playbar.min.js</DependentUpon>
     </None>
     <None Include="Javascript\playbar\battlelog.bf4.playbar.min.js.map">
       <DependentUpon>battlelog.bf4.playbar.min.js</DependentUpon>
+    </None>
+    <None Include="Javascript\playbar\battlelog.mohw.playbar.min.js.map">
+      <DependentUpon>battlelog.mohw.playbar.min.js</DependentUpon>
     </None>
     <None Include="Javascript\settings\battlelog.bf3.settings.min.js.map">
       <DependentUpon>battlelog.bf3.settings.min.js</DependentUpon>
@@ -239,6 +270,12 @@
     </None>
     <None Include="Javascript\settings\battlelog.bfh.settings.min.js.map">
       <DependentUpon>battlelog.bfh.settings.min.js</DependentUpon>
+    </None>
+    <None Include="Javascript\settings\battlelog.mohw.settings.min.js.map">
+      <DependentUpon>battlelog.mohw.settings.min.js</DependentUpon>
+    </None>
+    <None Include="Javascript\stats\battlelog.bf3.stats - Copy.min.js.map">
+      <DependentUpon>battlelog.bf3.stats - Copy.min.js</DependentUpon>
     </None>
     <None Include="Javascript\stats\battlelog.bf3.stats.min.js.map">
       <DependentUpon>battlelog.bf3.stats.min.js</DependentUpon>
@@ -281,6 +318,14 @@
     <Page Include="UI\UIControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Update\UIDownloader.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Update\UIUpdateNotifier.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

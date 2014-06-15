@@ -29,8 +29,7 @@ namespace Battlelogium.Core.UI
                         break;
                }
 
-                if (this.UICore.config.RightClickDrag)
-            {
+             if (this.UICore.config.RightClickDrag){
                 if (!this.RightClickDragInitialized)
                 {
                     this.InitRightClickDrag();
@@ -44,8 +43,8 @@ namespace Battlelogium.Core.UI
 
         public void SetFullScreen()
         {
-            this.SaveBounds(); //Save window bounds before setting fullscreen
             this.IsFullscreen = true;
+            this.SaveBounds(); //Save window bounds before setting fullscreen
             this.WindowState = WindowState.Maximized;
             this.WindowStyle = WindowStyle.None;
             this.BorderBrush = null;
@@ -88,7 +87,6 @@ namespace Battlelogium.Core.UI
                 this.UICore.config.WriteConfig("fullscreenMode", "true");
                 return;
             }
-            this.UICore.config.WriteConfig("fullscreenMode", "false");
             IsolatedStorageFile storage = IsolatedStorageFile.GetUserStoreForAssembly();
             using (IsolatedStorageFileStream stream = new IsolatedStorageFileStream("windowbounds", FileMode.Create, storage))
             using (StreamWriter writer = new StreamWriter(stream))

@@ -129,6 +129,18 @@
   <ItemGroup>
     <Resource Include="images\BF4\icon.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\BFH\icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\BFH\icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\MOHW\icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\MOHW\icon.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
