@@ -1,7 +1,11 @@
 ![Battlelogium](http://ron975.github.io/Battlelogium/images/Battlelogium.Logo.Full.png "Battlelogium")
 =========================
  
+<<<<<<< HEAD
 Battlelogium is a [Battlelog](http://battlelog.battlefield.com/) client that wraps Battlelog, Origin, and Battlelog-powered games into one neat package. It enables Steam features such as the overlay and In-Home Streaming for all Battlelog-powered games.
+=======
+Battlelogium is a [Battlelog](http://battlelog.battlefield.com/) client that wraps Battlelog, Origin, and Battlefield 3, 4 and Hardline into one neat package. It enables Steam features such as the overlay and In-Home Streaming for Battlefield 3, Battlefied 4, and Battlefield Hardline.
+>>>>>>> 7dc59f51aca40889c4e208a977d6697efa5281f4
 
 Features
 --------
@@ -10,8 +14,13 @@ Features
 * Powered by [CEFSharp](http://github.com/cefsharp/CEFSharp/) 
 * Built with aesthetics in mind
 * Wraps Battlefield and Battlelog in one neat package
+<<<<<<< HEAD
 * **Steam Overlay support** for all supported games
 * Steam **In-Home Streaming** for all supported games
+=======
+* Steam Overlay support for Battlefield 3, **Battlefield 4 and Battlefield Hardline**_*_
+* Steam **In-Home Streaming**** for Battlefield 3, 4, and Hardline
+>>>>>>> 7dc59f51aca40889c4e208a977d6697efa5281f4
 * Start campaign with Steam support if Battlelog is not available
 * Does not modify or affect any Battlefield or Origin files  
 * Open source and licensed under [GNU GPL v3](http://www.gnu.org/licenses/gpl.html)
@@ -56,7 +65,10 @@ Changelog
 ###WIP Pre-Release 2.1.0.0
 >* User Experience
 >  - **Added Battlefield Hardline Beta support**
+<<<<<<< HEAD
 >  - **Added Medal of Honor: Warfighter support**
+=======
+>>>>>>> 7dc59f51aca40889c4e208a977d6697efa5281f4
 >  - Battlelog Web Plugins are now updatable in-interface
 >  - Updated installer to be simpler to use 
 >  - Added an option to uninstall Battlelogium

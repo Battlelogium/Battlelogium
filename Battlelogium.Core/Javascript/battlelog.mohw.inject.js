@@ -11,13 +11,13 @@ function injectOnce() {
         injectCSS('css_windowbutton', baseurl + '/windowbutton/battlelog.windowbutton.min.css');
     }
     if (document.getElementById('_battlelogplaybar') == null) {
-        injectScript('_battlelogplaybar', baseurl + '/playbar/battlelog.bf3.playbar.min.js');
+        injectScript('_battlelogplaybar', baseurl + '/playbar/battlelog.mohw.playbar.min.js');
     }
     if (document.getElementById('_battlelogstats') == null) {
-        injectScript('_battlelogstats', baseurl + '/stats/battlelog.bf3.stats.min.js');
+        injectScript('_battlelogstats', baseurl + '/stats/battlelog.mohw.stats.min.js');
     }
     if (document.getElementById('_battlelogsettings') == null) {
-        injectScript('_battlelogsettings', baseurl + '/settings/battlelog.bf3.settings.min.js');
+        injectScript('_battlelogsettings', baseurl + '/settings/battlelog.mohw.settings.min.js');
     }
 }
 
@@ -26,14 +26,14 @@ function runCustomJS() {
     battlelogplaybar.fixQuickMatchButtons();
     windowbutton.addWindowButtons();
     battlelogplaybar.fixEAPlaybarButtons();
-    battlelogplaybar.addPlaybarButton(battlelogplaybar.createPlaybarButton('btnServers', 'SERVERS', 'location.href = "http://battlelog.battlefield.com/bf3/servers/"'));
+    battlelogplaybar.addPlaybarButton(battlelogplaybar.createPlaybarButton('btnServers', 'SERVERS', 'location.href = "http://battlelog.battlefield.com/mohw/servers/"'));
     $("#base-header-secondary-nav>ul>li>a:contains('Buy Battlefield 4')").remove();
     } catch (error) {
     }
     if (window.location.href.match(/\/soldier\//) != null) {
         battlelogstats.overview();
     }
-    if (window.location.href == 'http://battlelog.battlefield.com/bf3/profile/edit/') {
+    if (window.location.href == 'http://battlelog.battlefield.com/mohw/profile/edit/') {
         
         battlelogsettings.addSettingsSection();
     }

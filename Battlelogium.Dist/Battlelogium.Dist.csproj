@@ -91,6 +91,10 @@
       <Project>{cb10907f-b4cd-4b38-b45d-16ead38f7f6e}</Project>
       <Name>Battlelogium.UI.BFH</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Battlelogium.UI.MOHW\Battlelogium.UI.MOHW.csproj">
+      <Project>{fcc1c348-ee60-4dbb-a3ce-d395e0994d02}</Project>
+      <Name>Battlelogium.UI.MOHW</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Battlelogium.UI.OfflineIndicator\Battlelogium.UI.OfflineIndicator.csproj">
       <Project>{d63a80c4-9a50-47b9-a236-6279eb5cd4a4}</Project>
       <Name>Battlelogium.UI.OfflineIndicator</Name>

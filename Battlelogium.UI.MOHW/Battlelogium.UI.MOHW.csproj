@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D63A80C4-9A50-47B9-A236-6279EB5CD4A4}</ProjectGuid>
+    <ProjectGuid>{FCC1C348-EE60-4DBB-A3CE-D395E0994D02}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Battlelogium.UI.OfflineIndicator</RootNamespace>
-    <AssemblyName>Battlelogium.UI.OfflineIndicator</AssemblyName>
+    <RootNamespace>Battlelogium.UI.MOHW</RootNamespace>
+    <AssemblyName>Battlelogium.UI.MOHW</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -25,10 +25,9 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -36,13 +35,14 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CefSharp, Version=1.25.7.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="CefSharp">
       <HintPath>..\packages\CefSharp.Wpf.1.25.7\lib\net40\CefSharp.dll</HintPath>
     </Reference>
-    <Reference Include="CefSharp.Wpf, Version=1.25.7.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="CefSharp.Wpf">
       <HintPath>..\packages\CefSharp.Wpf.1.25.7\lib\net40\CefSharp.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -65,7 +65,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="UIOfflineIndicator.xaml">
+    <Page Include="MOHWWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -76,8 +76,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="UIOfflineIndicatorWindow.xaml.cs">
-      <DependentUpon>UIOfflineIndicator.xaml</DependentUpon>
+    <Compile Include="MOHWWindow.xaml.cs">
+      <DependentUpon>MOHWWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -110,9 +110,20 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="images\loadingsprite.png" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Battlelogium.Core\Battlelogium.Core.csproj">
       <Project>{74847b27-2dfa-404b-9baf-bfdd69604091}</Project>
       <Name>Battlelogium.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Battlelogium.ThirdParty.Animator\Battlelogium.ThirdParty.Animator.csproj">
+      <Project>{fb19b412-db0a-42c8-9123-4ff3bb2f17e7}</Project>
+      <Name>Battlelogium.ThirdParty.Animator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Battlelogium.ThirdParty.WPFCustomMessageBox\Battlelogium.ThirdParty.WPFCustomMessageBox.csproj">
+      <Project>{0c691505-4dab-4946-a1bb-1f6c682567eb}</Project>
+      <Name>Battlelogium.ThirdParty.WPFCustomMessageBox</Name>
     </ProjectReference>
     <ProjectReference Include="..\Battlelogium.Utilities\Battlelogium.Utilities.csproj">
       <Project>{df1ebfb7-05c5-42a2-a411-d2c49266c22c}</Project>
@@ -120,26 +131,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\BF3\icon.png" />
-    <Resource Include="images\BF4\icon.png" />
+    <Resource Include="images\background.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\BF3\icon.ico" />
+    <Resource Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\BF4\icon.ico" />
+    <Resource Include="images\icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\BFH\icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="images\BFH\icon.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="images\MOHW\icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="images\MOHW\icon.ico" />
+    <Resource Include="images\bg_icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
@@ -149,6 +150,10 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
+  <PropertyGroup>
+    <PostBuildEvent>robocopy "$(SolutionDir)packages\CefSharp.Wpf.1.25.7\cef" "$(ProjectDir)bin\$(ConfigurationName)" *.* /E
+exit /b 0</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

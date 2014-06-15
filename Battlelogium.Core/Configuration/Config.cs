@@ -17,7 +17,6 @@ namespace Battlelogium.Core.Configuration
         private readonly bool checkUpdates;
         private readonly bool fullscreenMode;
         private readonly bool manageOrigin;
-        private readonly bool enableSteamOverlayBF4; 
         private readonly int windowHeight;
         private readonly int windowWidth;
         private readonly bool disableHardwareAccel;
