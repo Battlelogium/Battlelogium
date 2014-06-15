@@ -63,6 +63,7 @@ namespace Battlelogium.Core.Configuration
             this.config.WriteConfig("disableHardwareAccel", this.disableHardwareAccel_input.IsChecked);
             this.config.WriteConfig("rightClickDrag", this.rightClickDrag_input.IsChecked);
             this.config.WriteConfig("fullscreenMode", this.fullscreenMode_input.IsChecked);
+
             this.DialogResult = true;
             this.Close();
         }
