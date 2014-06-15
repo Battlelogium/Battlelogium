@@ -1,4 +1,4 @@
-﻿<Window x:Class="Battlelogium.Utilities.Update.UIDownloader"
+﻿<Window x:Class="Battlelogium.Core.Update.UIDownloader"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Updating Battlelogium" Height="225" Width="550" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="images/bg_generic.ico">

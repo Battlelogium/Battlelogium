@@ -128,6 +128,12 @@
       <DependentUpon>UIControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Update\UIDownloader.xaml.cs">
+      <DependentUpon>UIDownloader.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Update\UIUpdateNotifier.xaml.cs">
+      <DependentUpon>UIUpdateNotifier.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="bg_generic.ico">
@@ -215,6 +221,8 @@
       <DependentUpon>BattlelogBase.cs</DependentUpon>
     </Compile>
     <Resource Include="logo.png" />
+    <Resource Include="Update\images\bg_generic.ico" />
+    <Resource Include="Update\images\logo.png" />
     <Content Include="userstylesheet.css" />
     <None Include="Javascript\battlelog.bf3.inject.min.js.map">
       <DependentUpon>battlelog.bf3.inject.min.js</DependentUpon>
@@ -281,6 +289,14 @@
     <Page Include="UI\UIControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Update\UIDownloader.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Update\UIUpdateNotifier.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

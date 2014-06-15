@@ -35,9 +35,6 @@ namespace Battlelogium.Utilities
                 appKey.SetValue("DisplayVersion", (object)displayVersion, RegistryValueKind.String);
 
                 appKey.SetValue("URLInfoAbout", (object)helpUrl, RegistryValueKind.String);
-
-            
-
             }
             catch (Exception e)
             {
