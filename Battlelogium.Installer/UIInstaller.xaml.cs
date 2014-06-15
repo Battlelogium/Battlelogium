@@ -72,6 +72,8 @@ namespace Battlelogium.Installer
             {
                 await InstallerCommon.ExtractZipFile(e.completedFilePath, installPath);
                 dl.SyncCloseWindow();
+                new UIComplete(installPath).Show();
+                this.Close();
             };
             dl.Show();
             dl.Start();
@@ -80,14 +82,7 @@ namespace Battlelogium.Installer
         
         public void FinalizeInstall()
         {
-            MessageBoxResult desktopShortcuts = MessageBox.Show("Create shortcuts on the desktop?", "Add shortcuts", MessageBoxButton.OKCancel);
-            if (desktopShortcuts.Equals(MessageBoxResult.OK))
-            {
-                CreateShortcut("Battlelogium - Battlefield 3.lnk", "Play Battlefield 3", Path.Combine(installPath, "Battlelogium.UI.BF3.exe"));
-                CreateShortcut("Battlelogium - Battlefield 4.lnk", "Play Battlefield 4", Path.Combine(installPath, "Battlelogium.UI.BF4.exe"));
-                CreateShortcut("Battlelogium - Battlefield Hardline.lnk", "Play Battlefield Hardline", Path.Combine(installPath, "Battlelogium.UI.BFH.exe"));
-
-            }
+            
             MessageBoxResult steamShortcuts = MessageBox.Show("Add Battlelogium to Steam as a non-Steam game?", "Add Steam shortcuts", MessageBoxButton.OKCancel);
             try
             {
