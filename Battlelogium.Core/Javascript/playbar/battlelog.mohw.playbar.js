@@ -54,7 +54,7 @@
     fixEAPlaybarButtons: function () {
         //Fix Campaign Button
         if ($('#btnCampaign').length == 0) {
-            var btnCampaign = $("button[data-track='actionbar.campaign']")
+            var btnCampaign = $(".launch-campaign-button")
             btnCampaign.attr('id', 'btnCampaign')
             btnCampaign.html("<p>CAMPAIGN</p>");
         }
