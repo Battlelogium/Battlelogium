@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.IO;
 using Battlelogium.Installer;
+using System.Diagnostics;
 namespace Battlelogium.Installer
 {
     /// <summary>
@@ -45,7 +46,9 @@ namespace Battlelogium.Installer
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             this.CreateDesktopShortcuts();
+            this.CreateStartMenuShortcuts();
             Uninstall.CreateBattlelogiumControlPanelEntry();
+            Process.Start("taskkill", "/im origin.exe /f").WaitForExit(); //Kill any elevated instances of origin.
             this.Close();
         }
     }

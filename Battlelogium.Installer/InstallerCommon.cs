@@ -45,6 +45,13 @@ namespace Battlelogium.Installer
                 CreateNoWindow = true,
                 WindowStyle = ProcessWindowStyle.Hidden
             }).WaitForExit();
+            Process.Start(new ProcessStartInfo()
+            {
+                FileName = "taskkill",
+                Arguments = "/im Battlelogium.UI.MOHW.exe /f",
+                CreateNoWindow = true,
+                WindowStyle = ProcessWindowStyle.Hidden
+            }).WaitForExit();
         }
 
         public static async Task ExtractZipFile(string fileName, string extractPath)

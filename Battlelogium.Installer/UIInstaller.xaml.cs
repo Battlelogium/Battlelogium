@@ -67,16 +67,9 @@ namespace Battlelogium.Installer
             }
             this.Hide();
             string url = await InstallerCommon.GetDownload("battlelogium");
-            var dl = new UIDownloader(url, "package.zip", "Downloading Battlelogium ...");
-            dl.DownloadComplete += async (s, e) =>
-            {
-                await InstallerCommon.ExtractZipFile(e.completedFilePath, installPath);
-                dl.SyncCloseWindow();
-                new UIComplete(installPath).Show();
-                this.Close();
-            };
-            dl.Show();
-            dl.Start();
+            var updater = new Updater(url, installPath);
+            updater.DownloadComplete += (s, e) => { this.Close(); };
+            updater.BeginUpdate();
         } 
 
         
@@ -103,7 +96,6 @@ namespace Battlelogium.Installer
             {
 
             }
-            Process.Start("taskkill", "/im origin.exe /f").WaitForExit(); //Kill any elevated instances of origin.
             this.Close();
         }
         public void CreateShortcut(string shortcutName, string description, string exePath)

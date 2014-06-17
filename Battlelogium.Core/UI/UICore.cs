@@ -14,6 +14,7 @@ using Battlelogium.Utilities;
 using System.Diagnostics;
 using System.Net;
 using Battlelogium.Core.Update;
+using System.IO;
 
 namespace Battlelogium.Core.UI
 {
@@ -110,9 +111,18 @@ namespace Battlelogium.Core.UI
                     case false:
                         return;
                     case true:
-
-                        Process.Start("Battlelogium.Installer.exe",Process.GetCurrentProcess().Id.ToString());
-                        this.mainWindow.Dispatcher.Invoke(() => this.mainWindow.Close());
+                        string url = await new WebClient().DownloadStringTaskAsync("http://ron975.github.io/Battlelogium/releaseinfo/download/installer");
+                        this.mainWindow.Dispatcher.Invoke(() => this.mainWindow.Hide());
+                        string filename = Path.GetFileName(new Uri(url).LocalPath);
+                        var dl = new UIDownloader(url, filename, "Downloading Battlelog Web Plugins...");
+                        dl.DownloadComplete += (s, e) =>
+                        {
+                            dl.SyncCloseWindow();
+                            Process.Start(e.completedFilePath, @"update "+"\""+Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)+"\"");
+                            this.mainWindow.Dispatcher.Invoke(() => this.mainWindow.Close());
+                        };
+                        dl.Show();
+                        dl.Start();
                         break;
                 }
             }
