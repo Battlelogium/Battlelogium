@@ -18,9 +18,10 @@
                 </LinearGradientBrush>
             </Grid.Background>
             <CheckBox x:Name="bf3Shortcut_input" IsChecked="True" Content="Add a desktop shortcut to Battlefield 3" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" />
-            <CheckBox x:Name="bf4Shortcut_input" IsChecked="True" Content="Add a desktop shortcut to Battlefield 4" HorizontalAlignment="Left" Margin="10,45,0,0" VerticalAlignment="Top" />
-            <CheckBox x:Name="bfhShortcut_input" IsChecked="True" Content="Add a desktop shortcut to Battlefield Hardline" HorizontalAlignment="Left" Margin="10,80,0,0" VerticalAlignment="Top"/>
-            <CheckBox x:Name="steamShortcut_input" Content="Add Battlelogium to Steam as a Non-Steam Game" HorizontalAlignment="Left" Margin="10,115,0,0" VerticalAlignment="Top"/>
+            <CheckBox x:Name="bf4Shortcut_input" IsChecked="True" Content="Add a desktop shortcut to Battlefield 4" HorizontalAlignment="Left" Margin="10,31,0,0" VerticalAlignment="Top" />
+            <CheckBox x:Name="bfhShortcut_input" IsChecked="True" Content="Add a desktop shortcut to Battlefield Hardline" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top"/>
+            <CheckBox x:Name="mohwShortcut_input" IsChecked="True" Content="Add a desktop shortcut to Medal of Honor: Warfighter" HorizontalAlignment="Left" Margin="10,73,0,0" VerticalAlignment="Top"/>
+            <CheckBox x:Name="steamShortcut_input" Content="Add Battlelogium to Steam as a Non-Steam Game" HorizontalAlignment="Left" Margin="10,94,0,0" VerticalAlignment="Top"/>
             <Button Content="Finish" HorizontalAlignment="Left" Margin="460,115,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
 
         </Grid>

@@ -116,7 +116,7 @@
   <PropertyGroup>
     <PostBuildEvent>del *.pdb
 del $(TargetFileName)
-robocopy "$(SolutionDir)packages\CefSharp.Wpf.1.25.5\cef" "$(ProjectDir)bin\$(ConfigurationName)" *.* /E
+robocopy "$(SolutionDir)packages\CefSharp.Wpf.1.25.7\cef" "$(ProjectDir)bin\$(ConfigurationName)" *.* /E
 exit /b 0
 </PostBuildEvent>
   </PropertyGroup>

@@ -31,12 +31,15 @@ namespace Battlelogium.Installer
             if (bf3Shortcut_input.IsChecked == true) InstallerCommon.CreateDesktopShortcut("Battlelogium - Battlefield 3.lnk", "Play Battlefield 3", Path.Combine(this.installPath, "Battlelogium.UI.BF3.exe"));
             if (bf4Shortcut_input.IsChecked == true) InstallerCommon.CreateDesktopShortcut("Battlelogium - Battlefield 4.lnk", "Play Battlefield 4", Path.Combine(this.installPath, "Battlelogium.UI.BF4.exe"));
             if (bfhShortcut_input.IsChecked == true) InstallerCommon.CreateDesktopShortcut("Battlelogium - Battlefield Hardline.lnk", "Play Battlefield Hardline", Path.Combine(this.installPath, "Battlelogium.UI.BFH.exe"));
+            if (mohwShortcut_input.IsChecked == true) InstallerCommon.CreateDesktopShortcut("Battlelogium - Medal of Honor Warfighter.lnk", "Medal of Honor Warfighter", Path.Combine(this.installPath, "Battlelogium.UI.MOHW.exe"));
+
         }
         public void CreateStartMenuShortcuts()
         {
             InstallerCommon.CreateStartMenuShortcut("Battlelogium - Battlefield 3.lnk", "Play Battlefield 3", Path.Combine(this.installPath, "Battlelogium.UI.BF3.exe"));
             InstallerCommon.CreateStartMenuShortcut("Battlelogium - Battlefield 4.lnk", "Play Battlefield 4", Path.Combine(this.installPath, "Battlelogium.UI.BF4.exe"));
             InstallerCommon.CreateStartMenuShortcut("Battlelogium - Battlefield Hardline.lnk", "Play Battlefield Hardline", Path.Combine(this.installPath, "Battlelogium.UI.BFH.exe"));
+            InstallerCommon.CreateStartMenuShortcut("Battlelogium - Medal of Honor Warfighter.lnk", "Medal of Honor Warfighter", Path.Combine(this.installPath, "Battlelogium.UI.MOHW.exe"));
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
