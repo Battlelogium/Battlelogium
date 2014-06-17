@@ -22,7 +22,7 @@ namespace Battlelogium.Installer
             return url;
         }
 
-        private void KillBattlelogium()
+        public static void KillBattlelogium()
         {
             Process.Start(new ProcessStartInfo()
             {

@@ -28,6 +28,7 @@ namespace Battlelogium.Installer
                     this.Shutdown();
                 }
 
+                InstallerCommon.KillBattlelogium();
                 string path = args[2];
                 string url = await InstallerCommon.GetDownload("battlelogium");
                 var updater = new Updater(url, path);
