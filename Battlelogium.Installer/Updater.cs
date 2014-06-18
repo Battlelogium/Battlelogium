@@ -9,7 +9,6 @@ namespace Battlelogium.Installer
     internal class Updater : UIDownloader
     {
         string installPath;
-        bool showUIComplete;
         internal Updater(string url, string installPath):base(url, "package.zip", "Downloading Battlelogium...")
         {
             this.installPath = installPath;

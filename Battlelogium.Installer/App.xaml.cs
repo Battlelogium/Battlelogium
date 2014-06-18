@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.IO;
 namespace Battlelogium.Installer
 {
     /// <summary>
@@ -33,6 +34,18 @@ namespace Battlelogium.Installer
                 string url = await InstallerCommon.GetDownload("battlelogium");
                 var updater = new Updater(url, path);
                 updater.BeginUpdate();
+                return;
+            }
+            if (args[1] == "uninstall")
+            {
+                if (File.Exists("filelist"))
+                {
+                    InstallerCommon.KillBattlelogium();
+                    new UIUninstaller().Show();
+                    return;
+                }
+                MessageBox.Show("filelist not found, Uninstall is unable to continue");
+                this.Shutdown();
                 return;
             }
             return;

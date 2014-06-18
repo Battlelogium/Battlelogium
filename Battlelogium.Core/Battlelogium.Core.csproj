@@ -113,6 +113,9 @@
     <Compile Include="Configuration\UIConfig.xaml.cs">
       <DependentUpon>UIConfig.xaml</DependentUpon>
     </Compile>
+    <Content Include="filelist">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Compile Include="ManagedOrigin\OfflineOrigin.cs" />
     <Compile Include="UI\UIWindow.cs" />
     <Compile Include="UI\UIWindow.DragHandler.cs">

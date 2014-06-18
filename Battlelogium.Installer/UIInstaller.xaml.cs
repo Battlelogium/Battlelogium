@@ -58,7 +58,12 @@ namespace Battlelogium.Installer
             try
             {
                 if (!Directory.Exists(installPath)) Directory.CreateDirectory(installPath);
-                System.IO.File.Copy(Assembly.GetEntryAssembly().Location, Path.Combine(installPath, "Battlelogium.Installer.exe"), true);
+
+                try
+                {
+                    System.IO.File.Copy(Assembly.GetEntryAssembly().Location, Path.Combine(installPath, "Battlelogium.Installer.exe"), true);
+                }
+                catch { };
             }
             catch
             {

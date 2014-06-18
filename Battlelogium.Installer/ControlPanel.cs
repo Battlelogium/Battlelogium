@@ -8,7 +8,7 @@ using System.IO;
 using System.Reflection;
 namespace Battlelogium.Installer
 {
-    public class Uninstall
+    public class ControlPanel
     {
         private static void RegisterControlPanelProgram(string appName, string installLocation, string displayicon, string uninstallString, string displayVersion, string publisherString, string helpUrl)
         {
@@ -42,12 +42,21 @@ namespace Battlelogium.Installer
             }
         }
 
-        public static void CreateBattlelogiumControlPanelEntry()
+        public static void RemoveControlPanelProgram(string appName)
         {
-            string installDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            Uninstall.RegisterControlPanelProgram("Battlelogium", installDir, 
+            string InstallerRegLoc = @"Software\Microsoft\Windows\CurrentVersion\Uninstall";
+            RegistryKey homeKey = (Registry.LocalMachine).OpenSubKey(InstallerRegLoc, true);
+            RegistryKey appSubKey = homeKey.OpenSubKey(appName);
+            if (null != appSubKey)
+            {
+                homeKey.DeleteSubKey(appName);
+            }
+        }
+        public static void CreateBattlelogiumControlPanelEntry(string installDir)
+        {
+            ControlPanel.RegisterControlPanelProgram("Battlelogium", installDir, 
                 Path.Combine(installDir,"bg_generic.ico"),
-                Path.Combine(installDir,"Battlelogium.ExecUtils.exe -uninst"), 
+                Path.Combine(installDir,"Battlelogium.Installer.exe uninstall"), 
                 Assembly.GetEntryAssembly().GetName().Version.ToString(),
                 "Battlelogium",
                 "http://ron975.github.com/Battlelogium");
