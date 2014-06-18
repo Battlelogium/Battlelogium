@@ -114,7 +114,7 @@ namespace Battlelogium.Core.UI
                         string url = await new WebClient().DownloadStringTaskAsync("http://ron975.github.io/Battlelogium/releaseinfo/download/installer");
                         this.mainWindow.Dispatcher.Invoke(() => this.mainWindow.Hide());
                         string filename = Path.GetFileName(new Uri(url).LocalPath);
-                        var dl = new UIDownloader(url, filename, "Downloading Battlelog Web Plugins...");
+                        var dl = new UIDownloader(url, filename, "Updating Battlelogium...");
                         dl.DownloadComplete += (s, e) =>
                         {
                             dl.SyncCloseWindow();
