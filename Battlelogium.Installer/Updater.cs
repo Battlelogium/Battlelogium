@@ -6,28 +6,26 @@ using System.Threading.Tasks;
 
 namespace Battlelogium.Installer
 {
-    internal class Updater
+    internal class Updater : UIDownloader
     {
         string installPath;
-        bool showUIComplete;
-        internal Updater(string installPath, bool showUIComplete)
+        internal Updater(string url, string installPath):base(url, "package.zip", "Downloading Battlelogium...")
         {
             this.installPath = installPath;
-            this.showUIComplete = showUIComplete;
         }
 
-        internal async Task StartUpdate()
+        internal async Task BeginUpdate()
         {
-            string url = await InstallerCommon.GetDownload("battlelogium");
-            var dl = new UIDownloader(url, "package.zip", "Downloading Battlelogium ...");
-            dl.DownloadComplete += async (s, e) =>
+            this.DownloadComplete += async (s, e) =>
             {
-                await InstallerCommon.ExtractZipFile(e.completedFilePath, this.installPath);
-                dl.SyncCloseWindow();
-                if (this.showUIComplete) new UIComplete(this.installPath).Show();
+                await InstallerCommon.ExtractZipFile(e.completedFilePath, installPath);
+                var completed = new UIComplete(installPath);
+                completed.Show();
+                completed.Activate();
+                this.SyncCloseWindow();
             };
-            dl.Show();
-            dl.Start();
+            this.Show();
+            this.Start();
         }
     }
 }

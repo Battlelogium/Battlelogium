@@ -22,7 +22,7 @@ namespace Battlelogium.Installer
             return url;
         }
 
-        private void KillBattlelogium()
+        public static void KillBattlelogium()
         {
             Process.Start(new ProcessStartInfo()
             {
@@ -42,6 +42,13 @@ namespace Battlelogium.Installer
             {
                 FileName = "taskkill",
                 Arguments = "/im Battlelogium.UI.BFH.exe /f",
+                CreateNoWindow = true,
+                WindowStyle = ProcessWindowStyle.Hidden
+            }).WaitForExit();
+            Process.Start(new ProcessStartInfo()
+            {
+                FileName = "taskkill",
+                Arguments = "/im Battlelogium.UI.MOHW.exe /f",
                 CreateNoWindow = true,
                 WindowStyle = ProcessWindowStyle.Hidden
             }).WaitForExit();

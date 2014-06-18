@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Battlelogium.Core.Update.UIUpdateNotifier"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="A new update is available" Height="600" Width="500" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="images/bg_generic.ico">
+        Title="Battlelogium - A new update is available" Height="600" Width="500" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="images/bg_generic.ico">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"></RowDefinition>

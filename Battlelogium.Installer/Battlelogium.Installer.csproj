@@ -73,6 +73,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="FolderBrowserDialog\Interop\ComDlgResources.cs" />
     <Compile Include="FolderBrowserDialog\Interop\COMGuids.cs" />
     <Compile Include="FolderBrowserDialog\Interop\ErrorHelper.cs" />
@@ -91,10 +94,18 @@
     <Compile Include="UIDownloader.xaml.cs">
       <DependentUpon>UIDownloader.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Uninstall.cs" />
+    <Compile Include="UIUninstaller.xaml.cs">
+      <DependentUpon>UIUninstaller.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ControlPanel.cs" />
+    <Compile Include="Updater.cs" />
     <Page Include="UIComplete.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIUninstaller.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UIInstaller.xaml">
       <Generator>MSBuild:Compile</Generator>
