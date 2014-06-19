@@ -19,6 +19,10 @@ namespace Battlelogium.Core.Javascript
         public void InitJavascriptObject(UICore core){
             this.Core = core;
         }
+        public void forceupdate()
+        {
+            this.syncInvoke(() => this.Core.UpdateBattlelogium());
+        }
         public void quit()
         {
             this.syncInvoke(() => this.Core.mainWindow.Close());

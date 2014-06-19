@@ -111,6 +111,14 @@ namespace Battlelogium.Core.UI
                     case false:
                         return;
                     case true:
+                        await UpdateBattlelogium();
+                        break;
+                }
+            }
+        }
+
+        internal async Task UpdateBattlelogium()
+        {
                         string url = await new WebClient().DownloadStringTaskAsync("http://ron975.github.io/Battlelogium/releaseinfo/download/installer");
                         this.mainWindow.Dispatcher.Invoke(() => this.mainWindow.Hide());
                         string filename = Path.GetFileName(new Uri(url).LocalPath);
@@ -123,9 +131,6 @@ namespace Battlelogium.Core.UI
                         };
                         dl.Show();
                         dl.Start();
-                        break;
-                }
-            }
         }
         private void StartOfflineMode()
         {
