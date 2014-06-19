@@ -3,6 +3,7 @@
 /// <reference path="dialog/battlelog.bf3.dialog.js" />
 /// <reference path="stats/battlelog.bf3.stats.js" />
 var baseurl = 'http://ron975.github.io/Battlelogium/Battlelogium.Core/Javascript';
+
 function injectOnce() {
     if (document.getElementById('_windowbutton') == null) {
         injectScript('_windowbutton', baseurl+'/windowbutton/battlelog.windowbutton.min.js');
