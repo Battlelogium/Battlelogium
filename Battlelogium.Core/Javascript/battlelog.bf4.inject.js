@@ -23,6 +23,7 @@ function injectOnce() {
 function runCustomJS() {
     try {
         windowbutton.addWindowButtons();
+        windowbutton.updateMaximizeButton();
         battlelogplaybar.fixEAPlaybarButtons();
         battlelogplaybar.createPlaybarButton('btnServers', 'SERVERS', '/bf4/servers', 'btn-primary margin-left').insertAfter($('#btnMulti'));
     } catch (error) {

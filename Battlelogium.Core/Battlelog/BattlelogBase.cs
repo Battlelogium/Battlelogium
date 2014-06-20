@@ -62,7 +62,7 @@ namespace Battlelogium.Core.Battlelog
             {
                 FileAccessFromFileUrlsAllowed = true,
                 UniversalAccessFromFileUrlsAllowed = true,
-#if DEBUG
+#if CEF_DEVTOOLS
                 DeveloperToolsDisabled = false,
 #else
                 DeveloperToolsDisabled = true,
@@ -103,6 +103,10 @@ namespace Battlelogium.Core.Battlelog
                     }"
             );
             this.battlelogWebview.ExecuteScript("runCustomJS();");
+#if CEF_DEVTOOLS
+            this.battlelogWebview.ShowDevTools();
+#endif
+
         }
     
         public static bool CheckBattlelogConnection()

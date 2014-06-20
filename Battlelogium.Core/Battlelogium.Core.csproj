@@ -219,13 +219,11 @@
       <Generator>VSMinifier</Generator>
       <LastGenOutput>battlelog.windowbutton.min.css</LastGenOutput>
     </Content>
-    <Content Include="Javascript\windowbutton\battlelog.windowbutton.min.css">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>battlelog.windowbutton.css</DependentUpon>
-    </Content>
     <Content Include="Javascript\windowbutton\battlelog.windowbutton.js">
       <LastGenOutput>battlelog.windowbutton.min.js</LastGenOutput>
+    </Content>
+    <Content Include="Javascript\windowbutton\battlelog.windowbutton.min.css">
+      <DependentUpon>battlelog.windowbutton.css</DependentUpon>
     </Content>
     <Content Include="Javascript\windowbutton\battlelog.windowbutton.min.js">
       <DependentUpon>battlelog.windowbutton.js</DependentUpon>

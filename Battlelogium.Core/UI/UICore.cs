@@ -80,8 +80,15 @@ namespace Battlelogium.Core.UI
             };
             this.mainWindow.PreviewKeyDown += mainWindow_PreviewKeyDown;
             this.mainWindow.PreviewMouseDown += (s, e) => { if (e.ChangedButton == MouseButton.Middle) e.Handled = true; }; //Disable opening link in new window with middle click
-
             this.battlelog.battlelogWebview.PropertyChanged += battlelogWebview_IsLoading;
+            this.mainWindow.StateChanged += (s, e) => {
+                try
+                {
+                    this.battlelog.battlelogWebview.ExecuteScript("windowbutton.updateMaximizeButton()");
+                }catch{
+
+                }
+            };
 
             if (config.ManageOrigin)
             {

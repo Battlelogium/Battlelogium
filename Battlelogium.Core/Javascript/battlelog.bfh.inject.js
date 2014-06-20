@@ -22,7 +22,7 @@ function injectOnce() {
 function runCustomJS() {
     try {
         windowbutton.addWindowButtons();
-      
+        windowbutton.updateMaximizeButton();
     } catch (error) {
     }
     if (window.location.href.match(/\/soldier\//) != null) {

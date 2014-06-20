@@ -23,11 +23,12 @@ function injectOnce() {
 
 function runCustomJS() {
     try {
-    battlelogplaybar.fixQuickMatchButtons();
-    windowbutton.addWindowButtons();
-    battlelogplaybar.fixEAPlaybarButtons();
-    battlelogplaybar.addPlaybarButton(battlelogplaybar.createPlaybarButton('btnServers', 'SERVERS', 'location.href = "http://battlelog.battlefield.com/mohw/servers/"'));
-    $("#base-header-secondary-nav>ul>li>a:contains('Buy Battlefield 4')").remove();
+        battlelogplaybar.fixQuickMatchButtons();
+        windowbutton.addWindowButtons();
+        windowbutton.updateMaximizeButton();
+        battlelogplaybar.fixEAPlaybarButtons();
+        battlelogplaybar.addPlaybarButton(battlelogplaybar.createPlaybarButton('btnServers', 'SERVERS', 'location.href = "http://battlelog.battlefield.com/mohw/servers/"'));
+        $("#base-header-secondary-nav>ul>li>a:contains('Buy Battlefield 4')").remove();
     } catch (error) {
     }
     if (window.location.href.match(/\/soldier\//) != null) {

@@ -11,12 +11,18 @@
     background: url("http://ron975.github.io/Battlelogium/Battlelogium.Core/Javascript/windowbutton/battlelog.windowbutton.png") top left no-repeat;
 }
 
-#base-header-user-tools .tools .log.reload:after {
-    background-position: -270px 0;
-}
 #base-header-user-tools .tools .log.minimize:after {
     background-position: -240px 0;
 }
+#base-header-user-tools .tools .log.reload:after {
+    background-position: -270px 0;
+}
 #base-header-user-tools .tools .log.close:after {
     background-position: -300px 0;
+}
+#base-header-user-tools .tools .log.maximize.restore:after{
+    background-position: -330px 0;
+}
+#base-header-user-tools .tools .log.maximize:after {
+    background-position: -360px 0;
 }
