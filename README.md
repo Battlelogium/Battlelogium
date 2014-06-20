@@ -61,10 +61,11 @@ Changelog
 >  - Improved installer to be more flexible 
 >  - Added an uninstaller*
 >  - Added entries for Battlelogium in Control Panel program list*
->  - Added Start Menu icons* 
+>  - Added Start Menu icons*
 >  - Added a way to force update
 >  - Added a maximize/restore window button
->_*If updating from 2.0.1.0 you will need to force update after 2.1.0.0 has been installed to gain these features_
+>
+>*_If updating from 2.0.1.0 you will need to force update after 2.1.0.0 has been installed to gain these features_
 >* Code
 >  - Updated to CEFSHarp 1.25.7
 >  - Presence of installer executable now no longer crucial for update. The updater/installer will be redownloaded every time. 
