@@ -52,7 +52,9 @@ namespace Battlelogium.Core.UI
 
         public UIControl()
         {
-            InitializeComponent();  
+            InitializeComponent();
+            MessageBox.Show("UICONTROL.LOAD \n Press OK");
+
         }
 
         protected virtual void OnPropertyChanged(string property)

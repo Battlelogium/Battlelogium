@@ -33,15 +33,22 @@ namespace Battlelogium.Core.UI
 
         public UICore(UIWindow mainWindow, BattlelogBase battlelog, Config config)
         {
+            MessageBox.Show("UICore.Constructor \n Press OK");
             this.mainWindow = mainWindow;
+            MessageBox.Show("UICore.Battlelog \n Press OK");
             this.battlelog = battlelog;
+            MessageBox.Show("UICore.Config \n Press OK");
             this.config = config;
+            MessageBox.Show("UICore.Origin \n Press OK");
             this.managedOrigin = new Origin();
         }
 
         public async Task Initialize()
         {
+            MessageBox.Show("UICore.Init \n Press OK");
+
             this.mainWindow.Icon = BitmapFrame.Create(new Uri(@"pack://application:,,/images/bg_icon.ico")); //Set runtime icon to Battlelogium badged ico
+            MessageBox.Show("UICore.FulLScreen Mode \n Press OK");
             switch (this.config.FullscreenMode)
             {
                 case true:
@@ -51,6 +58,7 @@ namespace Battlelogium.Core.UI
                     this.mainWindow.SetWindowed();
                     break;
             }
+
             if (config.CheckUpdates) await this.CheckUpdate();
             bool isBattlelogAvailable = await BattlelogBase.CheckBattlelogConnectionAsync();
             if (!isBattlelogAvailable)
@@ -66,7 +74,17 @@ namespace Battlelogium.Core.UI
                         return;
                 }
             }
-            this.battlelog.InitializeWebview();
+            try
+            {
+                MessageBox.Show("InitWebView \n Press OK");
+                this.battlelog.InitializeWebview();
+            }
+            catch (Exception e)
+            {
+                
+                MessageBox.Show("UICORE"+e.ToString());
+            }
+            MessageBox.Show("UICore.InitJS Mode \n Press OK");
             this.battlelog.javascriptObject.InitJavascriptObject(this);
             this.mainWindow.MainControl.VersionNumber = "Battlelogium " + Assembly.GetEntryAssembly().GetName().Version.ToString();
             this.mainWindow.MainControl.MainGrid.Children.Add(battlelog.battlelogWebview);

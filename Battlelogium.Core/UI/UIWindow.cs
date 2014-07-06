@@ -24,6 +24,8 @@ namespace Battlelogium.Core.UI
 
         public UIWindow()
         {
+            MessageBox.Show("WINDOW.InitView Mode \n Press OK");
+
             this.SourceInitialized += (s, e) => 
             {
                 this.HideWindowButtons();
@@ -39,9 +41,18 @@ namespace Battlelogium.Core.UI
 
         public void InitializeCore(BattlelogBase battlelog)
         {
+            MessageBox.Show("WINDOW.InitCore \n Press OK");
+
             this.UICore = new UICore(this, battlelog, new Config());
             this.IsCoreInitialized = true;
-            this.UICore.Initialize();
+            try
+            {
+                this.UICore.Initialize();
+            }
+            catch (System.Exception e)
+            {
+                MessageBox.Show("UIWINDOW"+e.ToString());
+            }
         }
     }
 }

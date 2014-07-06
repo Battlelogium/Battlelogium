@@ -1,5 +1,6 @@
 ﻿using Battlelogium.Core;
 using Battlelogium.Core.UI;
+using System.Windows.Forms;
 namespace Battlelogium.Core.Battlelog
 {
     public class Battlefield3 : BattlelogBase
@@ -14,6 +15,7 @@ namespace Battlelogium.Core.Battlelog
         public Battlefield3()
             : base("http://battlelog.battlefield.com/bf3/", "Battlefield 3", "BF3", new string[1]{"bf3.exe"}, 70619, jsUrl)
         {
+            MessageBox.Show("Battlefield3.Init \n Press OK");
         }
     }
 }

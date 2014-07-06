@@ -13,6 +13,8 @@ namespace Battlelogium.Core.UI
 
         public void SetWindowed()
         {
+            MessageBox.Show("WINDOW.WINDOWED \n Press OK");
+
             this.IsFullscreen = false;
             this.WindowStyle = WindowStyle.SingleBorderWindow;
             this.ResizeMode = ResizeMode.CanResize;
@@ -28,6 +30,7 @@ namespace Battlelogium.Core.UI
                         this.Width = this.UICore.config.WindowWidth;
                         break;
                }
+                MessageBox.Show("WINDOW.LOADBOUNDSCALLERDONE \n Press OK");
 
              if (this.UICore.config.RightClickDrag){
                 if (!this.RightClickDragInitialized)
@@ -38,11 +41,15 @@ namespace Battlelogium.Core.UI
                 {
                     this.EnableRightClickDrag();
                 }
+                MessageBox.Show("WINDOW.RIGHTCLICK \n Press OK");
+
             }
         }
 
         public void SetFullScreen()
         {
+            MessageBox.Show("WINDOW.FULLSCREEN \n Press OK");
+
             this.IsFullscreen = true;
             this.SaveBounds(); //Save window bounds before setting fullscreen
             this.WindowState = WindowState.Maximized;
@@ -58,6 +65,8 @@ namespace Battlelogium.Core.UI
 
         private void LoadBounds()
         {
+            MessageBox.Show("WINDOW.LOADBOUNDS \n Press OK");
+
             IsolatedStorageFile storage = IsolatedStorageFile.GetUserStoreForAssembly();
             try
             {
@@ -78,6 +87,8 @@ namespace Battlelogium.Core.UI
                 this.Height = 720;
                 this.Width = 1280;
             }
+            MessageBox.Show("WINDOW.LOADBOUNDSDONE \n Press OK");
+
         }
 
         private void SaveBounds()

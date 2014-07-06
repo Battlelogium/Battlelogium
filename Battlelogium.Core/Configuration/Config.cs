@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 
 namespace Battlelogium.Core.Configuration
@@ -26,9 +27,15 @@ namespace Battlelogium.Core.Configuration
         #endregion
 
         public Config(string configFileName){
-
-            this.configFileName = configFileName;
-            this.CreateConfigFile();
+            try
+            {
+                this.configFileName = configFileName;
+                this.CreateConfigFile();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.InnerException.StackTrace);
+            }
             Dictionary<string, string> config = GetConfigurationData();
 
             if (!bool.TryParse(config.GetValueOrDefault("checkUpdates"), out checkUpdates)) checkUpdates = true;
@@ -73,10 +80,17 @@ namespace Battlelogium.Core.Configuration
 
         public void CreateConfigFile()
         {
-            if(!Directory.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Battlelogium")))
-                Directory.CreateDirectory(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Battlelogium"));
-            if (!File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Battlelogium", this.configFileName)))
-                File.Copy(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "defaultconfig"), Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Battlelogium", this.configFileName), true);
+            try
+            {
+                if (!Directory.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Battlelogium")))
+                    Directory.CreateDirectory(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Battlelogium"));
+                if (!File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Battlelogium", this.configFileName)))
+                    File.Copy(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "defaultconfig"), Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Battlelogium", this.configFileName), true);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("CONFIG"+e.ToString());
+            }
         }
         #region Accessors
 

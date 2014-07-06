@@ -31,6 +31,8 @@ namespace Battlelogium.Core.Battlelog
         
         public BattlelogBase(string battlelogURL, string battlefieldName, string battlefieldShortname, string[] executableNames, int originCode, string javascriptPath)
         {
+            MessageBox.Show("Battlelog.InitJS Mode \n Press OK");
+
             this.javascriptObject = new JavascriptObject();
             this.javascriptURL = javascriptPath;
 
@@ -39,13 +41,15 @@ namespace Battlelogium.Core.Battlelog
             this.battlefieldShortname = battlefieldShortname;
             this.executableNames = executableNames;
             this.gameId = originCode;
-
+            MessageBox.Show("Battlelog.InitGame Mode \n Press OK");
             this.InitListenGame();
 
         }
 
         public void InitializeWebview()
         {
+            MessageBox.Show("Battlelog.InitView Mode \n Press OK");
+
             Settings settings = new Settings
             {
 #if DEBUG
@@ -73,8 +77,11 @@ namespace Battlelogium.Core.Battlelog
                 /* UserStyleSheetLocation is the data in userstylesheet.css minified and encoded in utf8 base64 data URI*/
 
 
-            };           
+            };
+            MessageBox.Show("Battlelog.BefView Mode \n Press OK");
             this.battlelogWebview = new WebView(this.battlelogURL, browserSettings);
+            MessageBox.Show("Battlelog.AftView Mode \n Press OK");
+
             this.battlelogWebview.RegisterJsObject("app", javascriptObject);
             this.battlelogWebview.LoadCompleted += this.LoadCompleted;
             this.battlelogWebview.PropertyChanged += battlelogWebview_PropertyChanged;

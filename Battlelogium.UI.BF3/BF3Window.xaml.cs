@@ -13,8 +13,11 @@ namespace Battlelogium.UI.BF3
     {
         public BF3Window()
         {
+            MessageBox.Show("BF3Window.Init \n Press OK");
             InitializeComponent();
+            MessageBox.Show("BF3Window.InitControl \n Press OK");
             this.MainControl = this.mainControl;
+            MessageBox.Show("BF3Window.InitCore \n Press OK");
             this.InitializeCore(new Battlefield3());
         }
     }
