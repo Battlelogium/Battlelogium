@@ -48,6 +48,7 @@ namespace Battlelogium.Installer
             this.CreateDesktopShortcuts();
             this.CreateStartMenuShortcuts();
             ControlPanel.CreateBattlelogiumControlPanelEntry(this.installPath);
+            if (this.steamShortcut_input.IsChecked == true) Process.Start(Path.Combine(installPath, "Battlelogium.ExecUtils.exe"));
             Process.Start("taskkill", "/im origin.exe /f").WaitForExit(); //Kill any elevated instances of origin.
             this.Close();
         }

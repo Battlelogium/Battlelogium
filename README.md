@@ -53,7 +53,7 @@ Building `Battlelogium.ThirdParty.SteamShortcutManager` (forked from [scottrice/
  
 Changelog
 ----------
-###WIP Pre-Release 2.1.0.0
+###Release 2.1.0.0
 >* User Experience
 >  - **Added Battlefield Hardline Beta support**
 >  - **Added Medal of Honor: Warfighter support**

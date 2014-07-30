@@ -120,6 +120,7 @@ namespace Battlelogium.ExecUtils
                         break;
                 }
             }
+            Process.Start("steam_shortcut_manager_cli.exe", "all" + space + quote + "Medal of Honor Warfighter" + quote + space + quote + Path.GetFullPath("Battlelogium.UI.MOHW.exe") + quote).WaitForExit();
             Process.Start("steam_shortcut_manager_cli.exe", "all" + space + quote + "Battlefield 3" + quote + space + quote + Path.GetFullPath("Battlelogium.UI.BF3.exe") + quote).WaitForExit();
             Process.Start("steam_shortcut_manager_cli.exe", "all" + space + quote + "Battlefield 4" + quote + space + quote + Path.GetFullPath("Battlelogium.UI.BF4.exe") + quote).WaitForExit();
             Process.Start("steam_shortcut_manager_cli.exe", "all" + space + quote + "Battlefield Hardline Beta" + quote + space + quote + Path.GetFullPath("Battlelogium.UI.BFH.exe") + quote).WaitForExit();
