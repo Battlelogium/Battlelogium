@@ -6,13 +6,9 @@ platform: x86
 configuration:
     - Debug
     - Release
-build:
-    project: Battlelogium.sln
 verbosity: normal
 artifacts:
     - path: Battlelogium.Dist\bin\$(configuration)
       name: Battlelogium Distributable
       type: zip
 shallow_clone: true
-environment:
-    VisualStudioVersion: 12.0
