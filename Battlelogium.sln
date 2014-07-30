@@ -35,8 +35,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VCRedistContainer", "VCRedi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Battlelogium.Installer", "Battlelogium.Installer\Battlelogium.Installer.csproj", "{170D7208-617A-43C5-995F-7ED7DC016514}"
 EndProject
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Battlelogium.ThirdParty.SteamShortcutManager", "Battlelogium.ThirdParty.SteamShortcutManager\Battlelogium.ThirdParty.SteamShortcutManager.pyproj", "{F599213B-CCE4-45A9-9711-DA6A07DC46A0}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Battlelogium.Dist", "Battlelogium.Dist\Battlelogium.Dist.csproj", "{902A04AC-76B2-4858-80E6-2FA2A9FB4645}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Battlelogium.Utilities", "Battlelogium.Utilities\Battlelogium.Utilities.csproj", "{DF1EBFB7-05C5-42A2-A411-D2C49266C22C}"
@@ -195,20 +193,6 @@ Global
 		{170D7208-617A-43C5-995F-7ED7DC016514}.Release|Win32.ActiveCfg = Release|Any CPU
 		{170D7208-617A-43C5-995F-7ED7DC016514}.Release|x64.ActiveCfg = Release|Any CPU
 		{170D7208-617A-43C5-995F-7ED7DC016514}.Release|x86.ActiveCfg = Release|Any CPU
-		{F599213B-CCE4-45A9-9711-DA6A07DC46A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F599213B-CCE4-45A9-9711-DA6A07DC46A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F599213B-CCE4-45A9-9711-DA6A07DC46A0}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{F599213B-CCE4-45A9-9711-DA6A07DC46A0}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{F599213B-CCE4-45A9-9711-DA6A07DC46A0}.Debug|Win32.ActiveCfg = Debug|Any CPU
-		{F599213B-CCE4-45A9-9711-DA6A07DC46A0}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{F599213B-CCE4-45A9-9711-DA6A07DC46A0}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{F599213B-CCE4-45A9-9711-DA6A07DC46A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F599213B-CCE4-45A9-9711-DA6A07DC46A0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F599213B-CCE4-45A9-9711-DA6A07DC46A0}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{F599213B-CCE4-45A9-9711-DA6A07DC46A0}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{F599213B-CCE4-45A9-9711-DA6A07DC46A0}.Release|Win32.ActiveCfg = Release|Any CPU
-		{F599213B-CCE4-45A9-9711-DA6A07DC46A0}.Release|x64.ActiveCfg = Release|Any CPU
-		{F599213B-CCE4-45A9-9711-DA6A07DC46A0}.Release|x86.ActiveCfg = Release|Any CPU
 		{902A04AC-76B2-4858-80E6-2FA2A9FB4645}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{902A04AC-76B2-4858-80E6-2FA2A9FB4645}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{902A04AC-76B2-4858-80E6-2FA2A9FB4645}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -273,9 +257,5 @@ Global
 		{FB19B412-DB0A-42C8-9123-4FF3BB2F17E7} = {E6CE58A4-18BC-40CA-8A79-067595E73414}
 		{0C691505-4DAB-4946-A1BB-1F6C682567EB} = {E6CE58A4-18BC-40CA-8A79-067595E73414}
 		{37D88743-8BA4-439D-90AF-CEB3F7CF788A} = {E6CE58A4-18BC-40CA-8A79-067595E73414}
-		{F599213B-CCE4-45A9-9711-DA6A07DC46A0} = {E6CE58A4-18BC-40CA-8A79-067595E73414}
-	EndGlobalSection
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal
