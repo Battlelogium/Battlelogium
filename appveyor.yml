@@ -1,6 +1,0 @@
-version: 2.1.0.{build}
-artifacts:
-    - path: Battlelogium.Dist\bin\$(configuration)
-      name: BattlelogiumDistributable
-      type: zip
-shallow_clone: true
