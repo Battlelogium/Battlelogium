@@ -1,14 +1,6 @@
 version: 2.1.0.{build}
-branches:
-    except:
-        - gh-pages
-platform: x86
-configuration:
-    - Debug
-    - Release
-verbosity: normal
 artifacts:
     - path: Battlelogium.Dist\bin\$(configuration)
-      name: Battlelogium Distributable
+      name: BattlelogiumDistributable
       type: zip
 shallow_clone: true
