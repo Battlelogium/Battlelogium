@@ -15,8 +15,8 @@ artifacts:
       type: zip
 assembly_info:
   patch: true
-  file: SharedAssemblyInfo.cs
-  assembly_version: {version}
-  assembly_file_version: {version}
-  assembly_informational_version: {version}-dirty
+  file: "SharedAssemblyInfo.cs"
+  assembly_version: "{version}"
+  assembly_file_version: "{version}"
+  assembly_informational_version: "{version}-dirty"
 shallow_clone: true
