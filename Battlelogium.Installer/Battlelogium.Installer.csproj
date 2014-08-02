@@ -98,7 +98,7 @@
       <DependentUpon>UIUninstaller.xaml</DependentUpon>
     </Compile>
     <Compile Include="ControlPanel.cs" />
-    <Compile Include="Updater.cs" />
+    <Compile Include="BattlelogiumInstaller.cs" />
     <Page Include="UIComplete.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

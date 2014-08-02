@@ -55,6 +55,7 @@ namespace Battlelogium.Installer
             this.downloader = new WebClient();
             progressBar.IsIndeterminate = true;
             if(!this.dependencies.IsOriginInstalled) await InstallOrigin();
+            await InstallDependency("vcredist", "Microsoft VC Redistributable 2012");
             try
             {
                 if (!Directory.Exists(installPath)) Directory.CreateDirectory(installPath);
@@ -72,7 +73,7 @@ namespace Battlelogium.Installer
             }
             this.Hide();
             string url = await InstallerCommon.GetDownload("battlelogium");
-            var updater = new Updater(url, installPath);
+            var updater = new BattlelogiumInstaller(url, installPath);
             updater.DownloadComplete += (s, e) => { this.Close(); };
             updater.BeginUpdate();
         } 

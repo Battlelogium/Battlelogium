@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Battlelogium.Installer
 {
-    internal class Updater : UIDownloader
+    internal class BattlelogiumInstaller : UIDownloader
     {
         string installPath;
-        internal Updater(string url, string installPath):base(url, "package.zip", "Downloading Battlelogium...")
+        internal BattlelogiumInstaller(string url, string installPath):base(url, "package.zip", "Downloading Battlelogium...")
         {
             this.installPath = installPath;
         }
