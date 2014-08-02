@@ -15,6 +15,10 @@ namespace Battlelogium.Installer
     {
         private async void Application_Startup(object sender, StartupEventArgs e)
         {
+            AppDomain.CurrentDomain.UnhandledException += (s, unhandledevent) =>
+            {
+                this.Shutdown(1);
+            };
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length == 1)
             {
@@ -32,7 +36,7 @@ namespace Battlelogium.Installer
                 InstallerCommon.KillBattlelogium();
                 string path = args[2];
                 string url = await InstallerCommon.GetDownload("battlelogium");
-                var updater = new Updater(url, path);
+                var updater = new BattlelogiumInstaller(url, path);
                 updater.BeginUpdate();
                 return;
             }
