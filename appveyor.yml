@@ -13,6 +13,9 @@ artifacts:
     - path: Battlelogium.Dist\bin\$(configuration)
       name: Battlelogium Distributable
       type: zip
+    - path: Battlelogium.Installer\bin\$(configuration)
+      name: Battlelogium Installer
+      type: auto
 assembly_info:
   patch: true
   file: "SharedAssemblyInfo.cs"
