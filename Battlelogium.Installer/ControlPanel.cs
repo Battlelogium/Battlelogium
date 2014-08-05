@@ -59,7 +59,7 @@ namespace Battlelogium.Installer
                 Path.Combine(installDir,"Battlelogium.Installer.exe uninstall"), 
                 Assembly.GetEntryAssembly().GetName().Version.ToString(),
                 "Battlelogium",
-                "http://battlelogium.github.com/Battlelogium");
+                "http://battlelogium.github.io/Battlelogium");
         }
     }
 }
