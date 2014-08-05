@@ -26,7 +26,7 @@ If you choose to use these builds, download from the Release branch [here](https
 Configuration Options
 ---------------------
  
-Most configuration options are accessible through the settings editor where the Battlelog profile settings are. Settings are saved and read from `config.ini`.
+Most configuration options are accessible through the settings editor where the Battlelog profile settings are. Settings are saved and read from `%APPDATA%\Battlelogium\config.ini`.
 
 ### General Options
 * `manageOrigin` toggles whether Battlelogium will create a new, managed instance of Origin so that Steam is aware of any child processes that Origin starts and therefore will attempt to hook the Steam overlay. Unless you are using a [.par file patch](http://par.nofate.me/) or [Outcome](http://outcome.nofate.me/), this should be set to true. **Battlelogium does not come with included installs for either Outcome or .par file patches since version 2.0**
