@@ -29,8 +29,8 @@ namespace Battlelogium.Core.Update
         public async Task LoadChangelog()
         {
             var downloader = new WebClient();
-            string version = await downloader.DownloadStringTaskAsync("http://ron975.github.io/Battlelogium/releaseinfo/releaseversion");
-            MemoryStream changenotes = new MemoryStream(await downloader.DownloadDataTaskAsync("http://ron975.github.io/Battlelogium/releaseinfo/releasenotes.rtf"));
+            string version = await downloader.DownloadStringTaskAsync("http://battlelogium.github.io/Battlelogium/releaseinfo/releaseversion");
+            MemoryStream changenotes = new MemoryStream(await downloader.DownloadDataTaskAsync("http://battlelogium.github.io/Battlelogium/releaseinfo/releasenotes.rtf"));
             this.Dispatcher.Invoke(() =>
             {
                 new TextRange(changeLogBox.Document.ContentStart, changeLogBox.Document.ContentEnd).Load(changenotes, DataFormats.Rtf);

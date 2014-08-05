@@ -1,6 +1,6 @@
 ﻿/// <reference path="windowbutton/battlelog.windowbutton.js" />
 /// <reference path="settings/battlelog.bfh.settings.js" />
-var baseurl = 'http://ron975.github.io/Battlelogium/Battlelogium.Core/Javascript';
+var baseurl = 'http://battlelogium.github.io/Battlelogium/Battlelogium.Core/Javascript';
 function injectOnce() {
     if (document.getElementById('_windowbutton') == null) {
         injectScript('_windowbutton', baseurl + '/windowbutton/battlelog.windowbutton.min.js');

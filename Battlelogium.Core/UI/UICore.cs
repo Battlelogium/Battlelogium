@@ -107,7 +107,7 @@ namespace Battlelogium.Core.UI
         {
             Version currentVersion = Assembly.GetEntryAssembly().GetName().Version;
             
-            Version newVersion = Version.Parse(await new WebClient().DownloadStringTaskAsync("http://ron975.github.io/Battlelogium/releaseinfo/releaseversion"));
+            Version newVersion = Version.Parse(await new WebClient().DownloadStringTaskAsync("http://battlelogium.github.io/Battlelogium/releaseinfo/releaseversion"));
             if (newVersion > currentVersion)
             {
                 bool? updateStart = new UIUpdateNotifier().ShowDialog();
@@ -126,7 +126,7 @@ namespace Battlelogium.Core.UI
 
         internal async Task UpdateBattlelogium()
         {
-                        string url = await new WebClient().DownloadStringTaskAsync("http://ron975.github.io/Battlelogium/releaseinfo/download/installer");
+                        string url = await new WebClient().DownloadStringTaskAsync("http://battlelogium.github.io/Battlelogium/releaseinfo/download/installer");
                         this.mainWindow.Dispatcher.Invoke(() => this.mainWindow.Hide());
                         string filename = Path.GetFileName(new Uri(url).LocalPath);
                         var dl = new UIDownloader(url, filename, "Updating Battlelogium...");
