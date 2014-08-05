@@ -1,4 +1,4 @@
-![Battlelogium](http://ron975.github.io/Battlelogium/images/Battlelogium.Logo.Full.png "Battlelogium")
+![Battlelogium](http://battlelogium.github.io/Battlelogium/images/Battlelogium.Logo.Full.png "Battlelogium")
 =========================
 
 Battlelogium is a [Battlelog](http://battlelog.battlefield.com/) client that wraps Battlelog, Origin, and Battlelog-powered games into one neat package. It enables Steam features such as the overlay and In-Home Streaming for all Battlelog-powered games.
@@ -18,7 +18,7 @@ Features
  
 Development Builds
 ------------------
-[![Build status](https://ci.appveyor.com/api/projects/status/euqiwvbob6cdxwy3)](https://ci.appveyor.com/project/ron975/battlelogium)
+[![Build status](https://ci.appveyor.com/api/projects/status/euqiwvbob6cdxwy3)](https://ci.appveyor.com/project/RonnChyran/battlelogium)
  
 Development builds are made every time a commit is made to the repository. They may contain unfinished or broken features.
 
