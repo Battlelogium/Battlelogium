@@ -10,12 +10,13 @@ Features
 * Powered by [CEFSharp](http://github.com/cefsharp/CEFSharp/) 
 * Built with aesthetics in mind
 * Wraps Battlefield and Battlelog in one neat package
-* **Steam Overlay support** for all supported games
+* **Steam Overlay support*** for all supported games
 * Steam **In-Home Streaming** for all supported games
 * Start campaign with Steam support if Battlelog is not available
 * Does not modify or affect any Battlefield or Origin files  
 * Open source and licensed under [GNU GPL v3](http://www.gnu.org/licenses/gpl.html)
  
+_*_Due to error logging changes in recent Origin updates, you must disable Origin In-Game while using Battlelogium through Steam or Battlefield will not be playable.
 Development Builds
 ------------------
 [![Build status](https://ci.appveyor.com/api/projects/status/euqiwvbob6cdxwy3)](https://ci.appveyor.com/project/RonnChyran/battlelogium)
