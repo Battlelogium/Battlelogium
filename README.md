@@ -19,7 +19,8 @@ Features
 _*_Due to error logging changes in recent Origin updates, you must disable Origin In-Game while using Battlelogium through Steam or Battlefield will not be playable.
 Development Builds
 ------------------
-[![Build status](https://ci.appveyor.com/api/projects/status/euqiwvbob6cdxwy3)](https://ci.appveyor.com/project/RonnChyran/battlelogium)
+[![Build status](https://ci.appveyor.com/api/projects/status/ebr664a5y6bhvrfl?svg=true)](https://ci.appveyor.com/project/RonnChyran/battlelogium)
+
  
 Development builds are made every time a commit is made to the repository. They may contain unfinished or broken features.
 
