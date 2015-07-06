@@ -5,9 +5,9 @@ namespace Battlelogium.Core.Battlelog
     public class Battlefield3 : BattlelogBase
     {
 #if DEBUG
-        //static string jsUrl = "http://battlelogium.github.io/Battlelogium/Battlelogium.Core/Javascript/battlelog.bf3.inject.js";
+        static string jsUrl = "http://battlelogium.github.io/Battlelogium/Battlelogium.Core/Javascript/battlelog.bf3.inject.js";
 
-        static string jsUrl = "http://localhost/battlelogium/battlelog.bf3.inject.js";
+        //static string jsUrl = "http://localhost/battlelogium/battlelog.bf3.inject.js";
 #else
         static string jsUrl = "http://battlelogium.github.io/Battlelogium/Battlelogium.Core/Javascript/battlelog.bf3.inject.js";
 #endif

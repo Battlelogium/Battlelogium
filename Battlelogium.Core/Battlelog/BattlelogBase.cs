@@ -87,7 +87,10 @@ namespace Battlelogium.Core.Battlelog
             if (e.PropertyName == "Address")
             {
                 this.battlelogWebview.ExecuteScript("runCustomJS()");
-                if (!this.battlelogWebview.Address.Contains(battlelogURL)) this.battlelogWebview.Load(battlelogURL);
+                if (!this.battlelogWebview.Address.Contains(battlelogURL) &&!this.battlelogWebview.Address.Contains("accounts.ea.com") && !this.battlelogWebview.Address.Contains("signin.ea.com") && !this.battlelogWebview.Address.Contains("www.facebook.com") && this.battlelogWebview.Address.Contains("auth.api.sonyentertainmentnetwork.com"))
+                {
+                    this.battlelogWebview.Load(battlelogURL);
+                }
             }
         }
 

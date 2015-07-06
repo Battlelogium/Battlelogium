@@ -8,7 +8,6 @@ configuration:
     - Release
 build:
     project: Battlelogium.sln
-verbosity: normal
 artifacts:
     - path: Battlelogium.Dist\bin\$(configuration)
       name: Battlelogium Distributable
