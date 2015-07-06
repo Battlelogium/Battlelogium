@@ -19,11 +19,11 @@
 }
 
 /*Remove base game selector*/
-.row base-game-selector {
+#site-gate .base-game-selector {
     display: none !important;
 }
 
-/**/
+/*Remove get game button*/
 .btn-get-game {
     display: none !important;
 }
