@@ -18,3 +18,13 @@
     display: none;
 }
 
+/*Remove base game selector*/
+.row base-game-selector {
+    display: none !important;
+}
+
+/**/
+.btn-get-game {
+    display: none !important;
+}
+

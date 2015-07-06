@@ -10,6 +10,9 @@ function injectOnce() {
     if (document.getElementById('css_windowbutton') == null) {
         injectCSS('css_windowbutton', baseurl + '/windowbutton/battlelog.windowbutton.min.css');
     }
+    if (document.getElementById('css_misc') == null) {
+        injectCSS('css_misc', baseurl + '/misc/battlelog.misc.min.css');
+    }
     if (document.getElementById('_battlelogplaybar') == null) {
         injectScript('_battlelogplaybar', baseurl + '/playbar/battlelog.mohw.playbar.min.js');
     }
