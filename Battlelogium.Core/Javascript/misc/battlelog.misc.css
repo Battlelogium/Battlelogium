@@ -41,3 +41,8 @@
 #site-gate .gate-actions {
   height: initial !important;
 }
+
+/*remove app promotion*/
+#comcenter-area .app-promotion.box {
+    display: none !important;
+}

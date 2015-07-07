@@ -1,11 +1,14 @@
-﻿version: 2.1.2.{build}
+﻿version: 2.2.{build}
 branches:
-    except:
-        - gh-pages
+  only:
+    - master
 platform: x86
 configuration:
     - Debug
     - Release
+install:
+    - nuget update -self
+    - nuget restore
 build:
     project: Battlelogium.sln
 artifacts:
