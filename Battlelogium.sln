@@ -8,8 +8,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{F2D67E7A-263E-4857-A216-94B23E2FAF02}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Battlelogium.UI.BF3", "Battlelogium.UI.BF3\Battlelogium.UI.BF3.csproj", "{A6538CAF-C5BF-4BEF-8C01-5E42C94720D9}"
@@ -275,3 +273,4 @@ Global
 		{37D88743-8BA4-439D-90AF-CEB3F7CF788A} = {E6CE58A4-18BC-40CA-8A79-067595E73414}
 	EndGlobalSection
 EndGlobal
+
