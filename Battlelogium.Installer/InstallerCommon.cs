@@ -63,15 +63,29 @@ namespace Battlelogium.Installer
                     foreach (var entry in package.Entries)
                     {
                         string fullPath = Path.Combine(extractPath, entry.FullName);
-                        if (String.IsNullOrEmpty(entry.Name)) Directory.CreateDirectory(fullPath);
-                        else 
-                            try {
-                            entry.ExtractToFile(fullPath, true);
-                            }
-                            catch (IOException)
+                        if(!Directory.Exists(Path.GetDirectoryName(fullPath))){
+                            try
                             {
-                                continue;
+                                Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
+                            }catch (IOException){
+                                
                             }
+                        }
+                        if (String.IsNullOrEmpty(entry.Name))
+                        {
+                            Directory.CreateDirectory(fullPath);
+                        }
+                        else
+                        {
+                            try
+                            {
+                                entry.ExtractToFile(fullPath, true);
+                            }
+                            catch (IOException ex)
+                            {
+                                Console.WriteLine(ex);
+                            }
+                        }
                     }
                 }
             });
