@@ -2,7 +2,7 @@
     addSettingsSection: function () {
         if (!$('#battlelogSettings').length) {
             var checkExist = setInterval(function () {
-                if ($('#profile-edit-row-game-launch').length) {
+                if ($('.span12 > .box').length) {
                     var section = $("<fieldset/>")
                     section.attr('class', 'box-content inline')
                     section.attr('id', 'battlelogSettings')
