@@ -64,7 +64,14 @@ namespace Battlelogium.Installer
                     {
                         string fullPath = Path.Combine(extractPath, entry.FullName);
                         if (String.IsNullOrEmpty(entry.Name)) Directory.CreateDirectory(fullPath);
-                        else entry.ExtractToFile(fullPath, true);
+                        else 
+                            try {
+                            entry.ExtractToFile(fullPath, true);
+                            }
+                            catch (IOException)
+                            {
+                                continue;
+                            }
                     }
                 }
             });
