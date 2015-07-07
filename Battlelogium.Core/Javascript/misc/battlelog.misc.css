@@ -28,3 +28,16 @@
     display: none !important;
 }
 
+/*Pretty up the login button*/
+.btn-login {
+    width: 100% !important;
+    display: -webkit-flex !important;
+    -webkit-justify-content: center !important;
+}
+#site-gate .site-gate-footer .gate-actions {
+  margin: 16px 0 0 !important;
+}
+
+#site-gate .gate-actions {
+  height: initial !important;
+}

@@ -166,6 +166,11 @@
     <Content Include="Javascript\battlelog.mohw.inject.min.js">
       <DependentUpon>battlelog.mohw.inject.js</DependentUpon>
     </Content>
+    <Content Include="Javascript\misc\battlelog.misc.min.css">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>battlelog.misc.css</DependentUpon>
+    </Content>
     <Content Include="Javascript\playbar\battlelog.bf3.playbar.min.js">
       <DependentUpon>battlelog.bf3.playbar.js</DependentUpon>
     </Content>
@@ -178,11 +183,6 @@
     <Content Include="Javascript\misc\battlelog.misc.css">
       <Generator>VSMinifier</Generator>
       <LastGenOutput>battlelog.misc.min.css</LastGenOutput>
-    </Content>
-    <Content Include="Javascript\misc\battlelog.misc.min.css">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>battlelog.misc.css</DependentUpon>
     </Content>
     <Content Include="Javascript\playbar\battlelog.mohw.playbar.min.js">
       <DependentUpon>battlelog.mohw.playbar.js</DependentUpon>
@@ -337,4 +337,3 @@
   </Target>
   -->
 </Project>
-
