@@ -1,11 +1,20 @@
 import sys
 import os
-import steam_shortcut_manager
-import steam_location_manager
 
-def insert_shortcut(manager, name, exe, icon=""):
-    manager.add_shortcut(name, "\""+exe+"\"", "\""+os.path.dirname(exe)+"\"", icon=icon)
-    manager.save()
+#Thanks https://github.com/scottrice/pysteam/tree/868d08c9045fda9ce98bd21b7e87876e3652adf2
+import steam
+import shortcuts
+import model
+
+def insert_shortcut(userContext, name, exe, icon="", tags=[]):
+
+    shortcutList = shortcuts.get_shortcuts(userContext)
+
+    shortcutList.append(model.Shortcut(name, "\""+exe+"\"", "\""+os.path.dirname(exe)+"\"", icon=icon, tags=[]))
+
+    shortcuts.set_shortcuts(userContext, shortcutList)
+
+    print "Inserted Shortcut {0}:{1} to id {2}".format(name, exe, userContext["user_id"])
 
 def run():
 
@@ -17,22 +26,27 @@ def run():
     gamename = sys.argv[2]
     gameexe = sys.argv[3]
 
+    steamObj = steam.get_steam()
+
     if userid == "all":
-        for uid in steam_location_manager.user_ids_on_this_machine():
+        for userContext in steam.local_user_contexts(steamObj):
             try:
-                vdf = steam_location_manager.shortcuts_file_for_user_id(
-                    steam_location_manager.userdata_directory_for_user_id(uid)
-                )
-                manager = steam_shortcut_manager.SteamShortcutManager(vdf)
-                insert_shortcut(manager, gamename, gameexe)
-                print "Inserted Shortcut {0}:{1} to id {2}".format(gamename, gameexe, uid)
+
+                insert_shortcut(userContext, gamename, gameexe)
+
             except:
                 continue
     else:
-        vdf = steam_location_manager.userdata_directory_for_user_id(userid)
-        manager = steam_shortcut_manager.SteamShortcutManager(vdf)
-        insert_shortcut(manager, gamename, gameexe)
-        print "Inserted Shortcut {0}:{1} to id {2}".format(gamename, gameexe, userid)
+
+        for userContext in steam.local_user_contexts(steamObj):
+
+            if userContext["user_id"] == userid:
+                try:
+
+                    insert_shortcut(userContext, gamename, gameexe)
+
+                finally:
+                    break
     return
 
 if __name__ == "__main__":
