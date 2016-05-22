@@ -1,0 +1,7 @@
+#community-bar .outerarrow{display:none}
+#community-bar{padding:5px 0!important}
+::-webkit-scrollbar{width:6px;height:6px;background:rgba(19,22,26,0.4)}
+::-webkit-scrollbar-track{background:rgba(0,0,0,0.1)}
+::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.3)}
+::-webkit-scrollbar-thumb:hover{background:rgba(0,0,0,0.4)}
+::-webkit-scrollbar-thumb:active{background:rgba(0,0,0,.6)}
