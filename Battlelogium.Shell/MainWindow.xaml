@@ -1,0 +1,26 @@
+﻿<Window x:Class="Battlelogium.Shell.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Battlelogium.Shell"
+        xmlns:controls="clr-namespace:Battlelogium.Shell.Controls"
+        mc:Ignorable="d"
+        Title="MainWindow" 
+        MinHeight="400" 
+        MinWidth="400"
+        WindowStyle="SingleBorderWindow" 
+        ResizeMode="CanResize"
+        BorderBrush="{x:Null}"
+        BorderThickness="0"
+        WindowStartupLocation="CenterScreen">
+    <WindowChrome.WindowChrome>
+        <WindowChrome ResizeBorderThickness="3" CaptionHeight="14"/>
+    </WindowChrome.WindowChrome>
+    <Window.Resources>
+        
+    </Window.Resources>
+    <Grid>
+        <controls:BattlelogView x:Name="view" Address="http://battlelog.battlefield.com"></controls:BattlelogView>
+    </Grid>
+</Window>
