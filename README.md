@@ -62,7 +62,7 @@ Building `Battlelogium.ThirdParty.SteamShortcutManager` (forked from [scottrice/
  
 Changelog
 ----------
-###Release 2.1.0.0
+### Release 2.1.0.0
 >* User Experience
 >  - **Added Battlefield Hardline Beta support**
 >  - **Added Medal of Honor: Warfighter support**
@@ -79,12 +79,12 @@ Changelog
 >  - Updated to CEFSHarp 1.25.7
 >  - Presence of installer executable now no longer crucial for update. The updater/installer will be redownloaded every time. 
 
-###Release 2.0.1.0
+### Release 2.0.1.0
 >* User Experience
 >  - Fixed crashes due to insufficient permissions when writing to config
 >  - Fixed cache not saving due to insufficient permissions
 
-###Release 2.0.0.0
+### Release 2.0.0.0
 >* User Experience 
 >  - **Reduced CPU usage compared to version 1.4.0.4**
 >  - **Added Battlefield 4 support** 
@@ -123,17 +123,17 @@ Changelog
 >  - Javascript is minimized before being served.
 >  - Javascript is separated into different files instead of serving one huge file.
 
-###Release 1.4.0.4
+### Release 1.4.0.4
 >* Code
 >  - Update to Awesomium 1.7.3
 
-###Release 1.4.0.3
+### Release 1.4.0.3
 >* User Experience
 >  - Disable settings dialog on Battlefield 4 and MOHW
 >  - Fix Quick Match tooltips not showing in some cases
 >  - Suppress flashes of the Quick Match tooltips when setting them
  
-###Release 1.4.0.1
+### Release 1.4.0.1
 >* User Experience
 >	- Added an option in the settings menu in which the requirement for Origin to be running while playing Battlefield 3 can be removed
 >	- If `handleOrigin` is false and the Origin requirement was removed, going directly to campaign will not require logging into Origin
@@ -169,7 +169,7 @@ Changelog
 >	- Reverted all event handlers to standard conventions 
 >	- Various bug fixes
  
-###Release 1.3
+### Release 1.3
 >* User Experience
 >	- Now supports going directly to campaign with Steam Overlay support. 
 >	- Will ask if you want to go to campaign if a connection to Battlelog is unable to be estalblished.
@@ -203,7 +203,7 @@ Changelog
 >	- Changed some method names to be more clear.
 >	- Sorted out code #regions
 
-###Release 1.21
+### Release 1.21
 >* User Experience
 >	- Steam Overlay now works again in Battlefield 3
 >	- Changed waitTimeToCloseOrigin config name to waitTimeToHideOrigin
